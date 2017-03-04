@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:configuration="http://eclipse.org/rmf/pror/toolextensions/1.0" xmlns:id="http://pror.org/presentation/id" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="_8OQs0QBiEeeCP6K68TaQiA">
+      <COMMENT>Created by: didier&#xD;
+</COMMENT>
+      <CREATION-TIME>2017-03-03T23:44:20.507+01:00</CREATION-TIME>
+      <REQ-IF-TOOL-ID>fmStudio (http://formalmind.com/studio)</REQ-IF-TOOL-ID>
+      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <SOURCE-TOOL-ID>fmStudio (http://formalmind.com/studio)</SOURCE-TOOL-ID>
+      <TITLE>Spec</TITLE>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+        <DATATYPE-DEFINITION-STRING IDENTIFIER="_8OQs0wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_String32k" MAX-LENGTH="32000"/>
+        <DATATYPE-DEFINITION-STRING IDENTIFIER="_8OQs1ABiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_String32k_SO_ForeignId" MAX-LENGTH="32000"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_8OQs1QBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_Xhtml_SO_ChapterName"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_8OQs1gBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_Xhtml_SO_Text"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_8OQs1wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_Xhtml_Spec_Description"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_8OQs2ABiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_Xhtml_SR_Description"/>
+        <DATATYPE-DEFINITION-STRING IDENTIFIER="_8OQs2QBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="T_String32k_SR_ForeignId" MAX-LENGTH="32000"/>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_3Yj3QABkEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:57:58.902+01:00" LONG-NAME="T_Xhtml_SR_Justification"/>
+      </DATATYPES>
+      <SPEC-TYPES>
+        <SPEC-OBJECT-TYPE IDENTIFIER="_8OQs2gBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="Requirement Type">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-STRING IDENTIFIER="_8OQs2wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.ForeignID">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>_8OQs1ABiEeeCP6K68TaQiA</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_8OQs3ABiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.ChapterName">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs1QBiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_8OQs3QBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.Text">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs1gBiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_m0-wMABkEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:55:54.545+01:00" LONG-NAME="Justification">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_3Yj3QABkEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPECIFICATION-TYPE IDENTIFIER="_8OQs3gBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="Specification Type">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_8OQs3wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.Description">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs1wBiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
+        <SPEC-RELATION-TYPE IDENTIFIER="_8OQs4ABiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="SpecRealtion Type">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_8OQs4QBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.Description">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs2ABiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-STRING IDENTIFIER="_8OQs4gBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="ReqIF.ForeignID">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>_8OQs2QBiEeeCP6K68TaQiA</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+          </SPEC-ATTRIBUTES>
+        </SPEC-RELATION-TYPE>
+      </SPEC-TYPES>
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT IDENTIFIER="_8OQs4wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:54:05.623+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3ABiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Technologies</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-1">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div/>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div/>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_8OQs5wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-04T14:12:13.802+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">The xml standard in the project is 1.1 ed. 2.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-2">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">The last proven release at this time.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3ABiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style=""><xhtml:br/></xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_wRuD4ADGEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:40:46.660+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-3">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style=""><xhtml:br/></xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3ABiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>Embedded functional statements</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">functional statements : statements returning data to insert.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_0RX64ADHEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:35:50.368+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-4">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Processing needs are defined in process instructions according applied xml standard.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">process instructions in xml are instructions for external tools to xml.They can be inserted at any location dedicated to data.</xhtml:p><xhtml:p style="">This is for these reasons this xml functionnality is really well suited.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_4_z_8ADHEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:46:55.582+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-5">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Data input files are referenced with a logical name.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A logical name is a convenient way to reference different files.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_BfZbYADIEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:47:51.716+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-6">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">References to input data are read-only accessible by each functional statement.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">These references give input data to inject in output by the process instructions.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_vDCYUADIEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:53:22.580+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-7">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">These references are previously declared and available in the template-file's block of their declaration/definition only.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This provision permits to store the value of a node to be used further in the template. This avoids bracktracking in input file.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_F69yUADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:55:29.870+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-8">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Statements return a string of characters or a list of strings of characters.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_sbo5cADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:00:37.764+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-10">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Data collect is performed in one pass per file.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Rewind in input data streams is no longer useful given the requirement, this one depends on.</xhtml:p><xhtml:p style="">More, a data file may be twice or more as parameter with a different logical name.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_5U1ZcADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:00:32.011+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-11">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Data collect is performed by file forward-searches by type.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_99_88ADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:00:44.792+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-12">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">It is triggered by a declaration in a process instruction.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="__wrbgADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:00:57.293+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-13">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A predicate to satisfy can be optionnally added to this kind of search.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_Cmej8ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:01:10.253+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-14">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This kind of search can be optionnally limited to a data block. By default, it is performed on the whole file.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_D7FmcADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:41:07.199+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-15">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">The data collect acts like an iterative loop, searching forward the next data of specified type, in the specified file.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_HpIlgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:01:43.248+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-16">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This data is referencable via a declared logical name.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_Ji908ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:02.637+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-17">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">The scope of the declaration is limited to the current block.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_KtDpgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:38.011+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-18">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">The process deduces the expected data presentation in the output file according the result's type of a processing instruction and the xsd structure of the part of template whom the processing instruction belongs to.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">An implicit arrangement like this one is a convenient solution for the user.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_PFqogADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:38.108+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-19">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">If the dataset is empty, no insertion is performed.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Trivial.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_R1g58ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:58.540+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-20">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">If dataset is a singleton, the value of the unique data-element is inserted in place of the process instruction.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Trivial.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_UjAa8ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:03:44.787+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-21">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Elements are laid out in rows if no column following or while next columns are empty in the template in the limit of the number of columns. A new row is then created to insert next data-elements if its insertion should override a cell already filled with data or overshots the number of columns.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This convention is an intuitive way to map a list of data to a grid.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_murOQADwEee6v-Osj5cBiw" LAST-CHANGE="2017-03-04T16:38:19.595+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-22">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p><xhtml:br/></xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3ABiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Generation processing</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This topic specifies the behavior of process instructions</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      <SPEC-RELATIONS/>
+      <SPECIFICATIONS>
+        <SPECIFICATION IDENTIFIER="_8OQs6wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="Requirements Document">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>Requirements Document</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_8OQs3gBiEeeCP6K68TaQiA</SPECIFICATION-TYPE-REF>
+          </TYPE>
+          <CHILDREN>
+            <SPEC-HIERARCHY IDENTIFIER="_8OQs7wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_8OQs4wBiEeeCP6K68TaQiA</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_8OQs8ABiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-04T11:39:27.267+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_8OQs5wBiEeeCP6K68TaQiA</SPEC-OBJECT-REF>
+                  </OBJECT>
+                  <CHILDREN/>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY IDENTIFIER="_wSdqwQDGEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:39:21.916+01:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_wRuD4ADGEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_0SIv4ADHEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:46:23.846+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_0RX64ADHEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_5An4QADHEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:46:55.583+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_4_z_8ADHEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_BgJpUADIEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:47:51.716+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_BfZbYADIEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_vDz0YADIEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:52:56.527+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_vDCYUADIEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_F7xqoADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T11:55:29.871+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_F69yUADJEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                  <CHILDREN/>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY IDENTIFIER="_mvZnAADwEee6v-Osj5cBiw" LAST-CHANGE="2017-03-04T16:38:52.570+01:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_murOQADwEee6v-Osj5cBiw</SPEC-OBJECT-REF>
+              </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_scZHYADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:38:52.569+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_sbo5cADiEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_5VlnYADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:38:52.570+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_5U1ZcADiEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_9-u8wADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:38:52.570+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_99_88ADiEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="__xZ0QADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T16:38:52.570+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>__wrbgADiEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                  </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY IDENTIFIER="_CnNjwADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:01:10.253+01:00">
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>_Cmej8ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY IDENTIFIER="_D7z_MADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:01:23.397+01:00">
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>_D7FmcADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                      </OBJECT>
+                      <CHILDREN>
+                        <SPEC-HIERARCHY IDENTIFIER="_Hp2XMADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:01:43.248+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_HpIlgADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_Jjs0wADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:02.637+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_Ji908ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_KtypUADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:09.806+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_KtDpgADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_PGZBQADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:38.108+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_PFqogADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_R2PSsADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:58.540+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_R1g58ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_UjvawADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:03:16.407+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_UjAa8ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                      </CHILDREN>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
+            </SPEC-HIERARCHY>
+          </CHILDREN>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+  <TOOL-EXTENSIONS>
+    <REQ-IF-TOOL-EXTENSION>
+      <configuration:ProrToolExtension>
+        <configuration:specViewConfigurations>
+          <configuration:ProrSpecViewConfiguration specification="_8OQs6wBiEeeCP6K68TaQiA">
+            <configuration:columns>
+              <configuration:Column label="ReqIF.ForeignID" width="108"/>
+              <configuration:UnifiedColumn label="Main" width="432"/>
+              <configuration:Column label="Justification" width="388"/>
+            </configuration:columns>
+            <configuration:leftHeaderColumn>
+              <configuration:Column label="Lead Header Column" width="30"/>
+            </configuration:leftHeaderColumn>
+          </configuration:ProrSpecViewConfiguration>
+        </configuration:specViewConfigurations>
+        <configuration:generalConfiguration>
+          <configuration:ProrGeneralConfiguration>
+            <configuration:labelConfiguration>
+              <configuration:LabelConfiguration>
+                <defaultLabel>ReqIF.Description</defaultLabel>
+                <defaultLabel>ReqIF.ForeignID</defaultLabel>
+              </configuration:LabelConfiguration>
+            </configuration:labelConfiguration>
+          </configuration:ProrGeneralConfiguration>
+        </configuration:generalConfiguration>
+        <configuration:presentationConfigurations>
+          <configuration:ProrPresentationConfigurations>
+            <configuration:presentationConfigurations>
+              <id:IdConfiguration datatype="_8OQs1ABiEeeCP6K68TaQiA" prefix="REQ-" count="22"/>
+              <id:IdConfiguration datatype="_8OQs2QBiEeeCP6K68TaQiA" prefix="LNK-" count="4"/>
+            </configuration:presentationConfigurations>
+          </configuration:ProrPresentationConfigurations>
+        </configuration:presentationConfigurations>
+      </configuration:ProrToolExtension>
+    </REQ-IF-TOOL-EXTENSION>
+  </TOOL-EXTENSIONS>
+</REQ-IF>
