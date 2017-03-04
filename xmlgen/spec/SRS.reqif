@@ -71,6 +71,15 @@
             </ATTRIBUTE-DEFINITION-STRING>
           </SPEC-ATTRIBUTES>
         </SPEC-RELATION-TYPE>
+        <SPEC-OBJECT-TYPE IDENTIFIER="_8OJNcAElEeeQk_FQEx5usg" LAST-CHANGE="2017-03-04T23:00:04.484+01:00" LONG-NAME="Note">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_CM2AgAEmEeeQk_FQEx5usg" LAST-CHANGE="2017-03-04T23:00:43.708+01:00" LONG-NAME="Description">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs2ABiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
         <SPEC-OBJECT IDENTIFIER="_8OQs4wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:54:05.623+01:00">
@@ -595,7 +604,7 @@
         </SPEC-OBJECT>
         <SPEC-OBJECT IDENTIFIER="_murOQADwEee6v-Osj5cBiw" LAST-CHANGE="2017-03-04T16:38:19.595+01:00">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-22">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-9">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -956,7 +965,7 @@
         <configuration:specViewConfigurations>
           <configuration:ProrSpecViewConfiguration specification="_8OQs6wBiEeeCP6K68TaQiA">
             <configuration:columns>
-              <configuration:Column label="ReqIF.ForeignID" width="108"/>
+              <configuration:Column label="ReqIF.ForeignID" width="142"/>
               <configuration:UnifiedColumn label="Main" width="432"/>
               <configuration:Column label="Justification" width="388"/>
             </configuration:columns>
