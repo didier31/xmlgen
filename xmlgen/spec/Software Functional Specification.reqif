@@ -73,9 +73,14 @@
         </SPEC-RELATION-TYPE>
         <SPEC-OBJECT-TYPE IDENTIFIER="_8OJNcAElEeeQk_FQEx5usg" LAST-CHANGE="2017-03-04T23:00:04.484+01:00" LONG-NAME="Note">
           <SPEC-ATTRIBUTES>
-            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_CM2AgAEmEeeQk_FQEx5usg" LAST-CHANGE="2017-03-04T23:00:43.708+01:00" LONG-NAME="Description">
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_CM2AgAEmEeeQk_FQEx5usg" LAST-CHANGE="2017-03-04T23:00:43.708+01:00" LONG-NAME="ReqIF.Text">
               <TYPE>
-                <DATATYPE-DEFINITION-XHTML-REF>_8OQs2ABiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+                <DATATYPE-DEFINITION-XHTML-REF>_8OQs1gBiEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_4dv1sAMtEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T13:02:01.203+01:00" LONG-NAME="Justification">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_3Yj3QABkEeeCP6K68TaQiA</DATATYPE-DEFINITION-XHTML-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-XHTML>
           </SPEC-ATTRIBUTES>
@@ -266,7 +271,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_F69yUADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-06T23:29:38.625+01:00">
+        <SPEC-OBJECT IDENTIFIER="_F69yUADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T11:47:11.761+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-8">
               <DEFINITION>
@@ -278,7 +283,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">Statements return a value or a list of values provided with a character string representation.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">Statements return a value or a list provided with a character string representation.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
             <ATTRIBUTE-VALUE-XHTML>
@@ -334,7 +339,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="__wrbgADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:49:58.985+01:00">
+        <SPEC-OBJECT IDENTIFIER="__wrbgADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T11:36:09.090+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-13">
               <DEFINITION>
@@ -346,7 +351,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">The capture of data is performed according a criteria, in a turing-complete capable language.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">The capture of data is performed according a filtering criteria, in a turing-complete capable language.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
             <ATTRIBUTE-VALUE-XHTML>
@@ -404,7 +409,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_HpIlgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-06T14:16:25.088+01:00">
+        <SPEC-OBJECT IDENTIFIER="_HpIlgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T11:48:00.599+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-16">
               <DEFINITION>
@@ -444,7 +449,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_KtDpgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:38.011+01:00">
+        <SPEC-OBJECT IDENTIFIER="_KtDpgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T13:03:13.551+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-18">
               <DEFINITION>
@@ -456,7 +461,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">The process deduces the expected data presentation in the output file according the result's type of a processing instruction and the xsd structure of the part of template whom the processing instruction belongs to.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">The process conforms to the xsd structure, specially at xml-expanding.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
             <ATTRIBUTE-VALUE-XHTML>
@@ -464,7 +469,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">An implicit arrangement like this one is a convenient solution for the user.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">Trivial.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -472,7 +477,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_PFqogADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:02:38.108+01:00">
+        <SPEC-OBJECT IDENTIFIER="_PFqogADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T12:28:21.927+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-19">
               <DEFINITION>
@@ -528,7 +533,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_UjAa8ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-04T15:03:44.787+01:00">
+        <SPEC-OBJECT IDENTIFIER="_UjAa8ADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T12:36:06.797+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-21">
               <DEFINITION>
@@ -540,7 +545,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">Elements are laid out in rows if no column following or while next columns are empty in the template in the limit of the number of columns. A new row is then created to insert next data-elements if its insertion should override a cell already filled with data or overshots the number of columns.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">List elements are laid out as follows :  </xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
             <ATTRIBUTE-VALUE-XHTML>
@@ -694,7 +699,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_qSKkYAK3EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:12:45.593+01:00">
+        <SPEC-OBJECT IDENTIFIER="_qSKkYAK3EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:44:23.943+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-28">
               <DEFINITION>
@@ -706,7 +711,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">A generation processing is composed by two kind of processing :</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">A generation processing is composed by two kinds of processing :</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -714,7 +719,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_AJsb4AK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:14:04.857+01:00">
+        <SPEC-OBJECT IDENTIFIER="_AJsb4AK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:31:17.614+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-29">
               <DEFINITION>
@@ -731,12 +736,20 @@
                   </xhtml:ul></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A stage of data filtering in order to get useful data to handle.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_FjYdYAK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:13:11.290+01:00">
+        <SPEC-OBJECT IDENTIFIER="_FjYdYAK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:31:38.390+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-30">
               <DEFINITION>
@@ -751,6 +764,14 @@
                 <xhtml:div><xhtml:ul>
                     <xhtml:li>the insertion of captured data (or part of) in output.</xhtml:li>
                   </xhtml:ul></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div/>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -846,7 +867,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_eMiY4ALDEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:31:13.320+01:00">
+        <SPEC-OBJECT IDENTIFIER="_eMiY4ALDEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:35:00.670+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-34">
               <DEFINITION>
@@ -859,6 +880,14 @@
               </DEFINITION>
               <THE-VALUE>
                 <xhtml:div><xhtml:p style="">Same logical name can be reused :</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This convention is usual in programming languages. Users who are most of them programmers are thus aware of this convention.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -930,7 +959,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_sQFr0ALGEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:47:42.184+01:00">
+        <SPEC-OBJECT IDENTIFIER="_sQFr0ALGEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:44:44.646+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-38">
               <DEFINITION>
@@ -942,7 +971,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:h3 style="font-size: 120%">Reference to captured data</xhtml:h3></xhtml:div>
+                <xhtml:div><xhtml:h3 style="font-size: 120%">References to captured data</xhtml:h3></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -950,7 +979,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_c2NiUALHEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T01:06:55.904+01:00">
+        <SPEC-OBJECT IDENTIFIER="_c2NiUALHEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:13:43.471+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-39">
               <DEFINITION>
@@ -983,6 +1012,14 @@
               </DEFINITION>
               <THE-VALUE>
                 <xhtml:div><xhtml:p style="">Statements are expressed in a turing-complete language.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Required for an obvious reason of computing capability.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -1030,7 +1067,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_rq_v0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:58:46.352+01:00">
+        <SPEC-OBJECT IDENTIFIER="_rq_v0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:15:31.339+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-43">
               <DEFINITION>
@@ -1042,12 +1079,293 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">Logical names of captured data are used in statements.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">Logical names of captured data are used in statements as actual arguments.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>Trivial.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_jT7ZwAMhEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:33:04.110+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-44">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">These instructions are inserted in process instructions blocks conforming to the xml standard.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This provision allows to insert generation instructions exactly at the place the data must be inserted and data structure, expanded.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_AKZOwAMiEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:41:49.571+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-45">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style=""><xhtml:br/></xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_sprywAMiEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:42:48.465+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_CM2AgAEmEeeQk_FQEx5usg</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>Generation of the xml ouput is based on an xml template with embedded generation instructions.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OJNcAElEeeQk_FQEx5usg</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_BOmBQAMjEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:45:27.936+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_CM2AgAEmEeeQk_FQEx5usg</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>Generation of the xml ouput is based on an xml template with embedded generation instructions as described in this section.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OJNcAElEeeQk_FQEx5usg</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_NrOkQAMnEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T13:02:44.365+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-46">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:h3 style="font-size: 120%">Data Layout</xhtml:h3></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p><xhtml:br/></xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_F5FoMAMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:21:09.687+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-47">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:h4 style="font-family: Segoe UI">Layout of data lists</xhtml:h4></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_YHstsAMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:23:36.392+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-48">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:ul>
+                    <xhtml:li>in rows if no column following or while next columns are empty in the template in the limit of the number of columns.</xhtml:li>
+                  </xhtml:ul></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_ZJAZsAMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:27:34.214+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-49">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:ul>
+                    <xhtml:li>A new row is created to insert next data-elements if its insertion should override a cell already filled with data or overshots the number of columns.</xhtml:li>
+                  </xhtml:ul></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_Zx-eMAMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:48.677+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-50">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_bLYPMAMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:37:17.170+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-51">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A user-defined logical name is associated with the whole content of each data source.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">These names are the root access to get data from the datasource.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_t9ecQAMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:39:20.460+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-52">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">It is defined for the overall generation processing.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_LxgFsAMrEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:42:36.986+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-53">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">Data sources are EMF resources.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_iQjQMAMsEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T13:02:46.949+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_CM2AgAEmEeeQk_FQEx5usg</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>The process deduces the expected data presentation in the output file according the result's type of a processing instruction as follows.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_4dv1sAMtEeeqJfFzwGdy-g</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>An implicit arrangement like this one is a convenient solution for the user.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OJNcAElEeeQk_FQEx5usg</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
@@ -1098,6 +1416,16 @@
                 <SPEC-OBJECT-REF>_murOQADwEee6v-Osj5cBiw</SPEC-OBJECT-REF>
               </OBJECT>
               <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER="_BPdj8AMjEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:45:02.529+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_BOmBQAMjEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_LyXBUQMrEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:44:11.017+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_LxgFsAMrEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
                 <SPEC-HIERARCHY IDENTIFIER="_qTCuIQK3EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:03:42.195+01:00">
                   <OBJECT>
                     <SPEC-OBJECT-REF>_qSKkYAK3EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
@@ -1115,6 +1443,11 @@
                       </OBJECT>
                     </SPEC-HIERARCHY>
                   </CHILDREN>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_jU0xoQMhEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:33:41.457+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_jT7ZwAMhEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                  </OBJECT>
                 </SPEC-HIERARCHY>
                 <SPEC-HIERARCHY IDENTIFIER="_o-_j8QLFEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:36:09.138+01:00">
                   <OBJECT>
@@ -1150,6 +1483,18 @@
                         <SPEC-OBJECT-REF>_sQFr0ALGEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
                       </OBJECT>
                       <CHILDREN>
+                        <SPEC-HIERARCHY IDENTIFIER="_bMPK0QMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:40:54.969+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_bLYPMAMqEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                          </OBJECT>
+                          <CHILDREN>
+                            <SPEC-HIERARCHY IDENTIFIER="_t-VX4QMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:39:20.460+01:00">
+                              <OBJECT>
+                                <SPEC-OBJECT-REF>_t9ecQAMqEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                              </OBJECT>
+                            </SPEC-HIERARCHY>
+                          </CHILDREN>
+                        </SPEC-HIERARCHY>
                         <SPEC-HIERARCHY IDENTIFIER="_BgJpUADIEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:44:07.369+01:00">
                           <OBJECT>
                             <SPEC-OBJECT-REF>_BfZbYADIEeewnYYy3vSCWg</SPEC-OBJECT-REF>
@@ -1191,50 +1536,76 @@
                           <OBJECT>
                             <SPEC-OBJECT-REF>_41XU0ALHEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
                           </OBJECT>
-                          <CHILDREN>
-                            <SPEC-HIERARCHY IDENTIFIER="_rr2rcQLIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:57:24.114+01:00">
-                              <OBJECT>
-                                <SPEC-OBJECT-REF>_rq_v0ALIEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
-                              </OBJECT>
-                            </SPEC-HIERARCHY>
-                          </CHILDREN>
+                          <CHILDREN/>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_rr2rcQLIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:16:00.209+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_rq_v0ALIEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+                          </OBJECT>
                         </SPEC-HIERARCHY>
                         <SPEC-HIERARCHY IDENTIFIER="_F7xqoADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:50:52.209+01:00">
                           <OBJECT>
                             <SPEC-OBJECT-REF>_F69yUADJEeewnYYy3vSCWg</SPEC-OBJECT-REF>
                           </OBJECT>
+                          <CHILDREN/>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_NsFf4QMnEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:14:16.868+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_NrOkQAMnEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                          </OBJECT>
                           <CHILDREN>
-                            <SPEC-HIERARCHY IDENTIFIER="_Hp2XMADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:50:42.665+01:00">
+                            <SPEC-HIERARCHY IDENTIFIER="_iRay4AMsEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:58:05.720+01:00">
                               <OBJECT>
-                                <SPEC-OBJECT-REF>_HpIlgADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                                <SPEC-OBJECT-REF>_iQjQMAMsEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
                               </OBJECT>
-                              <CHILDREN/>
+                            </SPEC-HIERARCHY>
+                            <SPEC-HIERARCHY IDENTIFIER="_KtypUADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T12:16:18.840+01:00">
+                              <OBJECT>
+                                <SPEC-OBJECT-REF>_KtDpgADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                              </OBJECT>
+                              <CHILDREN>
+                                <SPEC-HIERARCHY IDENTIFIER="_PGZBQADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:50:42.669+01:00">
+                                  <OBJECT>
+                                    <SPEC-OBJECT-REF>_PFqogADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                                  </OBJECT>
+                                  <CHILDREN/>
+                                </SPEC-HIERARCHY>
+                                <SPEC-HIERARCHY IDENTIFIER="_R2PSsADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:51:17.601+01:00">
+                                  <OBJECT>
+                                    <SPEC-OBJECT-REF>_R1g58ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                                  </OBJECT>
+                                  <CHILDREN/>
+                                </SPEC-HIERARCHY>
+                                <SPEC-HIERARCHY IDENTIFIER="_F5_AEQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:20:11.867+01:00">
+                                  <OBJECT>
+                                    <SPEC-OBJECT-REF>_F5FoMAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                                  </OBJECT>
+                                </SPEC-HIERARCHY>
+                                <SPEC-HIERARCHY IDENTIFIER="_UjvawADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:51:20.009+01:00">
+                                  <OBJECT>
+                                    <SPEC-OBJECT-REF>_UjAa8ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+                                  </OBJECT>
+                                  <CHILDREN>
+                                    <SPEC-HIERARCHY IDENTIFIER="_YIk3cQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:30.514+01:00">
+                                      <OBJECT>
+                                        <SPEC-OBJECT-REF>_YHstsAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                                      </OBJECT>
+                                    </SPEC-HIERARCHY>
+                                    <SPEC-HIERARCHY IDENTIFIER="_ZJ3VUQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:43.702+01:00">
+                                      <OBJECT>
+                                        <SPEC-OBJECT-REF>_ZJAZsAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                                      </OBJECT>
+                                    </SPEC-HIERARCHY>
+                                    <SPEC-HIERARCHY IDENTIFIER="_Zy3PAQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:48.677+01:00">
+                                      <OBJECT>
+                                        <SPEC-OBJECT-REF>_Zx-eMAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                                      </OBJECT>
+                                    </SPEC-HIERARCHY>
+                                  </CHILDREN>
+                                </SPEC-HIERARCHY>
+                              </CHILDREN>
                             </SPEC-HIERARCHY>
                           </CHILDREN>
-                        </SPEC-HIERARCHY>
-                      </CHILDREN>
-                    </SPEC-HIERARCHY>
-                    <SPEC-HIERARCHY IDENTIFIER="_KtypUADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:50:42.669+01:00">
-                      <OBJECT>
-                        <SPEC-OBJECT-REF>_KtDpgADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
-                      </OBJECT>
-                      <CHILDREN>
-                        <SPEC-HIERARCHY IDENTIFIER="_PGZBQADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:50:42.669+01:00">
-                          <OBJECT>
-                            <SPEC-OBJECT-REF>_PFqogADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
-                          </OBJECT>
-                          <CHILDREN/>
-                        </SPEC-HIERARCHY>
-                        <SPEC-HIERARCHY IDENTIFIER="_R2PSsADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:51:17.601+01:00">
-                          <OBJECT>
-                            <SPEC-OBJECT-REF>_R1g58ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
-                          </OBJECT>
-                          <CHILDREN/>
-                        </SPEC-HIERARCHY>
-                        <SPEC-HIERARCHY IDENTIFIER="_UjvawADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T00:51:20.009+01:00">
-                          <OBJECT>
-                            <SPEC-OBJECT-REF>_UjAa8ADjEeewnYYy3vSCWg</SPEC-OBJECT-REF>
-                          </OBJECT>
                         </SPEC-HIERARCHY>
                       </CHILDREN>
                     </SPEC-HIERARCHY>
@@ -1275,7 +1646,7 @@
         <configuration:presentationConfigurations>
           <configuration:ProrPresentationConfigurations>
             <configuration:presentationConfigurations>
-              <id:IdConfiguration datatype="_8OQs1ABiEeeCP6K68TaQiA" prefix="REQ-SRS-" count="43"/>
+              <id:IdConfiguration datatype="_8OQs1ABiEeeCP6K68TaQiA" prefix="REQ-SRS-" count="53"/>
               <id:IdConfiguration datatype="_8OQs2QBiEeeCP6K68TaQiA" prefix="LNK-" count="14"/>
             </configuration:presentationConfigurations>
           </configuration:ProrPresentationConfigurations>
