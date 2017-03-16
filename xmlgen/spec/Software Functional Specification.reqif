@@ -123,14 +123,14 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_8OQs5wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-04T14:12:13.802+01:00">
+        <SPEC-OBJECT IDENTIFIER="_8OQs5wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-11T13:06:38.507+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">The xml standard in the project is 1.1 ed. 2.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">The xml standard, used is 1.1 ed. 2.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-2">
@@ -271,7 +271,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_F69yUADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T11:47:11.761+01:00">
+        <SPEC-OBJECT IDENTIFIER="_F69yUADJEeewnYYy3vSCWg" LAST-CHANGE="2017-03-12T13:00:52.104+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-8">
               <DEFINITION>
@@ -339,7 +339,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="__wrbgADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T11:36:09.090+01:00">
+        <SPEC-OBJECT IDENTIFIER="__wrbgADiEeewnYYy3vSCWg" LAST-CHANGE="2017-03-12T10:24:47.486+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-13">
               <DEFINITION>
@@ -449,7 +449,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_KtDpgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-07T13:03:13.551+01:00">
+        <SPEC-OBJECT IDENTIFIER="_KtDpgADjEeewnYYy3vSCWg" LAST-CHANGE="2017-03-12T13:56:05.359+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-18">
               <DEFINITION>
@@ -597,26 +597,6 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_vyx4cAJjEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T12:55:05.916+01:00">
-          <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-23">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-            <ATTRIBUTE-VALUE-XHTML>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
-              </DEFINITION>
-              <THE-VALUE>
-                <xhtml:div/>
-              </THE-VALUE>
-            </ATTRIBUTE-VALUE-XHTML>
-          </VALUES>
-          <TYPE>
-            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
-          </TYPE>
-        </SPEC-OBJECT>
         <SPEC-OBJECT IDENTIFIER="_2_R7YAJjEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T12:55:53.240+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-24">
@@ -699,7 +679,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_qSKkYAK3EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:44:23.943+01:00">
+        <SPEC-OBJECT IDENTIFIER="_qSKkYAK3EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T09:58:18.272+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-28">
               <DEFINITION>
@@ -719,7 +699,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_AJsb4AK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:31:17.614+01:00">
+        <SPEC-OBJECT IDENTIFIER="_AJsb4AK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T10:12:00.439+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-29">
               <DEFINITION>
@@ -749,7 +729,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_FjYdYAK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:31:38.390+01:00">
+        <SPEC-OBJECT IDENTIFIER="_FjYdYAK5EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T10:02:44.814+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-30">
               <DEFINITION>
@@ -779,7 +759,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_9v3y4AK6EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:24:23.113+01:00">
+        <SPEC-OBJECT IDENTIFIER="_9v3y4AK6EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T10:26:58.557+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-31">
               <DEFINITION>
@@ -807,7 +787,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_nOI14AK7EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-06T23:24:49.009+01:00">
+        <SPEC-OBJECT IDENTIFIER="_nOI14AK7EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T10:29:13.638+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-32">
               <DEFINITION>
@@ -837,7 +817,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_uQbM4AK7EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:12:08.558+01:00">
+        <SPEC-OBJECT IDENTIFIER="_uQbM4AK7EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T10:31:34.909+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-33">
               <DEFINITION>
@@ -999,7 +979,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_41XU0ALHEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:51:52.818+01:00">
+        <SPEC-OBJECT IDENTIFIER="_41XU0ALHEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T12:53:56.685+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-40">
               <DEFINITION>
@@ -1027,7 +1007,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_MHzO0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:54:03.307+01:00">
+        <SPEC-OBJECT IDENTIFIER="_MHzO0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-11T13:08:07.735+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-41">
               <DEFINITION>
@@ -1039,7 +1019,15 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">Acceleo Query Language is the data language for capture filtering and generation.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">Acceleo Query Language (TBD: version) is the data language for capture filtering and generation.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div/>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -1047,7 +1035,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_fxMQQALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:56:10.795+01:00">
+        <SPEC-OBJECT IDENTIFIER="_fxMQQALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T22:50:31.453+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-42">
               <DEFINITION>
@@ -1059,7 +1047,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p style="">(version)</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p style="">EMF's version of data sources, used is 2.9.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -1067,7 +1055,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_rq_v0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T12:15:31.339+01:00">
+        <SPEC-OBJECT IDENTIFIER="_rq_v0ALIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-12T13:31:38.968+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-43">
               <DEFINITION>
@@ -1095,7 +1083,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_jT7ZwAMhEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:33:04.110+01:00">
+        <SPEC-OBJECT IDENTIFIER="_jT7ZwAMhEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T10:16:03.286+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-44">
               <DEFINITION>
@@ -1158,7 +1146,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OJNcAElEeeQk_FQEx5usg</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_BOmBQAMjEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T11:45:27.936+01:00">
+        <SPEC-OBJECT IDENTIFIER="_BOmBQAMjEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T09:49:06.566+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <DEFINITION>
@@ -1265,19 +1253,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_Zx-eMAMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:48.677+01:00">
-          <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-50">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-          <TYPE>
-            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
-          </TYPE>
-        </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_bLYPMAMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:37:17.170+01:00">
+        <SPEC-OBJECT IDENTIFIER="_bLYPMAMqEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T12:08:38.332+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-51">
               <DEFINITION>
@@ -1325,7 +1301,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_LxgFsAMrEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:42:36.986+01:00">
+        <SPEC-OBJECT IDENTIFIER="_LxgFsAMrEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T09:53:51.839+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-53">
               <DEFINITION>
@@ -1345,7 +1321,7 @@
             <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_iQjQMAMsEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T13:02:46.949+01:00">
+        <SPEC-OBJECT IDENTIFIER="_iQjQMAMsEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T13:53:20.917+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <DEFINITION>
@@ -1368,8 +1344,217 @@
             <SPEC-OBJECT-TYPE-REF>_8OJNcAElEeeQk_FQEx5usg</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_icfzIAN8EeeqJfFzwGdy-g" LAST-CHANGE="2017-03-12T11:56:58.496+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-SRS-54">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs2wBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_8OQs3QBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A special keyword enables list-item individual selection. It triggers an iteration through a list on the current xml output block.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_m0-wMABkEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">This provision seems to be necessary in order to perform iteration on lists.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_8OQs2gBiEeeCP6K68TaQiA</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
       </SPEC-OBJECTS>
-      <SPEC-RELATIONS/>
+      <SPEC-RELATIONS>
+        <SPEC-RELATION IDENTIFIER="_oiLbIAOAEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:54:20.432+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-18">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_rFYNIAN_EeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_LxgFsAMrEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_KbI5oAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:58:05.043+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-19">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_o5xRMAEOEeevQq2Csre8xg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_jT7ZwAMhEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_W9hcIAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:59:35.887+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-21">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>__wrbgADiEeewnYYy3vSCWg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_MHzO0ALIEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_olhNkAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:01:33.689+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-22">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_mY1TkAOBEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_o-IoUALFEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_6lyVEAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:03:30.429+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-23">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_mY1TkAOBEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_AJsb4AK5EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="__hG_kAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:04:05.680+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-24">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_FjYdYAK5EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_AJsb4AK5EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_AdE4kAOCEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:04:14.567+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-25">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_XO7KoAEPEeevQq2Csre8xg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_AJsb4AK5EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_D6L4oAOCEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:04:30.024+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-26">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_XO7KoAEPEeevQq2Csre8xg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_c2NiUALHEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_fWigEAOCEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:07:36.859+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-27">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_Hs5AIAEPEeevQq2Csre8xg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_bLYPMAMqEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+        <SPEC-RELATION IDENTIFIER="_71WNkAODEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:18:01.710+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="LNK-28">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_8OQs4gBiEeeCP6K68TaQiA</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TARGET>
+            <SPEC-OBJECT-REF>_o5xRMAEOEeevQq2Csre8xg</SPEC-OBJECT-REF>
+          </TARGET>
+          <SOURCE>
+            <SPEC-OBJECT-REF>_8OQs5wBiEeeCP6K68TaQiA</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>_8OQs4ABiEeeCP6K68TaQiA</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
+      </SPEC-RELATIONS>
       <SPECIFICATIONS>
         <SPECIFICATION IDENTIFIER="_8OQs6wBiEeeCP6K68TaQiA" LAST-CHANGE="2017-03-03T23:44:20.507+01:00" LONG-NAME="Requirements Document">
           <VALUES>
@@ -1401,13 +1586,7 @@
                   <OBJECT>
                     <SPEC-OBJECT-REF>_MHzO0ALIEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
                   </OBJECT>
-                  <CHILDREN>
-                    <SPEC-HIERARCHY IDENTIFIER="_fyDL4QLIEeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:56:10.795+01:00">
-                      <OBJECT>
-                        <SPEC-OBJECT-REF>_fxMQQALIEeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
-                      </OBJECT>
-                    </SPEC-HIERARCHY>
-                  </CHILDREN>
+                  <CHILDREN/>
                 </SPEC-HIERARCHY>
               </CHILDREN>
             </SPEC-HIERARCHY>
@@ -1474,6 +1653,11 @@
                         <SPEC-HIERARCHY IDENTIFIER="_uRSvkQK7EeeMtfpTGKwq8Q" LAST-CHANGE="2017-03-07T00:43:52.553+01:00">
                           <OBJECT>
                             <SPEC-OBJECT-REF>_uQbM4AK7EeeMtfpTGKwq8Q</SPEC-OBJECT-REF>
+                          </OBJECT>
+                        </SPEC-HIERARCHY>
+                        <SPEC-HIERARCHY IDENTIFIER="_idWuwQN8EeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:25:05.304+01:00">
+                          <OBJECT>
+                            <SPEC-OBJECT-REF>_icfzIAN8EeeqJfFzwGdy-g</SPEC-OBJECT-REF>
                           </OBJECT>
                         </SPEC-HIERARCHY>
                       </CHILDREN>
@@ -1596,11 +1780,7 @@
                                         <SPEC-OBJECT-REF>_ZJAZsAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
                                       </OBJECT>
                                     </SPEC-HIERARCHY>
-                                    <SPEC-HIERARCHY IDENTIFIER="_Zy3PAQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:48.677+01:00">
-                                      <OBJECT>
-                                        <SPEC-OBJECT-REF>_Zx-eMAMoEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
-                                      </OBJECT>
-                                    </SPEC-HIERARCHY>
+                                    <SPEC-HIERARCHY IDENTIFIER="_Zy3PAQMoEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T12:22:48.677+01:00"/>
                                   </CHILDREN>
                                 </SPEC-HIERARCHY>
                               </CHILDREN>
@@ -1646,8 +1826,8 @@
         <configuration:presentationConfigurations>
           <configuration:ProrPresentationConfigurations>
             <configuration:presentationConfigurations>
-              <id:IdConfiguration datatype="_8OQs1ABiEeeCP6K68TaQiA" prefix="REQ-SRS-" count="53"/>
-              <id:IdConfiguration datatype="_8OQs2QBiEeeCP6K68TaQiA" prefix="LNK-" count="14"/>
+              <id:IdConfiguration datatype="_8OQs1ABiEeeCP6K68TaQiA" prefix="REQ-SRS-" count="54"/>
+              <id:IdConfiguration datatype="_8OQs2QBiEeeCP6K68TaQiA" prefix="LNK-" count="28"/>
             </configuration:presentationConfigurations>
           </configuration:ProrPresentationConfigurations>
         </configuration:presentationConfigurations>

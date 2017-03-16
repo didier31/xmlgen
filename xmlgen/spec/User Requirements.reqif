@@ -194,7 +194,7 @@
             <SPEC-OBJECT-TYPE-REF>_6b7LSgEMEeevQq2Csre8xg</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_Hs5AIAEPEeevQq2Csre8xg" LAST-CHANGE="2017-03-04T20:17:15.285+01:00">
+        <SPEC-OBJECT IDENTIFIER="_Hs5AIAEPEeevQq2Csre8xg" LAST-CHANGE="2017-03-11T11:13:44.793+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-UR-5">
               <DEFINITION>
@@ -206,7 +206,7 @@
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_6b7LTQEMEeevQq2Csre8xg</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
               <THE-VALUE>
-                <xhtml:div><xhtml:p>An arbitrary number of input files gives all data requested by the statements.</xhtml:p></xhtml:div>
+                <xhtml:div><xhtml:p>An arbitrary number of data sources </xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -242,7 +242,7 @@
             <SPEC-OBJECT-TYPE-REF>_6b7LSgEMEeevQq2Csre8xg</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_XO7KoAEPEeevQq2Csre8xg" LAST-CHANGE="2017-03-04T20:18:32.321+01:00">
+        <SPEC-OBJECT IDENTIFIER="_XO7KoAEPEeevQq2Csre8xg" LAST-CHANGE="2017-03-11T12:19:18.651+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-UR-7">
               <DEFINITION>
@@ -255,6 +255,46 @@
               </DEFINITION>
               <THE-VALUE>
                 <xhtml:div><xhtml:p>The xml template is expanded by data resulting of computing its statements, respecting an xml-schema.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_6b7LSgEMEeevQq2Csre8xg</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_rFYNIAN_EeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:47:26.667+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-UR-8">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_6b7LSwEMEeevQq2Csre8xg</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_6b7LTQEMEeevQq2Csre8xg</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p style="">A data source is an EMF model file.</xhtml:p></xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_6b7LSgEMEeevQq2Csre8xg</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="_mY1TkAOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-11T11:30:03.895+01:00">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-UR-9">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>_6b7LSwEMEeevQq2Csre8xg</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_6b7LTQEMEeevQq2Csre8xg</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div><xhtml:p>gives all data requested by the statements.</xhtml:p></xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
@@ -305,6 +345,18 @@
                   <OBJECT>
                     <SPEC-OBJECT-REF>_Hs5AIAEPEeevQq2Csre8xg</SPEC-OBJECT-REF>
                   </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY IDENTIFIER="_mZlhgQOBEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:01:30.917+01:00">
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>_mY1TkAOBEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
+                </SPEC-HIERARCHY>
+                <SPEC-HIERARCHY IDENTIFIER="_rGJCIQN_EeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T22:47:26.667+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_rFYNIAN_EeeqJfFzwGdy-g</SPEC-OBJECT-REF>
+                  </OBJECT>
                 </SPEC-HIERARCHY>
               </CHILDREN>
             </SPEC-HIERARCHY>
@@ -332,7 +384,7 @@
           <configuration:ProrSpecViewConfiguration specification="_6b7LWwEMEeevQq2Csre8xg">
             <configuration:columns>
               <configuration:Column label="ReqIF.ForeignID" width="100"/>
-              <configuration:UnifiedColumn label="Main" width="669"/>
+              <configuration:UnifiedColumn label="Main" width="719"/>
             </configuration:columns>
             <configuration:leftHeaderColumn>
               <configuration:Column label="Lead Header Column" width="30"/>
@@ -352,7 +404,7 @@
         <configuration:presentationConfigurations>
           <configuration:ProrPresentationConfigurations>
             <configuration:presentationConfigurations>
-              <id:IdConfiguration datatype="_6b7LRAEMEeevQq2Csre8xg" prefix="REQ-UR-" count="7"/>
+              <id:IdConfiguration datatype="_6b7LRAEMEeevQq2Csre8xg" prefix="REQ-UR-" count="9"/>
               <id:IdConfiguration datatype="_6b7LSQEMEeevQq2Csre8xg" prefix="LNK-" count="0"/>
             </configuration:presentationConfigurations>
           </configuration:ProrPresentationConfigurations>

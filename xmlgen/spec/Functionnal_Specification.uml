@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ModelElements="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements" xmlns:Requirements="http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements">
+  <uml:Package xmi:id="_-6nQkAZQEee76YHiT40GwA" name="Functionnal Specification" URI="">
+    <packagedElement xmi:type="uml:Package" xmi:id="_zE-p4AZREee76YHiT40GwA" name="Generation processing">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_jB5QcAcEEee76YHiT40GwA" annotatedElement="_zE-p4AZREee76YHiT40GwA">
+        <body>This provision allows to insert generation instructions exactly at the place the data must be inserted and data structure, expanded.</body>
+      </ownedComment>
+      <ownedComment xmi:type="uml:Comment" xmi:id="_UJKxoAjFEeejaZk9qAqYAw" annotatedElement="_zE-p4AZREee76YHiT40GwA">
+        <body>A stage of data filtering in order to get useful data to handle.</body>
+      </ownedComment>
+      <packagedElement xmi:type="uml:Package" xmi:id="_7D6PUAZREee76YHiT40GwA" name="Data capture" URI="">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_wMGLcAcFEee76YHiT40GwA" annotatedElement="_7D6PUAZREee76YHiT40GwA">
+          <body>It enables to extract interesting data to insert.</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_s4XUYAcGEee76YHiT40GwA" annotatedElement="_7D6PUAZREee76YHiT40GwA">
+          <body>It enables efficiency of capture.</body>
+        </ownedComment>
+        <packagedElement xmi:type="uml:Class" xmi:id="_880hYAcEEee76YHiT40GwA" name="Data expression">
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_VlSE4AcFEee76YHiT40GwA" name="Data expression language"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_F43Z4AcGEee76YHiT40GwA" name="Scope of capture">
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_VAzpYAcGEee76YHiT40GwA" name="Capture in data source"/>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_Vosv0AcGEee76YHiT40GwA" name="Capture in part of data source"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_auzGUAdbEee76YHiT40GwA" name="Data sources"/>
+        <packagedElement xmi:type="uml:Abstraction" xmi:id="_0fvU0AdbEee76YHiT40GwA" name="" client="_7D6PUAZREee76YHiT40GwA">
+          <supplier xmi:type="uml:Class" href="User_Requirements.uml#_bBGigAZDEeeNtrLd9XhOkw"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_8j40UAZREee76YHiT40GwA" name="Statements for generation">
+        <packagedElement xmi:type="uml:Class" xmi:id="_jgTBsAcaEee76YHiT40GwA" name="Programming language"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_EEGOoAccEee76YHiT40GwA" name="Captured data in statements"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_-Q7yoAcaEee76YHiT40GwA" name="Results representation"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_Gm4vwAcBEee76YHiT40GwA" name="Purpose"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_bDn5sAcBEee76YHiT40GwA" name="Type of data sources"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_EwTWsAcDEee76YHiT40GwA" name="Instructions">
+        <nestedClassifier xmi:type="uml:Class" xmi:id="__6jvwAcCEee76YHiT40GwA" name="Data capture"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_r1dpwAcCEee76YHiT40GwA" name="Insertion of captured data"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_G2H-QAcEEee76YHiT40GwA" name="Instructions location"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_ilg-MAdLEee76YHiT40GwA" client="_bDn5sAcBEee76YHiT40GwA">
+        <supplier xmi:type="uml:Class" href="User_Requirements.uml#_p5sqQAZKEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_CRGmMAdMEee76YHiT40GwA" client="_Gm4vwAcBEee76YHiT40GwA">
+        <supplier xmi:type="uml:Class" href="User_Requirements.uml#_CVWP4AZCEeeNtrLd9XhOkw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_H2r5MAdNEee76YHiT40GwA" name="" client="_Gm4vwAcBEee76YHiT40GwA">
+        <supplier xmi:type="uml:Class" href="User_Requirements.uml#_hepfoAZBEeeNtrLd9XhOkw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_tXQ9oAdYEee76YHiT40GwA" name="" client="_zE-p4AZREee76YHiT40GwA">
+        <supplier xmi:type="uml:Class" href="User_Requirements.uml#_mB_G8AZMEee76YHiT40GwA"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_tPJL8AciEee76YHiT40GwA" name="Output expansion">
+      <packagedElement xmi:type="uml:Class" xmi:id="_00t2MAciEee76YHiT40GwA" name="Results organisation">
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_So0YIAcjEee76YHiT40GwA" name="Structure"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_S8zrIAcjEee76YHiT40GwA" name="Result insertion"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_0Pc7EAckEee76YHiT40GwA" name="" client="_tPJL8AciEee76YHiT40GwA" supplier="_tPJL8AciEee76YHiT40GwA"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_M6kNIAcpEee76YHiT40GwA" name="Next insertions"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPDPYAZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPDPYQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#/"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPD2cAZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_TZ_nULU5EduiKqCzJMWbGw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPEdgAZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPEdgQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPEdggZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_Gx8MgLX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPEdgwZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPEdhAZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPEdhQZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_fSw28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPEdhgZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPEdhwZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//portandflows"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFEkAZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_rpx28LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPFEkQZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFEkgZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//constraints"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFEkwZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_5WYJ0LX7EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPFElAZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFElQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//activities"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFElgZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_C2zXMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPFElwZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFEmAZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//allocations"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFroAZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_NxdG4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPFroQZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFrogZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFrowZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_OOJC4LX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPFrpAZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFrpQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//interactions"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPFrpgZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_meOioLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPGSsAZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPGSsQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//statemachines"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPGSsgZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_nAF5kLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPGSswZSEee76YHiT40GwA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPGStAZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#//usecases"/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPGStQZSEee76YHiT40GwA" source="duplicatedProfile"/>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_neZmMLX8EduFmqQsrNB9lw"/>
+    </profileApplication>
+  </uml:Package>
+  <Requirements:Requirement xmi:id="_l4u1kAZSEee76YHiT40GwA" text="The xml standard, used is 1.1 ed. 2." id="REQ-XGN-SS-TECH-1">
+    <base_Class xmi:type="uml:Class" href="Software_Design.uml#_l4Y3UAZSEee76YHiT40GwA"/>
+  </Requirements:Requirement>
+  <ModelElements:Rationale xmi:id="_yzKEoAZSEee76YHiT40GwA">
+    <base_Comment xmi:type="uml:Comment" href="Software_Design.uml#_yx45UAZSEee76YHiT40GwA"/>
+  </ModelElements:Rationale>
+  <Requirements:Requirement xmi:id="_Q-_xIAZTEee76YHiT40GwA" text="Acceleo Query Language is the data language for capture filtering and generation." id="REQ-XGN-SS-TECH-1">
+    <base_Class xmi:type="uml:Class" href="Software_Design.uml#_Q-kTUAZTEee76YHiT40GwA"/>
+  </Requirements:Requirement>
+  <Requirements:Requirement xmi:id="_GnYfAAcBEee76YHiT40GwA" text="Generation of the xml ouput is based on a xml template with embedded generation instructions." id="REQ-XGN-FS-GEN-1" base_Class="_Gm4vwAcBEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_bD-fAAcBEee76YHiT40GwA" text="Data sources are EMF resources." id="REQ-XGN-FS-GEN-2" base_Class="_bDn5sAcBEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_r17j0AcCEee76YHiT40GwA" text="insertion of captured data (or part of) in output." id="REQ-XGN-FS-GEN-3.2" base_Class="_r1dpwAcCEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="__7C38AcCEee76YHiT40GwA" text="capture of data from data sources" id="REQ-XGN-FS-GEN-3.1" base_Class="__6jvwAcCEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_EwztAAcDEee76YHiT40GwA" text="A generation processing is composed by two kinds of processing :" id="REQ-XGN-FS-GEN-3" base_Class="_EwTWsAcDEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_G2xegAcEEee76YHiT40GwA" text="These instructions are inserted in process instructions blocks (&lt;? ... >) conforming to the xml standard." id="REQ-XGN-FS-GEN-4" base_Class="_G2H-QAcEEee76YHiT40GwA"/>
+  <ModelElements:Rationale xmi:id="_jCRD4AcEEee76YHiT40GwA" base_Comment="_jB5QcAcEEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_89FnIAcEEee76YHiT40GwA" text="The capture of data is performed according an filtering criteria." id="REQ-XGN-FS-CAP-1" base_Class="_880hYAcEEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_Vl2FkAcFEee76YHiT40GwA" text="Data expression is expressed in a turing-complete capable language." id="REQ-XGN-FS-CAP-1.1" base_Class="_VlSE4AcFEee76YHiT40GwA"/>
+  <ModelElements:Rationale xmi:id="_wMVcAAcFEee76YHiT40GwA" base_Comment="_wMGLcAcFEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_F5QbcAcGEee76YHiT40GwA" text="The scope of capture is :" id="REQ-XGN-FS-CAP-2" base_Class="_F43Z4AcGEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_VBQ8YAcGEee76YHiT40GwA" text="an entire data source." id="REQ-XGN-FS-CAP-2.1" base_Class="_VAzpYAcGEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_VpLQ8AcGEee76YHiT40GwA" text="or a part of a data source." id="REQ-XGN-FS-CAP-2.2" base_Class="_Vosv0AcGEee76YHiT40GwA"/>
+  <ModelElements:Rationale xmi:id="_s4pBMAcGEee76YHiT40GwA" base_Comment="_s4XUYAcGEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_jglVkAcaEee76YHiT40GwA" text="Statements are expressed in a turing-complete language." id="REQ-XGN-FS-STA-1" base_Class="_jgTBsAcaEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_-ROtkAcaEee76YHiT40GwA" text="Statements return a value or a list provided with a character string representation." id="REQ-XGN-FS-STA-3" base_Class="_-Q7yoAcaEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_EEi6kAccEee76YHiT40GwA" text="Captured data are used in statements as actual arguments." id="REQ-XGN-FS-STA-2" base_Class="_EEGOoAccEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_01CmUAciEee76YHiT40GwA" text="The expansion process deduces the expected data organisation in the output file according the result's structure." id="REQ-XGN-FS-EXP-1" base_Class="_00t2MAciEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_SpHTEAcjEee76YHiT40GwA" text="The process conforms to the xsd structure." id="REQ-XGN-FS-EXP-1.1" base_Class="_So0YIAcjEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_S9IbQAcjEee76YHiT40GwA" text="Results of a single invocation of a generation statement replace it at the same point according the xsd meta-structure." id="REQ-XGN-FS-EXP-1.2" base_Class="_S8zrIAcjEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_0QkVYAckEee76YHiT40GwA" base_Abstraction="_0Pc7EAckEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_M7G_sAcpEee76YHiT40GwA" text="Next insertions respect the chronological order." id="REQ-XGN-FS-EXP-1.2.1" base_Class="_M6kNIAcpEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_imcyUAdLEee76YHiT40GwA" base_Abstraction="_ilg-MAdLEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_CR-I4AdMEee76YHiT40GwA" base_Abstraction="_CRGmMAdMEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_H3rXsAdNEee76YHiT40GwA" base_Abstraction="_H2r5MAdNEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_tYjXEAdYEee76YHiT40GwA" base_Abstraction="_tXQ9oAdYEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_avXHAAdbEee76YHiT40GwA" text="An arbitrary number of data sources gives all data requested by the statements." id="REQ-XGN-FS-CAP-3" base_Class="_auzGUAdbEee76YHiT40GwA"/>
+  <Requirements:Satisfy xmi:id="_0gsXEAdbEee76YHiT40GwA" base_Abstraction="_0fvU0AdbEee76YHiT40GwA"/>
+  <ModelElements:Rationale xmi:id="_UJp50AjFEeejaZk9qAqYAw" base_Comment="_UJKxoAjFEeejaZk9qAqYAw"/>
+</xmi:XMI>
