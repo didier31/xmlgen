@@ -50,19 +50,57 @@ Said differently, it enables list iteration and xml generation loop.</body>
       <packagedElement xmi:type="uml:Abstraction" xmi:id="_xDijAAo1EeeX3O0HMCA_eQ" name="" client="_1tpXwAduEee76YHiT40GwA">
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_Vosv0AcGEee76YHiT40GwA"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ZZFJsAsCEee_u5nO06K3NQ" name="Type of data sources"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_cG4MsAsCEee_u5nO06K3NQ" name="" client="_ZZFJsAsCEee_u5nO06K3NQ">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_bDn5sAcBEee76YHiT40GwA"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_yGls4AfvEeezgfvGMJ6KUA" name="Statements for generation">
       <packagedElement xmi:type="uml:Class" xmi:id="_F6CscAf0EeezgfvGMJ6KUA" name="Captured data in statements"/>
       <packagedElement xmi:type="uml:Abstraction" xmi:id="_ss-9AAo2EeeX3O0HMCA_eQ" name="" client="_yGls4AfvEeezgfvGMJ6KUA">
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_EEGOoAccEee76YHiT40GwA"/>
       </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_qAk5sAr9Eee_u5nO06K3NQ" name="" client="_yGls4AfvEeezgfvGMJ6KUA">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_r1dpwAcCEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_NtJY8AsAEee_u5nO06K3NQ" name="Instruction location"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_SY8ZsAsAEee_u5nO06K3NQ" name="" client="_NtJY8AsAEee_u5nO06K3NQ">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_G2H-QAcEEee76YHiT40GwA"/>
+      </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_rhxcMAo4EeeX3O0HMCA_eQ" name="Reliability">
       <packagedElement xmi:type="uml:Package" xmi:id="_nz4YsAo5EeeX3O0HMCA_eQ" name="User input checks">
         <packagedElement xmi:type="uml:Class" xmi:id="_4JnRAAo5EeeX3O0HMCA_eQ" name="Results representation check"/>
-        <packagedElement xmi:type="uml:Abstraction" xmi:id="_dFH6gAo6EeeX3O0HMCA_eQ" name="" client="_4JnRAAo5EeeX3O0HMCA_eQ">
+        <packagedElement xmi:type="uml:Abstraction" xmi:id="_oij2QAp-EeesUIF1hL4v1g" name="" client="_4JnRAAo5EeeX3O0HMCA_eQ">
           <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_-Q7yoAcaEee76YHiT40GwA"/>
         </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_GiorUAsGEee_u5nO06K3NQ" name="Output expansion" visibility="public">
+      <packagedElement xmi:type="uml:Class" xmi:id="_orxS0AsREee_u5nO06K3NQ" name="Data source reading order"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_s-XJYAsREee_u5nO06K3NQ" name="" client="_orxS0AsREee_u5nO06K3NQ">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_M6kNIAcpEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_KfFcUAsSEee_u5nO06K3NQ" name="Output writing order"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_oANX4AsSEee_u5nO06K3NQ" client="_KfFcUAsSEee_u5nO06K3NQ">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_M6kNIAcpEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_EO9lgAzoEeewduy55glU-Q" name="Results organisation">
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_Q4oRMAznEeewduy55glU-Q" name="Data's arrangement in columns"/>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_RRjukAznEeewduy55glU-Q" name="Data's arrangement in columns"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_c64ZwAz1Eeewduy55glU-Q" name="XSD validation"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_vyex4Az1Eeewduy55glU-Q" client="_c64ZwAz1Eeewduy55glU-Q">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_So0YIAcjEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_NoHk4Az2Eeewduy55glU-Q" name="" client="_RRjukAznEeewduy55glU-Q">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_S8zrIAcjEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_S9_dYAz2Eeewduy55glU-Q" client="_Q4oRMAznEeewduy55glU-Q">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_S8zrIAcjEee76YHiT40GwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_mdAv8Az4Eeewduy55glU-Q" name="" client="_EO9lgAzoEeewduy55glU-Q">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_00t2MAciEee76YHiT40GwA"/>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_AaPb8AcwEee76YHiT40GwA">
@@ -161,6 +199,23 @@ Said differently, it enables list iteration and xml generation loop.</body>
   <Requirements:Satisfy xmi:id="_xFayUAo1EeeX3O0HMCA_eQ" base_Abstraction="_xDijAAo1EeeX3O0HMCA_eQ"/>
   <Requirements:Satisfy xmi:id="_st6KEAo2EeeX3O0HMCA_eQ" base_Abstraction="_ss-9AAo2EeeX3O0HMCA_eQ"/>
   <Requirements:Satisfy xmi:id="__YpVcAo3EeeX3O0HMCA_eQ" base_Abstraction="__XwkoAo3EeeX3O0HMCA_eQ"/>
-  <Requirements:Requirement xmi:id="_4KCHwAo5EeeX3O0HMCA_eQ" text="Check if data to insert in output is representable by a character string." id="REQ-XGN-SS-CHK-1" base_Class="_4JnRAAo5EeeX3O0HMCA_eQ"/>
-  <Requirements:Satisfy xmi:id="_dFnpwAo6EeeX3O0HMCA_eQ" base_Abstraction="_dFH6gAo6EeeX3O0HMCA_eQ"/>
+  <Requirements:Requirement xmi:id="_4KCHwAo5EeeX3O0HMCA_eQ" text="Check if data to insert in output is representable by a character string." id="REQ-XGN-SS-CHK-UIN-1" base_Class="_4JnRAAo5EeeX3O0HMCA_eQ"/>
+  <Requirements:Satisfy xmi:id="_ok7NwAp-EeesUIF1hL4v1g" base_Abstraction="_oij2QAp-EeesUIF1hL4v1g"/>
+  <Requirements:Satisfy xmi:id="_qB4hQAr9Eee_u5nO06K3NQ" base_Abstraction="_qAk5sAr9Eee_u5nO06K3NQ"/>
+  <Requirements:Requirement xmi:id="_NvmQAAsAEee_u5nO06K3NQ" text="Generation statements are inserted in process instructions blocks (&lt;? ... >) conforming to the xml standard." id="REQ-XGN-SS-STA-1" base_Class="_NtJY8AsAEee_u5nO06K3NQ"/>
+  <Requirements:Satisfy xmi:id="_SaeqwAsAEee_u5nO06K3NQ" base_Abstraction="_SY8ZsAsAEee_u5nO06K3NQ"/>
+  <Requirements:Requirement xmi:id="_ZayZ4AsCEee_u5nO06K3NQ" text="Data sources are EMF resources." id="REQ-XGN-SS-CAP-5" base_Class="_ZZFJsAsCEee_u5nO06K3NQ"/>
+  <Requirements:Satisfy xmi:id="_cJKEoAsCEee_u5nO06K3NQ" base_Abstraction="_cG4MsAsCEee_u5nO06K3NQ"/>
+  <Requirements:Requirement xmi:id="_oslyMAsREee_u5nO06K3NQ" text="Data sources are read forward from the beginning of the data source." id="REQ-XGN-SS-OEX-1" base_Class="_orxS0AsREee_u5nO06K3NQ"/>
+  <Requirements:Satisfy xmi:id="_s_cugAsREee_u5nO06K3NQ" base_Abstraction="_s-XJYAsREee_u5nO06K3NQ"/>
+  <Requirements:Requirement xmi:id="_KfuVgAsSEee_u5nO06K3NQ" text="Writing is in the append mode." id="REQ-XGN-SS-OEX-2" base_Class="_KfFcUAsSEee_u5nO06K3NQ"/>
+  <Requirements:Satisfy xmi:id="_oBSV8AsSEee_u5nO06K3NQ" base_Abstraction="_oANX4AsSEee_u5nO06K3NQ"/>
+  <Requirements:Requirement xmi:id="_Q982EAznEeewduy55glU-Q" text="in rows if no column following or while next columns are empty in the template in the limit of the number of columns." id="REQ-XGN-SS-OEX-3.1" base_Class="_Q4oRMAznEeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_RTtqsAznEeewduy55glU-Q" text="A new row is created to insert next data-elements if its insertion should override a cell already filled with data or overshots the number of columns." id="REQ-XGN-SS-OEX-3.2" base_Class="_RRjukAznEeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_EQrcwAzoEeewduy55glU-Q" text="Output data elements are laid out as follows :" id="REQ-XGN-SS-OEX-3" base_Class="_EO9lgAzoEeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_c8BpQAz1Eeewduy55glU-Q" text="An xsd validation is performed after expansion process." id="REQ-XGN-SS-OEX-4" base_Class="_c64ZwAz1Eeewduy55glU-Q"/>
+  <Requirements:Satisfy xmi:id="_v0SIsAz1Eeewduy55glU-Q" base_Abstraction="_vyex4Az1Eeewduy55glU-Q"/>
+  <Requirements:Satisfy xmi:id="_Npy_4Az2Eeewduy55glU-Q" base_Abstraction="_NoHk4Az2Eeewduy55glU-Q"/>
+  <Requirements:Satisfy xmi:id="_S_lY0Az2Eeewduy55glU-Q" base_Abstraction="_S9_dYAz2Eeewduy55glU-Q"/>
+  <Requirements:Satisfy xmi:id="_meq80Az4Eeewduy55glU-Q" base_Abstraction="_mdAv8Az4Eeewduy55glU-Q"/>
 </xmi:XMI>

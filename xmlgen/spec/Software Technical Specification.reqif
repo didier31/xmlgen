@@ -184,7 +184,7 @@
             <SPEC-OBJECT-TYPE-REF>_lNkS-gOEEeeqJfFzwGdy-g</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_E5qNEAOMEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-08T00:18:39.131+01:00">
+        <SPEC-OBJECT IDENTIFIER="_E5qNEAOMEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-17T14:16:27.915+01:00">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-4">
               <DEFINITION>
@@ -340,34 +340,6 @@
             <SPEC-OBJECT-TYPE-REF>_lNkS-gOEEeeqJfFzwGdy-g</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="_cGZd4Ao5Eeei76gS-crxug" LAST-CHANGE="2017-03-16T12:12:18.648+01:00">
-          <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="REQ-9">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>_lNkS-wOEEeeqJfFzwGdy-g</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-            <ATTRIBUTE-VALUE-XHTML>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-XHTML-REF>_lNkS_QOEEeeqJfFzwGdy-g</ATTRIBUTE-DEFINITION-XHTML-REF>
-              </DEFINITION>
-              <THE-VALUE>
-                <xhtml:div><xhtml:p style="">Check data to insert are representable.</xhtml:p></xhtml:div>
-              </THE-VALUE>
-            </ATTRIBUTE-VALUE-XHTML>
-            <ATTRIBUTE-VALUE-ENUMERATION>
-              <VALUES>
-                <ENUM-VALUE-REF>_98VggAOJEeeqJfFzwGdy-g</ENUM-VALUE-REF>
-              </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>_aIsokAOKEeeqJfFzwGdy-g</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-          </VALUES>
-          <TYPE>
-            <SPEC-OBJECT-TYPE-REF>_lNkS-gOEEeeqJfFzwGdy-g</SPEC-OBJECT-TYPE-REF>
-          </TYPE>
-        </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPECIFICATIONS>
         <SPECIFICATION IDENTIFIER="_lNkTCwOEEeeqJfFzwGdy-g" LAST-CHANGE="2017-03-07T23:22:42.580+01:00" LONG-NAME="Requirements Document">
@@ -429,11 +401,6 @@
                     <SPEC-OBJECT-REF>_KQavAAOPEeeqJfFzwGdy-g</SPEC-OBJECT-REF>
                   </OBJECT>
                 </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY IDENTIFIER="_cHtFcAo5Eeei76gS-crxug" LAST-CHANGE="2017-03-16T12:12:18.648+01:00">
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>_cGZd4Ao5Eeei76gS-crxug</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
               </CHILDREN>
             </SPEC-HIERARCHY>
           </CHILDREN>
@@ -448,7 +415,7 @@
           <configuration:ProrSpecViewConfiguration specification="_lNkTCwOEEeeqJfFzwGdy-g">
             <configuration:columns>
               <configuration:Column label="ReqIF.ForeignID" width="100"/>
-              <configuration:UnifiedColumn label="Main" width="432"/>
+              <configuration:UnifiedColumn label="Main" width="410"/>
               <configuration:Column label="Consequence" width="87"/>
               <configuration:Column label="Justification" width="395"/>
             </configuration:columns>
