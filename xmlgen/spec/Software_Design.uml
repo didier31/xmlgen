@@ -75,6 +75,11 @@ Said differently, it enables list iteration and xml generation loop.</body>
           <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_-Q7yoAcaEee76YHiT40GwA"/>
         </packagedElement>
       </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_G1IRUAz6Eeewduy55glU-Q" name="Readable data source check"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_VrIcQAz6Eeewduy55glU-Q" name="Xml-schema check"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_pTsXQAz6Eeewduy55glU-Q" name="Syntactic correctness of the statements"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_3ZVcQAz6Eeewduy55glU-Q" name="Check xml template correctness"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_v2KwUAz7Eeewduy55glU-Q" name="Output is writable"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_GiorUAsGEee_u5nO06K3NQ" name="Output expansion" visibility="public">
       <packagedElement xmi:type="uml:Class" xmi:id="_orxS0AsREee_u5nO06K3NQ" name="Data source reading order"/>
@@ -218,4 +223,9 @@ Said differently, it enables list iteration and xml generation loop.</body>
   <Requirements:Satisfy xmi:id="_Npy_4Az2Eeewduy55glU-Q" base_Abstraction="_NoHk4Az2Eeewduy55glU-Q"/>
   <Requirements:Satisfy xmi:id="_S_lY0Az2Eeewduy55glU-Q" base_Abstraction="_S9_dYAz2Eeewduy55glU-Q"/>
   <Requirements:Satisfy xmi:id="_meq80Az4Eeewduy55glU-Q" base_Abstraction="_mdAv8Az4Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_G1rq8Az6Eeewduy55glU-Q" text="Check that each data source is readable." id="REQ-XGN-SS-CHK-UIN-2" base_Class="_G1IRUAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_VroLgAz6Eeewduy55glU-Q" text="Check that an xml-schema is associated with xml template." id="REQ-XGN-SS-CHK-UIN-3" base_Class="_VrIcQAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_pURmEAz6Eeewduy55glU-Q" text="Check syntactic correctness of the statements handling data sources." id="REQ-XGN-SS-CHK-UIN-5" base_Class="_pTsXQAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_3Z_jkAz6Eeewduy55glU-Q" text="Check  the xml template's correctness against its xml-schema." id="REQ-XGN-SS-CHK-UIN-4" base_Class="_3ZVcQAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_v22FwAz7Eeewduy55glU-Q" text="Check that output is writable." id="REQ-XGN-SS-CHK-UIN-6" base_Class="_v2KwUAz7Eeewduy55glU-Q"/>
 </xmi:XMI>
