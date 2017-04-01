@@ -71,15 +71,19 @@ Said differently, it enables list iteration and xml generation loop.</body>
     <packagedElement xmi:type="uml:Package" xmi:id="_rhxcMAo4EeeX3O0HMCA_eQ" name="Reliability">
       <packagedElement xmi:type="uml:Package" xmi:id="_nz4YsAo5EeeX3O0HMCA_eQ" name="User input checks">
         <packagedElement xmi:type="uml:Class" xmi:id="_4JnRAAo5EeeX3O0HMCA_eQ" name="Results representation check"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Brg2oA2_EeehkaCWP9onZA" name="Data source check"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_G1IRUAz6Eeewduy55glU-Q" name="Readable data source check"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_ja27kA2-EeehkaCWP9onZA" name="Data source corruption check"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_VrIcQAz6Eeewduy55glU-Q" name="Xml-schema check"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_pTsXQAz6Eeewduy55glU-Q" name="Syntactic correctness of the statements"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_3ZVcQAz6Eeewduy55glU-Q" name="Check xml template correctness"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_v2KwUAz7Eeewduy55glU-Q" name="Output is writable"/>
         <packagedElement xmi:type="uml:Abstraction" xmi:id="_oij2QAp-EeesUIF1hL4v1g" name="" client="_4JnRAAo5EeeX3O0HMCA_eQ">
           <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_-Q7yoAcaEee76YHiT40GwA"/>
         </packagedElement>
+        <packagedElement xmi:type="uml:Abstraction" xmi:id="_iyRKMA3BEeehkaCWP9onZA" client="_G1IRUAz6Eeewduy55glU-Q" supplier="_Brg2oA2_EeehkaCWP9onZA"/>
+        <packagedElement xmi:type="uml:Abstraction" xmi:id="_jhQ-MA3BEeehkaCWP9onZA" name="" client="_ja27kA2-EeehkaCWP9onZA" supplier="_Brg2oA2_EeehkaCWP9onZA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_G1IRUAz6Eeewduy55glU-Q" name="Readable data source check"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_VrIcQAz6Eeewduy55glU-Q" name="Xml-schema check"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_pTsXQAz6Eeewduy55glU-Q" name="Syntactic correctness of the statements"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_3ZVcQAz6Eeewduy55glU-Q" name="Check xml template correctness"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_v2KwUAz7Eeewduy55glU-Q" name="Output is writable"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_GiorUAsGEee_u5nO06K3NQ" name="Output expansion" visibility="public">
       <packagedElement xmi:type="uml:Class" xmi:id="_orxS0AsREee_u5nO06K3NQ" name="Data source reading order"/>
@@ -87,25 +91,21 @@ Said differently, it enables list iteration and xml generation loop.</body>
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_M6kNIAcpEee76YHiT40GwA"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_KfFcUAsSEee_u5nO06K3NQ" name="Output writing order"/>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_oANX4AsSEee_u5nO06K3NQ" client="_KfFcUAsSEee_u5nO06K3NQ">
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_oANX4AsSEee_u5nO06K3NQ" client="_GiorUAsGEee_u5nO06K3NQ">
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_M6kNIAcpEee76YHiT40GwA"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_EO9lgAzoEeewduy55glU-Q" name="Results organisation">
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_Q4oRMAznEeewduy55glU-Q" name="Data's arrangement in columns"/>
-        <nestedClassifier xmi:type="uml:Class" xmi:id="_RRjukAznEeewduy55glU-Q" name="Data's arrangement in columns"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_c64ZwAz1Eeewduy55glU-Q" name="XSD validation"/>
       <packagedElement xmi:type="uml:Abstraction" xmi:id="_vyex4Az1Eeewduy55glU-Q" client="_c64ZwAz1Eeewduy55glU-Q">
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_So0YIAcjEee76YHiT40GwA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_NoHk4Az2Eeewduy55glU-Q" name="" client="_RRjukAznEeewduy55glU-Q">
-        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_S8zrIAcjEee76YHiT40GwA"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_upGbYBVuEeeK7_P-_dlzxw" name="Output structure"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_59QhIBV3EeeK7_P-_dlzxw" name="" client="_GiorUAsGEee_u5nO06K3NQ">
+        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_F43Z4AcGEee76YHiT40GwA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_S9_dYAz2Eeewduy55glU-Q" client="_Q4oRMAznEeewduy55glU-Q">
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_RPHeEBV4EeeK7_P-_dlzxw" name="" client="_upGbYBVuEeeK7_P-_dlzxw" supplier="_UJVzQAdxEee76YHiT40GwA"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ioKNgBV4EeeK7_P-_dlzxw" name="Result insertion"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_LnUSoBV5EeeK7_P-_dlzxw" name="" client="_ioKNgBV4EeeK7_P-_dlzxw">
         <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_S8zrIAcjEee76YHiT40GwA"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_mdAv8Az4Eeewduy55glU-Q" name="" client="_EO9lgAzoEeewduy55glU-Q">
-        <supplier xmi:type="uml:Class" href="Functionnal_Specification.uml#_00t2MAciEee76YHiT40GwA"/>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_AaPb8AcwEee76YHiT40GwA">
@@ -190,9 +190,9 @@ Said differently, it enables list iteration and xml generation loop.</body>
   <Requirements:Satisfy xmi:id="_mvUi0AdkEee76YHiT40GwA" base_Abstraction="_muaj4AdkEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_VXV4cAdmEee76YHiT40GwA" text="A identifier references content of data source." id="REQ-XGN-SS-CAP-1" base_Class="_VW3XUAdmEee76YHiT40GwA"/>
   <Requirements:Satisfy xmi:id="_y7QM0AdnEee76YHiT40GwA" base_Abstraction="_y6nToAdnEee76YHiT40GwA"/>
-  <Requirements:Requirement xmi:id="_a4esIAduEee76YHiT40GwA" text="An identifier references a filtering expression." id="REQ-XGN-SS-CAP-2" base_Class="_a4HfwAduEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_a4esIAduEee76YHiT40GwA" text="An identifier references resulting data of a filtering expression." id="REQ-XGN-SS-CAP-2" base_Class="_a4HfwAduEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_1uBLMAduEee76YHiT40GwA" text="A filtering expresssion takes defined data source or captured data references as filtered targets." id="REQ-XGN-SS-CAP-3" base_Class="_1tpXwAduEee76YHiT40GwA"/>
-  <Requirements:Requirement xmi:id="_UJ5M4AdxEee76YHiT40GwA" text="The scope of a capture's definition is limited to the block just containing its xml process instruction block." id="REQ-XGN-SS-CAP-2.1" base_Class="_UJVzQAdxEee76YHiT40GwA"/>
+  <Requirements:Requirement xmi:id="_UJ5M4AdxEee76YHiT40GwA" text="The scope of a capture's definition is limited to the blocks of the next sibling markups." id="REQ-XGN-SS-CAP-2.1" base_Class="_UJVzQAdxEee76YHiT40GwA"/>
   <Requirements:Satisfy xmi:id="_8pWy8AftEeezgfvGMJ6KUA" base_Abstraction="_8n4MQAftEeezgfvGMJ6KUA"/>
   <Requirements:Requirement xmi:id="_F78w8Af0EeezgfvGMJ6KUA" text="Captured data are used in statements as actual arguments." id="REQ-XGN-SS-STA-2" base_Class="_F6CscAf0EeezgfvGMJ6KUA"/>
   <Requirements:Satisfy xmi:id="_ptOUkAf3EeezgfvGMJ6KUA" base_Abstraction="_prz_UAf3EeezgfvGMJ6KUA"/>
@@ -215,17 +215,20 @@ Said differently, it enables list iteration and xml generation loop.</body>
   <Requirements:Satisfy xmi:id="_s_cugAsREee_u5nO06K3NQ" base_Abstraction="_s-XJYAsREee_u5nO06K3NQ"/>
   <Requirements:Requirement xmi:id="_KfuVgAsSEee_u5nO06K3NQ" text="Writing is in the append mode." id="REQ-XGN-SS-OEX-2" base_Class="_KfFcUAsSEee_u5nO06K3NQ"/>
   <Requirements:Satisfy xmi:id="_oBSV8AsSEee_u5nO06K3NQ" base_Abstraction="_oANX4AsSEee_u5nO06K3NQ"/>
-  <Requirements:Requirement xmi:id="_Q982EAznEeewduy55glU-Q" text="in rows if no column following or while next columns are empty in the template in the limit of the number of columns." id="REQ-XGN-SS-OEX-3.1" base_Class="_Q4oRMAznEeewduy55glU-Q"/>
-  <Requirements:Requirement xmi:id="_RTtqsAznEeewduy55glU-Q" text="A new row is created to insert next data-elements if its insertion should override a cell already filled with data or overshots the number of columns." id="REQ-XGN-SS-OEX-3.2" base_Class="_RRjukAznEeewduy55glU-Q"/>
-  <Requirements:Requirement xmi:id="_EQrcwAzoEeewduy55glU-Q" text="Output data elements are laid out as follows :" id="REQ-XGN-SS-OEX-3" base_Class="_EO9lgAzoEeewduy55glU-Q"/>
   <Requirements:Requirement xmi:id="_c8BpQAz1Eeewduy55glU-Q" text="An xsd validation is performed after expansion process." id="REQ-XGN-SS-OEX-4" base_Class="_c64ZwAz1Eeewduy55glU-Q"/>
   <Requirements:Satisfy xmi:id="_v0SIsAz1Eeewduy55glU-Q" base_Abstraction="_vyex4Az1Eeewduy55glU-Q"/>
-  <Requirements:Satisfy xmi:id="_Npy_4Az2Eeewduy55glU-Q" base_Abstraction="_NoHk4Az2Eeewduy55glU-Q"/>
-  <Requirements:Satisfy xmi:id="_S_lY0Az2Eeewduy55glU-Q" base_Abstraction="_S9_dYAz2Eeewduy55glU-Q"/>
-  <Requirements:Satisfy xmi:id="_meq80Az4Eeewduy55glU-Q" base_Abstraction="_mdAv8Az4Eeewduy55glU-Q"/>
-  <Requirements:Requirement xmi:id="_G1rq8Az6Eeewduy55glU-Q" text="Check that each data source is readable." id="REQ-XGN-SS-CHK-UIN-2" base_Class="_G1IRUAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_G1rq8Az6Eeewduy55glU-Q" text="Check that each data source is readable." id="REQ-XGN-SS-CHK-UIN-2.1" base_Class="_G1IRUAz6Eeewduy55glU-Q"/>
   <Requirements:Requirement xmi:id="_VroLgAz6Eeewduy55glU-Q" text="Check that an xml-schema is associated with xml template." id="REQ-XGN-SS-CHK-UIN-3" base_Class="_VrIcQAz6Eeewduy55glU-Q"/>
-  <Requirements:Requirement xmi:id="_pURmEAz6Eeewduy55glU-Q" text="Check syntactic correctness of the statements handling data sources." id="REQ-XGN-SS-CHK-UIN-5" base_Class="_pTsXQAz6Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_pURmEAz6Eeewduy55glU-Q" text="Check syntactic ans semantic correctness of the statements handling data sources." id="REQ-XGN-SS-CHK-UIN-5" base_Class="_pTsXQAz6Eeewduy55glU-Q"/>
   <Requirements:Requirement xmi:id="_3Z_jkAz6Eeewduy55glU-Q" text="Check  the xml template's correctness against its xml-schema." id="REQ-XGN-SS-CHK-UIN-4" base_Class="_3ZVcQAz6Eeewduy55glU-Q"/>
   <Requirements:Requirement xmi:id="_v22FwAz7Eeewduy55glU-Q" text="Check that output is writable." id="REQ-XGN-SS-CHK-UIN-6" base_Class="_v2KwUAz7Eeewduy55glU-Q"/>
+  <Requirements:Requirement xmi:id="_jcmA8A2-EeehkaCWP9onZA" text="Check data source correctness." id="REQ-XGN-SS-CHK-UIN-2.2" base_Class="_ja27kA2-EeehkaCWP9onZA"/>
+  <Requirements:Requirement xmi:id="_vdtM8A2_EeehkaCWP9onZA" text="Check data source lisibility." id="REQ-XGN-SS-CHK-UIN-2" base_Class="_Brg2oA2_EeehkaCWP9onZA"/>
+  <Requirements:DeriveReqt xmi:id="_i0RVUA3BEeehkaCWP9onZA" base_Abstraction="_iyRKMA3BEeehkaCWP9onZA"/>
+  <Requirements:DeriveReqt xmi:id="_ji7yIA3BEeehkaCWP9onZA" base_Abstraction="_jhQ-MA3BEeehkaCWP9onZA"/>
+  <Requirements:Requirement xmi:id="_uqwoQBVuEeeK7_P-_dlzxw" text="Each occurence of a captured data generates the appending of the scoped xml-template blocks if statements for expansion occured inside." id="REQ-XGN-SS-OEX-3" base_Class="_upGbYBVuEeeK7_P-_dlzxw"/>
+  <Requirements:DeriveReqt xmi:id="_5-5f4BV3EeeK7_P-_dlzxw" base_Abstraction="_59QhIBV3EeeK7_P-_dlzxw"/>
+  <Requirements:DeriveReqt xmi:id="_RQc60BV4EeeK7_P-_dlzxw" base_Abstraction="_RPHeEBV4EeeK7_P-_dlzxw"/>
+  <Requirements:Requirement xmi:id="_ipJsABV4EeeK7_P-_dlzxw" text="Results of a single invocation of a generation statement replace it at the same structural point according the xsd meta-structure." id="REQ-XGN-SS-OEX-5" base_Class="_ioKNgBV4EeeK7_P-_dlzxw"/>
+  <Requirements:Satisfy xmi:id="_LovO8BV5EeeK7_P-_dlzxw" base_Abstraction="_LnUSoBV5EeeK7_P-_dlzxw"/>
 </xmi:XMI>

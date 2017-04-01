@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="5.1" xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xila="http://www.w3.org/2001/XInclude/local-attributes"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:trans="http://docbook.org/ns/transclusion"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:m="http://www.w3.org/1998/Math/MathML"
+         xmlns:html="http://www.w3.org/1999/xhtml"
+         xmlns:db="http://docbook.org/ns/docbook">
+  <title>Syntax and semantics</title>
+
+  <para>Syntax of the process instructions is given by the following grammar
+  :</para>
+
+  <programlisting>inputPI -&gt; (captures | content | end)
+
+captures -&gt; (label ':')? capture (',' capture)*
+
+capture -&gt; dataID '=' expression
+
+dataID -&gt; Ident
+
+content -&gt; expression
+
+end -&gt; END labels?
+
+labels -&gt; label (',' label)*
+
+label -&gt; Ident
+
+END -&gt; [Ee][nN][Dd]
+</programlisting>
+
+  <para>A process instruction, processed by the software could be either
+  :</para>
+
+  <itemizedlist>
+    <listitem>
+      <para>a series of data source capture definition (: 'captures'
+      rule)</para>
+    </listitem>
+
+    <listitem>
+      <para>a content to insert given by an expression (: 'content'
+      rule)</para>
+    </listitem>
+
+    <listitem>
+      <para>the end of series of definition and expansion (: 'end'
+      rule)</para>
+    </listitem>
+  </itemizedlist>
+
+  <section>
+    <title>captures (: 'captures' rule)</title>
+
+    <para>Captures are expressions related to references, retrieving data from
+    data sources directly or indirectly from other captures.</para>
+
+    <para>They can preceded by a label to identify the series when closing
+    their scope.</para>
+
+    <para>It opens a related expansive xml block's series.</para>
+
+    <para>Expressions of a same series should have a same cardinality at the
+    same time.</para>
+  </section>
+
+  <section>
+    <title>content (: 'content' rule)</title>
+
+    <para>Content is an expression whom results are inserted at this point and
+    consequently trigger xml output's expansion.</para>
+  </section>
+
+  <section>
+    <title>end of expansive blocks (: 'end' rule)</title>
+
+    <para>This instruction closes expansive xml blocks and related data
+    definitions of a same xml level.</para>
+
+    <para>If no label is given, it closes the last captures series,
+    defined.</para>
+
+    <para>If labels are given, it closes all between labeled captures series,
+    quoted.</para>
+  </section>
+
+  <section>
+    <title>expression (: 'expression' rule)</title>
+
+    <para>Expression is an Acceleo Query Language expression.</para>
+  </section>
+</section>

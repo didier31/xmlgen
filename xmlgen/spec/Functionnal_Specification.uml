@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ModelElements="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements" xmlns:Requirements="http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ModelElements="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements" xmlns:Requirements="http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/0.7.0/SysML/ModelElements http://www.eclipse.org/papyrus/0.7.0/SysML#//modelelements http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements">
   <uml:Package xmi:id="_-6nQkAZQEee76YHiT40GwA" name="Functionnal Specification" URI="">
     <packagedElement xmi:type="uml:Package" xmi:id="_zE-p4AZREee76YHiT40GwA" name="Generation processing">
       <ownedComment xmi:type="uml:Comment" xmi:id="_jB5QcAcEEee76YHiT40GwA" annotatedElement="_zE-p4AZREee76YHiT40GwA">
@@ -53,14 +53,11 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_tPJL8AciEee76YHiT40GwA" name="Output expansion">
-      <packagedElement xmi:type="uml:Class" xmi:id="_00t2MAciEee76YHiT40GwA" name="Results organisation"/>
       <packagedElement xmi:type="uml:Abstraction" xmi:id="_0Pc7EAckEee76YHiT40GwA" name="" client="_tPJL8AciEee76YHiT40GwA" supplier="_tPJL8AciEee76YHiT40GwA"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_M6kNIAcpEee76YHiT40GwA" name="Next insertions"/>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_KQS4AAz3Eeewduy55glU-Q" client="_So0YIAcjEee76YHiT40GwA" supplier="_00t2MAciEee76YHiT40GwA"/>
-      <packagedElement xmi:type="uml:Abstraction" xmi:id="_53-wUAz3Eeewduy55glU-Q" client="_S8zrIAcjEee76YHiT40GwA" supplier="_00t2MAciEee76YHiT40GwA"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_S8zrIAcjEee76YHiT40GwA" name="Result insertion"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_So0YIAcjEee76YHiT40GwA" name="Structure"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_S8zrIAcjEee76YHiT40GwA" name="Result insertion"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_So0YIAcjEee76YHiT40GwA" name="Structure"/>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_XPDPYAZSEee76YHiT40GwA">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_XPDPYQZSEee76YHiT40GwA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#/"/>
@@ -165,7 +162,6 @@
   <Requirements:Requirement xmi:id="_jglVkAcaEee76YHiT40GwA" text="Statements are expressed in a turing-complete language." id="REQ-XGN-FS-STA-1" base_Class="_jgTBsAcaEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_-ROtkAcaEee76YHiT40GwA" text="Statements return data to insert provided with a character string representation." id="REQ-XGN-FS-STA-3" base_Class="_-Q7yoAcaEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_EEi6kAccEee76YHiT40GwA" text="Captured data are used in statements as actual arguments." id="REQ-XGN-FS-STA-2" base_Class="_EEGOoAccEee76YHiT40GwA"/>
-  <Requirements:Requirement xmi:id="_01CmUAciEee76YHiT40GwA" text="The expansion process deduces the expected data organisation in the output file according the result's structure." id="REQ-XGN-FS-EXP-1" base_Class="_00t2MAciEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_SpHTEAcjEee76YHiT40GwA" text="The process conforms to the xsd structure." id="REQ-XGN-FS-EXP-1.1" base_Class="_So0YIAcjEee76YHiT40GwA"/>
   <Requirements:Requirement xmi:id="_S9IbQAcjEee76YHiT40GwA" text="Results of a single invocation of a generation statement replace it at the same structural point according the xsd meta-structure." id="REQ-XGN-FS-EXP-1.2" base_Class="_S8zrIAcjEee76YHiT40GwA"/>
   <Requirements:Satisfy xmi:id="_0QkVYAckEee76YHiT40GwA" base_Abstraction="_0Pc7EAckEee76YHiT40GwA"/>
@@ -177,6 +173,4 @@
   <Requirements:Requirement xmi:id="_avXHAAdbEee76YHiT40GwA" text="An arbitrary number of data sources gives all data requested by the statements." id="REQ-XGN-FS-CAP-3" base_Class="_auzGUAdbEee76YHiT40GwA"/>
   <Requirements:Satisfy xmi:id="_0gsXEAdbEee76YHiT40GwA" base_Abstraction="_0fvU0AdbEee76YHiT40GwA"/>
   <ModelElements:Rationale xmi:id="_UJp50AjFEeejaZk9qAqYAw" base_Comment="_UJKxoAjFEeejaZk9qAqYAw"/>
-  <standard:Refine xmi:id="_KQsgoAz3Eeewduy55glU-Q" base_Abstraction="_KQS4AAz3Eeewduy55glU-Q"/>
-  <standard:Refine xmi:id="_53_-cAz3Eeewduy55glU-Q" base_Abstraction="_53-wUAz3Eeewduy55glU-Q"/>
 </xmi:XMI>
