@@ -20,9 +20,7 @@ grammar Query;
  * 
  * Contributors:
  *     Obeo - initial API and implementation
- *******************************************************************************/
-package org.eclipse.acceleo.query.parser;
-  
+ *******************************************************************************/  
 }
 
 entry : expression EOF

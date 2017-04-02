@@ -1,7 +1,7 @@
 grammar PI;
 
 @header {
-package org.xmlgen.parser.pi;  
+package org.xmlgen.parser.pi;
 }
 
 import Query;

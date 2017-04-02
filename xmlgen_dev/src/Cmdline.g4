@@ -1,15 +1,17 @@
 grammar Cmdline;
 
 @header {
-package org.xmlgen.parser.cmdline;  
+package org.xmlgen.parser.cmdline;
 }
 
 import Query;
 
-cmdline : cmd+ EOF
+WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+
+cmdline : cmd* EOF
 ;
 
-cmd : (dataSource | template | schema | output) 
+cmd : dataSource | template | schema | output
 ;
 
 dataSource : Ident '=' Filename
@@ -33,7 +35,8 @@ String : [^\\'] (Escape|.)*? [^\\']
 fragment Escape : '\\\\' | '\\\''
 ;
 
-Ident : (Letter | '_') (Letter | [0-9] | '_')*
+// Rigourously the same as Acceleo Query Language
+Ident : (Letter | '_') (Letter | [0-9] | '_')* 
 ;
 fragment Letter : [a-zA-Z]
 ;
