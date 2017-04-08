@@ -13,14 +13,17 @@ import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
+import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
+
+import java.io.File;
 }
 
 @parser::members 
 { 
-	final private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.DataSource, Message.Duplicate_Reference);
+	final private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Duplicate_Reference);
 }
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
@@ -36,21 +39,22 @@ dataSource : id=Ident '=' filename=Filename {
 	                                           FrameStack frameStack = Context.getInstance().getFrameStack();
 	                                           Frame topFrame = frameStack.peek();
 	                                           if (topFrame.get($id.text) != null)
-	                                              {
-	                                              	  Notifications notifications = Notifications.getInstance(); 
-	                                              	  Artefact artefact = new Artefact($id.text);	                                              	  
-	                                              	  notifications.add(new ContextualNotification(duplicateDataSourceReference, artefact)); 
-	                                              } 
+	                                           {
+	                                              Notifications notifications = Notifications.getInstance(); 
+	                                              LocationImpl location = new LocationImpl(new Artefact($id.text), $id.index, $id.pos, $id.line);	  
+	                                              ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
+	                                              notifications.add(contextNotification); 
+	                                           } 
 	                                           else
-	                                              {
-	                                                  topFrame.put($id.text, filename);
-	                                              }
+	                                           {
+	                                              topFrame.put($id.text, new File(filename));
+	                                           }
                                             }
 ;
 
 output : '--output' filename=Filename       {
-		                                        String filename = $filename.text.substring(1, $filename.text.length()-1);
-		                                        Context.getInstance().setOutput(filename);
+		                                       String filename = $filename.text.substring(1, $filename.text.length()-1);
+		                                       Context.getInstance().setOutput(filename);
                                             }
 ;
 

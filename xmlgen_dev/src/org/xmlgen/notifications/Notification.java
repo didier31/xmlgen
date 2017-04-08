@@ -1,5 +1,7 @@
 package org.xmlgen.notifications;
 
+import org.xmlgen.notifications.Notification.Message;
+
 public class Notification 
 {
 	public enum Module  
@@ -57,9 +59,10 @@ public class Notification
 	{ 
 		public static final Message Read_Denied = new Message("read denied");
 		public static final Message Not_Found = new Message("not found");
-		public static final Message File_Missing = new Message("file missing");
+		public static final Message Argument_Missing = new Message("argument missing");
 		public static final Message Write_Denied = new Message("write denied");
 		public static final Message Duplicate_Reference = new Message("duplicate reference");
+		public static final Message IsDirectory = new Message("is a directory");;
 		
 		public String toString()
 		{
@@ -72,8 +75,7 @@ public class Notification
 		}		
 		
 		private String string;
-		
-		};
+	};
 
     public Notification(Module module, Gravity gravity, Subject subject, Message message) 
 	{

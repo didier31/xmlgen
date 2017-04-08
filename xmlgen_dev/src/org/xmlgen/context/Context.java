@@ -1,6 +1,7 @@
 package org.xmlgen.context;
 
 import java.io.File;
+import java.util.Set;
 
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
@@ -14,6 +15,11 @@ import org.xmlgen.notifications.Notifications;
 public class Context 
 {
 
+static public void clear() 
+{
+	instance = new Context();
+}	
+	
 public static Context getInstance()
 {
 	return instance;
@@ -82,7 +88,7 @@ protected void checkTemplate(Notifications notifications)
 	}
 	else
 	{
-		if (!template.exists())
+		if (!template.isFile())
 		{
 			notifications.add(templateNotFound);
 		}
@@ -101,7 +107,7 @@ protected void checkSchema(Notifications notifications)
 	File schema = getSchema();
 	if (schema != null)
 	{
-		if (!schema.exists())
+		if (!schema.isFile())
 		{
 			notifications.add(schemaNotFound);
 		}
@@ -125,15 +131,23 @@ protected void checkOutput(Notifications notifications)
 	}
 	else
 	{
-		if (!output.exists())
+		File outputDir = output.getParentFile();
+		if (outputDir != null && !outputDir.isDirectory())
 		{
 			notifications.add(outputNotFound);
 		}
 		else
 		{
-			if (!output.canWrite())
+			if (output.isDirectory())
 			{
-				notifications.add(outputNotWritable);
+				notifications.add(outputIsDirectory);
+			}
+			else
+			{
+				if (!outputDir.canWrite())
+				{
+					notifications.add(outputNotWritable);
+				}
 			}
 		}	
 	}
@@ -143,14 +157,21 @@ protected void checkDataSources(Notifications notifications)
 {
 	FrameStack frameStack = getFrameStack();
 	
-	for (String key : frameStack.keySet())
+	Set<String> dataSourcesStr = frameStack.keySet(); 
+	
+	if (dataSourcesStr.isEmpty())
+	{		
+		notifications.add(dataSourceMissing);
+	}
+			
+	for (String dataSourceStr : dataSourcesStr)
 	{
-		Object object = frameStack.get(key);
+		Object object = frameStack.get(dataSourceStr);
 		if (object instanceof File)
 		{
 			File dataSource = (File) object;
 			
-			if (!dataSource.exists())
+			if (!dataSource.isFile())
 			{
 				ContextualNotification _dataSourceNotFound = new ContextualNotification(dataSourceNotFound, 
 						                                                                new Artefact(dataSource.getName()));
@@ -177,17 +198,20 @@ static private Context instance = new Context();
 private File xmlTemplate = null, output = null, schema = null;
 private FrameStack frameStack = new FrameStack("");
 
-final private Notification templateMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.File_Missing);
+final private Notification templateMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Argument_Missing);
 final private Notification templateNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Not_Found);
 final private Notification templateNotReadable =  new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Read_Denied);
 
 final private Notification schemaNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Schema, Message.Not_Found);
 final private Notification schemaNotReadable =  new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Schema, Message.Read_Denied);
 
-final private Notification outputMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.File_Missing);
+final private Notification outputMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Argument_Missing);
 final private Notification outputNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Not_Found);
+final private Notification outputIsDirectory = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.IsDirectory);
 final private Notification outputNotWritable =  new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Write_Denied);
 
+final private Notification dataSourceMissing = new Notification(Module.Parameters_check, Gravity.Warning, Subject.DataSource, Message.Argument_Missing);
 final private Notification dataSourceNotFound = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Not_Found);
 final private Notification dataSourceNotReadable =  new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Read_Denied);
+
 }
