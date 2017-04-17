@@ -23,9 +23,7 @@ dataID -&gt; Ident
 
 content -&gt; expression
 
-end -&gt; END labels?
-
-labels -&gt; label (',' label)*
+end -&gt; END label?
 
 label -&gt; Ident
 
@@ -80,11 +78,12 @@ END -&gt; [Ee][nN][Dd]
     <para>This instruction closes expansive xml blocks and related data
     definitions of a same xml level.</para>
 
-    <para>If no label is given, it closes the last captures series,
-    defined.</para>
+    <para>If no label is given, it closes the last captures series, defined.
+    It checks the related captures are anonymous. Else, it warns the label is
+    not used.</para>
 
-    <para>If labels are given, it closes all between labeled captures series,
-    quoted.</para>
+    <para>If a label are given, it checks if The last open capture series has
+    the same name.</para>
   </section>
 
   <section>
