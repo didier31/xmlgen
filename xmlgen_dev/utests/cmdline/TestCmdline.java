@@ -3,13 +3,17 @@ package cmdline;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.junit.Test;
 import org.xmlgen.context.Context;
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.cmdline.SmartCmdlineParser;
 
@@ -18,7 +22,7 @@ public class TestCmdline {
 	public String toString(Notifications notifications)
 	{
 		String string = "";
-		
+			
 		for (Notification notification : notifications)
 		{
 			String specific = "";
@@ -41,6 +45,16 @@ public class TestCmdline {
 			  + "|" + notification.getMessage()
 			  + "\n";
 		}
+
+	HashMap<Gravity, Integer> counts = notifications.getCounts();	
+		
+ 	for (Gravity g : Gravity.values())
+ 	{
+ 		string += g.toString() + ":" + counts.get(g) + "    ";
+ 	}
+	
+ 	string += "\n";
+ 	
 	return string;
 	}
 	
@@ -124,21 +138,17 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String dataSource3 = "'" + cdir + "data source3'";
-		String template = "'" + cdir + "_template'";
-		String schema = "'" + cdir + "schema'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
+		String schema = "'http://docbook.org/xml/5.0/xsd/docbook.xsd'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 
-				          "_dataSource2", "=", dataSource2, 
-				          "datasource3", "="+dataSource3,
-				          "--template", template,
-				          "--schema", schema,
-				          "--output", output };
+				            "--template", template,
+				            "--schema", schema,
+				            "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, dataSource3, template, schema);
+		run(vargs);
 	}
 	
 	@Test
@@ -146,37 +156,51 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String template = "'" + cdir + "_template'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 
-				          "_dataSource2", "=", dataSource2, 
-				          "--template", template,
-				          "--output", output };
+				            "--template", template,
+				            "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, template);
+		run(vargs);
 	}
+
+	@Test
+	public void nominal_1_3_with_schema_and_http_template() throws IOException
+	{
+		prepareRun();
+		
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
+		String schema = "'http://docbook.org/xml/5.0/xsd/docbook.xsd'";
+		String output = "'" + odir.getPath() + File.separator + "output'";
+		
+		String[] vargs = {"data_source1=", dataSource1, 
+				            "--template", template,
+				            "--schema", schema,
+				            "--output", output };
+		
+		run(vargs);
+	}
+
 	
 	@Test
 	public void error_2_1_duplicate_reference() throws IOException
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String template = "'" + cdir + "_template'";
-		String schema = "'" + cdir + "schema'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
-		String[] vargs = {"data_source=", dataSource1, 
-				          "data_source", "=", dataSource2, 
-				          "--template", template,
-				          "--schema", schema,
-				          "--output", output };
+		String[] vargs = {"data_source1=", dataSource1, 
+				            "data_source1=", dataSource1,
+				            "--template", template,
+				            "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, template, schema);
+		run(vargs);
 	}
 	
 	@Test
@@ -184,17 +208,15 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String schema = "'" + cdir + "schema'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String schema = "'http://docbook.org/xml/5.0/xsd/docbook.xsd'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
-		String[] vargs = {"data_source=", dataSource1, 
-				          "dataSource", "=", dataSource2, 
-				          "--schema", schema,
-				          "--output", output };
+		String[] vargs = {"data_source1=", dataSource1, 
+				            "--schema", schema,
+				            "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, schema);
+		run(vargs);
 	}	
 	
 	@Test
@@ -202,19 +224,14 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String dataSource3 = "'" + cdir + "data source3'";
-		String template = "'" + cdir + "_template'";
-		String schema = "'" + cdir + "schema'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 
-				          "_dataSource2", "=", dataSource2, 
-				          "datasource3", "=" + dataSource3,
-				          "--template", template,
-				          "--schema", schema };
+				            "--template", template 
+				           };
 		
-		run(vargs, dataSource1, dataSource2, dataSource3, schema, template);
+		run(vargs);
 	}	
 	
 	@Test
@@ -222,15 +239,17 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String template = "'" + cdir + "_template'";
-		String schema = "'" + cdir + "schema'";
+		String template = "'" + cdir + "docbook_template.xml'";
+		String schema = "'http://docbook.org/xml/5.0/xsd/docbook.xsd'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
-		String[] vargs = {"--template", template,
-				          "--schema", schema,
-				          "--output", output };
+		String[] vargs = {
+				            "--template", template,
+				            "--schema", schema,
+				            "--output", output 
+				           };
 		
-		run(vargs, schema, template);
+		run(vargs);
 	}
 	
 	@Test
@@ -238,21 +257,17 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String dataSource3 = "'" + cdir + "not found file'";
-		String template = "'" + cdir + "_template'";
-		String schema = "'" + cdir + "schema'";
+		String dataSource1 = "'" + cdir + "mispelledFile.uml'";
+		String template = "'" + cdir + "docbook_template.xml'";
+		String schema = "'http://docbook.org/xml/5.0/xsd/docbook.xsd'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 
-				          "_dataSource2", "=", dataSource2, 
-				          "datasource3", "=" + dataSource3,
-				          "--template", template,
-				          "--schema", schema,
-				          "--output", output };
+				            "--template", template,
+				            "--schema", schema,
+				            "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, schema, template);
+		run(vargs);
 	}
 	
 	@Test
@@ -309,21 +324,17 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "data source1'";
-		String dataSource2 = "'" + cdir + "data source2'";
-		String dataSource3 = "'" + cdir + "data source3'";
-		String template = "'" + cdir + "_template'";
+		String dataSource1 = "'" + cdir + "design.uml'";
+		String template = "'" + cdir + "fantasy_template'";
 		String schema = "'" + cdir + "schema'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 
-				          "_dataSource2", "=", dataSource2, 
-				          "datasource3", "="+dataSource3,
 				          "--template", template,
 				          "--schema", schema,
 				          "--output", output };
 		
-		run(vargs, dataSource1, dataSource2, dataSource3, schema);
+		run(vargs, schema);
 	}
 
 	@Test

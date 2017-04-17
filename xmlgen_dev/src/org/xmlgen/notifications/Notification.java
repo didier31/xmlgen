@@ -6,7 +6,7 @@ public class Notification
 {
 	public enum Module  
 	    { 
-		Parameters_check("Parameters check"), Parser("Parser"), Expansion("Expansion");
+		Parameters_check("Parameters check"), Parser("Parser"), Expansion("Expansion"), XML_Parser("XML Parser");
 		
 		private Module(String string)
 		{
@@ -40,7 +40,7 @@ public class Notification
 	
 	public enum Subject 
 	{ 
-		Template("Template"), Schema("Schema"), Output("Output"), DataSource("Data source"), Command_Line("CMD");
+		Template("Template"), Schema("Schema"), Output("Output"), DataSource("Data source"), Command_Line("CMD"), Configuration("Configuration");
 		
 		public String toString()
 		{
@@ -62,7 +62,9 @@ public class Notification
 		public static final Message Argument_Missing = new Message("argument missing");
 		public static final Message Write_Denied = new Message("write denied");
 		public static final Message Duplicate_Reference = new Message("duplicate reference");
-		public static final Message IsDirectory = new Message("is a directory");;
+		public static final Message IsDirectory = new Message("is a directory");
+		public static final Message URL_Syntax_Error = new Message("URL malformed");
+		public static final Message No_Resource_Factory = new Message("No resource factory registered");
 		
 		public String toString()
 		{

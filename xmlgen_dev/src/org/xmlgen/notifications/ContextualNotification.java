@@ -1,7 +1,5 @@
 package org.xmlgen.notifications;
 
-import javax.xml.stream.Location;
-
 public class ContextualNotification extends Notification 
 {
 private Artefact location;

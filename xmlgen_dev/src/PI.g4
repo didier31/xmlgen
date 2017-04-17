@@ -18,17 +18,26 @@ capture : dataID '=' expression
 dataID : Ident
 ;
 
-content : expression
+content : attributeContent | elementContent
 ;
 
-end: END labels?
-; 
+attributeContent : ATTRIBUTE attributeID expression
+;
 
-labels: label (',' label)*
+elementContent : expression
+;
+
+attributeID : Ident
+;
+
+end: END label? 
 ;
 
 label: Ident
 ;
 
 END: [Ee][nN][Dd]
+;
+
+ATTRIBUTE: [aA][tT][tT][rR]
 ;

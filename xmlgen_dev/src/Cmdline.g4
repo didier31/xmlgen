@@ -47,7 +47,7 @@ dataSource : id=Ident '=' filename=Filename {
 	                                           } 
 	                                           else
 	                                           {
-	                                              topFrame.put($id.text, new File(filename));
+	                                              topFrame.put($id.text, filename);
 	                                           }
                                             }
 ;

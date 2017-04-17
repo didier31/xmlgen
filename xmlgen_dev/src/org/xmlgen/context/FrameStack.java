@@ -5,16 +5,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 public class FrameStack implements Map<String, Object> 
 {	
 	Stack<Frame> stack = new Stack<Frame>();
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1675538724156829710L;
 	
 	public FrameStack(String frameName)
 	{		
