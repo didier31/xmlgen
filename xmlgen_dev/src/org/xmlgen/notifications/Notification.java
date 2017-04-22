@@ -1,7 +1,5 @@
 package org.xmlgen.notifications;
 
-import org.xmlgen.notifications.Notification.Message;
-
 public class Notification 
 {
 	public enum Module  

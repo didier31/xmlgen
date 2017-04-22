@@ -3,9 +3,7 @@
  */
 package org.xmlgen.parser.cmdline;
 
-import java.io.IOException;
-import java.io.StringReader;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -23,15 +21,7 @@ public class SmartCmdlineParser extends CmdlineParser
 		{
 			args += ' ' + arg;
 		}
-		StringReader sr = new StringReader(args);
-		ANTLRInputStream ucs = null;
-		try {
-			ucs = new ANTLRInputStream(sr);
-		} catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		CmdlineLexer lexer = new CmdlineLexer(ucs);
+		CmdlineLexer lexer = new CmdlineLexer(CharStreams.fromString(args));
 		lexer.removeErrorListener(ConsoleErrorListener.INSTANCE);
 		lexer.addErrorListener(new SyntaxErrorListener());
 		return new CommonTokenStream(lexer);

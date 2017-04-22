@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
+import org.eclipse.emf.ecore.EObject;
 import org.w3c.dom.ProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
@@ -29,25 +30,25 @@ public class CapturesInstruction extends ExpansionInstruction
 	{
 		super(pi);
 		datasourcesIDs = new Vector<String>(capturesInstruction.capture().size());
-		iterators = new Vector<Iterator<Object>>(capturesInstruction.capture().size());
+		iterators = new Vector<Iterator<EObject>>(capturesInstruction.capture().size());
 		
 		for (CaptureContext  capture : capturesInstruction.capture())
 		{
 			AstResult parsedQuery = parseQuery(capture.expression().getText());
-			Iterator<Object> iterator = null;
+			Iterator<EObject> iterator = null;
 			if (parsedQuery.getErrors().isEmpty())
 			{
 				String id = capture.dataID().getText();
 				if (!datasourcesIDs.contains(id))
 				{
-					Object result = eval(parsedQuery);
+					EObject result = eval(parsedQuery);
 					if (result instanceof Iterator)
 					{
-						iterator = (Iterator<Object>) result;										
+						iterator = (Iterator<EObject>) result;										
 					}
 					else
 					{
-						Vector<Object> results = new Vector<Object>(1);
+						Vector<EObject> results = new Vector<EObject>(1);
 						results.add(result);
 						iterator = results.iterator();
 					}					
@@ -69,20 +70,12 @@ public class CapturesInstruction extends ExpansionInstruction
 		}
 	}
 	
-	public CapturesInstruction(String dataSourceIds[], Iterator<Object> dataSourcesIterators[], CoreDocumentImpl ownerDoc)
+	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<EObject>> dataSourcesIterators, CoreDocumentImpl ownerDoc)
 	{
 		super(ownerDoc, piMarker, "");
-		assert(dataSourceIds.length == dataSourcesIterators.length);
-		datasourcesIDs = new Vector<String>(dataSourceIds.length);
-		for (String datasourceId : dataSourceIds)
-		{
-			datasourcesIDs.add(datasourceId);
-		}
-		
-		for (Iterator<Object> dataSourcesIterator : dataSourcesIterators)			
-		{
-			iterators.add(dataSourcesIterator);
-		}		
+		assert(dataSourceIDs.size() == dataSourcesIterators.size());
+		this.datasourcesIDs = dataSourceIDs;
+		this.iterators = dataSourcesIterators;
 	}
 	
 	protected void addToCurrentFrame(String id)
@@ -99,7 +92,7 @@ public class CapturesInstruction extends ExpansionInstruction
 		int i = 0;
 		for (String id : datasourcesIDs)
 		{
-			Iterator<Object> iterator = iterators.get(i); 
+			Iterator<EObject> iterator = iterators.get(i); 
 			if (iterator.hasNext())
 			{
 				Object object = iterators.get(i).next();
@@ -117,5 +110,5 @@ public class CapturesInstruction extends ExpansionInstruction
 	private static final long serialVersionUID = 5198212129556107335L;
 	
 	Vector<String> datasourcesIDs;
-	Vector<Iterator<Object>> iterators;
+	Vector<Iterator<EObject>> iterators;
 }

@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +20,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -29,10 +30,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -48,6 +51,8 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.template.dom.Factories;
 import org.xmlgen.template.dom.location.LocationAnnotator;
+import org.xmlgen.template.dom.specialization.CapturesInstruction;
+import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 
 public class Context 
 {
@@ -112,19 +117,17 @@ public String toString()
  * Check context
  */
 public void check()
-{
-	Notifications notifications = Notifications.getInstance();
-	
-	checkDataSources(notifications);
-	checkSchemaAndTemplate(notifications);
-	checkOutput(notifications);	
+{	
+	checkSchemaAndTemplate();
+	checkDataSources();
+	checkOutput();	
 }
 
-protected void checkSchemaAndTemplate(Notifications notifications)
+protected void checkSchemaAndTemplate()
 {
 	if (getSchema() != null)
 	{
-		checkSchema(notifications);
+		checkSchema();
 	}
 	
 	if (getXmlTemplate() == null)
@@ -133,21 +136,25 @@ protected void checkSchemaAndTemplate(Notifications notifications)
 		return;
 	}
 	
-	readTemplate(notifications);
-	if (schema != null && xmlTemplateDocument != null)
+	readTemplate();
+	if (schema != null && xmlTemplateDocument != null && xmlTemplateDocument.getFirstChild() != null)
 	{
-		validateTemplate(notifications);
+		validateTemplate();
 	}
 }
 
-protected void validateTemplate(Notifications notifications)
+protected void validateTemplate()
 {
 	assert(xmlTemplateDocument != null && schema != null);
 	Validator validator = schema.newValidator();
-	validator.setErrorHandler(new XMLErrorsReporter(notifications));
+	java.net.URI templateURI = toNetURI(getXmlTemplate());	
+   String systemId = templateURI.toString();
+   InputSource inputSource = new InputSource(systemId);
+	validator.setErrorHandler(templateErrorHandler );
+	SAXSource source = new SAXSource(inputSource);
    try 
    {
-       validator.validate(new DOMSource(xmlTemplateDocument));
+       validator.validate(source);
    } 
    catch (SAXException | IOException e) 
    {
@@ -157,7 +164,7 @@ protected void validateTemplate(Notifications notifications)
    }
 }
 
-protected void readTemplate(Notifications notifications)
+protected void readTemplate()
 {	
 	assert(getXmlTemplate() != null);
 	
@@ -233,7 +240,7 @@ protected void readTemplate(Notifications notifications)
 	}
 }
 
-protected void checkSchema(Notifications notifications) 
+protected void checkSchema() 
 {	
 	assert(getSchema() != null);
    SchemaFactory factory;
@@ -242,15 +249,29 @@ protected void checkSchema(Notifications notifications)
    
    Source schemaFile = new StreamSource(schemaURI.toASCIIString());
    Schema schema = null;
-     
-   String schemaLanguages[] = {  XMLConstants.W3C_XML_SCHEMA_NS_URI }; //, XMLConstants.RELAXNG_NS_URI };
-	/* TODO : REMOVE : Message messages[] = new Message[schemaLanguages.length]; */
+
+   System.setProperty(
+         SchemaFactory.class.getName() + ":" + XMLConstants.RELAXNG_NS_URI, 
+         "com.thaiopensource.relaxng.jaxp.XMLSyntaxSchemaFactory");
+   
+   final String RNC_NS_URI = "http://relaxng.org/compact.html";
+	System.setProperty(
+         SchemaFactory.class.getName() + ":" +  RNC_NS_URI,
+         "com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory");
+	
+   String schemaLanguages[] = {  XMLConstants.W3C_XML_SCHEMA_NS_URI, XMLConstants.RELAXNG_NS_URI, RNC_NS_URI };
    
    boolean fail = true;
+   
+   HashMap<Gravity, Integer> counts = notifications.getCounts();
+   
+   int errorsCount = counts.get(Gravity.Error);
+   int fatalCount = counts.get(Gravity.Fatal);
    
    for (int i = 0; i < schemaLanguages.length && fail; i++)
    {
    	factory = SchemaFactory.newInstance(schemaLanguages[i]);
+   	factory.setErrorHandler(schemaErrorHandler);
    	try
    	{
    		schema = factory.newSchema(schemaFile);
@@ -259,14 +280,19 @@ protected void checkSchema(Notifications notifications)
    	catch (SAXException e)
    	{
 		schema = null;
-		return;
 		}
    }
+   
+   if (errorsCount < counts.get(Gravity.Error) || fatalCount < counts.get(Gravity.Fatal))
+   {
+   	schema = null;
+   }
+   	
    
    this.schema = schema;
 }
 
-protected void checkOutput(Notifications notifications) 
+protected void checkOutput() 
 {
 	File output = getOutput();
 
@@ -298,7 +324,15 @@ protected void checkOutput(Notifications notifications)
 	}
 }
 
-protected void checkDataSources(Notifications notifications)
+protected void registerEMFpackages()
+{
+	UMLResourcesUtil.initLocalRegistries(resourceSet);
+	resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);	
+	//resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new org.eclipse.emf.ecore.xmi.impl.new org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl());
+	//resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl());	
+}
+
+protected void checkDataSources()
 {
 	FrameStack frameStack = getFrameStack();
 	
@@ -312,20 +346,7 @@ protected void checkDataSources(Notifications notifications)
 	Vector<String> validDatasourceIds = new Vector<String>(dataSourcesIds.size());
 	Vector<Iterator<EObject>> validIterators = new Vector<Iterator<EObject>>(dataSourcesIds.size());
 	
-	// TODO : Provisoire
-	/* Registry registry = resourceSet.getResourceFactoryRegistry();
-	registry.getContentTypeToFactoryMap().put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE); */
-	
-	UMLResourcesUtil.initLocalRegistries(resourceSet);
-	resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-	
-	/*resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-	resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-	   .put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
-	Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap()
-	   .put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE); */
-	
-	resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl());
+	registerEMFpackages();
 	
 	for (String dataSourceId : dataSourcesIds)
 	{
@@ -346,6 +367,7 @@ protected void checkDataSources(Notifications notifications)
 		
 		try
 		{
+			resourceSet.getURIConverter().createInputStream(resource.getURI());
 			resource.load(null);
 		} 
 		catch (IOException e)
@@ -368,7 +390,8 @@ protected void checkDataSources(Notifications notifications)
 		{
 			List<EObject> contents = resource.getContents();
 			if (contents.isEmpty())
-			{
+			{				
+				frameStack.peek().remove(dataSourceId);
 				Artefact artefact = new Artefact(dataSourceId);
 				Notification notification = new ContextualNotification(dataSourceNotFound, artefact);
 				notifications.add(notification);
@@ -379,7 +402,15 @@ protected void checkDataSources(Notifications notifications)
 				validIterators.add(contents.iterator());
 			}
 		}
-	// TODO : Add a couple (captures, end) instructions respectively at beginning and end of the DOM document.
+	}
+	// Add a captures instruction for data sources
+	Document xmlTemplateDoc = getXmlTemplateDocument();
+	if (xmlTemplateDoc != null && xmlTemplateDoc.getFirstChild() != null)
+	{
+		CapturesInstruction dataSourcesCapturesInstruction = new CapturesInstruction(validDatasourceIds,
+				                                                                       validIterators,
+				                                                                       (CoreDocumentImpl) xmlTemplateDoc.getFirstChild().getOwnerDocument());
+		xmlTemplateDoc.insertBefore(dataSourcesCapturesInstruction, xmlTemplateDoc.getFirstChild());
 	}
 }
 
@@ -418,12 +449,11 @@ private String schemaFilename = null;
 private Schema schema = null;
 private FrameStack frameStack = new FrameStack("");
 
-final private Notification templateMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Argument_Missing);
-final private Notification templateNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Not_Found);
-final private Notification templateNotReadable =  new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Read_Denied);
+private Notifications notifications = Notifications.getInstance();
+private ErrorHandler templateErrorHandler = new XMLErrorsReporter(notifications, Module.Parameters_check, Subject.Template);
+private ErrorHandler schemaErrorHandler = new XMLErrorsReporter(notifications, Module.Parameters_check, Subject.Schema);
 
-final private Notification schemaNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Schema, Message.Not_Found);
-final private Notification schemaNotReadable =  new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Schema, Message.Read_Denied);
+final private Notification templateMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Argument_Missing);
 
 final private Notification outputMissing = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Argument_Missing);
 final private Notification outputNotFound = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Not_Found);
@@ -432,6 +462,5 @@ final private Notification outputNotWritable =  new Notification(Module.Paramete
 
 final private Notification dataSourceMissing = new Notification(Module.Parameters_check, Gravity.Warning, Subject.DataSource, Message.Argument_Missing);
 final private Notification dataSourceNotFound = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Not_Found);
-final private Notification dataSourceNotReadable =  new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Read_Denied);
 final private Notification dataSourceNoResourceFactoryRegistered = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Configuration, Message.No_Resource_Factory);
 }

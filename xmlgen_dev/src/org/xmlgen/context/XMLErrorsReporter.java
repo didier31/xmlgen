@@ -15,9 +15,11 @@ import org.xmlgen.notifications.Notifications;
 
 public class XMLErrorsReporter implements ErrorHandler
 {
-	public XMLErrorsReporter(Notifications notifications)
+	public XMLErrorsReporter(Notifications notifications, Module module, Subject subject)
 	{
 		this.notifications = notifications;
+		this.module = module;
+		this.subject = subject;
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ public class XMLErrorsReporter implements ErrorHandler
 	protected void doNotification(SAXParseException exception, Gravity gravity)
 	{
 		Message message = new Message(exception.getMessage());
-		Notification notification = new Notification(Module.Parameters_check, gravity, Subject.Template, message);
+		Notification notification = new Notification(module, gravity, subject, message);
 		Artefact artefact = new Artefact(exception.getPublicId());
 		LocationImpl location = new LocationImpl(artefact, -1, exception.getColumnNumber(), exception.getLineNumber());
 		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
@@ -49,4 +51,6 @@ public class XMLErrorsReporter implements ErrorHandler
 	}
 	
    private Notifications notifications;
+	private Module module;
+	private Subject subject;
 }

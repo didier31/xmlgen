@@ -1,10 +1,8 @@
 package org.xmlgen.expansion.pi.parsing;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.List;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.acceleo.query.ast.Error;
@@ -21,9 +19,7 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PILexer;
 import org.xmlgen.parser.pi.PIParser;
-import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ContentContext;
-import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
 
 public class InstructionParser 
@@ -66,16 +62,8 @@ public class InstructionParser
 	IQueryEnvironment queryEnvironment = Query.newEnvironmentWithDefaultServices(null);
 		
 	protected static InputPIContext doParse(ProcessingInstruction pi)
-	{
-		StringReader sr = new StringReader(pi.getData());
-		ANTLRInputStream ucs = null;
-		try {
-			ucs = new ANTLRInputStream(sr);
-		} catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		PILexer lexer = new PILexer(ucs);
+	{	
+		PILexer lexer = new PILexer(CharStreams.fromString(pi.getData()));
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
 		InputPIContext inputPI = parser.inputPI();
 		return inputPI;

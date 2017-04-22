@@ -10,7 +10,6 @@ import javax.xml.transform.TransformerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notification.Message;
@@ -34,7 +33,7 @@ static public XMLReader newXMLReader() throws ParserConfigurationException, SAXE
 
 static public SAXParser newSAXParser() throws ParserConfigurationException, SAXException
 {
-	return saxParserFactory.newSAXParser();
+	return getSAXParserFactory().newSAXParser();
 }
 
 static public DocumentBuilder getDocumentBuilder()
@@ -42,7 +41,7 @@ static public DocumentBuilder getDocumentBuilder()
 	return docBuilder;
 }
 
-static public SAXParserFactory getSAXParserFactory()
+static protected SAXParserFactory getSAXParserFactory()
 {
 	return saxParserFactory;
 }
@@ -52,12 +51,10 @@ static public TransformerFactory getTransformerFactory()
 	return transformerFactory;
 }
 
-static public DocumentBuilderFactory getDocumentBuilderFactory()
+static protected DocumentBuilderFactory getDocumentBuilderFactory()
 {
 	 return documentBuilderFactory;
 }
-
-
 
 static private DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 static private TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -68,7 +65,7 @@ static
 {
 	try
 	{
-		docBuilder = documentBuilderFactory.newDocumentBuilder();
+		docBuilder = getDocumentBuilderFactory().newDocumentBuilder();
 	} 
 	catch (ParserConfigurationException e)
 	{

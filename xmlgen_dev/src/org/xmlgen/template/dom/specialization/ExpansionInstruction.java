@@ -11,6 +11,7 @@ import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.eclipse.acceleo.query.runtime.impl.QueryBuilderEngine;
 import org.eclipse.acceleo.query.runtime.impl.QueryEvaluationEngine;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.w3c.dom.ProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
@@ -22,7 +23,6 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
-import org.xmlgen.parser.pi.PIParser.ContentContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
@@ -110,7 +110,7 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 	    return compiledQuery;
 	}
 	
-	protected Object eval(AstResult parsedQuery)
+	protected EObject eval(AstResult parsedQuery)
 	{
 		if (parsedQuery != null && parsedQuery.getErrors().isEmpty())
 		{   
@@ -121,7 +121,7 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 			
 			
 			
-			Object result = evaluationResult.getResult();
+			EObject result = (EObject) evaluationResult.getResult();
 			return result;
 		}
 		else
