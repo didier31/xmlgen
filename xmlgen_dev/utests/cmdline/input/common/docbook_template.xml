@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book version="5.0" xmlns="http://docbook.org/ns/docbook"
+      xmlns:ns5="http://www.w3.org/2000/svg"
+      xmlns:ns4="http://www.w3.org/1999/xhtml"
+      xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+      xmlns:ns="http://www.w3.org/1999/xlink"
       xmlns:db="http://docbook.org/ns/docbook">
   <info>
-    <title>Architecture <?xmlgen toto=datasource1 ?></title>
+    <title><?xmlgen data_source1.name ?></title>
 
     <author>
       <personname><firstname/><surname/></personname>
@@ -15,13 +19,57 @@
     <pubdate/>
   </info>
 
+  <?xmlgen packagedElement = data_source1.packagedElement ?>
+
   <chapter>
-    <title/>
+    <title><?xmlgen packagedElement.name ?></title>
 
     <section>
       <title/>
 
       <para/>
+
+      <table>
+        <title/>
+
+        <tgroup cols="3">
+          <?xmlgen attr cols="3" ?>
+
+          <tbody>
+            <row>
+              <entry/>
+
+              <entry/>
+
+              <entry/>
+            </row>
+
+            <row>
+              <entry/>
+
+              <entry/>
+
+              <entry/>
+            </row>
+
+            <row>
+              <entry/>
+
+              <entry/>
+
+              <entry/>
+            </row>
+
+            <row>
+              <entry/>
+
+              <entry/>
+
+              <entry/>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
     </section>
   </chapter>
 </book>

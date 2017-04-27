@@ -5,9 +5,21 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
+import org.w3c.dom.Document;
 import org.xmlgen.context.Context;
+import org.xmlgen.expansion.Expander;
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -105,7 +117,7 @@ public class TestCmdline {
 		createFiles(filesToCreatePaths);			
 		run(vargs);
 		deleteFiles(filesToCreatePaths);
-	}
+	} 
 	
 	protected void run(String[] vargs) throws IOException
 	{
@@ -122,10 +134,43 @@ public class TestCmdline {
 		Context context = Context.getInstance();
 		context.check();
 		
+		Notifications notifications = Notifications.getInstance();
+		HashMap<Gravity, Integer> counts = notifications.getCounts();
+		
+		Expander expander = new Expander();
+		
+		Document document = null;
+		
+		if (counts.get(Gravity.Error) == 0 && counts.get(Gravity.Fatal) == 0)
+		{
+			document = expander.expand(Context.getInstance().getXmlTemplateDocument());
+		}
+		
+		Transformer transformer = null;
+		try
+		{
+			transformer = TransformerFactory.newInstance().newTransformer();
+		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Result outputXML = new StreamResult(new File("output.xml"));
+		Source input = new DOMSource(document);		
+		
+		try
+		{
+			transformer.transform(input, outputXML);
+		} catch (TransformerException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());
 		output.println(tree.toStringTree(parser));
-		err.println(toString(Notifications.getInstance()));
+		err.println(toString(notifications));
 		output.close();
 	}
 	
@@ -147,7 +192,7 @@ public class TestCmdline {
 				            "--schema", schema,
 				            "--output", output };
 		
-		run(vargs);
+		run(vargs); 
 	}
 	
 	@Test
@@ -157,6 +202,7 @@ public class TestCmdline {
 		
 		String dataSource1 = "'" + cdir + "design.uml'";
 		String template = "'" + cdir + "docbook_template.xml'";
+		//template = "'" + cdir + "SansTitre.xhtml'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
 		String[] vargs = {"data_source1=", dataSource1, 

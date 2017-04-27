@@ -30,9 +30,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
@@ -326,10 +324,7 @@ protected void checkOutput()
 
 protected void registerEMFpackages()
 {
-	UMLResourcesUtil.initLocalRegistries(resourceSet);
-	resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);	
-	//resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new org.eclipse.emf.ecore.xmi.impl.new org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl());
-	//resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl());	
+	UMLResourcesUtil.initLocalRegistries(resourceSet);	
 }
 
 protected void checkDataSources()
@@ -344,7 +339,7 @@ protected void checkDataSources()
 	}
 				
 	Vector<String> validDatasourceIds = new Vector<String>(dataSourcesIds.size());
-	Vector<Iterator<EObject>> validIterators = new Vector<Iterator<EObject>>(dataSourcesIds.size());
+	Vector<Iterator<Object>> validIterators = new Vector<Iterator<Object>>(dataSourcesIds.size());
 	
 	registerEMFpackages();
 	
@@ -398,8 +393,11 @@ protected void checkDataSources()
 			}
 			else
 			{
+				Vector<Object> contentRoot = new Vector<Object>(1);
+				contentRoot.add(contents.get(0));
+				
 				validDatasourceIds.add(dataSourceId);
-				validIterators.add(contents.iterator());
+				validIterators.add(contentRoot.iterator());
 			}
 		}
 	}

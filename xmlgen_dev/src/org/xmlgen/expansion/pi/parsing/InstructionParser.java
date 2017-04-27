@@ -58,8 +58,21 @@ public class InstructionParser
 			return null;
 		}
 	}
+	 
+	public static AstResult parseQuery(String query)
+	{
+	    QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
+	    AstResult astResult = builder.build(query);
+	    notifyErrors(astResult);
+	    return astResult;
+	}
 
-	IQueryEnvironment queryEnvironment = Query.newEnvironmentWithDefaultServices(null);
+	static private IQueryEnvironment queryEnvironment = Query.newEnvironmentWithDefaultServices(null);
+	
+	static public IQueryEnvironment getQueryEnv()
+	{
+		return queryEnvironment;
+	}
 		
 	protected static InputPIContext doParse(ProcessingInstruction pi)
 	{	
@@ -67,14 +80,6 @@ public class InstructionParser
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
 		InputPIContext inputPI = parser.inputPI();
 		return inputPI;
-	}
-
-	protected AstResult parseQuery(String query)
-	{
-	    QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
-	    AstResult astResult = builder.build(query);
-	    notifyErrors(astResult);
-	    return astResult;
 	}
 	
 	protected static void notifyErrors(AstResult compiledQuery)

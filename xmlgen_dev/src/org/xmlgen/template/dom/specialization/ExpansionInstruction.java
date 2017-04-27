@@ -5,15 +5,13 @@ import java.util.List;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.acceleo.query.ast.Error;
 import org.eclipse.acceleo.query.runtime.EvaluationResult;
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment;
-import org.eclipse.acceleo.query.runtime.Query;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.eclipse.acceleo.query.runtime.impl.QueryBuilderEngine;
 import org.eclipse.acceleo.query.runtime.impl.QueryEvaluationEngine;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.UMLPackage;
 import org.w3c.dom.ProcessingInstruction;
 import org.xmlgen.context.Context;
+import org.xmlgen.context.FrameStack;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notifications;
@@ -28,9 +26,10 @@ import org.xmlgen.parser.pi.PIParser.EndContext;
 import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 import com.sun.org.apache.xerces.internal.dom.ProcessingInstructionImpl;
 
-abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
+abstract public class ExpansionInstruction extends ProcessingInstructionImpl 
+{
 
-	final static String piMarker = "xmlgen";
+	public final static String piMarker = "xmlgen";
 	
 	/**
 	 * Test is ProcessingInstruction is an expand PI
@@ -42,7 +41,7 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 		return piMarker.compareToIgnoreCase(pi.getTarget()) == 0;
 	}
 	
-	static ExpansionInstruction create(ProcessingInstruction pi)
+	public static ExpansionInstruction create(ProcessingInstruction pi)
 	{
 		assert isExpandPI(pi);
 		ParserRuleContext instruction = InstructionParser.parse(pi);
@@ -55,7 +54,7 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
-		   domInstruction = new AttributeContentIntruction(pi, attributeContentInstruction);
+		   domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);
 		}
 		else if (instruction instanceof ElementContentContext)
 		{
@@ -84,8 +83,11 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 	{
 		super(ownerDoc, target, data);
 	}
-
-	static IQueryEnvironment queryEnvironment = Query.newEnvironmentWithDefaultServices(null);	
+	
+	static
+	{
+		InstructionParser.getQueryEnv().registerEPackage(UMLPackage.eINSTANCE);
+	}
 	
 	protected void notifyErrors(AstResult compiledQuery)
 	{
@@ -102,27 +104,40 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 		}
 	}
 	
-	protected AstResult parseQuery(String query)
-	{
-	    QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
-	    AstResult compiledQuery = builder.build(query);
-	    notifyErrors(compiledQuery);
-	    return compiledQuery;
-	}
-	
-	protected EObject eval(AstResult parsedQuery)
+	protected Object eval(AstResult parsedQuery)
 	{
 		if (parsedQuery != null && parsedQuery.getErrors().isEmpty())
 		{   
-			QueryEvaluationEngine engine = new QueryEvaluationEngine(queryEnvironment);		
-			EvaluationResult evaluationResult = engine.eval(parsedQuery, 
-   		                                                Context.getInstance().getFrameStack());
-		
+			QueryEvaluationEngine engine = new QueryEvaluationEngine(InstructionParser.getQueryEnv());			
+			FrameStack frameStack = Context.getInstance().getFrameStack();			
+			EvaluationResult evaluationResult = engine.eval(parsedQuery, frameStack);		
+			Object result = evaluationResult.getResult();
 			
-			
-			
-			EObject result = (EObject) evaluationResult.getResult();
-			return result;
+			if (evaluationResult.getDiagnostic() != null)
+			{
+				Diagnostic diagnostic = evaluationResult.getDiagnostic();
+				int severity = diagnostic.getSeverity();
+				if (severity != Diagnostic.OK)
+				{
+					notifyErrors(diagnostic);
+					if (severity == Diagnostic.WARNING || severity != Diagnostic.INFO)
+					{
+						return result;
+					}
+					else
+					{
+						return null;
+					}
+				}
+				else
+				{
+					return result;
+				}
+			}			
+			else
+			{
+				return result;
+			}			
 		}
 		else
 		{
@@ -132,7 +147,40 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl {
 	
 	protected void notifyErrors(Diagnostic diagnostic)
 	{
-		// TODO : notify errors in harmony with sub-classes
+		assert(diagnostic != null);
+		String messageString = diagnostic.getMessage();
+		if (messageString != null)
+		{
+			int severity = diagnostic.getSeverity();
+			assert(severity != Diagnostic.OK);
+			Message message = new Message(messageString);
+			Gravity gravity;
+			switch (severity)
+			{
+			   case Diagnostic.CANCEL : gravity = Gravity.Fatal;
+			                            break;
+		                         
+		      case Diagnostic.ERROR  : gravity = Gravity.Error;
+		                               break;
+		                         
+		      case Diagnostic.WARNING: gravity = Gravity.Warning;
+		                               break;
+		
+		      case Diagnostic.INFO   : gravity = Gravity.Information;
+		                               break;
+		
+		      default : assert(false); gravity = Gravity.Fatal;
+		   }
+		   Notification notification = new Notification(Module.Parser,
+				                                       gravity,
+				                                       Subject.Template,
+				                                       message);
+		Notifications.getInstance().add(notification);
+		}
+		for (Diagnostic subDiagnostic : diagnostic.getChildren())
+		{
+			notifyErrors(subDiagnostic);
+		}
 	}
 	/**
 	 * 

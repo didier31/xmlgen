@@ -1,6 +1,7 @@
 package org.xmlgen.context;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -85,7 +86,7 @@ public class FrameStack implements Map<String, Object>
 			i--;
 			value = stack.elementAt(i).get(key);
 		}
-		while (value == null || i > 0); 
+		while (value == null && i > 0); 
 		return value;
 	}
 
@@ -104,9 +105,9 @@ public class FrameStack implements Map<String, Object>
 	 */
 	@Override
 	public Set<String> keySet() {
-		int i = stack.size() - 1;
-		Set<String> values = stack.elementAt(i).keySet();
-		for (i--;i >= 0;i--)
+		;
+		Set<String> values = new HashSet<String>(100);
+		for (int i = stack.size() - 1; i >= 0; i--)
 		{	
 			values.addAll(stack.elementAt(i).keySet());		
 		}

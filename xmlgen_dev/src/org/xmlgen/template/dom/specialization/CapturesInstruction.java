@@ -5,10 +5,10 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.eclipse.emf.ecore.EObject;
 import org.w3c.dom.ProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
+import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -20,6 +20,7 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.CaptureContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
+import org.xmlgen.parser.pi.PIParser.LabelContext;
 
 import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 
@@ -29,26 +30,28 @@ public class CapturesInstruction extends ExpansionInstruction
 	public CapturesInstruction(ProcessingInstruction pi, CapturesContext capturesInstruction)
 	{
 		super(pi);
+		LabelContext labelContext = capturesInstruction.label();
+		label = (labelContext != null) ? capturesInstruction.label().getText() : "";
 		datasourcesIDs = new Vector<String>(capturesInstruction.capture().size());
-		iterators = new Vector<Iterator<EObject>>(capturesInstruction.capture().size());
+		iterators = new Vector<Iterator<Object>>(capturesInstruction.capture().size());		
 		
 		for (CaptureContext  capture : capturesInstruction.capture())
 		{
-			AstResult parsedQuery = parseQuery(capture.expression().getText());
-			Iterator<EObject> iterator = null;
+			AstResult parsedQuery = InstructionParser.parseQuery(capture.expression().getText());
+			Iterator<Object> iterator = null;
 			if (parsedQuery.getErrors().isEmpty())
 			{
 				String id = capture.dataID().getText();
 				if (!datasourcesIDs.contains(id))
 				{
-					EObject result = eval(parsedQuery);
-					if (result instanceof Iterator)
+					Object result = eval(parsedQuery);
+					if (result instanceof Iterable)
 					{
-						iterator = (Iterator<EObject>) result;										
+						iterator = ((Iterable<Object>) result).iterator();										
 					}
 					else
 					{
-						Vector<EObject> results = new Vector<EObject>(1);
+						Vector<Object> results = new Vector<Object>(1);
 						results.add(result);
 						iterator = results.iterator();
 					}					
@@ -70,7 +73,7 @@ public class CapturesInstruction extends ExpansionInstruction
 		}
 	}
 	
-	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<EObject>> dataSourcesIterators, CoreDocumentImpl ownerDoc)
+	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<Object>> dataSourcesIterators, CoreDocumentImpl ownerDoc)
 	{
 		super(ownerDoc, piMarker, "");
 		assert(dataSourceIDs.size() == dataSourcesIterators.size());
@@ -82,24 +85,39 @@ public class CapturesInstruction extends ExpansionInstruction
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		assert(!currentFrame.containsKey(id));
-		currentFrame.put(id, new String("dummy"));
+		currentFrame.put(id, new String("####"));
 	}
 	
-	public void iterate()
+	/**
+	 * 
+	 * @return if iterate can be run again
+	 */
+	public boolean iterate()
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		
 		int i = 0;
+		boolean notAtTheEnd = true;
 		for (String id : datasourcesIDs)
 		{
-			Iterator<EObject> iterator = iterators.get(i); 
+			Iterator<Object> iterator = iterators.get(i); 
 			if (iterator.hasNext())
 			{
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
 			}
+			else
+			{
+				notAtTheEnd = false;
+			}
 			i++;
 		}
+	return notAtTheEnd;
+	}
+	
+	public String getLabel()
+	{
+		return label;
 	}
 	
 	Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, 
@@ -109,6 +127,8 @@ public class CapturesInstruction extends ExpansionInstruction
 
 	private static final long serialVersionUID = 5198212129556107335L;
 	
-	Vector<String> datasourcesIDs;
-	Vector<Iterator<EObject>> iterators;
+	private Vector<String> datasourcesIDs;
+	private Vector<Iterator<Object>> iterators;
+	private String label;
+	
 }

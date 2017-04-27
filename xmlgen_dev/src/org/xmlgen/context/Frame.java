@@ -1,9 +1,6 @@
 package org.xmlgen.context;
 
 import java.util.HashMap;
-import java.util.Iterator;
-
-import org.eclipse.emf.ecore.EObject;
 
 public class Frame extends HashMap<String, Object> 
 {
@@ -14,7 +11,8 @@ public class Frame extends HashMap<String, Object>
 	private String name;	
 	private int level;
 	
-	public Frame(String name, int level) {
+	public Frame(String name, int level) 
+	{
 		super();
 		this.name = name;
 		this.level = level;
