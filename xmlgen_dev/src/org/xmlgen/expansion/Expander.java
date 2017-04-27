@@ -63,17 +63,21 @@ public class Expander
 	protected Node[] expandDeeper(Node root, Node parent, boolean deeperAndLonger)
 	{
 		assert(root != null);
+		
+		Node[] allSibling;
+		Node rootClone;
+		
 		if (root instanceof ElementContentInstruction)
 		{
 			ElementContentInstruction elementContentInstruction = (ElementContentInstruction) root;
 			
-			return doContentInstruction(elementContentInstruction);
+			allSibling = doContentInstruction(elementContentInstruction);
 		}
 		else if (root instanceof AttributeContentInstruction)
 		{
 			AttributeContentInstruction attributeContentInstruction = (AttributeContentInstruction) root;
 			
-			return doAttributeContentInstruction(attributeContentInstruction, parent);
+			allSibling = doAttributeContentInstruction(attributeContentInstruction, parent);
 		}
 		else if (root instanceof CapturesInstruction)
 		{
@@ -82,31 +86,34 @@ public class Expander
 			
 			skipLoopBody(capturesInstruction, parent);
 			
-			return expansionResult;
+			allSibling = expansionResult;
 		}
 		else if (root instanceof EndInstruction)
 		{
 			EndInstruction endInstruction = (EndInstruction) root;
 			endLoop(endInstruction);
 			
-			return new Node[0];
+			allSibling = new Node[0];
 		}
 		else if (root instanceof ProcessingInstruction && ExpansionInstruction.isExpandPI((ProcessingInstruction) root))
 		{
 			ProcessingInstruction pi = (ProcessingInstruction) root;
 			ExpansionInstruction ei = ExpansionInstruction.create(pi);
 			
-			return expandDeeper(ei, parent, false);
+			allSibling = expandDeeper(ei, parent);
 		}
 		else
 		{
-			Node rootClone = root.cloneNode(false);
-			Node[] allSibling = new Node[] {rootClone};
+			rootClone = root.cloneNode(false);
+			allSibling = new Node[] {rootClone};
+		}
+
 			Node firstChild = root.getFirstChild();
 			if (firstChild != null)
-			{
+			{				
 				Node[] subTree = expandDeeper(firstChild, root);
-				add(rootClone, subTree);						
+				assert(allSibling.length > 0);
+				add(allSibling[0], subTree);						
 			}
 			
 			if (deeperAndLonger)
@@ -122,8 +129,7 @@ public class Expander
 					allSibling = ArrayUtils.addAll(allSibling, subForest);
 				}			
 			}
-			return allSibling;			
-		}
+			return allSibling;
 	}
 
 	/**

@@ -21,7 +21,7 @@ dataID : Ident
 content : attributeContent | elementContent
 ;
 
-attributeContent : ATTRIBUTE attributeID expression
+attributeContent : ATTRIBUTE attributeID '=' expression
 ;
 
 elementContent : expression

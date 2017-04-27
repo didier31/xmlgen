@@ -78,6 +78,7 @@ public class InstructionParser
 	{	
 		PILexer lexer = new PILexer(CharStreams.fromString(pi.getData()));
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
+		parser.addErrorListener(new SyntaxErrorListener());
 		InputPIContext inputPI = parser.inputPI();
 		return inputPI;
 	}
