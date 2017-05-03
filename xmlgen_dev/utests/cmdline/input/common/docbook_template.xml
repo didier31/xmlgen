@@ -32,8 +32,8 @@
       <table>
         <title/>
 
-        <tgroup cols="">
-          <?xmlgen attr cols=3 ?>
+        <tgroup cols="3">
+          <?xmlgen attr col=6 ?>
 
           <tbody>
             <row>

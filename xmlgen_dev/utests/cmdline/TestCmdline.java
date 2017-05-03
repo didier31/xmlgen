@@ -5,19 +5,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 import org.junit.Test;
-import org.w3c.dom.Document;
 import org.xmlgen.context.Context;
 import org.xmlgen.expansion.Expander;
 import org.xmlgen.notifications.Artefact;
@@ -146,31 +138,15 @@ public class TestCmdline {
 			document = expander.expand(Context.getInstance().getXmlTemplateDocument());
 		}
 		
-		Transformer transformer = null;
-		try
-		{
-			transformer = TransformerFactory.newInstance().newTransformer();
-		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Result outputXML = new StreamResult(new File("output.xml"));
-		Source input = new DOMSource(document);		
-		
-		try
-		{
-			transformer.transform(input, outputXML);
-		} catch (TransformerException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+      XMLOutputter xml = new XMLOutputter();
+      // we want to format the xml. This is used only for demonstration. pretty formatting adds extra spaces and is generally not required.
+      xml.setFormat(Format.getPrettyFormat());
+      System.out.println(xml.outputString(document));
 		
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());
 		output.println(tree.toStringTree(parser));
-		err.println(toString(notifications));
+		err.println("\n" + toString(notifications));
 		output.close();
 	}
 	

@@ -1,9 +1,7 @@
 package org.xmlgen.template.dom.specialization;
 
-import org.w3c.dom.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 import org.xmlgen.parser.pi.PIParser.EndContext;
-
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 
 public class EndInstruction extends ExpansionInstruction 
 {
@@ -13,9 +11,9 @@ public class EndInstruction extends ExpansionInstruction
 		setLabel(endInstruction.label().Ident().getText());
 	}
 	
-	public EndInstruction(String label, CoreDocumentImpl ownerDoc, String target, String data)
+	public EndInstruction(String label, String target, String data)
 	{
-		super(ownerDoc, target, data);
+		super(target, data);
 		setLabel(label);
 	}
 	

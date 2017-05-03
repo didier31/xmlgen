@@ -1,11 +1,13 @@
 package org.xmlgen.expansion;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.ProcessingInstruction;
-import org.w3c.dom.Text;
+import java.util.Vector;
+
+import org.jdom2.Attribute;
+import org.jdom2.Content;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.jdom2.Text;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.notifications.Artefact;
@@ -17,143 +19,173 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
-import org.xmlgen.template.dom.location.Location;
+import org.xmlgen.template.dom.Iterator;
 import org.xmlgen.template.dom.specialization.AttributeContentInstruction;
 import org.xmlgen.template.dom.specialization.CapturesInstruction;
 import org.xmlgen.template.dom.specialization.ElementContentInstruction;
 import org.xmlgen.template.dom.specialization.EndInstruction;
 import org.xmlgen.template.dom.specialization.ExpansionInstruction;
 
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
-
 public class Expander 
 {	
 	public Document expand(Document document)
 	{
-		Node[] node = expandDeeper(document, null);		
-		Document expandedDocument = (Document) node[0];
+		Iterator iterator = new Iterator(document.getRootElement());
+		Vector<Cloneable> node = expandDeeper(iterator);		
+		assert node.size() == 1 && node.get(0) instanceof Element;
+		Document expandedDocument = new Document((Element) node.get(0), document.getDocType());
 		// TODO: Implement DOCTYPE copy.
 		return expandedDocument;
 	}
 	
-	private Node goNode = null;
-	
-	protected Node goNode()
+	protected Vector<Cloneable> expandDeeper(Iterator iterator)
 	{
-		Node goToS = goNode;
-		goNode = null;
-		return goToS;
-	}
+		Vector<Cloneable> allSibling = expandDeeperOnly(iterator);
+		if (iterator.current() != null)
+		{
+			iterator.sibling();			
+			
+			if (iterator.current() != null)
+			{
+				Vector<Cloneable> subForest = expandDeeper(iterator);
+				allSibling.addAll(subForest);
+			}
+		}
+		return allSibling;
+	} 
 	
-	protected void setGoNode(Node goNode)
+	protected Vector<Cloneable> expandDeeperOnly(Iterator iterator)
 	{
-		this.goNode = goNode; 
+		Vector<Cloneable> allSibling;
+				
+		if (iterator.current() != null)
+		{
+			allSibling = computeNode(iterator);			
+			Iterator deeperIterator = new Iterator(iterator.current());
+			deeperIterator.descendant();
+			if (deeperIterator.current() != null)
+			{
+				Vector<Cloneable> subTree = expandDeeper(deeperIterator);
+			   assert(allSibling.size() > 0);
+			   setChildren((Element) allSibling.get(0), subTree);
+			}			
+		}
+		else
+		{
+			allSibling = new Vector<Cloneable>(0);
+		}
+		return allSibling;
 	}
 
-	protected Node[] expandDeeper(Node root, Node parent)
+	/**
+	 * @param root
+	 * @param parent
+	 * @return
+	 */
+	protected Vector<Cloneable> computeNode(Iterator iterator)
 	{
-		return expandDeeper(root, parent, true);
-	}
-	
-	protected Node[] expandDeeperOnly(Node root, Node parent)
-	{
-		return expandDeeper(root, parent, false);
-	}
-	
-	protected Node[] expandDeeper(Node root, Node parent, boolean deeperAndLonger)
-	{
+		Vector<Cloneable> allSibling;
+		Content root = iterator.current();
 		assert(root != null);
-		
-		Node[] allSibling;
-		Node rootClone;
+		Content rootClone;
 		
 		if (root instanceof ElementContentInstruction)
 		{
-			ElementContentInstruction elementContentInstruction = (ElementContentInstruction) root;
-			
+			ElementContentInstruction elementContentInstruction = (ElementContentInstruction) root;			
 			allSibling = doContentInstruction(elementContentInstruction);
 		}
 		else if (root instanceof AttributeContentInstruction)
 		{
-			AttributeContentInstruction attributeContentInstruction = (AttributeContentInstruction) root;
-			
-			allSibling = doAttributeContentInstruction(attributeContentInstruction, parent);
+			AttributeContentInstruction attributeContentInstruction = (AttributeContentInstruction) root;			
+			allSibling = doAttributeContentInstruction(attributeContentInstruction);
 		}
 		else if (root instanceof CapturesInstruction)
-		{
-			CapturesInstruction capturesInstruction = (CapturesInstruction) root;
-			Node[] expansionResult = doLoop(capturesInstruction, parent);
-			
-			skipLoopBody(capturesInstruction, parent);
-			
-			allSibling = expansionResult;
+		{ 				
+			allSibling = doLoop(iterator);
 		}
 		else if (root instanceof EndInstruction)
 		{
 			EndInstruction endInstruction = (EndInstruction) root;
-			endLoop(endInstruction);
-			
-			allSibling = new Node[0];
+			endLoop(endInstruction);			
+			allSibling = new Vector<Cloneable>();
 		}
 		else if (root instanceof ProcessingInstruction && ExpansionInstruction.isExpandPI((ProcessingInstruction) root))
 		{
 			ProcessingInstruction pi = (ProcessingInstruction) root;
-			ExpansionInstruction ei = ExpansionInstruction.create(pi);
-			
-			allSibling = expandDeeper(ei, parent);
+			ExpansionInstruction ei = ExpansionInstruction.create(pi);			
+			iterator.set(ei);
+			allSibling = computeNode(iterator);
 		}
 		else
 		{
-			rootClone = root.cloneNode(false);
-			allSibling = new Node[] {rootClone};
+			rootClone = root.clone();
+			allSibling = new Vector<Cloneable>(1);
+			allSibling.add(rootClone);
 		}
-
-			Node firstChild = root.getFirstChild();
-			if (firstChild != null)
-			{				
-				Node[] subTree = expandDeeper(firstChild, root);
-				assert(allSibling.length > 0);
-				add(allSibling[0], subTree);						
-			}
-			
-			if (deeperAndLonger)
-			{
-				Node sibling = goNode();
-				if (sibling == null)
-				{
-					sibling = root.getNextSibling();
-				}
-				if (sibling != null)
-				{
-					Node[] subForest = expandDeeper(sibling, parent);
-					allSibling = ArrayUtils.addAll(allSibling, subForest);
-				}			
-			}
-			return allSibling;
+		return allSibling;
 	}
 
+	protected Vector<Cloneable> doLoop(Iterator loopIterator)
+	{		
+		assert(loopIterator.current() instanceof CapturesInstruction);
+		
+		CapturesInstruction capturesInstruction = (CapturesInstruction) loopIterator.current();
+		
+		String label = capturesInstruction.getLabel();
+		Frame newFrame = new Frame(label, 0);
+		Context.getInstance().getFrameStack().push(newFrame);
+		Vector<Cloneable> expandedNodes = new Vector<Cloneable>(0);						
+		
+		Iterator atFirstContentInLoop = new Iterator(loopIterator.current());
+		atFirstContentInLoop.sibling();
+		while (capturesInstruction.iterate())
+		{								
+			boolean EndInstrNotEncountered = true;			
+			loopIterator.set(atFirstContentInLoop.current());
+			while (loopIterator.current() != null && EndInstrNotEncountered)
+			{
+				Content content = loopIterator.current();
+				EndInstrNotEncountered = !(content instanceof EndInstruction);
+				if (EndInstrNotEncountered)
+				{
+					Vector<Cloneable> localExpandedNodes = expandDeeperOnly(loopIterator);
+					expandedNodes.addAll(localExpandedNodes);
+				}
+				if (loopIterator.current() != null)
+				{
+					loopIterator.sibling();
+				}
+			}
+		}
+		return expandedNodes;
+	}
+	
 	/**
 	 * @param attributeContentInstruction
 	 * @return
 	 */
-	private Node[] doAttributeContentInstruction(AttributeContentInstruction attributeContentInstruction, Node parent)
+	private Vector<Cloneable> doAttributeContentInstruction(AttributeContentInstruction attributeContentInstruction)
 	{
-		Node attribute = parent.getAttributes().getNamedItem(attributeContentInstruction.getAttributeId());
+		String attributeId = attributeContentInstruction.getAttributeId();
+		Element parent = attributeContentInstruction.getParentElement();
+		Attribute attribute = parent.getAttribute(attributeId);
 
 		if (attribute != null)
 		{
 			Object computedValue = attributeContentInstruction.eval();
-			Node attributeClone = attribute.cloneNode(true);
+			Attribute attributeClone = attribute.clone();
 			if (computedValue != null)
 			{
-				attributeClone.setNodeValue(computedValue.toString());
+				attributeClone.setValue(computedValue.toString());
 			}
 			
-			return new Node[] { attributeClone };
+			Vector<Cloneable> attributes = new Vector<Cloneable>(1);
+			attributes.add(attributeClone);
+			return attributes;
 		}
 		else
 		{
-			return new Node[0];
+			return new Vector<Cloneable>(0);
 		}
 	}
 
@@ -161,95 +193,40 @@ public class Expander
 	 * @param elementContentInstruction
 	 * @return
 	 */
-	private Node[] doContentInstruction(ElementContentInstruction elementContentInstruction)
+	private Vector<Cloneable> doContentInstruction(ElementContentInstruction elementContentInstruction)
 	{
 		Object computedValue = elementContentInstruction.eval();
 		if (computedValue != null)
 		{
-			Text text = elementContentInstruction.getOwnerDocument().createTextNode(computedValue.toString());
-			return new Node[] {text};
+			Text text = new Text(computedValue.toString());
+			Vector<Cloneable> contents = new Vector<Cloneable>(1);
+			contents.add(text);
+			return contents;
 		}
 		else
 		{	
-			return new Node[0];
+			return new Vector<Cloneable>(0);
 		}
 	}
 
-	private void add(Node toRoot, Node[] children)
-	{
-		for (Node child : children)
+	private void setChildren(Element toRoot, Vector<Cloneable> children)
+	{	
+		toRoot.getContent().clear();
+		for (Cloneable child : children)
 		{
-			Document document = toRoot.getOwnerDocument();
-			if (document == null)
+			if (child instanceof Attribute)
 			{
-				assert toRoot instanceof Document;
-				document = (Document) toRoot;
-				if (child instanceof Attr)
-				{
-					document.getAttributes().setNamedItem(child);
-				}
-				else
-				{
-					document.adoptNode(child);
-					document.appendChild(child);
-				}
+				Attribute attribute = (Attribute) child;
+				toRoot.setAttribute(attribute);
 			}
 			else
-			{
-				if (child instanceof Attr)
-				{
-					toRoot.getAttributes().setNamedItem(child);
-				}
-				else
-				{
-					document.adoptNode(child);
-					toRoot.appendChild(child);
-				}
+			{				
+				Content childContent = (Content) child;
+				toRoot.addContent(childContent);
 			}
 		}
 	}
 	
-	protected void skipLoopBody(CapturesInstruction ci, Node parent)
-	{
-		Node sibling = ci;
-		while (sibling != null && !(sibling instanceof EndInstruction))
-		{			
-			sibling = sibling.getNextSibling();
-		}
-		if (sibling == null)
-		{
-			CoreDocumentImpl owner = (CoreDocumentImpl) ci.getOwnerDocument();
-			EndInstruction ei = new EndInstruction("", owner, ExpansionInstruction.piMarker, "");
-			parent.appendChild(ei);
-			setGoNode(ei);
-		}
-		else
-		{
-			setGoNode((EndInstruction) sibling);
-		}
-	}
-	
-	protected Node[] doLoop(CapturesInstruction capturesInstruction, Node parent)
-	{		
-		String label = capturesInstruction.getLabel();
-		Frame newFrame = new Frame(label, 0);
-		Context.getInstance().getFrameStack().push(newFrame);
-		Node[] expandedNodes = null;
-		while (capturesInstruction.iterate())
-		{			
-			Node node = capturesInstruction.getNextSibling();		
-			
-			while (!(node == null || node instanceof EndInstruction))
-			{
-				Node[] localExpandedNodes = expandDeeperOnly(node, parent);
-				expandedNodes = ArrayUtils.addAll(expandedNodes, localExpandedNodes);
-				
-				node = node.getNextSibling();
-			}
-		}
-		return expandedNodes;
-	}
-
 	/**
 	 * @param endInstruction
 	 */
@@ -262,9 +239,8 @@ public class Expander
 		{
 			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
 			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
-			Location location = (Location) endInstruction.getUserData(Location.LOCATION);
-			Artefact artefact = new Artefact(location.getSystemId());
-			LocationImpl locationImpl = new LocationImpl(artefact, -1, location.getStartColumn(), location.getStartLine());
+			Artefact artefact = new Artefact("");
+			LocationImpl locationImpl = new LocationImpl(artefact, -1, endInstruction.getColumn(), endInstruction.getLine());
 			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
 			Notifications.getInstance().add(contextual);
 		}

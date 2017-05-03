@@ -1,6 +1,6 @@
 package org.xmlgen.template.dom.specialization;
 
-import org.w3c.dom.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 
 public class ElementContentInstruction extends ContentInstruction

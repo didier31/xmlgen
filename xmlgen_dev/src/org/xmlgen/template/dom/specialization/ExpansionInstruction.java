@@ -9,10 +9,12 @@ import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.eclipse.acceleo.query.runtime.impl.QueryEvaluationEngine;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.uml2.uml.UMLPackage;
-import org.w3c.dom.ProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
+import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Notification.Gravity;
@@ -23,12 +25,14 @@ import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
-import com.sun.org.apache.xerces.internal.dom.ProcessingInstructionImpl;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedElement;
+import org.jdom2.located.LocatedProcessingInstruction;
 
-abstract public class ExpansionInstruction extends ProcessingInstructionImpl 
+abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 {
-
 	public final static String piMarker = "xmlgen";
 	
 	/**
@@ -55,6 +59,22 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
 		   domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);
+
+		   String attributeId = ((AttributeContentInstruction) domInstruction).getAttributeId();
+		   if (attributeId != null)
+		   {
+		   	LocatedElement parent = (LocatedElement) domInstruction.getParentElement();
+		   	Attribute attribute = parent.getAttribute(attributeId);
+		   	if (attribute == null)
+		   	{
+		   		Message attributeNotFoundMessage = new Message("attribute, " + attributeId + " is not found");
+		   		Notification attributeNotFound = new Notification(Module.Expansion, Gravity.Error, Subject.Template, attributeNotFoundMessage );
+		   		Artefact artefact = new Artefact(parent.getQualifiedName());
+		   		LocationImpl location = new LocationImpl(artefact, -1, parent.getColumn(), parent.getLine());
+		   		ContextualNotification contextualAttributeNotFound = new ContextualNotification(attributeNotFound, location);
+		   		Notifications.getInstance().add(contextualAttributeNotFound); 
+		   	}
+			}
 		}
 		else if (instruction instanceof ElementContentContext)
 		{
@@ -69,19 +89,23 @@ abstract public class ExpansionInstruction extends ProcessingInstructionImpl
 		else
 		{
 			domInstruction = null;
-		}
+		}	
+		
 		return domInstruction;
 	}	
 	
 	protected ExpansionInstruction(ProcessingInstruction pi) 
 	{
-		super((CoreDocumentImpl) pi.getOwnerDocument(), pi.getTarget(), pi.getData());
-		pi.getParentNode().replaceChild(this, pi);
+		super(pi.getTarget(), pi.getData());
+		Element parent = pi.getParentElement();
+		int i = parent.indexOf(pi);
+		parent.removeContent(i);
+		parent.addContent(i, this);
 	}
 	
-	protected ExpansionInstruction(CoreDocumentImpl ownerDoc, String target, String data)
+	protected ExpansionInstruction(String target, String data)
 	{
-		super(ownerDoc, target, data);
+		super(target, data);
 	}
 	
 	static

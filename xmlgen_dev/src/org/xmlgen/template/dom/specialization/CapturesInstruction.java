@@ -5,7 +5,8 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.w3c.dom.ProcessingInstruction;
+import org.jdom2.Document;
+import org.jdom2.ProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
@@ -21,8 +22,6 @@ import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.CaptureContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.LabelContext;
-
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 
 public class CapturesInstruction extends ExpansionInstruction 
 {
@@ -73,9 +72,9 @@ public class CapturesInstruction extends ExpansionInstruction
 		}
 	}
 	
-	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<Object>> dataSourcesIterators, CoreDocumentImpl ownerDoc)
+	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<Object>> dataSourcesIterators, Document ownerDoc)
 	{
-		super(ownerDoc, piMarker, "");
+		super(piMarker, "");
 		assert(dataSourceIDs.size() == dataSourcesIterators.size());
 		this.datasourcesIDs = dataSourceIDs;
 		this.iterators = dataSourcesIterators;

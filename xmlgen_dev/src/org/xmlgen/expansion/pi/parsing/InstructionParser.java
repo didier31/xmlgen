@@ -10,7 +10,7 @@ import org.eclipse.acceleo.query.runtime.IQueryEnvironment;
 import org.eclipse.acceleo.query.runtime.Query;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.eclipse.acceleo.query.runtime.impl.QueryBuilderEngine;
-import org.w3c.dom.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Notification.Gravity;

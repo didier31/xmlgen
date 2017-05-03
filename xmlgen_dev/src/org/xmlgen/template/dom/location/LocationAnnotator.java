@@ -24,17 +24,17 @@ public class LocationAnnotator extends XMLFilterImpl
        super(xmlReader);
 
        // Add listener to DOM, so we know which node was added.
-       EventListener modListener = new EventListener() 
+       EventListener domListener = new EventListener() 
        {
            @Override
-           public void handleEvent(Event e) {
+           public void handleEvent(Event e) 
+           {
                EventTarget target = ((MutationEvent) e).getTarget();
                lastAddedElement = (Element) target;
            }
        };
        
-       ((EventTarget) dom).addEventListener("DOMNodeInserted",
-               modListener, true);
+       ((EventTarget) dom).addEventListener("DOMNodeInserted", domListener, true);
    }
 
    @Override
@@ -44,6 +44,20 @@ public class LocationAnnotator extends XMLFilterImpl
        this.locator = locator;
    }
 
+   @Override
+   public void processingInstruction (String target, String data)
+         throws SAXException
+   {
+      super.processingInstruction(target, data);
+      Locator startLocator = locatorStack.peek();
+        
+      Location location = new Location(startLocator.getSystemId(),         		                           
+                                       locator.getLineNumber(),
+                                       locator.getColumnNumber(), -1, -1);
+        
+      lastAddedElement.getFirstChild().setUserData(Location.LOCATION, location, dataHandler);
+   }
+   
    @Override
    public void startElement(String uri, String localName,
            String qName, Attributes atts) throws SAXException 
@@ -87,12 +101,12 @@ public class LocationAnnotator extends XMLFilterImpl
                Node src, Node dst) {
           
            if (src != null && dst != null) {
-               Location locatonData = (Location)
+               Location locationData = (Location)
                        src.getUserData(Location.LOCATION);
               
-               if (locatonData != null) {
+               if (locationData != null) {
                    dst.setUserData(Location.LOCATION,
-                           locatonData, dataHandler);
+                           locationData, dataHandler);
                }
            }
        }

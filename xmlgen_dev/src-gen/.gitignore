@@ -4,3 +4,9 @@
 /QueryLexer.tokens
 /QueryListener.java
 /QueryParser.java
+/XMLLexer.java
+/XMLLexer.tokens
+/XMLParser.java
+/XMLParser.tokens
+/XMLParserBaseListener.java
+/XMLParserListener.java

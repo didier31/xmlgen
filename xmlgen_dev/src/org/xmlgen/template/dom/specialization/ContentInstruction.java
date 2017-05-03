@@ -1,7 +1,7 @@
 package org.xmlgen.template.dom.specialization;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.w3c.dom.ProcessingInstruction;
+import org.jdom2.ProcessingInstruction;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 
 abstract public class ContentInstruction extends ExpansionInstruction 

@@ -14,12 +14,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -32,11 +27,13 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
-import org.w3c.dom.Document;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.located.LocatedJDOMFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 import org.xmlgen.notifications.Artefact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -47,10 +44,7 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 
 import org.xmlgen.notifications.Notifications;
-import org.xmlgen.template.dom.Factories;
-import org.xmlgen.template.dom.location.LocationAnnotator;
 import org.xmlgen.template.dom.specialization.CapturesInstruction;
-import com.sun.org.apache.xerces.internal.dom.CoreDocumentImpl;
 
 public class Context 
 {
@@ -135,7 +129,7 @@ protected void checkSchemaAndTemplate()
 	}
 	
 	readTemplate();
-	if (schema != null && xmlTemplateDocument != null && xmlTemplateDocument.getFirstChild() != null)
+	if (schema != null && xmlTemplateDocument != null && xmlTemplateDocument.getRootElement() != null)
 	{
 		validateTemplate();
 	}
@@ -165,76 +159,20 @@ protected void validateTemplate()
 protected void readTemplate()
 {	
 	assert(getXmlTemplate() != null);
-	
-	XMLReader xmlReader;
-	try
+
+	SAXBuilder jdomBuilder = new SAXBuilder();
+	jdomBuilder.setJDOMFactory(new LocatedJDOMFactory());
+   try
 	{
-		xmlReader = Factories.newXMLReader();
-	} 
-	catch (ParserConfigurationException | SAXException e)
-	{		
-		xmlReader = null;
-		
-		Message message = new Message(e.getMessage());
+		xmlTemplateDocument = jdomBuilder.build(getXmlTemplate());
+	} catch (JDOMException e)
+   {
+		Message message = new Message(e.getLocalizedMessage());
 		Notification notification = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, message);
 		notifications.add(notification);
-	}
-	
-	if (xmlReader == null)
+   }  
+   catch (IOException e)
 	{
-		return;
-	}
-	
-	xmlTemplateDocument = Factories.newDocument(); 
-	DOMResult domResult = new DOMResult(xmlTemplateDocument);
-	
-	 /*
-    * Create our filter to wrap the SAX parser, that captures the 
-    * locations of elements and annotates their nodes as they are
-    * inserted into the DOM.
-    */
-   LocationAnnotator locationAnnotator
-           = new LocationAnnotator(xmlReader, xmlTemplateDocument);
-
-   /*
-    * Create the SAXSource to use the annotator.
-    */
-	java.net.URI templateURI = toNetURI(getXmlTemplate());	
-   String systemId = templateURI.toString();
-   InputSource inputSource = new InputSource(systemId);
-   SAXSource saxSource = new SAXSource(locationAnnotator, inputSource);
-
-   Transformer nullTransformer;
-	try
-	{
-		nullTransformer = Factories.getTransformerFactory().newTransformer();
-	} 
-	catch (TransformerConfigurationException e)
-	{
-		nullTransformer = null;
-		
-		Message message = new Message(e.getMessage());
-		Notification notification = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, message);
-		Artefact artefact = new Artefact(e.getLocator().getPublicId());
-		LocationImpl location = new LocationImpl(artefact, -1, e.getLocator().getColumnNumber(), e.getLocator().getLineNumber());
-		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
-		notifications.add(contextualNotification);
-	}
-	/*
-    * Finally read the XML into the DOM.
-    */
-	if (nullTransformer == null)
-	{
-		return;
-	}
-	nullTransformer.setErrorListener(new TransXMLErrorListener(notifications, Subject.Template));
-	try
-	{
-		nullTransformer.transform(saxSource, domResult);
-	} 
-	catch (TransformerException e)
-	{
-		return;
 	}
 }
 
@@ -401,14 +339,15 @@ protected void checkDataSources()
 			}
 		}
 	}
+	
 	// Add a captures instruction for data sources
 	Document xmlTemplateDoc = getXmlTemplateDocument();
-	if (xmlTemplateDoc != null && xmlTemplateDoc.getFirstChild() != null)
+	if (xmlTemplateDoc != null && xmlTemplateDoc.getRootElement() != null)
 	{
 		CapturesInstruction dataSourcesCapturesInstruction = new CapturesInstruction(validDatasourceIds,
 				                                                                       validIterators,
-				                                                                       (CoreDocumentImpl) xmlTemplateDoc.getFirstChild().getOwnerDocument());
-		xmlTemplateDoc.insertBefore(dataSourcesCapturesInstruction, xmlTemplateDoc.getFirstChild());
+				                                                                       xmlTemplateDoc.getRootElement().getDocument());
+		xmlTemplateDoc.getRootElement().addContent(0, dataSourcesCapturesInstruction);
 	}
 }
 
