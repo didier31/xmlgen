@@ -3,7 +3,7 @@ package org.xmlgen.parser.cmdline;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -27,8 +27,8 @@ public class SyntaxErrorListener extends BaseErrorListener
 				                                     Gravity.Error,
 				                                     Subject.Command_Line, 
 				                                     new Message(msg));
-		Artefact artefact = new Artefact("");
-		LocationImpl localisation = new LocationImpl(artefact, charPositionInLine, charPositionInLine, line);
+		Artifact artifact = new Artifact("");
+		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, charPositionInLine, line);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
 		Notifications.getInstance().add(contextualNotification);
 	}

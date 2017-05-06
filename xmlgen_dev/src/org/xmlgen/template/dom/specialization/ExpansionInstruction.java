@@ -12,7 +12,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -25,10 +25,8 @@ import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
-import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-import org.jdom2.located.LocatedElement;
 import org.jdom2.located.LocatedProcessingInstruction;
 
 abstract public class ExpansionInstruction extends LocatedProcessingInstruction
@@ -45,7 +43,7 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		return piMarker.compareToIgnoreCase(pi.getTarget()) == 0;
 	}
 	
-	public static ExpansionInstruction create(ProcessingInstruction pi)
+	public static ExpansionInstruction create(LocatedProcessingInstruction pi)
 	{
 		assert isExpandPI(pi);
 		ParserRuleContext instruction = InstructionParser.parse(pi);
@@ -58,23 +56,7 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
-		   domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);
-
-		   String attributeId = ((AttributeContentInstruction) domInstruction).getAttributeId();
-		   if (attributeId != null)
-		   {
-		   	LocatedElement parent = (LocatedElement) domInstruction.getParentElement();
-		   	Attribute attribute = parent.getAttribute(attributeId);
-		   	if (attribute == null)
-		   	{
-		   		Message attributeNotFoundMessage = new Message("attribute, " + attributeId + " is not found");
-		   		Notification attributeNotFound = new Notification(Module.Expansion, Gravity.Error, Subject.Template, attributeNotFoundMessage );
-		   		Artefact artefact = new Artefact(parent.getQualifiedName());
-		   		LocationImpl location = new LocationImpl(artefact, -1, parent.getColumn(), parent.getLine());
-		   		ContextualNotification contextualAttributeNotFound = new ContextualNotification(attributeNotFound, location);
-		   		Notifications.getInstance().add(contextualAttributeNotFound); 
-		   	}
-			}
+		   domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);		   			   			   
 		}
 		else if (instruction instanceof ElementContentContext)
 		{
@@ -89,14 +71,15 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		else
 		{
 			domInstruction = null;
-		}	
-		
+		}			
 		return domInstruction;
 	}	
 	
-	protected ExpansionInstruction(ProcessingInstruction pi) 
+	protected ExpansionInstruction(LocatedProcessingInstruction pi) 
 	{
 		super(pi.getTarget(), pi.getData());
+		setColumn(pi.getColumn());
+		setLine(pi.getLine());
 		Element parent = pi.getParentElement();
 		int i = parent.indexOf(pi);
 		parent.removeContent(i);
@@ -118,13 +101,15 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		List<Error> errors = compiledQuery.getErrors();
 		for (Error error : errors)
 		{
-			// TODO: Localize errors
 			Message message = new Message(error.toString());
 			Notification notification = new Notification(Module.Parser,
 					                                     Gravity.Fatal,
 					                                     Subject.Template,
 					                                     message);
-			Notifications.getInstance().add(notification);
+			Artifact artifact = new Artifact("Xml template");
+			LocationImpl location = new LocationImpl(artifact, -1, getColumn(), getLine());
+			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications.getInstance().add(contextual);
 		}
 	}
 	
@@ -194,12 +179,14 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		                               break;
 		
 		      default : assert(false); gravity = Gravity.Fatal;
-		   }
+		   }			
 		   Notification notification = new Notification(Module.Parser,
 				                                       gravity,
 				                                       Subject.Template,
 				                                       message);
-		Notifications.getInstance().add(notification);
+		   LocationImpl location = new LocationImpl(null, -1, getColumn(), getLine());
+			ContextualNotification contextual = new ContextualNotification(notification, location );
+		   Notifications.getInstance().add(contextual);
 		}
 		for (Diagnostic subDiagnostic : diagnostic.getChildren())
 		{

@@ -15,7 +15,7 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notifications;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 
 import java.io.File;
@@ -41,7 +41,7 @@ dataSource : id=Ident '=' filename=Filename {
 	                                           if (topFrame.get($id.text) != null)
 	                                           {
 	                                              Notifications notifications = Notifications.getInstance(); 
-	                                              LocationImpl location = new LocationImpl(new Artefact($id.text), $id.index, $id.pos, $id.line);	  
+	                                              LocationImpl location = new LocationImpl(new Artifact($id.text), $id.index, $id.pos, $id.line);	  
 	                                              ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
 	                                              notifications.add(contextNotification); 
 	                                           } 

@@ -12,7 +12,7 @@ import org.jdom2.output.XMLOutputter;
 import org.junit.Test;
 import org.xmlgen.context.Context;
 import org.xmlgen.expansion.Expander;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -32,11 +32,11 @@ public class TestCmdline {
 			if (notification instanceof ContextualNotification)
 			{
 				ContextualNotification specNotification = (ContextualNotification) notification;
-				Artefact artefact = specNotification.getLocation();
-				specific = artefact.getName();
-				if (artefact instanceof LocationImpl)
+				Artifact artifact = specNotification.getLocation();
+				specific = artifact.getName();
+				if (artifact instanceof LocationImpl)
 				{					
-					LocationImpl location = (LocationImpl) artefact;
+					LocationImpl location = (LocationImpl) artifact;
 					specific += ":o" + location.getCharacterOffset() + ":l" + location.getLineNumber() + ":c" + location.getColumnNumber();
 				}
 			}
@@ -141,7 +141,8 @@ public class TestCmdline {
       XMLOutputter xml = new XMLOutputter();
       // we want to format the xml. This is used only for demonstration. pretty formatting adds extra spaces and is generally not required.
       xml.setFormat(Format.getPrettyFormat());
-      System.out.println(xml.outputString(document));
+      PrintStream xmlOutput = new PrintStream(new File(odir, "output.xml"));
+      xmlOutput.println(xml.outputString(document));
 		
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());

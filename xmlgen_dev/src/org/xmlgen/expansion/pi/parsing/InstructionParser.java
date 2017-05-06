@@ -11,6 +11,10 @@ import org.eclipse.acceleo.query.runtime.Query;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.eclipse.acceleo.query.runtime.impl.QueryBuilderEngine;
 import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Notification.Gravity;
@@ -54,16 +58,15 @@ public class InstructionParser
 		}
 		else
 		{			
-			assert (false);
 			return null;
 		}
 	}
 	 
-	public static AstResult parseQuery(String query)
+	public static AstResult parseQuery(String query, LocatedProcessingInstruction pi)
 	{
 	    QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
 	    AstResult astResult = builder.build(query);
-	    notifyErrors(astResult);
+	    notifyErrors(astResult, pi);
 	    return astResult;
 	}
 
@@ -83,18 +86,20 @@ public class InstructionParser
 		return inputPI;
 	}
 	
-	protected static void notifyErrors(AstResult compiledQuery)
+	protected static void notifyErrors(AstResult compiledQuery, LocatedProcessingInstruction pi)
 	{
 		List<Error> errors = compiledQuery.getErrors();
 		for (Error error : errors)
 		{
-			// TODO: Localize errors and characterize Gravity better.
 			Message message = new Message(error.toString());
 			Notification notification = new Notification(Module.Parser,
-					                                     Gravity.Fatal,
-					                                     Subject.Template,
-					                                     message);
-			Notifications.getInstance().add(notification);
+					                                       Gravity.Fatal,
+					                                       Subject.Template,
+					                                       message);
+			Artifact artefact = new Artifact("xml template");
+			LocationImpl location = new LocationImpl(artefact, -1, pi.getColumn(), pi.getLine());
+			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications.getInstance().add(contextual);
 		}
 	}
 }

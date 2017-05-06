@@ -2,11 +2,11 @@ package org.xmlgen.notifications;
 
 import javax.xml.stream.Location;
 
-public class LocationImpl extends Artefact implements Location {
+public class LocationImpl extends Artifact implements Location {
 
 	private int characterOffset, columnNumber, lineNumber;
 	
-	public LocationImpl(Artefact artefact, int characterOffset, int columnNumber, int lineNumber) 
+	public LocationImpl(Artifact artefact, int characterOffset, int columnNumber, int lineNumber) 
 	{
 		super(artefact);
 		this.characterOffset = characterOffset;

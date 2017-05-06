@@ -1,11 +1,11 @@
 package org.xmlgen.template.dom.specialization;
 
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 
 public class ElementContentInstruction extends ContentInstruction
 {
-	protected ElementContentInstruction(ProcessingInstruction pi, ElementContentContext parsedPI)
+	protected ElementContentInstruction(LocatedProcessingInstruction pi, ElementContentContext parsedPI)
 	{
 		super(pi, parsedPI.expression().getText());
 	}

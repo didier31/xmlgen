@@ -34,7 +34,7 @@ import org.jdom2.located.LocatedJDOMFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -269,7 +269,7 @@ protected void checkDataSources()
 {
 	FrameStack frameStack = getFrameStack();
 	
-	Set<String> dataSourcesIds = frameStack.keySet(); 
+	Set<String> dataSourcesIds = frameStack.keySet();
 	
 	if (dataSourcesIds.isEmpty())
 	{		
@@ -310,7 +310,7 @@ protected void checkDataSources()
 		
 		for (Diagnostic error : errors)
 		{
-			LocationImpl location = new LocationImpl(new Artefact(error.getLocation()), -1, error.getColumn(), error.getLine());	
+			LocationImpl location = new LocationImpl(new Artifact(error.getLocation()), -1, error.getColumn(), error.getLine());	
 			Notification notification = new Notification(Module.Parameters_check,
 					                                       Gravity.Error,
 					                                       Subject.DataSource, 
@@ -325,8 +325,8 @@ protected void checkDataSources()
 			if (contents.isEmpty())
 			{				
 				frameStack.peek().remove(dataSourceId);
-				Artefact artefact = new Artefact(dataSourceId);
-				Notification notification = new ContextualNotification(dataSourceNotFound, artefact);
+				Artifact artifact = new Artifact(dataSourceId);
+				Notification notification = new ContextualNotification(dataSourceNotFound, artifact);
 				notifications.add(notification);
 			}
 			else
@@ -339,6 +339,8 @@ protected void checkDataSources()
 			}
 		}
 	}
+	
+	frameStack.clear();
 	
 	// Add a captures instruction for data sources
 	Document xmlTemplateDoc = getXmlTemplateDocument();

@@ -1,15 +1,15 @@
 package org.xmlgen.template.dom.specialization;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 
 abstract public class ContentInstruction extends ExpansionInstruction 
 {	
-	protected ContentInstruction(ProcessingInstruction pi, String queryText) 
+	protected ContentInstruction(LocatedProcessingInstruction pi, String queryText) 
    {
       super(pi);
-		AstResult compiledQuery = InstructionParser.parseQuery(queryText);		
+		AstResult compiledQuery = InstructionParser.parseQuery(queryText, pi);		
 		if (compiledQuery.getErrors().isEmpty())
 		{
 			setCompiledQuery(compiledQuery);

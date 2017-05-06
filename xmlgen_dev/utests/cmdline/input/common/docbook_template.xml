@@ -19,10 +19,12 @@
     <pubdate/>
   </info>
 
-  <?xmlgen packagedElement = data_source1.packagedElement ?>
+  <?xmlgen firstLevelPackages = data_source1.nestedPackage,
+  package = firstLevelPackages->closure(package | package.nestedPackage)
+  ?>
 
   <chapter>
-    <title><?xmlgen packagedElement.name ?></title>
+    <title>Package <?xmlgen package.name?> (from <?xmlgen package.nestingPackage.name ?>)</title>
 
     <section>
       <title/>
@@ -33,7 +35,7 @@
         <title/>
 
         <tgroup cols="3">
-          <?xmlgen attr col=6 ?>
+          <?xmlgen attr cols=6 ?>
 
           <tbody>
             <row>

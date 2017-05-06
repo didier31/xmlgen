@@ -6,11 +6,11 @@ import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
 import org.jdom2.Text;
+import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -84,45 +84,48 @@ public class Expander
 	 */
 	protected Vector<Cloneable> computeNode(Iterator iterator)
 	{
-		Vector<Cloneable> allSibling;
+		Vector<Cloneable> expandedNode;
 		Content root = iterator.current();
-		assert(root != null);
 		Content rootClone;
 		
-		if (root instanceof ElementContentInstruction)
+		if (root == null)
+		{
+			expandedNode = new Vector<Cloneable>();
+		}
+		else if (root instanceof ElementContentInstruction)
 		{
 			ElementContentInstruction elementContentInstruction = (ElementContentInstruction) root;			
-			allSibling = doContentInstruction(elementContentInstruction);
+			expandedNode = doContentInstruction(elementContentInstruction);
 		}
 		else if (root instanceof AttributeContentInstruction)
 		{
 			AttributeContentInstruction attributeContentInstruction = (AttributeContentInstruction) root;			
-			allSibling = doAttributeContentInstruction(attributeContentInstruction);
+			expandedNode = doAttributeContentInstruction(attributeContentInstruction);
 		}
 		else if (root instanceof CapturesInstruction)
 		{ 				
-			allSibling = doLoop(iterator);
+			expandedNode = doLoop(iterator);
 		}
 		else if (root instanceof EndInstruction)
 		{
 			EndInstruction endInstruction = (EndInstruction) root;
 			endLoop(endInstruction);			
-			allSibling = new Vector<Cloneable>();
+			expandedNode = new Vector<Cloneable>();
 		}
-		else if (root instanceof ProcessingInstruction && ExpansionInstruction.isExpandPI((ProcessingInstruction) root))
+		else if (root instanceof LocatedProcessingInstruction && ExpansionInstruction.isExpandPI((LocatedProcessingInstruction) root))
 		{
-			ProcessingInstruction pi = (ProcessingInstruction) root;
+			LocatedProcessingInstruction pi = (LocatedProcessingInstruction) root;
 			ExpansionInstruction ei = ExpansionInstruction.create(pi);			
 			iterator.set(ei);
-			allSibling = computeNode(iterator);
+			expandedNode = computeNode(iterator);
 		}
-		else
+		else			
 		{
 			rootClone = root.clone();
-			allSibling = new Vector<Cloneable>(1);
-			allSibling.add(rootClone);
+			expandedNode = new Vector<Cloneable>(1);
+			expandedNode.add(rootClone);
 		}
-		return allSibling;
+		return expandedNode;
 	}
 
 	protected Vector<Cloneable> doLoop(Iterator loopIterator)
@@ -166,9 +169,7 @@ public class Expander
 	 */
 	private Vector<Cloneable> doAttributeContentInstruction(AttributeContentInstruction attributeContentInstruction)
 	{
-		String attributeId = attributeContentInstruction.getAttributeId();
-		Element parent = attributeContentInstruction.getParentElement();
-		Attribute attribute = parent.getAttribute(attributeId);
+		Attribute attribute = attributeContentInstruction.getAttribute();
 
 		if (attribute != null)
 		{
@@ -239,8 +240,8 @@ public class Expander
 		{
 			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
 			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
-			Artefact artefact = new Artefact("");
-			LocationImpl locationImpl = new LocationImpl(artefact, -1, endInstruction.getColumn(), endInstruction.getLine());
+			Artifact artifact = new Artifact("");
+			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(), endInstruction.getLine());
 			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
 			Notifications.getInstance().add(contextual);
 		}

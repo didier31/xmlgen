@@ -1,5 +1,6 @@
 package org.xmlgen.context;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -61,16 +62,6 @@ public class FrameStack implements Map<String, Object>
 		}
 		while (notFound || i > 0); 
 		return !notFound;
-	}
-
-	
-	/**
-	 * Returns top frame's entry set 
-	 */	
-	@Override
-	public Set<java.util.Map.Entry<String, Object>> entrySet() 
-	{
-	return null;
 	}
 
 	/**
@@ -234,6 +225,50 @@ public class FrameStack implements Map<String, Object>
 			string += '(' + key + ", " + get(key) + ")\n";
 		}
 	return string;
+	}
+	
+	/**
+	 * Returns top frame's entry set 
+	 */	
+	@Override
+	public Set<java.util.Map.Entry<String, Object>> entrySet() 
+	{			
+		ArrayList<java.util.Map.Entry<String, Object>> copy = new ArrayList<java.util.Map.Entry<String, Object>>(size());
+		for (int i = stack.size() - 1; i >= 0; i--)
+		{
+			for (Entry<String, Object> e : stack.elementAt(i).entrySet()) 
+			{
+				copy.add(new MyEntry<String, Object>(e.getKey(), e.getValue()));
+			}
+		}		
+	return new HashSet<java.util.Map.Entry<String, Object>>(copy);
+	}
+	
+	final class MyEntry<K, V> implements Map.Entry<K, V> {
+	    private final K key;
+	    private V value;
+
+	    public MyEntry(K key, V value) {
+	        this.key = key;
+	        this.value = value;
+	    }
+
+	    @Override
+	    public K getKey() {
+	        return key;
+	    }
+
+	    @Override
+	    public V getValue() {
+	        return value;
+	    }
+
+	    @Override
+	    public V setValue(V value) {
+	        V old = this.value;
+	        this.value = value;
+	        return old;
+	    }
 	}
 }
 

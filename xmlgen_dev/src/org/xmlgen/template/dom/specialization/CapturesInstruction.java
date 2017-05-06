@@ -6,11 +6,11 @@ import java.util.Vector;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.jdom2.Document;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -25,8 +25,7 @@ import org.xmlgen.parser.pi.PIParser.LabelContext;
 
 public class CapturesInstruction extends ExpansionInstruction 
 {
-	@SuppressWarnings("unchecked")
-	public CapturesInstruction(ProcessingInstruction pi, CapturesContext capturesInstruction)
+	public CapturesInstruction(LocatedProcessingInstruction pi, CapturesContext capturesInstruction)
 	{
 		super(pi);
 		LabelContext labelContext = capturesInstruction.label();
@@ -36,7 +35,8 @@ public class CapturesInstruction extends ExpansionInstruction
 		
 		for (CaptureContext  capture : capturesInstruction.capture())
 		{
-			AstResult parsedQuery = InstructionParser.parseQuery(capture.expression().getText());
+			String queryToParse = capture.expression().getText();
+			AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, pi);
 			Iterator<Object> iterator = null;
 			if (parsedQuery.getErrors().isEmpty())
 			{
@@ -44,32 +44,56 @@ public class CapturesInstruction extends ExpansionInstruction
 				if (!datasourcesIDs.contains(id))
 				{
 					Object result = eval(parsedQuery);
-					if (result instanceof Iterable)
-					{
-						iterator = ((Iterable<Object>) result).iterator();										
-					}
-					else
-					{
-						Vector<Object> results = new Vector<Object>(1);
-						results.add(result);
-						iterator = results.iterator();
-					}					
-				assert(iterator != null);
-				datasourcesIDs.add(id);
-				iterators.add(iterator);
-				addToCurrentFrame(id);
+					iterator = createEMFIterator(result);	
+					assert(iterator != null);
+					datasourcesIDs.add(id);
+					iterators.add(iterator);
+					// Initialize loop variable with the whole content
+					// in order to be used in the following variables of the same captures instruction.
+					// (Note : The whole value will be replaced further by iterated items 
+					// when this.iterate() method will be called)
+					addToCurrentFrame(id, result);
 				}
 				else
 				{
-					Notifications notifications = Notifications.getInstance();
-					Token startToken = capture.dataID().getStart();
-				   // TODO : Resolve -1 problem for column parameter.
-               LocationImpl location = new LocationImpl(new Artefact(id), startToken.getStartIndex(), -1, startToken.getLine());	  
-               ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
-               notifications.add(contextNotification); 
+					notifyDuplicateId(capture, id); 
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param capture
+	 * @param id
+	 */
+	private void notifyDuplicateId(CaptureContext capture, String id)
+	{
+		Token startToken = capture.dataID().getStart();
+		// TODO : Resolve -1 problem for column parameter.
+		LocationImpl location = new LocationImpl(new Artifact(id), startToken.getStartIndex(), -1, startToken.getLine());	  
+		ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
+		notifications.add(contextNotification);
+	}
+
+	/**
+	 * @param result
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private Iterator<Object> createEMFIterator(Object result)
+	{
+		Iterator<Object> iterator;
+		if (result instanceof Iterable)
+		{
+			iterator = ((Iterable<Object>) result).iterator();										
+		}
+		else
+		{
+			Vector<Object> results = new Vector<Object>(1);
+			results.add(result);
+			iterator = results.iterator();
+		}
+		return iterator;
 	}
 	
 	public CapturesInstruction(Vector<String> dataSourceIDs, Vector<Iterator<Object>> dataSourcesIterators, Document ownerDoc)
@@ -80,23 +104,23 @@ public class CapturesInstruction extends ExpansionInstruction
 		this.iterators = dataSourcesIterators;
 	}
 	
-	protected void addToCurrentFrame(String id)
+	protected void addToCurrentFrame(String id, Object value)
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		assert(!currentFrame.containsKey(id));
-		currentFrame.put(id, new String("####"));
+		currentFrame.put(id, value);
 	}
 	
 	/**
 	 * 
-	 * @return if iterate can be run again
+	 * @return if something has been effectively iterated.
 	 */
 	public boolean iterate()
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		
 		int i = 0;
-		boolean notAtTheEnd = true;
+		boolean notAtTheEnd = false;
 		for (String id : datasourcesIDs)
 		{
 			Iterator<Object> iterator = iterators.get(i); 
@@ -104,16 +128,23 @@ public class CapturesInstruction extends ExpansionInstruction
 			{
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
-			}
-			else
-			{
-				notAtTheEnd = false;
+				informUser(id, object);
+				notAtTheEnd = true;
 			}
 			i++;
 		}
 	return notAtTheEnd;
 	}
 	
+	protected void informUser(String id, Object object)
+	{
+		
+		String referenceValue = object != null ? object.toString() : "null";
+		Message message = new Message(id + " = " + referenceValue);
+		Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource, message );
+		notifications.add(notification);
+	}
+
 	public String getLabel()
 	{
 		return label;
@@ -130,4 +161,5 @@ public class CapturesInstruction extends ExpansionInstruction
 	private Vector<Iterator<Object>> iterators;
 	private String label;
 	
+	static private Notifications notifications = Notifications.getInstance();
 }

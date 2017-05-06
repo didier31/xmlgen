@@ -3,7 +3,7 @@ package org.xmlgen.context;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xmlgen.notifications.Artefact;
+import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
@@ -44,8 +44,8 @@ public class XMLErrorsReporter implements ErrorHandler
 	{
 		Message message = new Message(exception.getMessage());
 		Notification notification = new Notification(module, gravity, subject, message);
-		Artefact artefact = new Artefact(exception.getPublicId());
-		LocationImpl location = new LocationImpl(artefact, -1, exception.getColumnNumber(), exception.getLineNumber());
+		Artifact artifact = new Artifact(exception.getPublicId());
+		LocationImpl location = new LocationImpl(artifact, -1, exception.getColumnNumber(), exception.getLineNumber());
 		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
 		notifications.add(contextualNotification);
 	}

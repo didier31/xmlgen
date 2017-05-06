@@ -27,7 +27,7 @@ attributeContent : ATTRIBUTE attributeID '=' expression
 elementContent : expression
 ;
 
-attributeID : Ident
+attributeID : Prefix? Ident
 ;
 
 end: END label? 
@@ -40,4 +40,7 @@ END: [Ee][nN][Dd]
 ;
 
 ATTRIBUTE: [aA][tT][tT][rR]
+;
+
+Prefix: (Ident ':')
 ;

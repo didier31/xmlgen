@@ -1,11 +1,11 @@
 package org.xmlgen.template.dom.specialization;
 
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 
 public class EndInstruction extends ExpansionInstruction 
 {
-	protected EndInstruction(ProcessingInstruction pi, EndContext endInstruction) 
+	protected EndInstruction(LocatedProcessingInstruction pi, EndContext endInstruction) 
 	{
 		super(pi);
 		setLabel(endInstruction.label().Ident().getText());
