@@ -15,7 +15,7 @@
 	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.uml2.types_2.0.0.v20161114-0827.jar"/>
 	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.uml2.uml.profile.standard_1.0.100.v20161114-0827.jar"/>
 	<classpathentry kind="lib" path="lib/jing.jar"/>
-	<classpathentry kind="lib" path="lib/antlr-4.7-complete.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-4.7-complete.jar" sourcepath="C:/Users/didier/Downloads/antlr4-4.7/runtime/Java/src/"/>
 	<classpathentry kind="lib" path="lib/lib/xalan/serializer-2.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/lib/xalan/xalan-2.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/lib/jaxen-1.1.6.jar"/>
@@ -24,5 +24,18 @@
 	<classpathentry kind="lib" path="lib/jdom-2.0.6-contrib.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-2.0.6.jar" sourcepath="C:/Users/didier/Downloads/jdom-2.0.6-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.acceleo.query"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.notation_1.8.0.201606071631.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.papyrus.infra.viewpoints.policy_1.2.0.201703080851.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.papyrus.infra.viewpoints.configuration_2.0.0.201703080851.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.papyrus.infra.viewpoints.iso42010_1.2.0.201703080851.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.papyrus.infra.core_2.1.1.201703080851.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.papyrus.infra.constraints_2.0.0.201703080851.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.emf.type.core_1.9.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.diagram.core_1.7.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.common.core_1.7.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.emf.core_1.7.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.emf.clipboard.core_1.7.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.gmf.runtime.emf.commands.core_1.7.0.201606071959.jar"/>
+	<classpathentry kind="lib" path="C:/Users/didier/.p2/pool/plugins/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

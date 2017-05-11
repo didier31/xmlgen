@@ -96,7 +96,7 @@ public class InstructionParser
 					                                       Gravity.Fatal,
 					                                       Subject.Template,
 					                                       message);
-			Artifact artefact = new Artifact("xml template");
+			Artifact artefact = new Artifact("");
 			LocationImpl location = new LocationImpl(artefact, -1, pi.getColumn(), pi.getLine());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			Notifications.getInstance().add(contextual);

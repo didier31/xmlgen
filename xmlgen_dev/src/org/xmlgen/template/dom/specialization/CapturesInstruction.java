@@ -128,21 +128,25 @@ public class CapturesInstruction extends ExpansionInstruction
 			{
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
-				informUser(id, object);
 				notAtTheEnd = true;
+				traceForUser(id, object);
 			}
 			i++;
 		}
 	return notAtTheEnd;
 	}
 	
-	protected void informUser(String id, Object object)
-	{
-		
+	protected void traceForUser(String id, Object object)
+	{		
+		if (Context.getInstance().isTrace())
+		{
 		String referenceValue = object != null ? object.toString() : "null";
 		Message message = new Message(id + " = " + referenceValue);
 		Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource, message );
-		notifications.add(notification);
+		LocationImpl location = new LocationImpl(new Artifact(getLabel()!= null ? getLabel() : ""), -1, getColumn(), getLine());
+		ContextualNotification contextual = new ContextualNotification(notification, location);
+		notifications.add(contextual);
+		}
 	}
 
 	public String getLabel()

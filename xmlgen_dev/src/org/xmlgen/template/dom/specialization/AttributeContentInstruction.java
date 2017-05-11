@@ -23,7 +23,7 @@ public class AttributeContentInstruction extends ContentInstruction
 	{
 		super(pi, parsedPI.expression().getText());
 		attributeId = parsedPI.attributeID().Ident().getText();
-		TerminalNode prefixToken = parsedPI.attributeID().Prefix();
+		TerminalNode prefixToken = parsedPI.attributeID().prefix() != null ? parsedPI.attributeID().prefix().Ident() : null;
 		if (prefixToken != null)
 		{
 			prefix = prefixToken.getText();

@@ -26,6 +26,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.gmf.runtime.notation.NotationFactory;
+import org.eclipse.gmf.runtime.notation.impl.NotationPackageImpl;
+import org.eclipse.papyrus.infra.viewpoints.style.impl.StylePackageImpl;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.jdom2.Document;
 import org.jdom2.JDOMException;
@@ -88,6 +93,16 @@ public void setSchema(String schema)
 {
 	this.schemaFilename = schema;
 }
+
+public void setTrace()
+{
+	trace = true;
+}
+public boolean isTrace()
+{
+	return trace;
+}
+
 
 public Document getXmlTemplateDocument()
 {
@@ -262,7 +277,13 @@ protected void checkOutput()
 
 protected void registerEMFpackages()
 {
-	UMLResourcesUtil.initLocalRegistries(resourceSet);	
+	UMLResourcesUtil.initLocalRegistries(resourceSet);
+	resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put("http://www.eclipse.org/gmf/runtime/1.0.2/notation", 
+			                                                                    NotationFactory.eINSTANCE);
+	resourceSet.getPackageRegistry().put("http://www.eclipse.org/gmf/runtime/1.0.2/notation", NotationPackageImpl.eINSTANCE);
+	resourceSet.getPackageRegistry().put("http://www.eclipse.org/papyrus/infra/viewpoints/policy/style", StylePackageImpl.eINSTANCE);
+	resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("notation", new XMIResourceFactoryImpl());
+	resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new GenericXMLResourceFactoryImpl());
 }
 
 protected void checkDataSources()
@@ -387,6 +408,8 @@ private File output = null;
 private String schemaFilename = null;
 private Schema schema = null;
 private FrameStack frameStack = new FrameStack("");
+
+private boolean trace;
 
 private Notifications notifications = Notifications.getInstance();
 private ErrorHandler templateErrorHandler = new XMLErrorsReporter(notifications, Module.Parameters_check, Subject.Template);

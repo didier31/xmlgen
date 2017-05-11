@@ -31,7 +31,7 @@ WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 cmdline : cmd* EOF
 ;
 
-cmd : dataSource | template | schema | output
+cmd : dataSource | template | schema | output | trace
 ;
 
 dataSource : id=Ident '=' filename=Filename {
@@ -69,6 +69,12 @@ template : '--template' filename=Filename   {
 	                                           Context.getInstance().setXmlTemplate(filename);
                                             }
 ;
+
+trace: '--trace'                            {
+		                                        Context.getInstance().setTrace();
+                                            }
+;
+
 
 Filename : '\''  (ESC|.)*?  '\''
 ;

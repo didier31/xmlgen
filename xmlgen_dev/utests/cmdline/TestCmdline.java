@@ -22,6 +22,11 @@ import org.xmlgen.parser.cmdline.SmartCmdlineParser;
 
 public class TestCmdline {
 	
+	public String fixedLengthString(String string, int length) 
+	{
+	    return String.format("%1$"+length+ "s", string);
+	}
+	
 	public String toString(Notifications notifications)
 	{
 		String string = "";
@@ -41,12 +46,12 @@ public class TestCmdline {
 				}
 			}
 			
-			string += notification.getGravity() 
-			  + "|" + notification.getModule() 
-			  + "|" + notification.getSubject()
-			  + "|" + specific
-			  + "|" + notification.getMessage()
-			  + "\n";
+			string += fixedLengthString(notification.getGravity().toString(), 6) 
+			  + "|" + fixedLengthString(notification.getModule().toString(), 9) 
+			  + "|" + fixedLengthString(notification.getSubject().toString(), 11)
+			  + "|" + fixedLengthString(specific, 12)
+			  + "|" + fixedLengthString(notification.getMessage().toString(), 40)
+			  + "\n"; 		
 		}
 
 	HashMap<Gravity, Integer> counts = notifications.getCounts();	
@@ -94,23 +99,6 @@ public class TestCmdline {
 		}
 	}
 	
-	
-	protected void deleteFiles(String ... filesPaths)
-	{
-		for (String filePath : filesPaths)
-		{
-			File file = new File(filePath.substring(1, filePath.length()-1));
-			file.delete();
-		}
-	}
-	
-	protected void run(String[] vargs, String ...filesToCreatePaths) throws IOException
-	{
-		createFiles(filesToCreatePaths);			
-		run(vargs);
-		deleteFiles(filesToCreatePaths);
-	} 
-	
 	protected void run(String[] vargs) throws IOException
 	{
 		Context.clear();
@@ -138,6 +126,8 @@ public class TestCmdline {
 			document = expander.expand(Context.getInstance().getXmlTemplateDocument());
 		}
 		
+		err.println("\n" + toString(notifications));
+		
       XMLOutputter xml = new XMLOutputter();
       // we want to format the xml. This is used only for demonstration. pretty formatting adds extra spaces and is generally not required.
       xml.setFormat(Format.getPrettyFormat());
@@ -147,7 +137,6 @@ public class TestCmdline {
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());
 		output.println(tree.toStringTree(parser));
-		err.println("\n" + toString(notifications));
 		output.close();
 	}
 	
@@ -178,11 +167,12 @@ public class TestCmdline {
 		prepareRun();
 		
 		String dataSource1 = "'" + cdir + "design.uml'";
+		String dataSource2 = "'" + cdir + "design.notation'";
+		String info = "'" + cdir + "info.xml'";
 		String template = "'" + cdir + "docbook_template.xml'";
-		//template = "'" + cdir + "SansTitre.xhtml'";
 		String output = "'" + odir.getPath() + File.separator + "output'";
 		
-		String[] vargs = {"data_source1=", dataSource1, 
+		String[] vargs = {"data_source1=", dataSource1, "data_source2=", dataSource2, "info=", info,
 				            "--template", template,
 				            "--output", output };
 		
@@ -401,7 +391,7 @@ public class TestCmdline {
 				          "--schema", schema,
 				          "--output", output };
 		
-		run(vargs, schema);
+		run(vargs);
 	}
 
 	@Test
