@@ -1,49 +1,104 @@
+/*
+ * 
+ */
 package org.xmlgen.template.dom.location;
 
-public class Location {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Location.
+ */
+public class Location
+{
 
-   public static final String LOCATION = "locationKey";
+	/** The Constant LOCATION. */
+	public static final String LOCATION = "locationKey";
 
-   public Location(String systemId,
-   		          int startLine, int startColumn,
-                    int endLine, int endColumn) 
-   {
-       super();
-       this.systemId = systemId;
-       this.startLine = startLine;
-       this.startColumn = startColumn;
-       this.endLine = endLine;
-       this.endColumn = endColumn;
-   }
+	/**
+	 * Instantiates a new location.
+	 *
+	 * @param systemId
+	 *           the system id
+	 * @param startLine
+	 *           the start line
+	 * @param startColumn
+	 *           the start column
+	 * @param endLine
+	 *           the end line
+	 * @param endColumn
+	 *           the end column
+	 */
+	public Location(String systemId, int startLine, int startColumn, int endLine, int endColumn)
+	{
+		super();
+		this.systemId = systemId;
+		this.startLine = startLine;
+		this.startColumn = startColumn;
+		this.endLine = endLine;
+		this.endColumn = endColumn;
+	}
 
-   public String getSystemId() 
-   {
-       return systemId;
-   }
+	/**
+	 * Gets the system id.
+	 *
+	 * @return the system id
+	 */
+	public String getSystemId()
+	{
+		return systemId;
+	}
 
-   public int getStartLine() 
-   {
-       return startLine;
-   }
+	/**
+	 * Gets the start line.
+	 *
+	 * @return the start line
+	 */
+	public int getStartLine()
+	{
+		return startLine;
+	}
 
-   public int getStartColumn() 
-   {
-       return startColumn;
-   }
+	/**
+	 * Gets the start column.
+	 *
+	 * @return the start column
+	 */
+	public int getStartColumn()
+	{
+		return startColumn;
+	}
 
-   public int getEndLine() 
-   {
-       return endLine;
-   }
+	/**
+	 * Gets the end line.
+	 *
+	 * @return the end line
+	 */
+	public int getEndLine()
+	{
+		return endLine;
+	}
 
-   public int getEndColumn() 
-   {
-       return endColumn;
-   }
-   
-   private final String systemId;
-   private final int startLine;
-   private final int startColumn;
-   private final int endLine;
-   private final int endColumn;
+	/**
+	 * Gets the end column.
+	 *
+	 * @return the end column
+	 */
+	public int getEndColumn()
+	{
+		return endColumn;
+	}
+
+	/** The system id. */
+	private final String systemId;
+
+	/** The start line. */
+	private final int startLine;
+
+	/** The start column. */
+	private final int startColumn;
+
+	/** The end line. */
+	private final int endLine;
+
+	/** The end column. */
+	private final int endColumn;
 }
