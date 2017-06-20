@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.xmlgen.template.dom.specialization;
 
 import java.util.List;
@@ -29,20 +32,35 @@ import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
 import org.jdom2.located.LocatedProcessingInstruction;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ExpansionInstruction.
+ */
 abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 {
+
+	/** The Constant piMarker. */
 	public final static String piMarker = "xmlgen";
-	
+
 	/**
-	 * Test is ProcessingInstruction is an expand PI
+	 * Test is ProcessingInstruction is an expand PI.
+	 *
 	 * @param pi
-	 * @return
+	 *           the pi
+	 * @return true, if is expand PI
 	 */
 	static public boolean isExpandPI(ProcessingInstruction pi)
 	{
 		return piMarker.compareToIgnoreCase(pi.getTarget()) == 0;
 	}
-	
+
+	/**
+	 * Creates the.
+	 *
+	 * @param pi
+	 *           the pi
+	 * @return the expansion instruction
+	 */
 	public static ExpansionInstruction create(LocatedProcessingInstruction pi)
 	{
 		assert isExpandPI(pi);
@@ -51,31 +69,37 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		if (instruction instanceof CapturesContext)
 		{
 			CapturesContext capturesInstruction = (CapturesContext) instruction;
-		   domInstruction = new CapturesInstruction(pi, capturesInstruction);
+			domInstruction = new CapturesInstruction(pi, capturesInstruction);
 		}
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
-		   domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);		   			   			   
+			domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);
 		}
 		else if (instruction instanceof ElementContentContext)
 		{
 			ElementContentContext elementContentInstruction = (ElementContentContext) instruction;
-		   domInstruction = new ElementContentInstruction(pi, elementContentInstruction);
+			domInstruction = new ElementContentInstruction(pi, elementContentInstruction);
 		}
 		else if (instruction instanceof EndContext)
 		{
-		   EndContext endInstruction = (EndContext) instruction;
-		   domInstruction = new EndInstruction(pi, endInstruction);
+			EndContext endInstruction = (EndContext) instruction;
+			domInstruction = new EndInstruction(pi, endInstruction);
 		}
 		else
 		{
 			domInstruction = null;
-		}			
+		}
 		return domInstruction;
-	}	
-	
-	protected ExpansionInstruction(LocatedProcessingInstruction pi) 
+	}
+
+	/**
+	 * Instantiates a new expansion instruction.
+	 *
+	 * @param pi
+	 *           the pi
+	 */
+	protected ExpansionInstruction(LocatedProcessingInstruction pi)
 	{
 		super(pi.getTarget(), pi.getData());
 		setColumn(pi.getColumn());
@@ -85,43 +109,61 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		parent.removeContent(i);
 		parent.addContent(i, this);
 	}
-	
+
+	/**
+	 * Instantiates a new expansion instruction.
+	 *
+	 * @param target
+	 *           the target
+	 * @param data
+	 *           the data
+	 */
 	protected ExpansionInstruction(String target, String data)
 	{
 		super(target, data);
 	}
-	
+
 	static
 	{
 		InstructionParser.getQueryEnv().registerEPackage(UMLPackage.eINSTANCE);
 	}
-	
+
+	/**
+	 * Notify errors.
+	 *
+	 * @param compiledQuery
+	 *           the compiled query
+	 */
 	protected void notifyErrors(AstResult compiledQuery)
 	{
 		List<Error> errors = compiledQuery.getErrors();
 		for (Error error : errors)
 		{
 			Message message = new Message(error.toString());
-			Notification notification = new Notification(Module.Parser,
-					                                     Gravity.Fatal,
-					                                     Subject.Template,
-					                                     message);
+			Notification notification = new Notification(Module.Parser, Gravity.Fatal, Subject.Template, message);
 			Artifact artifact = new Artifact("Xml template");
 			LocationImpl location = new LocationImpl(artifact, -1, getColumn(), getLine());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			Notifications.getInstance().add(contextual);
 		}
 	}
-	
+
+	/**
+	 * Eval.
+	 *
+	 * @param parsedQuery
+	 *           the parsed query
+	 * @return the object
+	 */
 	protected Object eval(AstResult parsedQuery)
 	{
 		if (parsedQuery != null && parsedQuery.getErrors().isEmpty())
-		{   
-			QueryEvaluationEngine engine = new QueryEvaluationEngine(InstructionParser.getQueryEnv());			
-			FrameStack frameStack = Context.getInstance().getFrameStack();			
-			EvaluationResult evaluationResult = engine.eval(parsedQuery, frameStack);		
+		{
+			QueryEvaluationEngine engine = new QueryEvaluationEngine(InstructionParser.getQueryEnv());
+			FrameStack frameStack = Context.getInstance().getFrameStack();
+			EvaluationResult evaluationResult = engine.eval(parsedQuery, frameStack);
 			Object result = evaluationResult.getResult();
-			
+
 			if (evaluationResult.getDiagnostic() != null)
 			{
 				Diagnostic diagnostic = evaluationResult.getDiagnostic();
@@ -142,60 +184,68 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 				{
 					return result;
 				}
-			}			
+			}
 			else
 			{
 				return result;
-			}			
+			}
 		}
 		else
 		{
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Notify errors.
+	 *
+	 * @param diagnostic
+	 *           the diagnostic
+	 */
 	protected void notifyErrors(Diagnostic diagnostic)
 	{
-		assert(diagnostic != null);
+		assert (diagnostic != null);
 		String messageString = diagnostic.getMessage();
 		if (messageString != null)
 		{
 			int severity = diagnostic.getSeverity();
-			assert(severity != Diagnostic.OK);
+			assert (severity != Diagnostic.OK);
 			Message message = new Message(messageString);
 			Gravity gravity;
 			switch (severity)
 			{
-			   case Diagnostic.CANCEL : gravity = Gravity.Fatal;
-			                            break;
-		                         
-		      case Diagnostic.ERROR  : gravity = Gravity.Error;
-		                               break;
-		                         
-		      case Diagnostic.WARNING: gravity = Gravity.Warning;
-		                               break;
-		
-		      case Diagnostic.INFO   : gravity = Gravity.Information;
-		                               break;
-		
-		      default : assert(false); gravity = Gravity.Fatal;
-		   }			
-		   Notification notification = new Notification(Module.Parser,
-				                                       gravity,
-				                                       Subject.Template,
-				                                       message);
-		   LocationImpl location = new LocationImpl(null, -1, getColumn(), getLine());
-			ContextualNotification contextual = new ContextualNotification(notification, location );
-		   Notifications.getInstance().add(contextual);
+			case Diagnostic.CANCEL:
+				gravity = Gravity.Fatal;
+				break;
+
+			case Diagnostic.ERROR:
+				gravity = Gravity.Error;
+				break;
+
+			case Diagnostic.WARNING:
+				gravity = Gravity.Warning;
+				break;
+
+			case Diagnostic.INFO:
+				gravity = Gravity.Information;
+				break;
+
+			default:
+				assert (false);
+				gravity = Gravity.Fatal;
+			}
+			Notification notification = new Notification(Module.Parser, gravity, Subject.Template, message);
+			LocationImpl location = new LocationImpl(null, -1, getColumn(), getLine());
+			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications.getInstance().add(contextual);
 		}
 		for (Diagnostic subDiagnostic : diagnostic.getChildren())
 		{
 			notifyErrors(subDiagnostic);
 		}
 	}
-	/**
-	 * 
-	 */
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 8385870921899134393L;
-	
+
 }

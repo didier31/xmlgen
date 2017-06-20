@@ -2145,7 +2145,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-Q9n5AcaEee76YHiT40GwA"/>
       </children>
       <element xmi:type="uml:Class" href="Functionnal_Specification.uml#_-Q7yoAcaEee76YHiT40GwA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-Q9AwQcaEee76YHiT40GwA" x="352" y="30"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-Q9AwQcaEee76YHiT40GwA" x="450" y="29"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_-RVbQAcaEee76YHiT40GwA" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_-RVbQQcaEee76YHiT40GwA"/>

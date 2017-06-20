@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.xmlgen.expansion.pi.parsing;
 
 import java.util.List;
@@ -26,9 +29,21 @@ import org.xmlgen.parser.pi.PIParser;
 import org.xmlgen.parser.pi.PIParser.ContentContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
 
-public class InstructionParser 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InstructionParser.
+ */
+public class InstructionParser
 {
-	 static public ParserRuleContext parse(ProcessingInstruction pi)
+
+	/**
+	 * Parses the.
+	 *
+	 * @param pi
+	 *           the pi
+	 * @return the parser rule context
+	 */
+	static public ParserRuleContext parse(ProcessingInstruction pi)
 	{
 		InputPIContext inputPI = doParse(pi);
 		if (inputPI.content() != null)
@@ -57,45 +72,72 @@ public class InstructionParser
 			return inputPI.end();
 		}
 		else
-		{			
+		{
 			return null;
 		}
 	}
-	 
+
+	/**
+	 * Parses the query.
+	 *
+	 * @param query
+	 *           the query
+	 * @param pi
+	 *           the pi
+	 * @return the ast result
+	 */
 	public static AstResult parseQuery(String query, LocatedProcessingInstruction pi)
 	{
-	    QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
-	    AstResult astResult = builder.build(query);
-	    notifyErrors(astResult, pi);
-	    return astResult;
+		QueryBuilderEngine builder = new QueryBuilderEngine(queryEnvironment);
+		AstResult astResult = builder.build(query);
+		notifyErrors(astResult, pi);
+		return astResult;
 	}
 
+	/** The query environment. */
 	static private IQueryEnvironment queryEnvironment = Query.newEnvironmentWithDefaultServices(null);
-	
+
+	/**
+	 * Gets the query env.
+	 *
+	 * @return the query env
+	 */
 	static public IQueryEnvironment getQueryEnv()
 	{
 		return queryEnvironment;
 	}
-		
+
+	/**
+	 * Do parse.
+	 *
+	 * @param pi
+	 *           the pi
+	 * @return the input PI context
+	 */
 	protected static InputPIContext doParse(ProcessingInstruction pi)
-	{	
+	{
 		PILexer lexer = new PILexer(CharStreams.fromString(pi.getData()));
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
 		parser.addErrorListener(new SyntaxErrorListener());
 		InputPIContext inputPI = parser.inputPI();
 		return inputPI;
 	}
-	
+
+	/**
+	 * Notify errors.
+	 *
+	 * @param compiledQuery
+	 *           the compiled query
+	 * @param pi
+	 *           the pi
+	 */
 	protected static void notifyErrors(AstResult compiledQuery, LocatedProcessingInstruction pi)
 	{
 		List<Error> errors = compiledQuery.getErrors();
 		for (Error error : errors)
 		{
 			Message message = new Message(error.toString());
-			Notification notification = new Notification(Module.Parser,
-					                                       Gravity.Fatal,
-					                                       Subject.Template,
-					                                       message);
+			Notification notification = new Notification(Module.Parser, Gravity.Fatal, Subject.Template, message);
 			Artifact artefact = new Artifact("");
 			LocationImpl location = new LocationImpl(artefact, -1, pi.getColumn(), pi.getLine());
 			ContextualNotification contextual = new ContextualNotification(notification, location);

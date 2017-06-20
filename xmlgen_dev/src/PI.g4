@@ -9,10 +9,10 @@ import Query;
 inputPI : (captures | content | end) EOF
 ;
 
-captures : (label ':')? capture (',' capture)*
+captures : ('['? label ']'?)? capture (',' capture)*
 ;
 
-capture : dataID '=' expression
+capture : dataID ':' expression
 ;
 
 dataID : Ident
@@ -30,7 +30,7 @@ elementContent : expression
 attributeID : prefix? Ident
 ;
 
-end: END label? 
+end: END ('['? label ']'?)? 
 ;
 
 label: Ident

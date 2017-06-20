@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package cmdline;
 
 import java.io.File;
@@ -5,28 +8,40 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.jdom2.Document;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 import org.junit.Test;
 import org.xmlgen.context.Context;
-import org.xmlgen.expansion.Expander;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
 import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notifications;
-import org.xmlgen.parser.cmdline.SmartCmdlineParser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestCmdline.
+ */
 public class TestCmdline {
 	
+	/**
+	 * Fixed length string.
+	 *
+	 * @param string the string
+	 * @param length the length
+	 * @return the string
+	 */
 	public String fixedLengthString(String string, int length) 
 	{
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
+	/**
+	 * To string.
+	 *
+	 * @param notifications the notifications
+	 * @return the string
+	 */
 	public String toString(Notifications notifications)
 	{
 		String string = "";
@@ -66,6 +81,9 @@ public class TestCmdline {
 	return string;
 	}
 	
+	/**
+	 * Prepare run.
+	 */
 	protected void prepareRun()
 	{
 		String methodName = new Exception().getStackTrace()[1].getMethodName();
@@ -82,67 +100,39 @@ public class TestCmdline {
 	    odir.mkdir();
 	}
 	
-	protected void createFiles(String ... filesPaths) throws IOException
-	{
-		for (String filePath : filesPaths)
-		{
-			File file = new File(filePath.substring(1, filePath.length()-1));
-			try 
-			{
-				file.createNewFile();
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-				throw e;
-			}
-		}
-	}
-	
+	/**
+	 * Run.
+	 *
+	 * @param vargs the vargs
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	protected void run(String[] vargs) throws IOException
 	{
-		Context.clear();
-		Notifications.getInstance().clear();		
-		
-		SmartCmdlineParser parser = new SmartCmdlineParser(vargs);
-		
 		PrintStream err = new PrintStream(new File(odir, "stderr"));		
 		System.setErr(err);
 		
-		ParseTree tree = parser.parse();
+		new Xmlgen().perform(vargs);
 		
 		Context context = Context.getInstance();
-		context.check();
-		
-		Notifications notifications = Notifications.getInstance();
-		HashMap<Gravity, Integer> counts = notifications.getCounts();
-		
-		Expander expander = new Expander();
-		
-		Document document = null;
-		
-		if (counts.get(Gravity.Error) == 0 && counts.get(Gravity.Fatal) == 0)
-		{
-			document = expander.expand(Context.getInstance().getXmlTemplateDocument());
-		}
-		
-		err.println("\n" + toString(notifications));
-		
-      XMLOutputter xml = new XMLOutputter();
-      // we want to format the xml. This is used only for demonstration. pretty formatting adds extra spaces and is generally not required.
-      xml.setFormat(Format.getPrettyFormat());
-      PrintStream xmlOutput = new PrintStream(new File(odir, "output.xml"));
-      xmlOutput.println(xml.outputString(document));
 		
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());
-		output.println(tree.toStringTree(parser));
 		output.close();
+		
+		err.println("\n" + toString(Notifications.getInstance()));
 	}
 	
+	/** The cdir. */
 	private String cdir = "utests/cmdline/input/common/";
+	
+	/** The odir. */
 	private File odir;
 	
+	/**
+	 * Nominal 1 1 with schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_1_with_schema() throws IOException
 	{
@@ -156,29 +146,43 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
+				            "--output", output,
+				            "--services", "cmdline.Hello"};
 		
 		run(vargs); 
 	}
 	
+	/**
+	 * Nominal 1 2 without schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_2_without_schema() throws IOException
 	{
 		prepareRun();
 		
+		String st = System.getProperty("java.class.path");
+		
 		String dataSource1 = "'" + cdir + "design.uml'";
-		String dataSource2 = "'" + cdir + "design.notation'";
 		String info = "'" + cdir + "info.xml'";
 		String template = "'" + cdir + "docbook_template.xml'";
-		String output = "'" + odir.getPath() + File.separator + "output'";
+		String output = "'" + odir.getPath() + File.separator + "output.xml'";
 		
-		String[] vargs = {"data_source1=", dataSource1, "data_source2=", dataSource2, "info=", info,
+		String[] vargs = {"data_source1=", dataSource1, "info=", info,
 				            "--template", template,
-				            "--output", output };
+				            "--trace",
+				            "--services", "cmdline.Hello",
+				            "--output", output};
 		
 		run(vargs);
 	}
 
+	/**
+	 * Nominal 1 3 with schema and http template.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_3_with_schema_and_http_template() throws IOException
 	{
@@ -197,6 +201,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Nominal 1 4 http datasource.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_4_http_datasource() throws IOException
 	{
@@ -213,6 +222,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Nominal 1 5 with rng schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_5_with_rng_schema() throws IOException
 	{
@@ -231,6 +245,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Nominal 1 6 with rnc schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void nominal_1_6_with_rnc_schema() throws IOException
 	{
@@ -249,6 +268,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 1 duplicate reference.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_1_duplicate_reference() throws IOException
 	{
@@ -266,6 +290,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 2 template missing.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_2_template_missing() throws IOException
 	{
@@ -282,6 +311,11 @@ public class TestCmdline {
 		run(vargs);
 	}	
 	
+	/**
+	 * Error 2 3 output missing.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_3_output_missing() throws IOException
 	{
@@ -297,6 +331,11 @@ public class TestCmdline {
 		run(vargs);
 	}	
 	
+	/**
+	 * Error 2 4 data source missing.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_4_data_source_missing() throws IOException
 	{
@@ -315,6 +354,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 5 ds not found.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_5_ds_not_found() throws IOException
 	{
@@ -333,6 +377,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 6 ds rddenied.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_6_ds_rddenied() throws IOException
 	{
@@ -358,6 +407,11 @@ public class TestCmdline {
 		datasource_denied.setReadable(true, false);
 	}
 	
+	/**
+	 * Error 2 7 schema not found.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_7_schema_not_found() throws IOException
 	{
@@ -376,6 +430,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 8 template not found.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_8_template_not_found() throws IOException
 	{
@@ -394,6 +453,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 
+	/**
+	 * Error 2 9 output not found.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_9_output_not_found() throws IOException
 	{
@@ -410,6 +474,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 2 10 output is a dir.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_10_output_is_a_dir() throws IOException
 	{
@@ -430,6 +499,11 @@ public class TestCmdline {
 		prepareRun();
 	}
 	
+	/**
+	 * Error 2 11 outputdir wr denied.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_2_11_outputdir_wr_denied() throws IOException
 	{
@@ -450,6 +524,11 @@ public class TestCmdline {
 		odir.setWritable(true);
 	}	
 	
+	/**
+	 * Error 3 1 syntax error.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_3_1_syntax_error() throws IOException
 	{
@@ -466,6 +545,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 3 2 lex err incorrect dsid.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_3_2_lex_err_incorrect_dsid() throws IOException
 	{
@@ -482,6 +566,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 3 3 lex err.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_3_3_lex_err() throws IOException
 	{
@@ -498,6 +587,11 @@ public class TestCmdline {
 	run(vargs);
 	}	
 	
+	/**
+	 * Error 4 1 with rng schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_4_1_with_rng_schema() throws IOException
 	{
@@ -516,6 +610,11 @@ public class TestCmdline {
 		run(vargs);
 	}
 	
+	/**
+	 * Error 4 2 with rnc schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void error_4_2_with_rnc_schema() throws IOException
 	{

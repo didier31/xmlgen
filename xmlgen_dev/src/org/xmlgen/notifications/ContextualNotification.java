@@ -1,18 +1,40 @@
+/*
+ * 
+ */
 package org.xmlgen.notifications;
 
-public class ContextualNotification extends Notification 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ContextualNotification.
+ */
+public class ContextualNotification extends Notification
 {
-private Artifact location;
 
-public ContextualNotification(Notification notification, Artifact location) 
-{
-	super(notification);
-	this.location = location;
-}
+	/** The location. */
+	private Artifact location;
 
-public Artifact getLocation() 
-{
-	return location;
-}
+	/**
+	 * Instantiates a new contextual notification.
+	 *
+	 * @param notification
+	 *           the notification
+	 * @param location
+	 *           the location
+	 */
+	public ContextualNotification(Notification notification, Artifact location)
+	{
+		super(notification);
+		this.location = location;
+	}
+
+	/**
+	 * Gets the location.
+	 *
+	 * @return the location
+	 */
+	public Artifact getLocation()
+	{
+		return location;
+	}
 
 }

@@ -8,12 +8,22 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author didier
+ * The Class SmartCmdlineParser.
  *
+ * @author didier
  */
-public class SmartCmdlineParser extends CmdlineParser 
+public class SmartCmdlineParser extends CmdlineParser
 {
+
+	/**
+	 * Gets the.
+	 *
+	 * @param vargs
+	 *           the vargs
+	 * @return the common token stream
+	 */
 	static protected CommonTokenStream get(String[] vargs)
 	{
 		String args = "";
@@ -26,7 +36,13 @@ public class SmartCmdlineParser extends CmdlineParser
 		lexer.addErrorListener(new SyntaxErrorListener());
 		return new CommonTokenStream(lexer);
 	}
-	
+
+	/**
+	 * Instantiates a new smart cmdline parser.
+	 *
+	 * @param vargs
+	 *           the vargs
+	 */
 	public SmartCmdlineParser(String[] vargs)
 	{
 		super(get(vargs));
@@ -34,7 +50,12 @@ public class SmartCmdlineParser extends CmdlineParser
 		addErrorListener(new SyntaxErrorListener());
 	}
 
-	public ParseTree parse() 
+	/**
+	 * Parses the.
+	 *
+	 * @return the parses the tree
+	 */
+	public ParseTree parse()
 	{
 		return cmdline();
 	}

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.xmlgen.expansion.pi.parsing;
 
 import org.antlr.v4.runtime.BaseErrorListener;
@@ -13,20 +16,33 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 
-public class SyntaxErrorListener extends BaseErrorListener 
+// TODO: Auto-generated Javadoc
+/**
+ * The listener interface for receiving syntaxError events. The class that is
+ * interested in processing a syntaxError event implements this interface, and
+ * the object created with that class is registered with a component using the
+ * component's <code>addSyntaxErrorListener<code> method. When the syntaxError
+ * event occurs, that object's appropriate method is invoked.
+ *
+ * @see SyntaxErrorEvent
+ */
+public class SyntaxErrorListener extends BaseErrorListener
 {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.antlr.v4.runtime.BaseErrorListener#syntaxError(org.antlr.v4.runtime.
+	 * Recognizer, java.lang.Object, int, int, java.lang.String,
+	 * org.antlr.v4.runtime.RecognitionException)
+	 */
 	@Override
-	public void syntaxError(Recognizer<?,?> recognizer,
-            Object offendingSymbol,
-            int line,
-            int charPositionInLine,
-            String msg,
-            RecognitionException e)
+	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
+			String msg, RecognitionException e)
 	{
-		Notification syntax_error = new Notification(Module.Parser,
-				                                     Gravity.Error,
-				                                     Subject.Template, 
-				                                     new Message(msg));
+		Message message = new Message(msg);
+		Notification syntax_error = new Notification(Module.Parser, Gravity.Error, Subject.Template, message);
 		Artifact artifact = new Artifact("");
 		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, charPositionInLine, line);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
