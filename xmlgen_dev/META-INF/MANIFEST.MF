@@ -1,30 +1,31 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: xmlgen
+Bundle-Name: Xmgen
 Bundle-SymbolicName: org.xmlgen
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: lib/jing.jar,
- lib/lib/xalan/serializer-2.7.2.jar,
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.xmlgen,
+ org.xmlgen.context,
+ org.xmlgen.notifications
+Import-Package: org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.resource.impl,
+ org.eclipse.emf.ecore.xmi.impl,
+ org.eclipse.emf.ecore.xml.type.internal,
+ org.eclipse.uml2.uml,
+ org.eclipse.uml2.uml.resources.util,
+ org.eclipse.uml2.uml.util
+Require-Bundle: org.eclipse.acceleo.query;bundle-version="6.0.1",
+ org.eclipse.acceleo.annotations;bundle-version="6.0.1",
+ com.google.guava
+Bundle-ClassPath: lib/lib/xalan/serializer-2.7.2.jar,
  lib/lib/xalan/xalan-2.7.2.jar,
  lib/lib/jaxen-1.1.6.jar,
  lib/lib/xercesImpl.jar,
  lib/lib/xml-apis.jar,
+ lib/antlr-4.7-complete.jar,
  lib/jdom-2.0.6-contrib.jar,
  lib/jdom-2.0.6.jar,
- lib/antlr-4.7-complete.jar
-Export-Package: org.xmlgen,
- org.xmlgen.context,
- org.xmlgen.notifications
-Bundle-Vendor: Didier Garcin
-Require-Bundle: org.eclipse.emf.common,
- com.google.guava,
- org.eclipse.emf.ecore,
- org.eclipse.uml2.uml.resources,
- org.eclipse.gmf.runtime.diagram.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.core.runtime;version="3.5.0",
- org.eclipse.equinox.app;version="1.1.0",
- org.eclipse.gmf.runtime.diagram.ui.image,
- org.eclipse.gmf.runtime.diagram.ui.render.util,
- org.eclipse.gmf.runtime.notation,
- org.eclipse.papyrus.infra.viewpoints.style
+ lib/jing.jar,
+ .

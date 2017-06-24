@@ -48,18 +48,24 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 
 /**
- * Context is usually initialized by the command line parser : - xml template URI
+ * Context is usually initialized by the command line parser : 
+ * - xml template URI
  * - data sources URIs and reference names - xml schema URI - output pathname -
  * trace on/off - user-defined java services
  * 
- * It provides the parameters given by the user : - xml template - xml schema -
- * data sources (reference name, value) - trace on/off
+ * It provides the parameters given by the user : 
+ * - xml template 
+ * - xml schema -
+ * data sources (reference name, value) 
+ * - trace on/off
  * 
- * Are registered to acceleo queries : - used-defined java services
+ * Are registered to acceleo queries : 
+ * - used-defined java services
  * 
- * Can checked : - xml schema (existence and readability and correctness) - xml
- * template (existence and readability and correctness against xml-schema). -
- * data sources (existence and readability and correctness)
+ * Can checked : 
+ * - xml schema (existence and readability and correctness) 
+ * - xmltemplate (existence and readability and correctness against xml-schema). 
+ * - data sources (existence and readability and correctness)
  * 
  * It provides frame stack of data sources for the expansion processing.
  * 
