@@ -111,7 +111,7 @@ public class TestCmdline {
 		PrintStream err = new PrintStream(new File(odir, "stderr"));		
 		System.setErr(err);
 		
-		new Xmlgen().perform(vargs);
+		new Xmlgen().perform(vargs, null);
 		
 		Context context = Context.getInstance();
 		
@@ -161,8 +161,6 @@ public class TestCmdline {
 	public void nominal_1_2_without_schema() throws IOException
 	{
 		prepareRun();
-		
-		String st = System.getProperty("java.class.path");
 		
 		String dataSource1 = "'" + cdir + "design.uml'";
 		String info = "'" + cdir + "info.xml'";

@@ -37,4 +37,9 @@ public class ContextualNotification extends Notification
 		return location;
 	}
 
+	@Override
+	public String toString()
+	{
+		return getLocation().toString() + super.toString(); 
+	}
 }

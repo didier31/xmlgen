@@ -26,19 +26,21 @@ public class Xmlgen
 	public static void main(String[] args)
 	{
 		Xmlgen xmlgen = new Xmlgen();
-		xmlgen.perform(args);
+		xmlgen.perform(args, null);
 		System.err.print(xmlgen.toString(Notifications.getInstance()));
 	}
 
-	public void perform(String[] vargs)
+	public void perform(String[] vargs, ClassLoader userServicesClassloader)
 	{
-		Context.clear();
+		Context.clear();		
 		Notifications.getInstance().clear();
+		
+		Context context = Context.getInstance();
+		context.setUserServicesClassLoader(userServicesClassloader);
 
 		SmartCmdlineParser parser = new SmartCmdlineParser(vargs);
 		parser.parse();
-
-		Context context = Context.getInstance();
+		
 		context.check();
 
 		Notifications notifications = Notifications.getInstance();

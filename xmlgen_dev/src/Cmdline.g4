@@ -20,11 +20,28 @@ import org.xmlgen.notifications.ContextualNotification;
 import java.io.File;
 }
 
-@parser::members {   
+@parser::members 
+{   
 	final private Notification argumentValueMissing = new Notification(Module.Parameters_check, Gravity.Error, Subject.Command_Line, Message.Argument_Value_Missing);	
 	final private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Duplicate_Reference);
 	
 	final private Notifications notifications = Notifications.getInstance();
+	
+	public class Filename
+	{
+		public Filename(String filename)
+		{
+			this.filename = filename;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return filename;
+		}
+		
+	private String filename; 
+	}
 }
 
 WS
@@ -49,9 +66,8 @@ cmd
 
 dataSource
 :
-	id = Ident '=' filename = Filename
+	id = Ident '=' constant = (Filename | Real | Integer | String)
 	{
-	                                           String filename = $filename.text.substring(1, $filename.text.length()-1);
 	                                           FrameStack frameStack = Context.getInstance().getFrameStack();
 	                                           Frame topFrame = frameStack.peek();
 	                                           if ($id.type == Ident)
@@ -63,17 +79,32 @@ dataSource
 	                                                 notifications.add(contextNotification); 
 	                                              } 
 	                                              else
+	                                              
 	                                              {
-	                                              	if ($filename.type == Filename)
+	                                              	switch ($constant.type)
 	                                              	{
-	                                              	   topFrame.put($id.text, filename);	
-	                                              	}
-	                                              	else
-	                                              	{
-	                                              		LocationImpl location = new LocationImpl(new Artifact($filename.text), $filename.index, $filename.pos, $filename.line);
+	                                              	case String:
+	                                              	   topFrame.put($id.text, $constant.text.substring(1, $constant.text.length()-1));
+	                                              	   break;
+	                                              	
+	                                              	case Filename:
+	                                              	   Filename filename = new Filename($constant.text.substring(1, $constant.text.length()-1));
+	                                              	   topFrame.put($id.text, filename);
+	                                              	   break;
+	                                              	
+	                                              	case Real:
+	                                              	   topFrame.put($id.text, new Double($constant.text));
+	                                              	   break;
+	                                              	
+	                                              	case Integer:
+	                                              	   topFrame.put($id.text, new Integer($constant.text));
+	                                              	   break;	                                              	     	                                              
+	                                              	
+	                                              	default:
+	                                              		LocationImpl location = new LocationImpl(new Artifact($constant.text), $constant.index, $constant.pos, $constant.line);
 	                                              		ContextualNotification contextNotification = new ContextualNotification(argumentValueMissing, location);
-	                                              		notifications.add(contextNotification); 
-	                                              	}
+	                                              		notifications.add(contextNotification);
+	                                              	} 
 	                                              }
 	                                           }
 	                                           else 
@@ -187,6 +218,15 @@ Filename
 	)*? '\''
 ;
 
+String
+:
+	'"'
+	(
+		ESC
+		| .
+	)*? '"' 
+;
+
 fragment
 ESC
 :
@@ -207,6 +247,11 @@ Ident
 		| [0-9]
 		| '_'
 	)*
+;
+
+Integer : [0-9]+
+;
+Real : [0-9]+'.'[0-9]+
 ;
 
 fragment

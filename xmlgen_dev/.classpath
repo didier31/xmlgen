@@ -3,17 +3,8 @@
 	<classpathentry kind="src" path="utests"/>
 	<classpathentry kind="src" path="src-gen"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr-4.7-complete.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/jing.jar"/>
-	<classpathentry kind="lib" path="lib/lib/xalan/serializer-2.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/lib/xalan/xalan-2.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/lib/jaxen-1.1.6.jar"/>
-	<classpathentry kind="lib" path="lib/lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="lib/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="lib/jdom-2.0.6-contrib.jar"/>
-	<classpathentry kind="lib" path="lib/jdom-2.0.6.jar" sourcepath="C:/Users/didier/Downloads/jdom-2.0.6-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

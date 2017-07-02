@@ -115,7 +115,7 @@ public class CapturesInstruction extends ExpansionInstruction
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
 				notAtTheEnd = true;
-				traceForUser(id, object);
+				traceIteration(id, object);
 			}
 			i++;
 		}
@@ -176,8 +176,20 @@ public class CapturesInstruction extends ExpansionInstruction
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		assert (!currentFrame.containsKey(id));
 		currentFrame.put(id, value);
+		traceReferenceDeclaration(id, currentFrame);
 	}
 
+	protected void traceReferenceDeclaration(String id, Frame frame)
+	{
+		if (Context.getInstance().isTrace())
+		{
+			Message message = new Message(frame.toString() + " adding " + id);
+			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
+					message);
+			Notifications.getInstance().add(notification);
+		}
+	}
+	
 	/**
 	 * Trace for user.
 	 *
@@ -186,7 +198,7 @@ public class CapturesInstruction extends ExpansionInstruction
 	 * @param object
 	 *           the object
 	 */
-	protected void traceForUser(String id, Object object)
+	protected void traceIteration(String id, Object object)
 	{
 		if (Context.getInstance().isTrace())
 		{

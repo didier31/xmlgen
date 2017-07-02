@@ -267,6 +267,12 @@ public class Notification
 	{
 		return subject;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "In " + getModule().toString() + ", " + getSubject().toString() + " " + getMessage(); 
+	}
 
 	/** The module. */
 	private Module module;

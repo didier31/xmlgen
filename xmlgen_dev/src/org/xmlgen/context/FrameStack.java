@@ -28,7 +28,7 @@ public class FrameStack implements Map<String, Object>
 	 */
 	public FrameStack(String frameName)
 	{
-		stack.push(new Frame(frameName, 0));
+		stack.push(new Frame(frameName));
 	}
 
 	/**
@@ -61,14 +61,13 @@ public class FrameStack implements Map<String, Object>
 	public boolean containsKey(Object key)
 	{
 		String keyStr = (String) key;
-		boolean notFound;
-		int i = stack.size();
-		do
+		boolean notFound = true;
+		int i = stack.size()-1;
+		while (notFound && i >= 0)
 		{
-			i--;
 			notFound = stack.elementAt(i).containsKey(keyStr);
+			i--;
 		}
-		while (notFound || i > 0);
 		return !notFound;
 	}
 
@@ -229,8 +228,9 @@ public class FrameStack implements Map<String, Object>
 	 */
 	public void push(Frame frame)
 	{
-		assert frame.getLevel() >= stack.peek().getLevel();
-		stack.push(frame);
+		int level = stack.size();
+		frame.setLevel(level);
+		stack.push(frame);			
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class FrameStack implements Map<String, Object>
 	{
 		stack.pop();
 	}
-
+	
 	/**
 	 * Pop all frames with frame Names at the same level as top frame.
 	 *

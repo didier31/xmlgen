@@ -4,6 +4,16 @@
 package org.xmlgen.template.dom.specialization;
 
 import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.context.Context;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
+import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notifications;
+import org.xmlgen.notifications.Notification.Gravity;
+import org.xmlgen.notifications.Notification.Message;
+import org.xmlgen.notifications.Notification.Module;
+import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +34,14 @@ public class EndInstruction extends ExpansionInstruction
 	protected EndInstruction(LocatedProcessingInstruction pi, EndContext endInstruction)
 	{
 		super(pi);
-		setLabel(endInstruction.label().Ident().getText());
+		if (endInstruction.label() != null)
+		{
+			setLabel(endInstruction.label().Ident().getText());
+		}
+		else
+		{
+			setLabel(null);
+		}
 	}
 
 	/**
@@ -63,7 +80,28 @@ public class EndInstruction extends ExpansionInstruction
 	{
 		return label;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "end loop" + label != null ? label : "";
+	}
 
+	public void traceEndInstruction()
+	{
+		if (Context.getInstance().isTrace())
+		{
+			Message message = new Message(toString());
+			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
+					message);
+			
+			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getColumn(),
+					getLine());
+			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications.getInstance().add(contextual);
+		}		
+	}
+	
 	/** The label. */
 	private String label;
 

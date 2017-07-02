@@ -89,4 +89,10 @@ public class LocationImpl extends Artifact implements Location
 	{
 		return null;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return super.toString() + ":" + getLineNumber() + ":" + getColumnNumber() + " ";
+	}
 }

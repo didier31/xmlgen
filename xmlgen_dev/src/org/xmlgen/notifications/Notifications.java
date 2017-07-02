@@ -5,6 +5,7 @@ package org.xmlgen.notifications;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import org.xmlgen.notifications.Notification.Gravity;
 
@@ -12,7 +13,7 @@ import org.xmlgen.notifications.Notification.Gravity;
 /**
  * The Class Notifications.
  */
-public class Notifications extends LinkedList<Notification>
+public class Notifications extends LinkedList<Notification> implements Notifier
 {
 
 	/**
@@ -44,7 +45,9 @@ public class Notifications extends LinkedList<Notification>
 	public boolean add(Notification n)
 	{
 		counts.put(n.getGravity(), counts.get(n.getGravity()) + 1);
-		return super.add(n);
+		boolean success = super.add(n);
+		notify(n);
+		return success;
 	}
 
 	/**
@@ -76,6 +79,27 @@ public class Notifications extends LinkedList<Notification>
 		resetCounts();
 	}
 
+	@Override
+	public void notify(Notification notification)
+	{
+		for (Notified notified : notifieds)
+		{
+			notified.notification(notification);
+		}
+	}
+
+	@Override
+	public void add(Notified notififed)
+	{
+		notifieds.add(notififed);
+	}
+
+	@Override
+	public void clearNotifiedQueue()
+	{
+		notifieds.clear();
+	}
+	
 	/** The instance. */
 	static Notifications instance = new Notifications();
 
@@ -85,4 +109,6 @@ public class Notifications extends LinkedList<Notification>
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5330193007718869533L;
 
+
+	private Vector<Notified> notifieds = new Vector<Notified>(1);
 }

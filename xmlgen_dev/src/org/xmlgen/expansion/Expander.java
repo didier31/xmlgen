@@ -10,6 +10,7 @@ import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Text;
+import org.jdom2.located.Located;
 import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
@@ -152,7 +153,6 @@ public class Expander
 		else if (root instanceof EndInstruction)
 		{
 			EndInstruction endInstruction = (EndInstruction) root;
-			endLoop(endInstruction);
 			expandedNode = new Vector<Cloneable>();
 		}
 		else if (root instanceof LocatedProcessingInstruction
@@ -188,7 +188,7 @@ public class Expander
 		CapturesInstruction capturesInstruction = (CapturesInstruction) loopIterator.current();	
 
 		String label = capturesInstruction.getLabel();
-		Frame newFrame = new Frame(label, 0);
+		Frame newFrame = new Frame(label);
 		FrameStack frameStack = Context.getInstance().getFrameStack(); 
 		frameStack.push(newFrame);
 		// Initializes references in the just new created frame in stack
@@ -198,28 +198,146 @@ public class Expander
 
 		Iterator atFirstContentInLoop = new Iterator(loopIterator.current());
 		atFirstContentInLoop.sibling();
+		boolean endInstrNotEncountered = true;
 		while (capturesInstruction.iterate())
 		{
-			boolean EndInstrNotEncountered = true;
+			endInstrNotEncountered = true;
 			loopIterator.set(atFirstContentInLoop.current());
-			while (loopIterator.current() != null && EndInstrNotEncountered)
+			while (loopIterator.current() != null && endInstrNotEncountered)
 			{
 				Content content = loopIterator.current();
-				EndInstrNotEncountered = !(content instanceof EndInstruction);
-				if (EndInstrNotEncountered)
-				{
-					Vector<Cloneable> localExpandedNodes = expandDeeperOnly(loopIterator);
-					expandedNodes.addAll(localExpandedNodes);
-				}
-				if (loopIterator.current() != null)
+				
+				Vector<Cloneable> localExpandedNodes = expandDeeperOnly(loopIterator);
+				expandedNodes.addAll(localExpandedNodes);
+				
+				// NB: this test can be performed asap at this time only
+				//     because LocatedProcessingInstruction is casted in EndInstruction
+				//     by computeNode() from expandDeeperOnly's call and not before.
+				Content computedContent = loopIterator.current();
+				endInstrNotEncountered = !(computedContent instanceof EndInstruction);
+				
+				if (loopIterator.current() != null && endInstrNotEncountered)
 				{
 					loopIterator.sibling();
 				}
 			}
 		}
+		
+		if (!endInstrNotEncountered)
+		{
+			assert(loopIterator.current() instanceof EndInstruction);
+			EndInstruction endInstruction = (EndInstruction) loopIterator.current();
+			endLoop(endInstruction);
+		}
+		else
+		{
+			popFrame();
+		}
+		
 		return expandedNodes;
 	}
 
+	// TODO: Auto-generated Javadoc
+	/**
+	 * End loop.
+	 *
+	 * @param endInstruction
+	 *           the end instruction
+	 */
+	protected void endLoop(EndInstruction endInstruction)
+	{
+		checkEndName(endInstruction);
+		popFrame(endInstruction);
+	}
+
+	/**
+	 * Check that the name of the end instruction is the same 
+	 * as the related capture instruction.
+	 * 
+	 * Notify the user if it is not the case.
+	 * 
+	 * @param endInstruction
+	 */
+	private void checkEndName(EndInstruction endInstruction)
+	{
+		FrameStack frameStack = Context.getInstance().getFrameStack();
+		Frame currentFrame = frameStack.peek();
+		String frameName = currentFrame.getName();
+
+		if ((frameName == null && endInstruction.getLabel() != null) 
+				|| 
+			  frameName != null && endInstruction.getLabel() != null && !frameName.equals(endInstruction.getLabel()))
+		{
+			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
+			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
+					message);
+			Artifact artifact = new Artifact("End instruction");
+			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
+					endInstruction.getLine());
+			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
+			Notifications.getInstance().add(contextual);
+		}
+	}	
+	
+	// TODO: Auto-generated Javadoc
+	/**
+	 * Pop the frame on top of the stack.
+	 * 
+	 * Notify the user if it can be done.
+	 *
+	 * @param located
+	 *          
+	 */
+	protected void popFrame(Located located)
+	{
+		FrameStack frameStack = Context.getInstance().getFrameStack();
+		if (frameStack.isEmpty())
+		{
+			Message message = new Message("No more frame to discard");
+			Notification noMoreFrameToDiscard = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
+					message);
+			
+			Artifact artifact = new Artifact("");			
+			int line = located.getLine(),
+				 column = located.getColumn();			
+			LocationImpl locationImpl = new LocationImpl(artifact, -1, column, line);
+			ContextualNotification contextual = new ContextualNotification(noMoreFrameToDiscard, locationImpl);
+			
+			Notifications.getInstance().add(contextual);
+		}
+		else
+		{
+			 popFrame();		
+		}
+	}
+	
+	protected void popFrame()
+	{
+		FrameStack frameStack = Context.getInstance().getFrameStack();
+		Frame framePoped = frameStack.peek(); 
+		frameStack.pop();
+		tracePop(framePoped);	
+	}
+	
+	/**
+	 * 
+	 * Trace Frame operation
+	 * 
+	 * @param op
+	 * @param frame
+	 */
+	protected void tracePop(Frame frame)
+	{
+		if (Context.getInstance().isTrace())
+		{
+			Message message = new Message("pop " + frame);
+			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
+					message);
+			Notifications.getInstance().add(notification);
+		}
+	}
+	
+	
 	/**
 	 * Do attribute content instruction.
 	 *
@@ -263,9 +381,16 @@ public class Expander
 		Object computedValue = elementContentInstruction.eval();
 		if (computedValue != null)
 		{
-			Text text = new Text(computedValue.toString());
 			Vector<Cloneable> contents = new Vector<Cloneable>(1);
-			contents.add(text);
+			if (computedValue instanceof Document)
+			{
+				contents.add((Document) computedValue);
+			}
+			else
+			{
+				Text text = new Text(computedValue.toString());
+				contents.add(text);
+			}
 			return contents;
 		}
 		else
@@ -300,49 +425,4 @@ public class Expander
 			}
 		}
 	}
-
-	// TODO: Auto-generated Javadoc
-	/**
-	 * End loop.
-	 *
-	 * @param endInstruction
-	 *           the end instruction
-	 */
-	protected void endLoop(EndInstruction endInstruction)
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame currentFrame = frameStack.peek();
-		String frameName = currentFrame.getName();
-
-		if (frameName == null || frameName.equals(endInstruction.getLabel()))
-		{
-			if (frameStack.isEmpty())
-			{
-				Message message = new Message("No more frame to discard");
-				Notification noMoreFrameToDiscard = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-						message);
-				Artifact artifact = new Artifact("End instruction");
-				LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
-						endInstruction.getLine());
-				ContextualNotification contextual = new ContextualNotification(noMoreFrameToDiscard, locationImpl);
-				Notifications.getInstance().add(contextual);
-			}
-			else
-			{
-				frameStack.pop();
-			}
-		}
-		else
-		{
-			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
-			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-					message);
-			Artifact artifact = new Artifact("End instruction");
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
-					endInstruction.getLine());
-			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
-			Notifications.getInstance().add(contextual);
-		}
-	}
-
 }

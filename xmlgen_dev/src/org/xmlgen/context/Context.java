@@ -46,26 +46,21 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 
 import org.xmlgen.notifications.Notifications;
+import org.xmlgen.parser.cmdline.CmdlineParser;
 
 /**
- * Context is usually initialized by the command line parser : 
- * - xml template URI
- * - data sources URIs and reference names - xml schema URI - output pathname -
- * trace on/off - user-defined java services
+ * Context is usually initialized by the command line parser : - xml template
+ * URI - data sources URIs and reference names - xml schema URI - output
+ * pathname - trace on/off - user-defined java services
  * 
- * It provides the parameters given by the user : 
- * - xml template 
- * - xml schema -
- * data sources (reference name, value) 
- * - trace on/off
+ * It provides the parameters given by the user : - xml template - xml schema -
+ * data sources (reference name, value) - trace on/off
  * 
- * Are registered to acceleo queries : 
- * - used-defined java services
+ * Are registered to acceleo queries : - used-defined java services
  * 
- * Can checked : 
- * - xml schema (existence and readability and correctness) 
- * - xmltemplate (existence and readability and correctness against xml-schema). 
- * - data sources (existence and readability and correctness)
+ * Can checked : - xml schema (existence and readability and correctness) -
+ * xmltemplate (existence and readability and correctness against xml-schema). -
+ * data sources (existence and readability and correctness)
  * 
  * It provides frame stack of data sources for the expansion processing.
  * 
@@ -91,6 +86,16 @@ public class Context
 	public static Context getInstance()
 	{
 		return instance;
+	}
+
+	/**
+	 * Gets the user services class loader.
+	 * 
+	 * @param userServicesClassloader
+	 */
+	public ClassLoader getUserServicesClassloader()
+	{
+		return this.userServicesClassloader;
 	}
 
 	/**
@@ -131,6 +136,16 @@ public class Context
 	public FrameStack getFrameStack()
 	{
 		return frameStack;
+	}
+
+	/**
+	 * Sets the user services class loader.
+	 * 
+	 * @param userServicesClassLoader
+	 */
+	public void setUserServicesClassLoader(ClassLoader userServicesClassLoader)
+	{
+		this.userServicesClassloader = userServicesClassLoader;
 	}
 
 	/**
@@ -411,7 +426,7 @@ public class Context
 			}
 			else
 			{
-				
+				// Todo:
 			}
 		}
 	}
@@ -436,7 +451,11 @@ public class Context
 	 */
 	public void registerUserService(String userServiceName)
 	{
-		ClassLoader classLoader = getClass().getClassLoader();
+		ClassLoader classLoader = getUserServicesClassloader();
+		if (classLoader == null)
+		{
+			classLoader = getClass().getClassLoader();
+		}
 
 		try
 		{
@@ -569,27 +588,32 @@ public class Context
 			 * Get data source uri passed via the frame
 			 */
 			Object object = frameStack.get(dataSourceId);
-			assert (object instanceof String);
-
-			String dataSourceFilename = (String) object;
-
-			Resource resource = loadDataSource(dataSourceFilename, dataSourceId);
-
-			EList<Diagnostic> errors = resource.getErrors();
-
-			if (errors.isEmpty())
+			if (object instanceof CmdlineParser.Filename)
 			{
-				List<EObject> contents = resource.getContents();
-				if (contents.isEmpty())
+				CmdlineParser.Filename dataSourceFilename = (CmdlineParser.Filename) object;
+
+				Resource resource = loadDataSource(dataSourceFilename.toString(), dataSourceId);
+
+				EList<Diagnostic> errors = resource.getErrors();
+
+				if (errors.isEmpty())
 				{
-					Artifact artifact = new Artifact(dataSourceId);
-					Notification notification = new ContextualNotification(dataSourceNotFound, artifact);
-					notifications.add(notification);
+					List<EObject> contents = resource.getContents();
+					if (contents.isEmpty())
+					{
+						Artifact artifact = new Artifact(dataSourceId);
+						Notification notification = new ContextualNotification(dataSourceNotFound, artifact);
+						notifications.add(notification);
+					}
+					else
+					{
+						frameStack.put(dataSourceId, contents);
+					}
 				}
-				else
-				{
-					frameStack.put(dataSourceId, contents);
-				}
+			}
+			else
+			{
+				frameStack.put(dataSourceId, object);
 			}
 		}
 	}
@@ -643,6 +667,9 @@ public class Context
 
 	/** The instance. */
 	static private Context instance = new Context();
+
+	/** ClassLoader for loading the user services */
+	private ClassLoader userServicesClassloader;
 
 	/** The xml template filename. */
 	private String xmlTemplateFilename = null;
