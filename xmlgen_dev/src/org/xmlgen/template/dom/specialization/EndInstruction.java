@@ -20,9 +20,9 @@ import org.xmlgen.parser.pi.PIParser.EndContext;
 /**
  * The Class EndInstruction.
  */
+@SuppressWarnings("serial")
 public class EndInstruction extends ExpansionInstruction
 {
-
 	/**
 	 * Instantiates a new end instruction.
 	 *
@@ -43,7 +43,7 @@ public class EndInstruction extends ExpansionInstruction
 			setLabel(null);
 		}
 	}
-
+	
 	/**
 	 * Instantiates a new end instruction.
 	 *
@@ -60,6 +60,23 @@ public class EndInstruction extends ExpansionInstruction
 		setLabel(label);
 	}
 
+
+	/**
+	 * 
+	 */
+	public void setRelatedCaptures(CapturesInstruction capturesInstruction)
+	{
+		this.capturesInstruction = capturesInstruction;
+	}
+	
+	/**
+	 * 
+	 */
+	public CapturesInstruction getRelatedCaptures()
+	{
+		return this.capturesInstruction;
+	}
+	
 	/**
 	 * Sets the label.
 	 *
@@ -104,7 +121,7 @@ public class EndInstruction extends ExpansionInstruction
 	
 	/** The label. */
 	private String label;
+	
+	private CapturesInstruction capturesInstruction;
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 8264616535449826911L;
 }

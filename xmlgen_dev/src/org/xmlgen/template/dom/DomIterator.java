@@ -4,7 +4,6 @@
 package org.xmlgen.template.dom;
 
 import java.util.List;
-
 import org.jdom2.Content;
 import org.jdom2.Element;
 import org.jdom2.Parent;
@@ -13,7 +12,7 @@ import org.jdom2.Parent;
 /**
  * The Class Iterator.
  */
-public class Iterator
+public class DomIterator
 {
 
 	/** The node. */
@@ -25,7 +24,7 @@ public class Iterator
 	 * @param node
 	 *           the node
 	 */
-	public Iterator(Content node)
+	public DomIterator(Content node)
 	{
 		set(node);
 	}

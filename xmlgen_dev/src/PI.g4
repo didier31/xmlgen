@@ -6,8 +6,13 @@ package org.xmlgen.parser.pi;
 
 import Query;
 
-inputPI : (captures | content | end) EOF
+inputPI : (captures | content | end | insert) EOF
 ;
+
+insert: Insert;
+
+Insert: [<][Ii][Nn][Ss][Ee][Rr][Tt][>];
+
 
 captures : ('['? label ']'?)? capture (',' capture)*
 ;

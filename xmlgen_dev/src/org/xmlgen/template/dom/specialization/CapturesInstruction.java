@@ -8,9 +8,11 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
+import org.jdom2.Content;
 import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
+import org.xmlgen.context.FrameStack;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
@@ -29,7 +31,7 @@ import org.xmlgen.parser.pi.PIParser.LabelContext;
 /**
  * The Class CapturesInstruction.
  */
-public class CapturesInstruction extends ExpansionInstruction
+public class CapturesInstruction extends IterativeInstruction
 {
 
 	/**
@@ -69,7 +71,8 @@ public class CapturesInstruction extends ExpansionInstruction
 	}
 
 	/**
-	 * Initialize loop variables iterators 
+	 * Creates a new context
+	 *  and Initialize loop variables iterators in it 
 	 * 
 	 * loop variables are temporarily set with with their whole content (not available for the loop body) 
 	 * in the order of their declaration
@@ -80,6 +83,9 @@ public class CapturesInstruction extends ExpansionInstruction
 
 	public void initialize()
 	{
+		super.initialize();
+		
+		// Initializes references in the just new created frame in stack		
 		int i = 0;
 		for (AstResult captureQuery : captureQueries)
 		{
@@ -121,7 +127,47 @@ public class CapturesInstruction extends ExpansionInstruction
 		}
 		return notAtTheEnd;
 	}
+	
+	@Override
+	public void terminate(Content lastInstruction)
+	{
+		if (lastInstruction instanceof EndInstruction)
+		{
+			EndInstruction endInstruction = (EndInstruction) lastInstruction;
+			checkEndName(endInstruction);
+		}
+		super.terminate();
+	}
 
+	/**
+	 * Check that the name of the end instruction is the same 
+	 * as the related capture instruction.
+	 * 
+	 * Notify the user if it is not the case.
+	 * 
+	 * @param endInstruction
+	 */
+	protected void checkEndName(EndInstruction endInstruction)
+	{
+		FrameStack frameStack = Context.getInstance().getFrameStack();
+		Frame currentFrame = frameStack.peek();
+		String frameName = currentFrame.getName();
+
+		if ((frameName == null && endInstruction.getLabel() != null) 
+				|| 
+			  frameName != null && endInstruction.getLabel() != null && !frameName.equals(endInstruction.getLabel()))
+		{
+			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
+			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
+					message);
+			Artifact artifact = new Artifact("End instruction");
+			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
+					endInstruction.getLine());
+			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
+			Notifications.getInstance().add(contextual);
+		}
+	}	
+	
 	/**
 	 * Notify duplicate id.
 	 *
@@ -130,7 +176,7 @@ public class CapturesInstruction extends ExpansionInstruction
 	 * @param id
 	 *           the id
 	 */
-	private void notifyDuplicateId(CaptureContext capture, String id)
+	protected void notifyDuplicateId(CaptureContext capture, String id)
 	{
 		Token startToken = capture.dataID().getStart();
 		// TODO : Resolve -1 problem for column parameter.
@@ -218,7 +264,8 @@ public class CapturesInstruction extends ExpansionInstruction
 	 *
 	 * @return the label
 	 */
-	public String getLabel()
+	@Override
+	protected String getLabel()
 	{
 		return label;
 	}
@@ -238,8 +285,8 @@ public class CapturesInstruction extends ExpansionInstruction
 
 	/** parsed capture queries */
 	private Vector<AstResult> captureQueries;
-
-	/** The label. */
+	
+	/** Label of the instruction **/
 	private String label;
 
 	/** The notifications. */

@@ -67,6 +67,10 @@ public class InstructionParser
 		{
 			return inputPI.captures();
 		}
+		else if (inputPI.insert() != null)
+		{
+			return inputPI.insert(); 
+		}
 		else if (inputPI.end() != null)
 		{
 			return inputPI.end();

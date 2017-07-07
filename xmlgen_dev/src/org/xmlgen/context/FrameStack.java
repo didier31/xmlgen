@@ -61,14 +61,14 @@ public class FrameStack implements Map<String, Object>
 	public boolean containsKey(Object key)
 	{
 		String keyStr = (String) key;
-		boolean notFound = true;
+		boolean found = false;
 		int i = stack.size()-1;
-		while (notFound && i >= 0)
+		while (found && i >= 0)
 		{
-			notFound = stack.elementAt(i).containsKey(keyStr);
+		found = stack.elementAt(i).containsKey(keyStr);
 			i--;
 		}
-		return !notFound;
+		return found;
 	}
 
 	/**
@@ -228,7 +228,20 @@ public class FrameStack implements Map<String, Object>
 	 */
 	public void push(Frame frame)
 	{
-		int level = stack.size();
+		float level = stack.size();
+		frame.setLevel(level);
+		stack.push(frame);			
+	}
+	
+	/**
+	 * Push on stack, a frame due to a recursive iteration.
+	 *
+	 * @param frame
+	 *           the frame
+	 */
+	public void pushR(Frame frame)
+	{
+		float level = stack.peek().getLevel() + 0.1F;
 		frame.setLevel(level);
 		stack.push(frame);			
 	}
@@ -239,48 +252,7 @@ public class FrameStack implements Map<String, Object>
 	public void pop()
 	{
 		stack.pop();
-	}
-	
-	/**
-	 * Pop all frames with frame Names at the same level as top frame.
-	 *
-	 * @param frameNames
-	 *           the frame names
-	 */
-	public void pop(Iterable<String> frameNames)
-	{
-		for (String frameName : frameNames)
-		{
-			int index = search(frameName);
-			if (index > -1)
-			{
-				stack.setSize(index);
-			}
-		}
-	}
-
-	/**
-	 * Returns index of the frame related to frameName with the same level as top
-	 * frame.
-	 *
-	 * @param frameName
-	 *           the frame name
-	 * @return index in stack or -1 if not found
-	 */
-	protected int search(String frameName)
-	{
-		int index = stack.size();
-		int level = stack.peek().getLevel();
-		Frame frame;
-		do
-		{
-			index--;
-			frame = stack.elementAt(index);
-		}
-		while (index >= 0 && frame.getLevel() == level && !frame.getName().equals(frameName));
-
-		return (frame.getLevel() == level) ? index : -1;
-	}
+	}	
 
 	/*
 	 * (non-Javadoc)

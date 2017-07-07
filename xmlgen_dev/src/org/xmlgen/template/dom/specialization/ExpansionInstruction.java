@@ -28,6 +28,7 @@ import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
+import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
 import org.jdom2.located.LocatedProcessingInstruction;
@@ -85,6 +86,10 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		{
 			EndContext endInstruction = (EndContext) instruction;
 			domInstruction = new EndInstruction(pi, endInstruction);
+		}
+		else if (instruction instanceof InsertContext)
+		{
+			domInstruction = new RecursiveLoopInstruction(pi);
 		}
 		else
 		{

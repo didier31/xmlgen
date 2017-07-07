@@ -10,26 +10,15 @@ import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Text;
-import org.jdom2.located.Located;
 import org.jdom2.located.LocatedProcessingInstruction;
-import org.xmlgen.context.Context;
-import org.xmlgen.context.Frame;
-import org.xmlgen.context.FrameStack;
-import org.xmlgen.notifications.Artifact;
-import org.xmlgen.notifications.ContextualNotification;
-import org.xmlgen.notifications.LocationImpl;
-import org.xmlgen.notifications.Notification;
-import org.xmlgen.notifications.Notification.Gravity;
-import org.xmlgen.notifications.Notification.Message;
-import org.xmlgen.notifications.Notification.Module;
-import org.xmlgen.notifications.Notification.Subject;
-import org.xmlgen.notifications.Notifications;
-import org.xmlgen.template.dom.Iterator;
+import org.xmlgen.template.dom.DomIterator;
 import org.xmlgen.template.dom.specialization.AttributeContentInstruction;
 import org.xmlgen.template.dom.specialization.CapturesInstruction;
 import org.xmlgen.template.dom.specialization.ElementContentInstruction;
 import org.xmlgen.template.dom.specialization.EndInstruction;
 import org.xmlgen.template.dom.specialization.ExpansionInstruction;
+import org.xmlgen.template.dom.specialization.IterativeInstruction;
+import org.xmlgen.template.dom.specialization.RecursiveLoopInstruction;
 
 /**
  * The class Expand expands a template XML document with xmlgen process
@@ -51,8 +40,10 @@ public class Expander
 	 */
 	public Document expand(Document template)
 	{
-		Iterator iterator = new Iterator(template.getRootElement());
-		Vector<Cloneable> node = expandDeeper(iterator);
+		DomIterator templateIterator = new DomIterator(template.getRootElement());
+		pushContext();
+		Vector<Cloneable> node = expandDeeper(templateIterator);
+		popContext();
 		assert node.size() == 1 && node.get(0) instanceof Element;
 		Document expandedDocument = new Document((Element) node.get(0), template.getDocType());
 		// TODO: Implement DOCTYPE copy.
@@ -63,21 +54,21 @@ public class Expander
 	 * Expanding deeper consists in visiting in depth and then in width the DOM
 	 * document node's subtree.
 	 * 
-	 * @param iterator
+	 * @param templateIterator
 	 *        the iterator referencing the actual DOM node.
 	 *        
 	 * @return the expanded DOM forest.
 	 */
-	protected Vector<Cloneable> expandDeeper(Iterator iterator)
+	protected Vector<Cloneable> expandDeeper(DomIterator templateIterator)
 	{
-		Vector<Cloneable> allSibling = expandDeeperOnly(iterator);
-		if (iterator.current() != null)
+		Vector<Cloneable> allSibling = expandDeeperOnly(templateIterator);
+		if (templateIterator.current() != null)
 		{
-			iterator.sibling();
+			templateIterator.sibling();
 
-			if (iterator.current() != null)
+			if (templateIterator.current() != null)
 			{
-				Vector<Cloneable> subForest = expandDeeper(iterator);
+				Vector<Cloneable> subForest = expandDeeper(templateIterator);
 				allSibling.addAll(subForest);
 			}
 		}
@@ -87,25 +78,40 @@ public class Expander
 	/**
 	 * Expands deeper only consists in visiting in depth only.
 	 *
-	 * @param iterator
+	 * @param templateIterator
 	 *        the iterator referencing the actual DOM node.
 	 *        
 	 * @return the expanded DOM forest.
 	 */
-	protected Vector<Cloneable> expandDeeperOnly(Iterator iterator)
+	protected Vector<Cloneable> expandDeeperOnly(DomIterator templateIterator)
 	{
 		Vector<Cloneable> allSibling;
 
-		if (iterator.current() != null)
+		if (templateIterator.current() != null)
 		{
-			allSibling = computeNode(iterator);
-			Iterator deeperIterator = new Iterator(iterator.current());
+			Context context = getContext();
+			boolean contextToPop;
+			if (!context.getCapturesStack().isEmpty())
+			{
+				pushContext();
+				contextToPop = true;
+			}
+			else
+			{
+				contextToPop = false;
+			}
+			allSibling = computeNode(templateIterator);
+			DomIterator deeperIterator = new DomIterator(templateIterator.current());
 			deeperIterator.descendant();
 			if (deeperIterator.current() != null)
 			{
 				Vector<Cloneable> subTree = expandDeeper(deeperIterator);
 				assert (allSibling.size() > 0);
 				setChildren((Element) allSibling.get(0), subTree);
+			}
+			if (contextToPop)
+			{
+				popContext();
 			}
 		}
 		else
@@ -121,16 +127,17 @@ public class Expander
 	 * - call the xmlgen pi parser before if not compiled yet. 
 	 * - or just clone the DOM node if it is ordinary one.
 	 *
-	 * @param iterator
-	 *        the iterator
+	 * @param templateIterator
+	 *        the iterator referencing the actual DOM node.
 	 *        
 	 * @return the vector
 	 */
-	protected Vector<Cloneable> computeNode(Iterator iterator)
+	protected Vector<Cloneable> computeNode(DomIterator templateIterator)
 	{
 		Vector<Cloneable> expandedNode;
-		Content root = iterator.current();
+		Content root = templateIterator.current();
 		Content rootClone;
+		Context context = getContext();
 
 		if (root == null)
 		{
@@ -148,21 +155,40 @@ public class Expander
 		}
 		else if (root instanceof CapturesInstruction)
 		{
-			expandedNode = doLoop(iterator);
+			// Stack the template iterator at capture instruction position
+			// to eventually be used deeper for an InsertInstruction
+			CapturesInstruction captureInstruction = (CapturesInstruction) root;
+			context.getCapturesStack().push(captureInstruction);
+			expandedNode = doLoop(templateIterator);
+			context.getCapturesStack().pop();
 		}
 		else if (root instanceof EndInstruction)
 		{
-			EndInstruction endInstruction = (EndInstruction) root;
 			expandedNode = new Vector<Cloneable>();
 		}
-		else if (root instanceof LocatedProcessingInstruction
-				&& ExpansionInstruction.isExpandPI((LocatedProcessingInstruction) root))
+		else if (root instanceof RecursiveLoopInstruction)
 		{
-			LocatedProcessingInstruction pi = (LocatedProcessingInstruction) root;
-			ExpansionInstruction ei = ExpansionInstruction.create(pi);
-			iterator.set(ei);
-			expandedNode = computeNode(iterator);
+			if (context.getCapturesStack().isEmpty())
+			{
+				// No loop on the air => Insert is improper.
+				// TODO: Notify a Warning
+				expandedNode = new Vector<Cloneable>();
+			}
+			else
+			{
+				RecursiveLoopInstruction recursiveLoopInstruction = (RecursiveLoopInstruction) root;
+				CapturesInstruction parentLoopInstruction = context.getCapturesStack().peek();
+				recursiveLoopInstruction.setMotherInstruction(parentLoopInstruction);
+				DomIterator recursiveLoopIterator = new DomIterator(recursiveLoopInstruction);
+				expandedNode = doLoop(recursiveLoopIterator);
+			}
 		}
+		else if (root instanceof LocatedProcessingInstruction
+					&& ExpansionInstruction.isExpandPI((LocatedProcessingInstruction) root))
+			{
+				replaceInDomWithParcedPI(templateIterator);
+				expandedNode = computeNode(templateIterator);
+			}			
 		else
 		{
 			rootClone = root.clone();
@@ -171,172 +197,102 @@ public class Expander
 		}
 		return expandedNode;
 	}
+	
+	void replaceInDomWithParcedPI(DomIterator templateIterator)
+	{
+		assert(templateIterator.current() instanceof LocatedProcessingInstruction);
+		
+		LocatedProcessingInstruction pi = (LocatedProcessingInstruction) templateIterator.current();
+		ExpansionInstruction ei = ExpansionInstruction.create(pi);
+		templateIterator.set(ei);
+	}
 
 	/**
 	 * Perform a capture xmlgen process instruction 
 	 * meaning to perform an iteration on declared data sources.
 	 *
-	 * @param loopIterator
+	 * @param templateIterator
 	 *        the iterator referencing the capture instruction.
 	 *        
 	 * @return the expanded xml nodes.
 	 */
-	protected Vector<Cloneable> doLoop(Iterator loopIterator)
+	protected Vector<Cloneable> doLoop(DomIterator templateIterator)
 	{
-		assert (loopIterator.current() instanceof CapturesInstruction);
+		assert (templateIterator.current() instanceof IterativeInstruction);
 
-		CapturesInstruction capturesInstruction = (CapturesInstruction) loopIterator.current();	
+		IterativeInstruction iterativeInstruction = (IterativeInstruction) templateIterator.current();	
 
-		String label = capturesInstruction.getLabel();
-		Frame newFrame = new Frame(label);
-		FrameStack frameStack = Context.getInstance().getFrameStack(); 
-		frameStack.push(newFrame);
-		// Initializes references in the just new created frame in stack
-		capturesInstruction.initialize();
-		
-		Vector<Cloneable> expandedNodes = new Vector<Cloneable>(0);
+		iterativeInstruction.initialize();	
 
-		Iterator atFirstContentInLoop = new Iterator(loopIterator.current());
+		DomIterator atFirstContentInLoop = new DomIterator(templateIterator.current());
 		atFirstContentInLoop.sibling();
-		boolean endInstrNotEncountered = true;
-		while (capturesInstruction.iterate())
+
+		Vector<Cloneable> expandedNodes = new Vector<Cloneable>(0);
+		
+		boolean endInstructionNotEncountered = true;
+	
+		boolean loopPassed = false;
+		boolean isAnInterationToPerform = iterativeInstruction.iterate();
+		while (isAnInterationToPerform || !loopPassed)
 		{
-			endInstrNotEncountered = true;
-			loopIterator.set(atFirstContentInLoop.current());
-			while (loopIterator.current() != null && endInstrNotEncountered)
+			templateIterator.set(atFirstContentInLoop.current());			
+
+			endInstructionNotEncountered = true;
+			
+			while (templateIterator.current() != null && endInstructionNotEncountered)
 			{
-				Content content = loopIterator.current();
-				
-				Vector<Cloneable> localExpandedNodes = expandDeeperOnly(loopIterator);
-				expandedNodes.addAll(localExpandedNodes);
-				
+				Vector<Cloneable> localExpandedNodes = expandDeeperOnly(templateIterator);
+				if (isAnInterationToPerform)
+				{
+					expandedNodes.addAll(localExpandedNodes);
+				}
+				Content computedContent = templateIterator.current();
 				// NB: this test can be performed asap at this time only
 				//     because LocatedProcessingInstruction is casted in EndInstruction
 				//     by computeNode() from expandDeeperOnly's call and not before.
-				Content computedContent = loopIterator.current();
-				endInstrNotEncountered = !(computedContent instanceof EndInstruction);
-				
-				if (loopIterator.current() != null && endInstrNotEncountered)
+				if (computedContent instanceof EndInstruction)
 				{
-					loopIterator.sibling();
+					EndInstruction endInstruction = (EndInstruction) computedContent;
+					CapturesInstruction relatedCaptureInstruction = endInstruction.getRelatedCaptures();
+					CapturesInstruction currentCaptureInstruction = getContext().getCapturesStack().peek();
+					if (relatedCaptureInstruction == null)
+					{
+						endInstruction.setRelatedCaptures(currentCaptureInstruction);
+						endInstructionNotEncountered = false;
+					}
+					else
+					{
+						endInstructionNotEncountered = relatedCaptureInstruction != currentCaptureInstruction; 
+					}
+				}
+				
+				if (endInstructionNotEncountered && templateIterator.current() != null)
+				{
+					templateIterator.sibling();
 				}
 			}
-		}
+			if (isAnInterationToPerform)
+			{
+				isAnInterationToPerform = iterativeInstruction.iterate();
+			}
+			else
+			{
+				loopPassed = true;
+			}
+		}		
 		
-		if (!endInstrNotEncountered)
+		EndInstruction endInstruction = (EndInstruction) templateIterator.current();
+		if (endInstruction != null)
 		{
-			assert(loopIterator.current() instanceof EndInstruction);
-			EndInstruction endInstruction = (EndInstruction) loopIterator.current();
-			endLoop(endInstruction);
+			iterativeInstruction.terminate(endInstruction);		
 		}
 		else
 		{
-			popFrame();
+			iterativeInstruction.terminate();
 		}
 		
 		return expandedNodes;
 	}
-
-	// TODO: Auto-generated Javadoc
-	/**
-	 * End loop.
-	 *
-	 * @param endInstruction
-	 *           the end instruction
-	 */
-	protected void endLoop(EndInstruction endInstruction)
-	{
-		checkEndName(endInstruction);
-		popFrame(endInstruction);
-	}
-
-	/**
-	 * Check that the name of the end instruction is the same 
-	 * as the related capture instruction.
-	 * 
-	 * Notify the user if it is not the case.
-	 * 
-	 * @param endInstruction
-	 */
-	private void checkEndName(EndInstruction endInstruction)
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame currentFrame = frameStack.peek();
-		String frameName = currentFrame.getName();
-
-		if ((frameName == null && endInstruction.getLabel() != null) 
-				|| 
-			  frameName != null && endInstruction.getLabel() != null && !frameName.equals(endInstruction.getLabel()))
-		{
-			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
-			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-					message);
-			Artifact artifact = new Artifact("End instruction");
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
-					endInstruction.getLine());
-			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
-			Notifications.getInstance().add(contextual);
-		}
-	}	
-	
-	// TODO: Auto-generated Javadoc
-	/**
-	 * Pop the frame on top of the stack.
-	 * 
-	 * Notify the user if it can be done.
-	 *
-	 * @param located
-	 *          
-	 */
-	protected void popFrame(Located located)
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		if (frameStack.isEmpty())
-		{
-			Message message = new Message("No more frame to discard");
-			Notification noMoreFrameToDiscard = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-					message);
-			
-			Artifact artifact = new Artifact("");			
-			int line = located.getLine(),
-				 column = located.getColumn();			
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, column, line);
-			ContextualNotification contextual = new ContextualNotification(noMoreFrameToDiscard, locationImpl);
-			
-			Notifications.getInstance().add(contextual);
-		}
-		else
-		{
-			 popFrame();		
-		}
-	}
-	
-	protected void popFrame()
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame framePoped = frameStack.peek(); 
-		frameStack.pop();
-		tracePop(framePoped);	
-	}
-	
-	/**
-	 * 
-	 * Trace Frame operation
-	 * 
-	 * @param op
-	 * @param frame
-	 */
-	protected void tracePop(Frame frame)
-	{
-		if (Context.getInstance().isTrace())
-		{
-			Message message = new Message("pop " + frame);
-			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
-					message);
-			Notifications.getInstance().add(notification);
-		}
-	}
-	
 	
 	/**
 	 * Do attribute content instruction.
@@ -425,4 +381,21 @@ public class Expander
 			}
 		}
 	}
+	
+	protected Context getContext()
+	{
+		return expansionContext.getContext();
+	}
+	
+	protected void pushContext()
+	{
+		expansionContext.push();
+	}
+	
+	protected void popContext()
+	{
+		expansionContext.pop();
+	}
+	
+	private ExpansionContext expansionContext = new ExpansionContext();
 }

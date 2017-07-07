@@ -15,7 +15,7 @@ public class Frame extends HashMap<String, Object>
 	private String name;
 
 	/** The level. */
-	private int level = 0;
+	private float level = 0;
 
 	/**
 	 * Instantiates a new frame.
@@ -44,7 +44,7 @@ public class Frame extends HashMap<String, Object>
 	 *
 	 * @return the level
 	 */
-	public int getLevel()
+	public float getLevel()
 	{
 		return level;
 	}
@@ -58,13 +58,16 @@ public class Frame extends HashMap<String, Object>
 	@Override
 	public String toString()
 	{
+		String levelString = Math.floor(level) == level ? Integer.toString((int) level).toString() : Float.toString(level);  
 		return "frame <" 
             + (name != null ? name : "") 
-            +  ">, level " + level + " "
+            +  ">, level " 
+            +  levelString
+            + " "
             + keySet().toString();
 	}
 
-	public void setLevel(int level)
+	public void setLevel(float level)
 	{
 		this.level = level;
 	}
