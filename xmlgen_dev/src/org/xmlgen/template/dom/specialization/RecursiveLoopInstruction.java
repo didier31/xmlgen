@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdom2.Content;
 import org.jdom2.Parent;
 import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.parser.pi.PIParser.BeginContext;
 
 public class RecursiveLoopInstruction extends IterativeInstruction
 {
@@ -30,15 +31,9 @@ public class RecursiveLoopInstruction extends IterativeInstruction
 		return motherLoop.iterate();
 	}
 	
-	protected RecursiveLoopInstruction(LocatedProcessingInstruction pi)
+	protected RecursiveLoopInstruction(LocatedProcessingInstruction pi, BeginContext beginContext)
 	{
-		super(pi);		
-	}
-	
-	@Override
-	protected String getLabel()
-	{
-		return "";
+		super(pi, beginContext);		
 	}
 
 	@Override

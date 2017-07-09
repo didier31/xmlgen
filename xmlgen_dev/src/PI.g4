@@ -6,15 +6,18 @@ package org.xmlgen.parser.pi;
 
 import Query;
 
-inputPI : (captures | content | end | insert) EOF
+inputPI : (structuralInstruction | content | insert) EOF
 ;
 
 insert: Insert;
 
-Insert: [<][Ii][Nn][Ss][Ee][Rr][Tt][>];
+structuralInstruction: (label (captures | begin)) | end
+;
 
+captures : capture (',' capture)*
+;
 
-captures : ('['? label ']'?)? capture (',' capture)*
+begin: Begin
 ;
 
 capture : dataID ':' expression
@@ -35,10 +38,10 @@ elementContent : expression
 attributeID : prefix? Ident
 ;
 
-end: END ('['? label ']'?)? 
+end: END label
 ;
 
-label: Ident
+label: ('['? Ident ']'?)?
 ;
 
 END: [Ee][nN][Dd]
@@ -48,4 +51,9 @@ ATTRIBUTE: [aA][tT][tT][rR]
 ;
 
 prefix: Ident ':'
+;
+
+Insert: [<][Ii][Nn][Ss][Ee][Rr][Tt][>];
+
+Begin: [Bb][Ee][Gg][Ii][Nn]
 ;

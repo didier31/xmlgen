@@ -1,5 +1,6 @@
 package org.xmlgen.template.dom.specialization;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.jdom2.Content;
 import org.jdom2.located.Located;
 import org.jdom2.located.LocatedProcessingInstruction;
@@ -16,11 +17,12 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 
-public abstract class IterativeInstruction extends ExpansionInstruction
+@SuppressWarnings("serial")
+public abstract class IterativeInstruction extends StructuralInstruction
 {
-	protected IterativeInstruction(LocatedProcessingInstruction pi)
+	protected IterativeInstruction(LocatedProcessingInstruction pi, ParserRuleContext parserRuleContext)
 	{
-		super(pi);
+		super(pi, parserRuleContext);
 	}
 	
 	public void initialize()
@@ -102,17 +104,4 @@ public abstract class IterativeInstruction extends ExpansionInstruction
 			Notifications.getInstance().add(notification);
 		}
 	}
-	
-	/**
-	 * Gets the label.
-	 *
-	 * @return the label
-	 */
-	abstract protected String getLabel();
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8255432588818382304L;
-
 }

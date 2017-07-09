@@ -25,7 +25,6 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.CaptureContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
-import org.xmlgen.parser.pi.PIParser.LabelContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,17 +41,15 @@ public class CapturesInstruction extends IterativeInstruction
 	 * @param capturesInstruction
 	 *           the captures instruction
 	 */
-	public CapturesInstruction(LocatedProcessingInstruction pi, CapturesContext capturesInstruction)
+	public CapturesInstruction(LocatedProcessingInstruction pi, CapturesContext capturesContext)
 	{
-		super(pi);
-		LabelContext labelContext = capturesInstruction.label();
-		label = (labelContext != null) ? capturesInstruction.label().getText() : "";
-		int capturesCount = capturesInstruction.capture().size();
+		super(pi, capturesContext.getParent());
+		int capturesCount = capturesContext.capture().size();
 		datasourcesIDs = new Vector<String>(capturesCount);
 		iterators = new Vector<Iterator<Object>>(capturesCount);
 		captureQueries = new Vector<AstResult>(capturesCount);
 
-		for (CaptureContext capture : capturesInstruction.capture())
+		for (CaptureContext capture : capturesContext.capture())
 		{
 			String queryToParse = capture.expression().getText();
 			AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, pi);
@@ -259,17 +256,6 @@ public class CapturesInstruction extends IterativeInstruction
 		}
 	}
 
-	/**
-	 * Gets the label.
-	 *
-	 * @return the label
-	 */
-	@Override
-	protected String getLabel()
-	{
-		return label;
-	}
-
 	/** The duplicate data source reference. */
 	Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error,
 			Subject.DataSource, Message.Duplicate_Reference);
@@ -285,9 +271,6 @@ public class CapturesInstruction extends IterativeInstruction
 
 	/** parsed capture queries */
 	private Vector<AstResult> captureQueries;
-	
-	/** Label of the instruction **/
-	private String label;
 
 	/** The notifications. */
 	static private Notifications notifications = Notifications.getInstance();

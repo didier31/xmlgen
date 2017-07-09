@@ -594,20 +594,23 @@ public class Context
 
 				Resource resource = loadDataSource(dataSourceFilename.toString(), dataSourceId);
 
-				EList<Diagnostic> errors = resource.getErrors();
-
-				if (errors.isEmpty())
+				if (resource != null)
 				{
-					List<EObject> contents = resource.getContents();
-					if (contents.isEmpty())
+					EList<Diagnostic> errors = resource.getErrors();
+
+					if (errors.isEmpty())
 					{
-						Artifact artifact = new Artifact(dataSourceId);
-						Notification notification = new ContextualNotification(dataSourceNotFound, artifact);
-						notifications.add(notification);
-					}
-					else
-					{
-						frameStack.put(dataSourceId, contents);
+						List<EObject> contents = resource.getContents();
+						if (contents.isEmpty())
+						{
+							Artifact artifact = new Artifact(dataSourceId);
+							Notification notification = new ContextualNotification(dataSourceNotFound, artifact);
+							notifications.add(notification);
+						}
+						else
+						{
+							frameStack.put(dataSourceId, contents);
+						}
 					}
 				}
 			}

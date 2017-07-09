@@ -46,7 +46,6 @@ public class Expander
 		popContext();
 		assert node.size() == 1 && node.get(0) instanceof Element;
 		Document expandedDocument = new Document((Element) node.get(0), template.getDocType());
-		// TODO: Implement DOCTYPE copy.
 		return expandedDocument;
 	}
 

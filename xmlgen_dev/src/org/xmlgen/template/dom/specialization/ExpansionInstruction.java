@@ -9,7 +9,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.acceleo.query.ast.Error;
 import org.eclipse.acceleo.query.runtime.EvaluationResult;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.eclipse.acceleo.query.runtime.impl.QueryEvaluationEngine;
+import org.eclipse.acceleo.query.runtime.IQueryEvaluationEngine;
+import org.eclipse.acceleo.query.runtime.QueryEvaluation;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.xmlgen.context.Context;
@@ -25,10 +26,12 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
+import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
+import org.xmlgen.parser.pi.PIParser.StructuralInstructionContext;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
 import org.jdom2.located.LocatedProcessingInstruction;
@@ -72,6 +75,16 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 			CapturesContext capturesInstruction = (CapturesContext) instruction;
 			domInstruction = new CapturesInstruction(pi, capturesInstruction);
 		}
+		else if (instruction instanceof EndContext)
+		{
+			EndContext endContext = (EndContext) instruction;
+			return new EndInstruction(pi, endContext);
+		}
+		else if (instruction instanceof BeginContext)
+		{
+			BeginContext beginContext = (BeginContext) instruction;
+			return new RecursiveLoopInstruction(pi, beginContext);
+		}
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
@@ -82,18 +95,14 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 			ElementContentContext elementContentInstruction = (ElementContentContext) instruction;
 			domInstruction = new ElementContentInstruction(pi, elementContentInstruction);
 		}
-		else if (instruction instanceof EndContext)
-		{
-			EndContext endInstruction = (EndContext) instruction;
-			domInstruction = new EndInstruction(pi, endInstruction);
-		}
 		else if (instruction instanceof InsertContext)
 		{
-			domInstruction = new RecursiveLoopInstruction(pi);
+			domInstruction = new InsertInstruction(pi);
 		}
 		else
 		{
 			domInstruction = null;
+			assert(false);
 		}
 		return domInstruction;
 	}
@@ -164,7 +173,7 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 	{
 		if (parsedQuery != null && parsedQuery.getErrors().isEmpty())
 		{
-			QueryEvaluationEngine engine = new QueryEvaluationEngine(InstructionParser.getQueryEnv());
+			IQueryEvaluationEngine engine = QueryEvaluation.newEngine(InstructionParser.getQueryEnv());
 			FrameStack frameStack = Context.getInstance().getFrameStack();
 			EvaluationResult evaluationResult = engine.eval(parsedQuery, frameStack);
 			Object result = evaluationResult.getResult();
