@@ -21,7 +21,7 @@ import org.xmlgen.parser.pi.PIParser.EndContext;
  * The Class EndInstruction.
  */
 @SuppressWarnings("serial")
-public class EndInstruction extends ExpansionInstruction
+public class EndInstruction extends ExpansionInstruction implements Tagged
 {
 	/**
 	 * Instantiates a new end instruction.
@@ -64,17 +64,17 @@ public class EndInstruction extends ExpansionInstruction
 	/**
 	 * 
 	 */
-	public void setRelatedCaptures(CapturesInstruction capturesInstruction)
+	public void setRelatedIterativeInstruction(IterativeInstruction iterativeInstruction)
 	{
-		this.capturesInstruction = capturesInstruction;
+		this.iterativeInstruction = iterativeInstruction;
 	}
 	
 	/**
 	 * 
 	 */
-	public CapturesInstruction getRelatedCaptures()
+	public IterativeInstruction getRelatedIterativeInstruction()
 	{
-		return this.capturesInstruction;
+		return this.iterativeInstruction;
 	}
 	
 	/**
@@ -122,6 +122,6 @@ public class EndInstruction extends ExpansionInstruction
 	/** The label. */
 	private String label;
 	
-	private CapturesInstruction capturesInstruction;
+	private IterativeInstruction iterativeInstruction;
 
 }

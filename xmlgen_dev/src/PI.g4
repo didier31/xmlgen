@@ -6,18 +6,12 @@ package org.xmlgen.parser.pi;
 
 import Query;
 
-inputPI : (structuralInstruction | content | insert) EOF
+inputPI : (captures | end | content | insert) EOF
 ;
 
 insert: Insert;
 
-structuralInstruction: (label (captures | begin)) | end
-;
-
-captures : capture (',' capture)*
-;
-
-begin: Begin
+captures : label capture (',' capture)*
 ;
 
 capture : dataID ':' expression

@@ -27,12 +27,11 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PILexer;
 import org.xmlgen.parser.pi.PIParser;
-import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
-import org.xmlgen.parser.pi.PIParser.StructuralInstructionContext;
+import org.xmlgen.parser.pi.PIParser.InsertContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -70,44 +69,31 @@ public class InstructionParser
 		}
 		else
 		{
-			StructuralInstructionContext structuralInstruction = inputPI.structuralInstruction();
-			if (structuralInstruction != null)
+			CapturesContext captures = inputPI.captures();
+			if (captures != null)
 			{
-				CapturesContext captures = structuralInstruction.captures();
-				if (captures != null)
-				{
-					return captures;
-				}
-				else
-				{
-					BeginContext begin = structuralInstruction.begin();
-					if (begin != null)
-					{
-						return begin;
-					}
-					else
-					{
-						EndContext end = structuralInstruction.end();
-						if (end != null)
-						{
-							return end;
-						}
-						else
-						{
-							assert (false);
-							return null;
-						}
-					}
-				}
-			}
-			else if (inputPI.insert() != null)
-			{
-				return inputPI.insert();
+				return captures;
 			}
 			else
 			{
-				assert (false);
-				return null;
+				EndContext end = inputPI.end();
+				if (end != null)
+				{
+					return end;
+				}
+				else
+				{
+					InsertContext insert = inputPI.insert();
+					if (insert != null)
+					{
+						return insert;
+					}
+					else
+					{
+						assert (false);
+						return null;
+					}
+				}
 			}
 		}
 	}

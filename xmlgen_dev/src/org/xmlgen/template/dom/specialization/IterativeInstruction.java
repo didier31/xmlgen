@@ -1,6 +1,5 @@
 package org.xmlgen.template.dom.specialization;
 
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.jdom2.Content;
 import org.jdom2.located.Located;
 import org.jdom2.located.LocatedProcessingInstruction;
@@ -18,11 +17,12 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 
 @SuppressWarnings("serial")
-public abstract class IterativeInstruction extends StructuralInstruction
+public abstract class IterativeInstruction extends ExpansionInstruction implements Tagged
 {
-	protected IterativeInstruction(LocatedProcessingInstruction pi, ParserRuleContext parserRuleContext)
+	protected IterativeInstruction(LocatedProcessingInstruction pi, String label)
 	{
-		super(pi, parserRuleContext);
+		super(pi);
+		setLabel(label);
 	}
 	
 	public void initialize()
@@ -47,6 +47,11 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	
 	abstract public void terminate(Content lastInstruction);
 
+	public String getLabel()
+	{
+		return label;
+	}
+	
 	// TODO: Auto-generated Javadoc
 	/**
 	 * Pop the frame on top of the stack.
@@ -104,4 +109,11 @@ public abstract class IterativeInstruction extends StructuralInstruction
 			Notifications.getInstance().add(notification);
 		}
 	}
+	
+	protected void setLabel(String label)
+	{
+		this.label = label;
+	}
+			
+	String label;
 }

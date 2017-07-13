@@ -26,12 +26,10 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
-import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
-import org.xmlgen.parser.pi.PIParser.StructuralInstructionContext;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
 import org.jdom2.located.LocatedProcessingInstruction;
@@ -80,11 +78,6 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 			EndContext endContext = (EndContext) instruction;
 			return new EndInstruction(pi, endContext);
 		}
-		else if (instruction instanceof BeginContext)
-		{
-			BeginContext beginContext = (BeginContext) instruction;
-			return new RecursiveLoopInstruction(pi, beginContext);
-		}
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
@@ -97,7 +90,8 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 		}
 		else if (instruction instanceof InsertContext)
 		{
-			domInstruction = new InsertInstruction(pi);
+			InsertContext insertInstruction = (InsertContext) instruction;
+			domInstruction = new InsertInstruction(pi, insertInstruction);
 		}
 		else
 		{

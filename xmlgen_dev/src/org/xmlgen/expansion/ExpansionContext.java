@@ -5,7 +5,7 @@ import java.util.Stack;
 import org.xmlgen.template.dom.specialization.CapturesInstruction;
 
 @SuppressWarnings("serial")
-public class ExpansionContext extends Stack<Context>
+public class ExpansionContext extends Stack<LocalContext>
 {
 	public CapturesInstruction getMother()
 	{
@@ -25,10 +25,10 @@ public class ExpansionContext extends Stack<Context>
 
 	public void push()
 	{
-		push(new Context());
+		push(new LocalContext());
 	}
 	
-	public Context getContext()
+	public LocalContext getContext()
 	{
 		return peek();
 	}

@@ -11,14 +11,15 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Text;
 import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.context.Context;
+import org.xmlgen.context.Frame;
 import org.xmlgen.template.dom.DomIterator;
 import org.xmlgen.template.dom.specialization.AttributeContentInstruction;
 import org.xmlgen.template.dom.specialization.CapturesInstruction;
 import org.xmlgen.template.dom.specialization.ElementContentInstruction;
 import org.xmlgen.template.dom.specialization.EndInstruction;
 import org.xmlgen.template.dom.specialization.ExpansionInstruction;
-import org.xmlgen.template.dom.specialization.IterativeInstruction;
-import org.xmlgen.template.dom.specialization.RecursiveLoopInstruction;
+import org.xmlgen.template.dom.specialization.InsertInstruction;
 
 /**
  * The class Expand expands a template XML document with xmlgen process
@@ -34,8 +35,8 @@ public class Expander
 	 * Expand the template
 	 *
 	 * @param template
-	 *        the template document
-	 *        
+	 *           the template document
+	 * 
 	 * @return the outgoing document
 	 */
 	public Document expand(Document template)
@@ -54,8 +55,8 @@ public class Expander
 	 * document node's subtree.
 	 * 
 	 * @param templateIterator
-	 *        the iterator referencing the actual DOM node.
-	 *        
+	 *           the iterator referencing the actual DOM node.
+	 * 
 	 * @return the expanded DOM forest.
 	 */
 	protected Vector<Cloneable> expandDeeper(DomIterator templateIterator)
@@ -78,8 +79,8 @@ public class Expander
 	 * Expands deeper only consists in visiting in depth only.
 	 *
 	 * @param templateIterator
-	 *        the iterator referencing the actual DOM node.
-	 *        
+	 *           the iterator referencing the actual DOM node.
+	 * 
 	 * @return the expanded DOM forest.
 	 */
 	protected Vector<Cloneable> expandDeeperOnly(DomIterator templateIterator)
@@ -88,7 +89,7 @@ public class Expander
 
 		if (templateIterator.current() != null)
 		{
-			Context context = getContext();
+			LocalContext context = getContext();
 			boolean contextToPop;
 			if (!context.getCapturesStack().isEmpty())
 			{
@@ -121,14 +122,14 @@ public class Expander
 	}
 
 	/**
-	 * Compute the given node in parameter : 
-	 * - call the specialized method if the DOM node is a compiled xmlgen process instruction. 
-	 * - call the xmlgen pi parser before if not compiled yet. 
-	 * - or just clone the DOM node if it is ordinary one.
+	 * Compute the given node in parameter : - call the specialized method if the
+	 * DOM node is a compiled xmlgen process instruction. - call the xmlgen pi
+	 * parser before if not compiled yet. - or just clone the DOM node if it is
+	 * ordinary one.
 	 *
 	 * @param templateIterator
-	 *        the iterator referencing the actual DOM node.
-	 *        
+	 *           the iterator referencing the actual DOM node.
+	 * 
 	 * @return the vector
 	 */
 	protected Vector<Cloneable> computeNode(DomIterator templateIterator)
@@ -136,7 +137,6 @@ public class Expander
 		Vector<Cloneable> expandedNode;
 		Content root = templateIterator.current();
 		Content rootClone;
-		Context context = getContext();
 
 		if (root == null)
 		{
@@ -154,40 +154,44 @@ public class Expander
 		}
 		else if (root instanceof CapturesInstruction)
 		{
-			// Stack the template iterator at capture instruction position
-			// to eventually be used deeper for an InsertInstruction
-			CapturesInstruction captureInstruction = (CapturesInstruction) root;
-			context.getCapturesStack().push(captureInstruction);
 			expandedNode = doLoop(templateIterator);
-			context.getCapturesStack().pop();
 		}
 		else if (root instanceof EndInstruction)
 		{
 			expandedNode = new Vector<Cloneable>();
 		}
-		else if (root instanceof RecursiveLoopInstruction)
+		else if (root instanceof InsertInstruction)
 		{
-			if (context.getCapturesStack().isEmpty())
+			if (expansionContext.getMother() == null)
 			{
-				// No loop on the air => Insert is improper.
+				// No recursion on the air => Insert is improper.
 				// TODO: Notify a Warning
 				expandedNode = new Vector<Cloneable>();
 			}
+
 			else
 			{
-				RecursiveLoopInstruction recursiveLoopInstruction = (RecursiveLoopInstruction) root;
-				CapturesInstruction parentLoopInstruction = context.getCapturesStack().peek();
-				recursiveLoopInstruction.setMotherInstruction(parentLoopInstruction);
-				DomIterator recursiveLoopIterator = new DomIterator(recursiveLoopInstruction);
-				expandedNode = doLoop(recursiveLoopIterator);
+				CapturesInstruction motherLoop = expansionContext.getMother();
+
+				if (motherLoop.toIterate())
+				{
+					Context.getInstance().getFrameStack().pushR(new Frame(""));
+					expandedNode = doIterations(new DomIterator(motherLoop));
+					Context.getInstance().getFrameStack().pop();
+					InsertInstruction insertInstruction = (InsertInstruction) root;
+				}
+				else
+				{
+					expandedNode = new Vector<Cloneable>();
+				}
 			}
 		}
 		else if (root instanceof LocatedProcessingInstruction
-					&& ExpansionInstruction.isExpandPI((LocatedProcessingInstruction) root))
-			{
-				replaceInDomWithParcedPI(templateIterator);
-				expandedNode = computeNode(templateIterator);
-			}			
+				&& ExpansionInstruction.isExpandPI((LocatedProcessingInstruction) root))
+		{
+			replaceInDomWithParcedPI(templateIterator);
+			expandedNode = computeNode(templateIterator);
+		}
 		else
 		{
 			rootClone = root.clone();
@@ -196,48 +200,71 @@ public class Expander
 		}
 		return expandedNode;
 	}
-	
+
 	void replaceInDomWithParcedPI(DomIterator templateIterator)
 	{
-		assert(templateIterator.current() instanceof LocatedProcessingInstruction);
-		
+		assert (templateIterator.current() instanceof LocatedProcessingInstruction);
+
 		LocatedProcessingInstruction pi = (LocatedProcessingInstruction) templateIterator.current();
 		ExpansionInstruction ei = ExpansionInstruction.create(pi);
 		templateIterator.set(ei);
 	}
 
 	/**
-	 * Perform a capture xmlgen process instruction 
-	 * meaning to perform an iteration on declared data sources.
+	 * Perform a capture xmlgen process instruction meaning to perform an
+	 * iteration on declared data sources.
 	 *
 	 * @param templateIterator
-	 *        the iterator referencing the capture instruction.
-	 *        
+	 *           the iterator referencing the capture instruction.
+	 * 
 	 * @return the expanded xml nodes.
 	 */
 	protected Vector<Cloneable> doLoop(DomIterator templateIterator)
 	{
-		assert (templateIterator.current() instanceof IterativeInstruction);
+		assert (templateIterator.current() instanceof CapturesInstruction);
 
-		IterativeInstruction iterativeInstruction = (IterativeInstruction) templateIterator.current();	
+		CapturesInstruction iterativeInstruction = (CapturesInstruction) templateIterator.current();
 
-		iterativeInstruction.initialize();	
+		// Stack the template iterator at capture instruction position
+		// to eventually be used deeper for an InsertInstruction
+		getContext().getCapturesStack().push(iterativeInstruction);
 
+		iterativeInstruction.initialize();
+
+		Vector<Cloneable> expandedNodes = doIterations(templateIterator);
+
+		EndInstruction endInstruction = (EndInstruction) templateIterator.current();
+		if (endInstruction != null)
+		{
+			iterativeInstruction.terminate(endInstruction);
+		}
+		else
+		{
+			iterativeInstruction.terminate();
+		}
+
+		getContext().getCapturesStack().pop();
+		return expandedNodes;
+	}
+
+	private Vector<Cloneable> doIterations(DomIterator templateIterator)
+	{
+		CapturesInstruction iterativeInstruction = (CapturesInstruction) templateIterator.current();
 		DomIterator atFirstContentInLoop = new DomIterator(templateIterator.current());
 		atFirstContentInLoop.sibling();
 
 		Vector<Cloneable> expandedNodes = new Vector<Cloneable>(0);
-		
+
 		boolean endInstructionNotEncountered = true;
-	
+
 		boolean loopPassed = false;
 		boolean isAnInterationToPerform = iterativeInstruction.iterate();
 		while (isAnInterationToPerform || !loopPassed)
 		{
-			templateIterator.set(atFirstContentInLoop.current());			
+			templateIterator.set(atFirstContentInLoop.current());
 
 			endInstructionNotEncountered = true;
-			
+
 			while (templateIterator.current() != null && endInstructionNotEncountered)
 			{
 				Vector<Cloneable> localExpandedNodes = expandDeeperOnly(templateIterator);
@@ -247,24 +274,25 @@ public class Expander
 				}
 				Content computedContent = templateIterator.current();
 				// NB: this test can be performed asap at this time only
-				//     because LocatedProcessingInstruction is casted in EndInstruction
-				//     by computeNode() from expandDeeperOnly's call and not before.
+				// because LocatedProcessingInstruction is casted in EndInstruction
+				// by computeNode() from expandDeeperOnly's call and not before.
 				if (computedContent instanceof EndInstruction)
 				{
 					EndInstruction endInstruction = (EndInstruction) computedContent;
-					CapturesInstruction relatedCaptureInstruction = endInstruction.getRelatedCaptures();
-					CapturesInstruction currentCaptureInstruction = getContext().getCapturesStack().peek();
+					CapturesInstruction relatedCaptureInstruction = (CapturesInstruction) endInstruction
+							.getRelatedIterativeInstruction();
+					CapturesInstruction currentCaptureInstruction = expansionContext.getMother();
 					if (relatedCaptureInstruction == null)
 					{
-						endInstruction.setRelatedCaptures(currentCaptureInstruction);
+						endInstruction.setRelatedIterativeInstruction(currentCaptureInstruction);
 						endInstructionNotEncountered = false;
 					}
 					else
 					{
-						endInstructionNotEncountered = relatedCaptureInstruction != currentCaptureInstruction; 
+						endInstructionNotEncountered = relatedCaptureInstruction != currentCaptureInstruction;
 					}
 				}
-				
+
 				if (endInstructionNotEncountered && templateIterator.current() != null)
 				{
 					templateIterator.sibling();
@@ -278,21 +306,10 @@ public class Expander
 			{
 				loopPassed = true;
 			}
-		}		
-		
-		EndInstruction endInstruction = (EndInstruction) templateIterator.current();
-		if (endInstruction != null)
-		{
-			iterativeInstruction.terminate(endInstruction);		
 		}
-		else
-		{
-			iterativeInstruction.terminate();
-		}
-		
 		return expandedNodes;
 	}
-	
+
 	/**
 	 * Do attribute content instruction.
 	 *
@@ -328,7 +345,7 @@ public class Expander
 	 * Do content instruction.
 	 *
 	 * @param elementContentInstruction
-	 *        the element content instruction
+	 *           the element content instruction
 	 * @return the vector
 	 */
 	protected Vector<Cloneable> doContentInstruction(ElementContentInstruction elementContentInstruction)
@@ -380,21 +397,21 @@ public class Expander
 			}
 		}
 	}
-	
-	protected Context getContext()
+
+	protected LocalContext getContext()
 	{
 		return expansionContext.getContext();
 	}
-	
+
 	protected void pushContext()
 	{
 		expansionContext.push();
 	}
-	
+
 	protected void popContext()
 	{
 		expansionContext.pop();
 	}
-	
+
 	private ExpansionContext expansionContext = new ExpansionContext();
 }

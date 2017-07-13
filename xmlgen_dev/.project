@@ -33,7 +33,6 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>net.certiv.antlrdt.core.nature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.pde.api.tools.apiAnalysisNature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>

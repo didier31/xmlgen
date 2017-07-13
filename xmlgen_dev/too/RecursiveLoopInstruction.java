@@ -25,6 +25,11 @@ public class RecursiveLoopInstruction extends IterativeInstruction
 		children.set(idx, this);
 	}
 	
+	public CapturesInstruction getMother()
+	{
+		return motherLoop;
+	}
+	
 	@Override
 	public boolean iterate()
 	{
@@ -33,7 +38,7 @@ public class RecursiveLoopInstruction extends IterativeInstruction
 	
 	protected RecursiveLoopInstruction(LocatedProcessingInstruction pi, BeginContext beginContext)
 	{
-		super(pi, beginContext);		
+		super(pi, beginContext.label().Ident() == null ? "" : beginContext.label().Ident().getText());
 	}
 
 	@Override

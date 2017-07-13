@@ -43,7 +43,7 @@ public class CapturesInstruction extends IterativeInstruction
 	 */
 	public CapturesInstruction(LocatedProcessingInstruction pi, CapturesContext capturesContext)
 	{
-		super(pi, capturesContext.getParent());
+		super(pi, capturesContext.label().Ident() == null ? "" : capturesContext.label().Ident().getText());
 		int capturesCount = capturesContext.capture().size();
 		datasourcesIDs = new Vector<String>(capturesCount);
 		iterators = new Vector<Iterator<Object>>(capturesCount);
@@ -121,6 +121,17 @@ public class CapturesInstruction extends IterativeInstruction
 				traceIteration(id, object);
 			}
 			i++;
+		}
+		return notAtTheEnd;
+	}
+	
+	public boolean toIterate()
+	{
+		boolean notAtTheEnd = true;
+		for (int i = 0; i < iterators.size() && notAtTheEnd; i++)
+		{
+			Iterator<Object> iterator = iterators.get(i);
+			notAtTheEnd = iterator.hasNext();
 		}
 		return notAtTheEnd;
 	}
