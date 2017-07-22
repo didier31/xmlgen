@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+      xmlns:ns5="http://www.w3.org/2000/svg"
+      xmlns:ns4="http://www.w3.org/1999/xhtml"
+      xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+      xmlns:ns="http://www.w3.org/1999/xlink"
+      xmlns:db="http://docbook.org/ns/docbook">
+  <info>
+    <title><?xmlgen data_source1->at(1).name ?></title>
+
+    <?xmlgen [AUTHOR]
+            auteur : info.author, 
+            prenom : auteur.firstname, 
+            nom : auteur.lastname 
+    ?>
+
+    <author>
+      <personname><firstname>
+           
+
+          <?xmlgen prenom ?>
+
+           
+        </firstname> <surname>
+           
+
+          <?xmlgen nom ?>
+
+           
+        </surname></personname>
+
+      <affiliation>
+        <orgname/>
+      </affiliation>
+    </author>
+
+    <?xmlgn end [AUTHOR]
+   ?>
+
+    <pubdate/>
+  </info>
+
+  <?xmlgen package : data_source1.nestedPackage->closure(package : ecore::EPackage | package.nestedPackage)
+   ?>
+
+  <chapter>
+    <title>Package <?xmlgen package.name?> (from <?xmlgen package.nestingPackage.name ?>)</title>
+
+    <?xmlgen [DIAGRAMS_OF_THIS_CHAPTER]
+             relatedDiagram : data_source2->select(d | d.styles->at(3).owner = package) 
+   ?>
+
+    <section>
+      <title/>
+
+      <para><?xmlgen 'world'.sayHello() ?></para>
+    </section>
+
+    <?xmlgen end [DIAGRAMS_OF_THIS_CHAPTER]
+   ?>
+  </chapter>
+</book>

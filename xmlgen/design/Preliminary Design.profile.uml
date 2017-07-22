@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_G2X14GisEeeV7syY9WG7Ag" name="Preliminary Design" URI="https://www.eclipse.org/papyrus/Preliminary Design">
+  <eAnnotations xmi:id="_G2X14WisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_G2X14misEeeV7syY9WG7Ag" name="PreliminaryDesign" nsURI="https://www.eclipse.org/papyrus/Preliminary Design" nsPrefix="PreliminaryDesign">
+      <eAnnotations xmi:id="_G2X142isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details xmi:id="_G2X15GisEeeV7syY9WG7Ag" key="originalName" value="Preliminary Design"/>
+      </eAnnotations>
+      <eAnnotations xmi:id="_G2X15WisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/4.0.0/UML" references="_G2X162isEeeV7syY9WG7Ag"/>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:id="_G2X15misEeeV7syY9WG7Ag">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_G2X152isEeeV7syY9WG7Ag">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+  </elementImport>
+  <elementImport xmi:id="_G2X16GisEeeV7syY9WG7Ag">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <elementImport xmi:id="_G2X16WisEeeV7syY9WG7Ag">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_G2X16misEeeV7syY9WG7Ag">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#UnlimitedNatural"/>
+  </elementImport>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X162isEeeV7syY9WG7Ag" name="PIParser" URI="https://www.eclipse.org/papyrus/PIParser">
+    <eAnnotations xmi:id="_G2X17GisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X17WisEeeV7syY9WG7Ag" name="PIParser" nsURI="https://www.eclipse.org/papyrus/PIParser" nsPrefix="PIParser">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X17misEeeV7syY9WG7Ag" name="BeginContext">
+          <eAnnotations xmi:id="_G2X172isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X1-GisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X18GisEeeV7syY9WG7Ag" name="CaptureContext">
+          <eAnnotations xmi:id="_G2X18WisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X1-WisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X18misEeeV7syY9WG7Ag" name="TaggedContext">
+          <eAnnotations xmi:id="_G2X182isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X1-misEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X19GisEeeV7syY9WG7Ag" name="EndContext">
+          <eAnnotations xmi:id="_G2X19WisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X1-2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X19misEeeV7syY9WG7Ag" name="CapturesContext">
+          <eAnnotations xmi:id="_G2X192isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X1_GisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X1-GisEeeV7syY9WG7Ag" name="BeginContext"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X1-WisEeeV7syY9WG7Ag" name="CaptureContext"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X1-misEeeV7syY9WG7Ag" name="TaggedContext"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X1-2isEeeV7syY9WG7Ag" name="EndContext"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X1_GisEeeV7syY9WG7Ag" name="CapturesContext"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X1_WisEeeV7syY9WG7Ag" name="context" URI="https://www.eclipse.org/papyrus/context">
+    <eAnnotations xmi:id="_G2X1_misEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X1_2isEeeV7syY9WG7Ag" name="context" nsURI="https://www.eclipse.org/papyrus/context" nsPrefix="context">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2AGisEeeV7syY9WG7Ag" name="long">
+          <eAnnotations xmi:id="_G2X2AWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2DmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2AmisEeeV7syY9WG7Ag" name="int">
+          <eAnnotations xmi:id="_G2X2A2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2D2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2BGisEeeV7syY9WG7Ag" name="boolean">
+          <eAnnotations xmi:id="_G2X2BWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2EGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2BmisEeeV7syY9WG7Ag" name="V">
+          <eAnnotations xmi:id="_G2X2B2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2EWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2CGisEeeV7syY9WG7Ag" name="K">
+          <eAnnotations xmi:id="_G2X2CWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2EmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2CmisEeeV7syY9WG7Ag" name="Frame">
+          <eAnnotations xmi:id="_G2X2C2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2E2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2DGisEeeV7syY9WG7Ag" name="FrameStack">
+          <eAnnotations xmi:id="_G2X2DWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2FGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2DmisEeeV7syY9WG7Ag" name="long"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2D2isEeeV7syY9WG7Ag" name="int"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2EGisEeeV7syY9WG7Ag" name="boolean"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2EWisEeeV7syY9WG7Ag" name="V"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2EmisEeeV7syY9WG7Ag" name="K"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2E2isEeeV7syY9WG7Ag" name="Frame"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2FGisEeeV7syY9WG7Ag" name="FrameStack"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2FWisEeeV7syY9WG7Ag" name="specialization" URI="https://www.eclipse.org/papyrus/specialization">
+    <eAnnotations xmi:id="_G2X2FmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2F2isEeeV7syY9WG7Ag" name="specialization" nsURI="https://www.eclipse.org/papyrus/specialization" nsPrefix="specialization">
+        <eAnnotations xmi:id="_G2X2GGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/4.0.0/UML" references="_G2X2r2isEeeV7syY9WG7Ag"/>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2GWisEeeV7syY9WG7Ag" name="EndOfBlock" eSuperTypes="_G2X2HGisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2GmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2N2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2HGisEeeV7syY9WG7Ag" name="EndInstruction" abstract="true" eSuperTypes="_G2X2H2isEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2HWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2Q2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2H2isEeeV7syY9WG7Ag" name="StructuralInstruction" abstract="true" eSuperTypes="_G2X2ImisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2IGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2PWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2ImisEeeV7syY9WG7Ag" name="ExpansionInstruction" abstract="true" eSuperTypes="_G2X2JWisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2I2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2QWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2JWisEeeV7syY9WG7Ag" name="PreliminaryDesign_located_LocatedProcessingInstruction">
+          <eAnnotations xmi:id="_G2X2JmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2t2isEeeV7syY9WG7Ag">
+            <details xmi:id="_G2X2J2isEeeV7syY9WG7Ag" key="originalName" value="Preliminary Design_located_LocatedProcessingInstruction"/>
+          </eAnnotations>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2KGisEeeV7syY9WG7Ag" name="IterativeInstruction" abstract="true" eSuperTypes="_G2X2H2isEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2KWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2OWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2K2isEeeV7syY9WG7Ag" name="EndOfCaptures" eSuperTypes="_G2X2HGisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2LGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2O2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2LmisEeeV7syY9WG7Ag" name="BeginInstruction" eSuperTypes="_G2X2H2isEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2L2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2P2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2MWisEeeV7syY9WG7Ag" name="CapturesInstruction" eSuperTypes="_G2X2KGisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2MmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2RWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2NGisEeeV7syY9WG7Ag" name="InsertInstruction" eSuperTypes="_G2X2ImisEeeV7syY9WG7Ag">
+          <eAnnotations xmi:id="_G2X2NWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2R2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2N2isEeeV7syY9WG7Ag" name="EndOfBlock">
+      <generalization xmi:id="_G2X2OGisEeeV7syY9WG7Ag" general="_G2X2Q2isEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2OWisEeeV7syY9WG7Ag" name="IterativeInstruction" isAbstract="true">
+      <generalization xmi:id="_G2X2OmisEeeV7syY9WG7Ag" general="_G2X2PWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2O2isEeeV7syY9WG7Ag" name="EndOfCaptures">
+      <generalization xmi:id="_G2X2PGisEeeV7syY9WG7Ag" general="_G2X2Q2isEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2PWisEeeV7syY9WG7Ag" name="StructuralInstruction" isAbstract="true">
+      <generalization xmi:id="_G2X2PmisEeeV7syY9WG7Ag" general="_G2X2QWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2P2isEeeV7syY9WG7Ag" name="BeginInstruction">
+      <generalization xmi:id="_G2X2QGisEeeV7syY9WG7Ag" general="_G2X2PWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2QWisEeeV7syY9WG7Ag" name="ExpansionInstruction" isAbstract="true">
+      <generalization xmi:id="_G2X2QmisEeeV7syY9WG7Ag" general="_G2X2t2isEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2Q2isEeeV7syY9WG7Ag" name="EndInstruction" isAbstract="true">
+      <generalization xmi:id="_G2X2RGisEeeV7syY9WG7Ag" general="_G2X2PWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2RWisEeeV7syY9WG7Ag" name="CapturesInstruction">
+      <generalization xmi:id="_G2X2RmisEeeV7syY9WG7Ag" general="_G2X2OWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2R2isEeeV7syY9WG7Ag" name="InsertInstruction">
+      <generalization xmi:id="_G2X2SGisEeeV7syY9WG7Ag" general="_G2X2QWisEeeV7syY9WG7Ag"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2SWisEeeV7syY9WG7Ag" name="expansion" URI="https://www.eclipse.org/papyrus/expansion">
+    <eAnnotations xmi:id="_G2X2SmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2S2isEeeV7syY9WG7Ag" name="expansion" nsURI="https://www.eclipse.org/papyrus/expansion" nsPrefix="expansion">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2TGisEeeV7syY9WG7Ag" name="ExpansionContext">
+          <eAnnotations xmi:id="_G2X2TWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2TmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2TmisEeeV7syY9WG7Ag" name="ExpansionContext"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2T2isEeeV7syY9WG7Ag" name="notifications" URI="https://www.eclipse.org/papyrus/notifications">
+    <eAnnotations xmi:id="_G2X2UGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2UWisEeeV7syY9WG7Ag" name="notifications" nsURI="https://www.eclipse.org/papyrus/notifications" nsPrefix="notifications">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2UmisEeeV7syY9WG7Ag" name="Notifications">
+          <eAnnotations xmi:id="_G2X2U2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2VmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2VGisEeeV7syY9WG7Ag" name="Notification">
+          <eAnnotations xmi:id="_G2X2VWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2V2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2VmisEeeV7syY9WG7Ag" name="Notifications"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2V2isEeeV7syY9WG7Ag" name="Notification"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2WGisEeeV7syY9WG7Ag" name="sax" URI="https://www.eclipse.org/papyrus/sax">
+    <eAnnotations xmi:id="_G2X2WWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2WmisEeeV7syY9WG7Ag" name="sax" nsURI="https://www.eclipse.org/papyrus/sax" nsPrefix="sax">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2W2isEeeV7syY9WG7Ag" name="ErrorHandler">
+          <eAnnotations xmi:id="_G2X2XGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2YWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2XWisEeeV7syY9WG7Ag" name="SAXException">
+          <eAnnotations xmi:id="_G2X2XmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2YmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2X2isEeeV7syY9WG7Ag" name="SAXParseException">
+          <eAnnotations xmi:id="_G2X2YGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2Y2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2YWisEeeV7syY9WG7Ag" name="ErrorHandler"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2YmisEeeV7syY9WG7Ag" name="SAXException"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2Y2isEeeV7syY9WG7Ag" name="SAXParseException"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2ZGisEeeV7syY9WG7Ag" name="util" URI="https://www.eclipse.org/papyrus/util">
+    <eAnnotations xmi:id="_G2X2ZWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2ZmisEeeV7syY9WG7Ag" name="util" nsURI="https://www.eclipse.org/papyrus/util" nsPrefix="util">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2Z2isEeeV7syY9WG7Ag" name="Stack">
+          <eAnnotations xmi:id="_G2X2aGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2dWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2aWisEeeV7syY9WG7Ag" name="HashMap">
+          <eAnnotations xmi:id="_G2X2amisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2dmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2a2isEeeV7syY9WG7Ag" name="Diagnostic">
+          <eAnnotations xmi:id="_G2X2bGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2d2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2bWisEeeV7syY9WG7Ag" name="Iterator">
+          <eAnnotations xmi:id="_G2X2bmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2eGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2b2isEeeV7syY9WG7Ag" name="URI">
+          <eAnnotations xmi:id="_G2X2cGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2eWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2cWisEeeV7syY9WG7Ag" name="Vector">
+          <eAnnotations xmi:id="_G2X2cmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2emisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2c2isEeeV7syY9WG7Ag" name="Set">
+          <eAnnotations xmi:id="_G2X2dGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2e2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2dWisEeeV7syY9WG7Ag" name="Stack"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2dmisEeeV7syY9WG7Ag" name="HashMap"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2d2isEeeV7syY9WG7Ag" name="Diagnostic"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2eGisEeeV7syY9WG7Ag" name="Iterator"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2eWisEeeV7syY9WG7Ag" name="URI"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2emisEeeV7syY9WG7Ag" name="Vector"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2e2isEeeV7syY9WG7Ag" name="Set"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2fGisEeeV7syY9WG7Ag" name="Notification" URI="https://www.eclipse.org/papyrus/Notification">
+    <eAnnotations xmi:id="_G2X2fWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2fmisEeeV7syY9WG7Ag" name="Notification" nsURI="https://www.eclipse.org/papyrus/Notification" nsPrefix="Notification">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2f2isEeeV7syY9WG7Ag" name="Gravity">
+          <eAnnotations xmi:id="_G2X2gGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2hWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2gWisEeeV7syY9WG7Ag" name="Module">
+          <eAnnotations xmi:id="_G2X2gmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2hmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2g2isEeeV7syY9WG7Ag" name="Subject">
+          <eAnnotations xmi:id="_G2X2hGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2h2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2hWisEeeV7syY9WG7Ag" name="Gravity"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2hmisEeeV7syY9WG7Ag" name="Module"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2h2isEeeV7syY9WG7Ag" name="Subject"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2iGisEeeV7syY9WG7Ag" name="resource" URI="https://www.eclipse.org/papyrus/resource">
+    <eAnnotations xmi:id="_G2X2iWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2imisEeeV7syY9WG7Ag" name="resource" nsURI="https://www.eclipse.org/papyrus/resource" nsPrefix="resource">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2i2isEeeV7syY9WG7Ag" name="Resource">
+          <eAnnotations xmi:id="_G2X2jGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2j2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2jWisEeeV7syY9WG7Ag" name="ResourceSet">
+          <eAnnotations xmi:id="_G2X2jmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2kGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2j2isEeeV7syY9WG7Ag" name="Resource"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2kGisEeeV7syY9WG7Ag" name="ResourceSet"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2kWisEeeV7syY9WG7Ag" name="validation" URI="https://www.eclipse.org/papyrus/validation">
+    <eAnnotations xmi:id="_G2X2kmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2k2isEeeV7syY9WG7Ag" name="validation" nsURI="https://www.eclipse.org/papyrus/validation" nsPrefix="validation">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2lGisEeeV7syY9WG7Ag" name="Schema">
+          <eAnnotations xmi:id="_G2X2lWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2lmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2lmisEeeV7syY9WG7Ag" name="Schema"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2l2isEeeV7syY9WG7Ag" name="lang" URI="https://www.eclipse.org/papyrus/lang">
+    <eAnnotations xmi:id="_G2X2mGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2mWisEeeV7syY9WG7Ag" name="lang" nsURI="https://www.eclipse.org/papyrus/lang" nsPrefix="lang">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2mmisEeeV7syY9WG7Ag" name="String">
+          <eAnnotations xmi:id="_G2X2m2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2oGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2nGisEeeV7syY9WG7Ag" name="Class">
+          <eAnnotations xmi:id="_G2X2nWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2oWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2nmisEeeV7syY9WG7Ag" name="Object">
+          <eAnnotations xmi:id="_G2X2n2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2omisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2oGisEeeV7syY9WG7Ag" name="String"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2oWisEeeV7syY9WG7Ag" name="Class"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2omisEeeV7syY9WG7Ag" name="Object"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2o2isEeeV7syY9WG7Ag" name="jdom2" URI="https://www.eclipse.org/papyrus/jdom2">
+    <eAnnotations xmi:id="_G2X2pGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2pWisEeeV7syY9WG7Ag" name="jdom2" nsURI="https://www.eclipse.org/papyrus/jdom2" nsPrefix="jdom2">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2pmisEeeV7syY9WG7Ag" name="Content">
+          <eAnnotations xmi:id="_G2X2p2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2rGisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2qGisEeeV7syY9WG7Ag" name="ProcessingInstruction">
+          <eAnnotations xmi:id="_G2X2qWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2rWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2qmisEeeV7syY9WG7Ag" name="Document">
+          <eAnnotations xmi:id="_G2X2q2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2rmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2rGisEeeV7syY9WG7Ag" name="Content"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2rWisEeeV7syY9WG7Ag" name="ProcessingInstruction"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2rmisEeeV7syY9WG7Ag" name="Document"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2r2isEeeV7syY9WG7Ag" name="located" URI="https://www.eclipse.org/papyrus/located">
+    <eAnnotations xmi:id="_G2X2sGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2sWisEeeV7syY9WG7Ag" name="located" nsURI="https://www.eclipse.org/papyrus/located" nsPrefix="located">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2smisEeeV7syY9WG7Ag" name="Located">
+          <eAnnotations xmi:id="_G2X2s2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2tmisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2tGisEeeV7syY9WG7Ag" name="LocatedProcessingInstruction">
+          <eAnnotations xmi:id="_G2X2tWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2t2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2tmisEeeV7syY9WG7Ag" name="Located"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2t2isEeeV7syY9WG7Ag" name="LocatedProcessingInstruction"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2uGisEeeV7syY9WG7Ag" name="net" URI="https://www.eclipse.org/papyrus/net">
+    <eAnnotations xmi:id="_G2X2uWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2umisEeeV7syY9WG7Ag" name="net" nsURI="https://www.eclipse.org/papyrus/net" nsPrefix="net">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2u2isEeeV7syY9WG7Ag" name="URI">
+          <eAnnotations xmi:id="_G2X2vGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2vWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2vWisEeeV7syY9WG7Ag" name="URI"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2vmisEeeV7syY9WG7Ag" name="IQueryBuilderEngine" URI="https://www.eclipse.org/papyrus/IQueryBuilderEngine">
+    <eAnnotations xmi:id="_G2X2v2isEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2wGisEeeV7syY9WG7Ag" name="IQueryBuilderEngine" nsURI="https://www.eclipse.org/papyrus/IQueryBuilderEngine" nsPrefix="IQueryBuilderEngine">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2wWisEeeV7syY9WG7Ag" name="AstResult">
+          <eAnnotations xmi:id="_G2X2wmisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2w2isEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2w2isEeeV7syY9WG7Ag" name="AstResult"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Profile" xmi:id="_G2X2xGisEeeV7syY9WG7Ag" name="io" URI="https://www.eclipse.org/papyrus/io">
+    <eAnnotations xmi:id="_G2X2xWisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <contents xmi:type="ecore:EPackage" xmi:id="_G2X2xmisEeeV7syY9WG7Ag" name="io" nsURI="https://www.eclipse.org/papyrus/io" nsPrefix="io">
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_G2X2x2isEeeV7syY9WG7Ag" name="File">
+          <eAnnotations xmi:id="_G2X2yGisEeeV7syY9WG7Ag" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_G2X2yWisEeeV7syY9WG7Ag"/>
+        </eClassifiers>
+      </contents>
+    </eAnnotations>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_G2X2yWisEeeV7syY9WG7Ag" name="File"/>
+  </packagedElement>
+</uml:Profile>

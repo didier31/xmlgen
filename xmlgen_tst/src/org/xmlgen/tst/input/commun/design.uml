@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:PapyrusJava="http://www.eclipse.org/papyrus/PapyrusJava/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:PapyrusJava="http://www.eclipse.org/papyrus/PapyrusJava/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
   <uml:Model xmi:id="_FqQeMBlyEeezd7Cccvt1Vg" name="Preliminary Design">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_Y0co4Bl3EeepV7CxG9RMmA">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#_0"/>
@@ -12,6 +12,778 @@
             <packagedElement xmi:type="uml:Class" xmi:id="_5xQwITmgEeeyd6AnlRcIHw" name="boolean"/>
           </packagedElement>
         </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_oTyzsTmgEeeyd6AnlRcIHw" name="java">
+      <packagedElement xmi:type="uml:Package" xmi:id="_oT8ksDmgEeeyd6AnlRcIHw" name="java">
+        <packagedElement xmi:type="uml:Package" xmi:id="_oT8ksTmgEeeyd6AnlRcIHw" name="lang">
+          <packagedElement xmi:type="uml:Class" xmi:id="_oT8ksjmgEeeyd6AnlRcIHw" name="String"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_eSadWUyDEee57Y32oh_xaQ" name="Class"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_oUPfoTmgEeeyd6AnlRcIHw" name="io">
+          <packagedElement xmi:type="uml:Class" xmi:id="_oUPfojmgEeeyd6AnlRcIHw" name="File"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_oW7AMTmgEeeyd6AnlRcIHw" name="net">
+          <packagedElement xmi:type="uml:Class" xmi:id="_oW7AMjmgEeeyd6AnlRcIHw" name="URI"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_cOTKFjm3Eeeyd6AnlRcIHw" name="util">
+          <packagedElement xmi:type="uml:Class" xmi:id="_cOTKFzm3Eeeyd6AnlRcIHw" name="Set"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_cOmFATm3Eeeyd6AnlRcIHw" name="Vector"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_9fnVokyCEee57Y32oh_xaQ" name="HashMap"/>
+          <packagedElement xmi:type="uml:Interface" xmi:id="_-MBIokyCEee57Y32oh_xaQ" name="Map"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_-MBIpEyCEee57Y32oh_xaQ" name="Stack"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_oVk8YjmgEeeyd6AnlRcIHw" name="importedTypes">
+      <packagedElement xmi:type="uml:Package" xmi:id="_oVk8YzmgEeeyd6AnlRcIHw" name="org">
+        <packagedElement xmi:type="uml:Package" xmi:id="_oVutYDmgEeeyd6AnlRcIHw" name="jdom2">
+          <packagedElement xmi:type="uml:Class" xmi:id="_oVutYTmgEeeyd6AnlRcIHw" name="Document"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_oYHTADmgEeeyd6AnlRcIHw" name="xmlgen">
+          <packagedElement xmi:type="uml:Package" xmi:id="_oYHTATmgEeeyd6AnlRcIHw" name="notifications">
+            <packagedElement xmi:type="uml:Class" xmi:id="_oYHTAjmgEeeyd6AnlRcIHw" name="Notifications"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_oYaN9DmgEeeyd6AnlRcIHw" name="Notification"/>
+            <packagedElement xmi:type="uml:Package" xmi:id="_F36dUkyDEee57Y32oh_xaQ" name="Notification">
+              <packagedElement xmi:type="uml:Class" xmi:id="_F36dU0yDEee57Y32oh_xaQ" name="Module"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_F4NYQUyDEee57Y32oh_xaQ" name="Subject"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_F5GwKEyDEee57Y32oh_xaQ" name="Gravity"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_oYREATmgEeeyd6AnlRcIHw" name="xml">
+          <packagedElement xmi:type="uml:Package" xmi:id="_oYREAjmgEeeyd6AnlRcIHw" name="sax">
+            <packagedElement xmi:type="uml:Class" xmi:id="_oYREAzmgEeeyd6AnlRcIHw" name="ErrorHandler"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_F4z1M0yDEee57Y32oh_xaQ" name="SAXParseException"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_F48_I0yDEee57Y32oh_xaQ" name="SAXException"/>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_oX0YETmgEeeyd6AnlRcIHw" name="javax">
+        <packagedElement xmi:type="uml:Package" xmi:id="_oX0YEjmgEeeyd6AnlRcIHw" name="xml">
+          <packagedElement xmi:type="uml:Package" xmi:id="_oX0YEzmgEeeyd6AnlRcIHw" name="validation">
+            <packagedElement xmi:type="uml:Class" xmi:id="_oX0YFDmgEeeyd6AnlRcIHw" name="Schema"/>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_oWeUQzmgEeeyd6AnlRcIHw" name="emf">
+      <packagedElement xmi:type="uml:Package" xmi:id="_oWeURDmgEeeyd6AnlRcIHw" name="org">
+        <packagedElement xmi:type="uml:Package" xmi:id="_oWoFQDmgEeeyd6AnlRcIHw" name="eclipse">
+          <packagedElement xmi:type="uml:Package" xmi:id="_oWoFQTmgEeeyd6AnlRcIHw" name="emf">
+            <packagedElement xmi:type="uml:Package" xmi:id="_oWoFQjmgEeeyd6AnlRcIHw" name="common">
+              <packagedElement xmi:type="uml:Package" xmi:id="_oWoFQzmgEeeyd6AnlRcIHw" name="util">
+                <packagedElement xmi:type="uml:Class" xmi:id="_oWoFRDmgEeeyd6AnlRcIHw" name="URI"/>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_oXN7IjmgEeeyd6AnlRcIHw" name="ecore">
+              <packagedElement xmi:type="uml:Package" xmi:id="_oXN7IzmgEeeyd6AnlRcIHw" name="resource">
+                <packagedElement xmi:type="uml:Class" xmi:id="_oXN7JDmgEeeyd6AnlRcIHw" name="ResourceSet"/>
+                <packagedElement xmi:type="uml:Class" xmi:id="_cOcUBjm3Eeeyd6AnlRcIHw" name="Resource"/>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Model" xmi:id="_8o5JAEyCEee57Y32oh_xaQ" name="generated">
+      <packagedElement xmi:type="uml:Package" xmi:id="_8r3kgEyCEee57Y32oh_xaQ" name="org">
+        <packagedElement xmi:type="uml:Package" xmi:id="_8r3kgUyCEee57Y32oh_xaQ" name="xmlgen">
+          <packagedElement xmi:type="uml:Package" xmi:id="_8r3kgkyCEee57Y32oh_xaQ" name="context">
+            <packagedElement xmi:type="uml:Class" xmi:id="_8sBVgEyCEee57Y32oh_xaQ" name="Context" visibility="public">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_8sBVgUyCEee57Y32oh_xaQ">
+                <body>/** 
+ * The Class Context.
+ */
+</body>
+              </ownedComment>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVgkyCEee57Y32oh_xaQ" name="resourceSet" visibility="private" type="_oXN7JDmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eS3JQkyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new ResourceSetImpl()</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVg0yCEee57Y32oh_xaQ" name="instance" visibility="private" isStatic="true" type="_8sBVgEyCEee57Y32oh_xaQ" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eS3JQ0yDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Context()</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVhEyCEee57Y32oh_xaQ" name="xmlTemplateFilename" visibility="private" type="_oT8ksjmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eS3JREyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>null</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVhUyCEee57Y32oh_xaQ" name="xmlTemplateDocument" visibility="private" type="_oVutYTmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATMEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>null</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVhkyCEee57Y32oh_xaQ" name="output" visibility="private" type="_oUPfojmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATMUyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>null</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVh0yCEee57Y32oh_xaQ" name="schemaFilename" visibility="private" type="_oT8ksjmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATMkyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>null</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBViEyCEee57Y32oh_xaQ" name="schema" visibility="private" type="_oX0YFDmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATM0yDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>null</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVikyCEee57Y32oh_xaQ" name="frameStack" visibility="private" type="_8sBViUyCEee57Y32oh_xaQ" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATNEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new FrameStack(&quot;&quot;)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVjEyCEee57Y32oh_xaQ" name="trace" visibility="private" isUnique="false">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVjUyCEee57Y32oh_xaQ" name="userServices" visibility="private" type="_cOmFATm3Eeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATNUyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Vector&lt;String>(10)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVjkyCEee57Y32oh_xaQ" name="notifications" visibility="private" type="_oYHTAjmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTATNkyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>Notifications.getInstance()</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sBVj0yCEee57Y32oh_xaQ" name="templateErrorHandler" visibility="private" type="_oYREAzmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKEMEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new XMLErrorsReporter(notifications, Module.Parameters_check, Subject.Template)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGgEyCEee57Y32oh_xaQ" name="schemaErrorHandler" visibility="private" type="_oYREAzmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKEMUyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new XMLErrorsReporter(notifications, Module.Parameters_check, Subject.Schema)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGgUyCEee57Y32oh_xaQ" name="templateMissing" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKEMkyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, Message.Argument_Missing)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGgkyCEee57Y32oh_xaQ" name="outputMissing" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKEM0yDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Argument_Missing)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGg0yCEee57Y32oh_xaQ" name="outputNotFound" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKENEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Not_Found)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGhEyCEee57Y32oh_xaQ" name="outputIsDirectory" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKENUyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.IsDirectory)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGhUyCEee57Y32oh_xaQ" name="outputNotWritable" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKENkyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Output, Message.Write_Denied)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGhkyCEee57Y32oh_xaQ" name="dataSourceMissing" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTKEN0yDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Warning, Subject.DataSource, Message.Argument_Missing)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGh0yCEee57Y32oh_xaQ" name="dataSourceNotFound" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTT1MEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Not_Found)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_8sLGiEyCEee57Y32oh_xaQ" name="dataSourceNoResourceFactoryRegistered" visibility="private" isLeaf="true" type="_oYaN9DmgEeeyd6AnlRcIHw" isUnique="false">
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_eTT1MUyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Configuration, Message.No_Resource_Factory)</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eR9xYUyDEee57Y32oh_xaQ" name="clear" specification="_eR9xYEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    instance = new Context();&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eR9xZEyDEee57Y32oh_xaQ" name="getInstance" specification="_eR9xYkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return instance;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eR9xZ0yDEee57Y32oh_xaQ" name="getXmlTemplate" specification="_eR9xZUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return xmlTemplateFilename;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eR9xakyDEee57Y32oh_xaQ" name="getOutput" specification="_eR9xaEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return output;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSHiYEyDEee57Y32oh_xaQ" name="getSchema" specification="_eR9xa0yDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return schemaFilename;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSHiZEyDEee57Y32oh_xaQ" name="getFrameStack" specification="_eSHiYUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return frameStack;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSHiZ0yDEee57Y32oh_xaQ" name="setXmlTemplate" specification="_eSHiZUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    this.xmlTemplateFilename = xmlTemplate;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSHiakyDEee57Y32oh_xaQ" name="setOutput" specification="_eSHiaEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    this.output = new File(output);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsUkyDEee57Y32oh_xaQ" name="setSchema" specification="_eSQsUEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    this.schemaFilename = schema;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsVEyDEee57Y32oh_xaQ" name="setTrace" specification="_eSQsU0yDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    trace = true;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsV0yDEee57Y32oh_xaQ" name="isTrace" specification="_eSQsVUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return trace;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsWkyDEee57Y32oh_xaQ" name="getXmlTemplateDocument" specification="_eSQsWEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return xmlTemplateDocument;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsXUyDEee57Y32oh_xaQ" name="toString" specification="_eSQsW0yDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    String string = &quot;template=&quot; + getXmlTemplate() + '\n' + &quot;schema=&quot; + getSchema() + '\n' + &quot;output=&quot; + getOutput() + '\n';&#xD;
+    string += getFrameStack().toString();&#xD;
+    return string;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsX0yDEee57Y32oh_xaQ" name="check" specification="_eSQsXkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    checkSchemaAndTemplate();&#xD;
+    checkAndCaptureDataSources();&#xD;
+    checkOutput();&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsYUyDEee57Y32oh_xaQ" name="checkSchemaAndTemplate" specification="_eSQsYEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    if (getSchema() != null) {&#xD;
+        checkSchema();&#xD;
+    }&#xD;
+    if (getXmlTemplate() == null) {&#xD;
+        notifications.add(templateMissing);&#xD;
+        return;&#xD;
+    }&#xD;
+    readTemplate();&#xD;
+    if (schema != null &amp;&amp; xmlTemplateDocument != null &amp;&amp; xmlTemplateDocument.getRootElement() != null) {&#xD;
+        validateTemplate();&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsY0yDEee57Y32oh_xaQ" name="validateTemplate" specification="_eSQsYkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    assert (xmlTemplateDocument != null &amp;&amp; schema != null);&#xD;
+    Validator validator = schema.newValidator();&#xD;
+    java.net.URI templateURI = toNetURI(getXmlTemplate());&#xD;
+    String systemId = templateURI.toString();&#xD;
+    InputSource inputSource = new InputSource(systemId);&#xD;
+    validator.setErrorHandler(templateErrorHandler);&#xD;
+    SAXSource source = new SAXSource(inputSource);&#xD;
+    try {&#xD;
+        validator.validate(source);&#xD;
+    } catch (SAXExceptionIOException |  e) {&#xD;
+        Message message = new Message(e.getMessage());&#xD;
+        Notification notification = new Notification(Module.Parameters_check, Gravity.Error, Subject.Template, message);&#xD;
+        notifications.add(notification);&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSQsZUyDEee57Y32oh_xaQ" name="readTemplate" specification="_eSQsZEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    assert (getXmlTemplate() != null);&#xD;
+    SAXBuilder jdomBuilder = new SAXBuilder();&#xD;
+    jdomBuilder.setJDOMFactory(new LocatedJDOMFactory());&#xD;
+    try {&#xD;
+        xmlTemplateDocument = jdomBuilder.build(getXmlTemplate());&#xD;
+    } catch (JDOMException e) {&#xD;
+        Message message = new Message(e.getLocalizedMessage());&#xD;
+        Notification notification = new Notification(Module.Parameters_check, Gravity.Fatal, Subject.Template, message);&#xD;
+        notifications.add(notification);&#xD;
+    } catch (IOException e) {&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSadUUyDEee57Y32oh_xaQ" name="checkSchema" specification="_eSadUEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    assert (getSchema() != null);&#xD;
+    SchemaFactory factory;&#xD;
+    java.net.URI schemaURI = toNetURI(getSchema());&#xD;
+    Source schemaFile = new StreamSource(schemaURI.toASCIIString());&#xD;
+    Schema schema = null;&#xD;
+    System.setProperty(SchemaFactory.class.getName() + &quot;:&quot; + XMLConstants.RELAXNG_NS_URI, &quot;com.thaiopensource.relaxng.jaxp.XMLSyntaxSchemaFactory&quot;);&#xD;
+    final String RNC_NS_URI = &quot;http://relaxng.org/compact.html&quot;;&#xD;
+    System.setProperty(SchemaFactory.class.getName() + &quot;:&quot; + RNC_NS_URI, &quot;com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory&quot;);&#xD;
+    String schemaLanguages[] = { XMLConstants.W3C_XML_SCHEMA_NS_URI, XMLConstants.RELAXNG_NS_URI, RNC_NS_URI };&#xD;
+    boolean fail = true;&#xD;
+    HashMap&lt;Gravity, Integer> counts = notifications.getCounts();&#xD;
+    int errorsCount = counts.get(Gravity.Error);&#xD;
+    int fatalCount = counts.get(Gravity.Fatal);&#xD;
+    for (int i = 0; i &lt; schemaLanguages.length &amp;&amp; fail; i++) {&#xD;
+        factory = SchemaFactory.newInstance(schemaLanguages[i]);&#xD;
+        factory.setErrorHandler(schemaErrorHandler);&#xD;
+        try {&#xD;
+            schema = factory.newSchema(schemaFile);&#xD;
+            fail = false;&#xD;
+        } catch (SAXException e) {&#xD;
+            schema = null;&#xD;
+        }&#xD;
+    }&#xD;
+    if (errorsCount &lt; counts.get(Gravity.Error) || fatalCount &lt; counts.get(Gravity.Fatal)) {&#xD;
+        schema = null;&#xD;
+    }&#xD;
+    this.schema = schema;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSadU0yDEee57Y32oh_xaQ" name="checkOutput" specification="_eSadUkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    File output = getOutput();&#xD;
+    if (output == null) {&#xD;
+        notifications.add(outputMissing);&#xD;
+    } else {&#xD;
+        File outputDir = output.getParentFile();&#xD;
+        if (outputDir != null &amp;&amp; !outputDir.isDirectory()) {&#xD;
+            notifications.add(outputNotFound);&#xD;
+        } else {&#xD;
+            if (output.isDirectory()) {&#xD;
+                notifications.add(outputIsDirectory);&#xD;
+            } else {&#xD;
+                if (!outputDir.canWrite()) {&#xD;
+                    notifications.add(outputNotWritable);&#xD;
+                }&#xD;
+            }&#xD;
+        }&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSadVUyDEee57Y32oh_xaQ" name="registerEMFpackages" specification="_eSadVEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    UMLResourcesUtil.initLocalRegistries(resourceSet);&#xD;
+    resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put(&quot;http://www.eclipse.org/gmf/runtime/1.0.2/notation&quot;, NotationFactory.eINSTANCE);&#xD;
+    resourceSet.getPackageRegistry().put(&quot;http://www.eclipse.org/gmf/runtime/1.0.2/notation&quot;, NotationPackageImpl.eINSTANCE);&#xD;
+    resourceSet.getPackageRegistry().put(&quot;http://www.eclipse.org/papyrus/infra/viewpoints/policy/style&quot;, StylePackageImpl.eINSTANCE);&#xD;
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(&quot;notation&quot;, new XMIResourceFactoryImpl());&#xD;
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(&quot;xml&quot;, new GenericXMLResourceFactoryImpl());&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSadWEyDEee57Y32oh_xaQ" name="registerUserService" specification="_eSadVkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    ClassLoader classLoader = getClass().getClassLoader();&#xD;
+    try {&#xD;
+        Class&lt;?> _class = classLoader.loadClass(userServiceName);&#xD;
+        registerUserService(_class);&#xD;
+    } catch (ClassNotFoundException e) {&#xD;
+        e.printStackTrace();&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSjnQ0yDEee57Y32oh_xaQ" name="registerUserService" specification="_eSjnQUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    IQueryEnvironment env = InstructionParser.getQueryEnv();&#xD;
+    Set&lt;IService> userServices = ServiceUtils.getServices(env, serviceClass);&#xD;
+    ServiceUtils.registerServices(env, userServices);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSjnR0yDEee57Y32oh_xaQ" name="checkDataSourceExistance" specification="_eSjnREyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    /**
+	 * Check there is at least a datasource
+	 * else add a notification to the user.
+	 */&#xD;
+    if (dataSourcesIds.isEmpty()) {&#xD;
+        notifications.add(dataSourceMissing);&#xD;
+        return false;&#xD;
+    } else {&#xD;
+        return true;&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eSjnTEyDEee57Y32oh_xaQ" name="loadDataSource" specification="_eSjnSEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    URI dataSourceURI = toURI(dataSourceFilename);&#xD;
+    /**
+	 * Create and load the data source EMF resource 	
+	 */&#xD;
+    Resource resource = resourceSet.createResource(dataSourceURI);&#xD;
+    if (resource == null) {&#xD;
+        Artifact artifact = new Artifact(dataSourceId);&#xD;
+        Notification notification = new ContextualNotification(dataSourceNoResourceFactoryRegistered, artifact);&#xD;
+        notifications.add(notification);&#xD;
+    } else {&#xD;
+        try {&#xD;
+            resource.load(null);&#xD;
+        } catch (IOException e) {&#xD;
+        }&#xD;
+        EList&lt;Diagnostic> errors = resource.getErrors();&#xD;
+        for (Diagnostic error : errors) {&#xD;
+            LocationImpl location = new LocationImpl(new Artifact(error.getLocation()), -1, error.getColumn(), error.getLine());&#xD;
+            Notification notification = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, new Message(error.getMessage()));&#xD;
+            notification = new ContextualNotification(notification, location);&#xD;
+            notifications.add(notification);&#xD;
+        }&#xD;
+    }&#xD;
+    return resource;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eStYQEyDEee57Y32oh_xaQ" name="checkAndCaptureDataSources" specification="_eSjnTUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    registerEMFpackages();&#xD;
+    FrameStack frameStack = getFrameStack();&#xD;
+    Set&lt;String> dataSourcesIds = frameStack.keySet();&#xD;
+    checkDataSourceExistance(dataSourcesIds);&#xD;
+    /**
+	 * Capture datasources 
+	 */&#xD;
+    Vector&lt;String> validDatasourceIds = new Vector&lt;String>(dataSourcesIds.size());&#xD;
+    Vector&lt;Iterator&lt;Object>> validIterators = new Vector&lt;Iterator&lt;Object>>(dataSourcesIds.size());&#xD;
+    for (String dataSourceId : dataSourcesIds) {&#xD;
+        /**
+		 * Get data source uri passed via the frame 
+		 */&#xD;
+        Object object = frameStack.get(dataSourceId);&#xD;
+        assert (object instanceof String);&#xD;
+        String dataSourceFilename = (String) object;&#xD;
+        Resource resource = loadDataSource(dataSourceFilename, dataSourceId);&#xD;
+        EList&lt;Diagnostic> errors = resource.getErrors();&#xD;
+        if (errors.isEmpty()) {&#xD;
+            List&lt;EObject> contents = resource.getContents();&#xD;
+            if (contents.isEmpty()) {&#xD;
+                Artifact artifact = new Artifact(dataSourceId);&#xD;
+                Notification notification = new ContextualNotification(dataSourceNotFound, artifact);&#xD;
+                notifications.add(notification);&#xD;
+            } else {&#xD;
+                Vector&lt;Object> contentRoot = new Vector&lt;Object>(1);&#xD;
+                contentRoot.add(contents.get(0));&#xD;
+                validDatasourceIds.add(dataSourceId);&#xD;
+                validIterators.add(contentRoot.iterator());&#xD;
+            }&#xD;
+        }&#xD;
+    }&#xD;
+    frameStack.clear();&#xD;
+    addCaptureInstrToTemplate(validDatasourceIds, validIterators);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eStYREyDEee57Y32oh_xaQ" name="addCaptureInstrToTemplate" specification="_eStYQUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    Document xmlTemplateDoc = getXmlTemplateDocument();&#xD;
+    if (xmlTemplateDoc != null &amp;&amp; xmlTemplateDoc.getRootElement() != null) {&#xD;
+        CapturesInstruction dataSourcesCapturesInstruction = new CapturesInstruction(validDatasourceIds, validIterators, xmlTemplateDoc.getRootElement().getDocument());&#xD;
+        xmlTemplateDoc.getRootElement().addContent(0, dataSourcesCapturesInstruction);&#xD;
+    }&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eStYSEyDEee57Y32oh_xaQ" name="toURI" specification="_eStYRUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return URI.createURI(toNetURI(filename).toString());&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eStYTEyDEee57Y32oh_xaQ" name="toNetURI" specification="_eStYSUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    java.net.URI fileURI = null;&#xD;
+    try {&#xD;
+        fileURI = new java.net.URI(filename);&#xD;
+    } catch (URISyntaxException e) {&#xD;
+        File file = new File(filename);&#xD;
+        fileURI = file.toURI();&#xD;
+    }&#xD;
+    return fileURI;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_eS3JQUyDEee57Y32oh_xaQ" name="Context" specification="_eStYTUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+</body>
+              </ownedBehavior>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eR9xYEyDEee57Y32oh_xaQ" name="clear" visibility="public" isStatic="true" method="_eR9xYUyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eR9xYkyDEee57Y32oh_xaQ" name="getInstance" visibility="public" isStatic="true" method="_eR9xZEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eR9xY0yDEee57Y32oh_xaQ" type="_8sBVgEyCEee57Y32oh_xaQ" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eR9xZUyDEee57Y32oh_xaQ" name="getXmlTemplate" visibility="public" method="_eR9xZ0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eR9xZkyDEee57Y32oh_xaQ" type="_oT8ksjmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eR9xaEyDEee57Y32oh_xaQ" name="getOutput" visibility="public" method="_eR9xakyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eR9xaUyDEee57Y32oh_xaQ" type="_oUPfojmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eR9xa0yDEee57Y32oh_xaQ" name="getSchema" visibility="public" method="_eSHiYEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eR9xbEyDEee57Y32oh_xaQ" type="_oT8ksjmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSHiYUyDEee57Y32oh_xaQ" name="getFrameStack" visibility="public" method="_eSHiZEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSHiY0yDEee57Y32oh_xaQ" type="_8sBViUyCEee57Y32oh_xaQ" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSHiZUyDEee57Y32oh_xaQ" name="setXmlTemplate" visibility="public" method="_eSHiZ0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSHiZkyDEee57Y32oh_xaQ" name="xmlTemplate" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSHiaEyDEee57Y32oh_xaQ" name="setOutput" visibility="public" method="_eSHiakyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSHiaUyDEee57Y32oh_xaQ" name="output" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsUEyDEee57Y32oh_xaQ" name="setSchema" visibility="public" method="_eSQsUkyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSQsUUyDEee57Y32oh_xaQ" name="schema" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsU0yDEee57Y32oh_xaQ" name="setTrace" visibility="public" method="_eSQsVEyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsVUyDEee57Y32oh_xaQ" name="isTrace" visibility="public" method="_eSQsV0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSQsVkyDEee57Y32oh_xaQ" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsWEyDEee57Y32oh_xaQ" name="getXmlTemplateDocument" visibility="public" method="_eSQsWkyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSQsWUyDEee57Y32oh_xaQ" type="_oVutYTmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsW0yDEee57Y32oh_xaQ" name="toString" visibility="public" method="_eSQsXUyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSQsXEyDEee57Y32oh_xaQ" type="_oT8ksjmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsXkyDEee57Y32oh_xaQ" name="check" visibility="public" method="_eSQsX0yDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsYEyDEee57Y32oh_xaQ" name="checkSchemaAndTemplate" visibility="protected" method="_eSQsYUyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsYkyDEee57Y32oh_xaQ" name="validateTemplate" visibility="protected" method="_eSQsY0yDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSQsZEyDEee57Y32oh_xaQ" name="readTemplate" visibility="protected" method="_eSQsZUyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSadUEyDEee57Y32oh_xaQ" name="checkSchema" visibility="protected" method="_eSadUUyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSadUkyDEee57Y32oh_xaQ" name="checkOutput" visibility="protected" method="_eSadU0yDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSadVEyDEee57Y32oh_xaQ" name="registerEMFpackages" visibility="protected" method="_eSadVUyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSadVkyDEee57Y32oh_xaQ" name="registerUserService" visibility="public" method="_eSadWEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSadV0yDEee57Y32oh_xaQ" name="userServiceName" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSjnQUyDEee57Y32oh_xaQ" name="registerUserService" visibility="public" method="_eSjnQ0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnQkyDEee57Y32oh_xaQ" name="serviceClass" type="_eSadWUyDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSjnREyDEee57Y32oh_xaQ" name="checkDataSourceExistance" visibility="protected" method="_eSjnR0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnRUyDEee57Y32oh_xaQ" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+                </ownedParameter>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnRkyDEee57Y32oh_xaQ" name="dataSourcesIds" type="_cOTKFzm3Eeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSjnSEyDEee57Y32oh_xaQ" name="loadDataSource" visibility="protected" method="_eSjnTEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnSUyDEee57Y32oh_xaQ" type="_cOcUBjm3Eeeyd6AnlRcIHw" direction="return"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnSkyDEee57Y32oh_xaQ" name="dataSourceFilename" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eSjnS0yDEee57Y32oh_xaQ" name="dataSourceId" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eSjnTUyDEee57Y32oh_xaQ" name="checkAndCaptureDataSources" visibility="protected" method="_eStYQEyDEee57Y32oh_xaQ"/>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eStYQUyDEee57Y32oh_xaQ" name="addCaptureInstrToTemplate" visibility="protected" method="_eStYREyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYQkyDEee57Y32oh_xaQ" name="validDatasourceIds" type="_cOmFATm3Eeeyd6AnlRcIHw"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYQ0yDEee57Y32oh_xaQ" name="validIterators" type="_cOmFATm3Eeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eStYRUyDEee57Y32oh_xaQ" name="toURI" visibility="protected" method="_eStYSEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYRkyDEee57Y32oh_xaQ" type="_oWoFRDmgEeeyd6AnlRcIHw" direction="return"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYR0yDEee57Y32oh_xaQ" name="filename" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eStYSUyDEee57Y32oh_xaQ" name="toNetURI" visibility="protected" method="_eStYTEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYSkyDEee57Y32oh_xaQ" type="_oW7AMjmgEeeyd6AnlRcIHw" direction="return"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_eStYS0yDEee57Y32oh_xaQ" name="filename" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_eStYTUyDEee57Y32oh_xaQ" name="Context" visibility="protected" method="_eS3JQUyDEee57Y32oh_xaQ"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_8sBViUyCEee57Y32oh_xaQ" name="FrameStack" visibility="public">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_-MBIoUyCEee57Y32oh_xaQ">
+                <body>/** 
+ * The Class FrameStack.
+ */
+</body>
+              </ownedComment>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_-MBIpUyCEee57Y32oh_xaQ" name="stack" type="_-MBIpEyCEee57Y32oh_xaQ" isUnique="false"/>
+              <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_-MBIo0yCEee57Y32oh_xaQ" name="FrameStack implements Map" client="_8sBViUyCEee57Y32oh_xaQ" supplier="_-MBIokyCEee57Y32oh_xaQ" contract="_-MBIokyCEee57Y32oh_xaQ"/>
+              <nestedClassifier xmi:type="uml:Class" xmi:id="_-MBIoEyCEee57Y32oh_xaQ" name="MyEntry" isLeaf="true">
+                <ownedComment xmi:type="uml:Comment" xmi:id="_-MBIpkyCEee57Y32oh_xaQ">
+                  <body>/** 
+ * The Class MyEntry.
+ * @param &lt; K > the key type
+ * @param &lt; V > the value type
+ */
+</body>
+                </ownedComment>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_-MBIq0yCEee57Y32oh_xaQ" name="key" type="_-MBIqkyCEee57Y32oh_xaQ" isUnique="false"/>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_-MBIrUyCEee57Y32oh_xaQ" name="value" type="_-MBIrEyCEee57Y32oh_xaQ" isUnique="false"/>
+                <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_-MBIqUyCEee57Y32oh_xaQ" name="MyEntry implements Entry" client="_-MBIoEyCEee57Y32oh_xaQ" supplier="_-MBIqEyCEee57Y32oh_xaQ" contract="_-MBIqEyCEee57Y32oh_xaQ"/>
+              </nestedClassifier>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_8sBVi0yCEee57Y32oh_xaQ" name="boolean"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_9fnVoEyCEee57Y32oh_xaQ" name="Frame" visibility="public">
+              <ownedComment xmi:type="uml:Comment" xmi:id="_9fnVoUyCEee57Y32oh_xaQ">
+                <body>/** 
+ * The Class Frame.
+ */
+</body>
+              </ownedComment>
+              <generalization xmi:type="uml:Generalization" xmi:id="_9fnVo0yCEee57Y32oh_xaQ" general="_9fnVokyCEee57Y32oh_xaQ"/>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_9fnVpUyCEee57Y32oh_xaQ" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isUnique="false">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_8heigBydEduyofBvg4RL2w"/>
+                <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_aoeiMEyDEee57Y32oh_xaQ" name="defaultValue">
+                  <language>JAVA</language>
+                  <body>652656178360546296L</body>
+                </defaultValue>
+              </ownedAttribute>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_9fnVpkyCEee57Y32oh_xaQ" name="name" visibility="private" type="_oT8ksjmgEeeyd6AnlRcIHw" isUnique="false"/>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_9fnVqEyCEee57Y32oh_xaQ" name="level" visibility="private" isUnique="false">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+              </ownedAttribute>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_aooTM0yDEee57Y32oh_xaQ" name="Frame" specification="_aoeiMUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    super();&#xD;
+    this.name = name;&#xD;
+    this.level = level;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_aoxdIUyDEee57Y32oh_xaQ" name="getName" specification="_aooTNEyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return name;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_aoxdJEyDEee57Y32oh_xaQ" name="getLevel" specification="_aoxdIkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    return level;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_aoeiMUyDEee57Y32oh_xaQ" name="Frame" visibility="public" method="_aooTM0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_aooTMUyDEee57Y32oh_xaQ" name="name" type="_oT8ksjmgEeeyd6AnlRcIHw"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_aooTMkyDEee57Y32oh_xaQ" name="level">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_aooTNEyDEee57Y32oh_xaQ" name="getName" visibility="public" method="_aoxdIUyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_aoxdIEyDEee57Y32oh_xaQ" type="_oT8ksjmgEeeyd6AnlRcIHw" direction="return"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_aoxdIkyDEee57Y32oh_xaQ" name="getLevel" visibility="public" method="_aoxdJEyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_aoxdI0yDEee57Y32oh_xaQ" direction="return">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_9fnVpEyCEee57Y32oh_xaQ" name="long"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_9fnVp0yCEee57Y32oh_xaQ" name="int"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_-MBIqkyCEee57Y32oh_xaQ" name="K"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_-MBIrEyCEee57Y32oh_xaQ" name="V"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_F36dUEyDEee57Y32oh_xaQ" name="XMLErrorsReporter" visibility="public">
+              <generalization xmi:type="uml:Generalization" xmi:id="_F36dUUyDEee57Y32oh_xaQ" general="_oYREAzmgEeeyd6AnlRcIHw"/>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_F5ZrEkyDEee57Y32oh_xaQ" name="notifications" visibility="private" type="_oYHTAjmgEeeyd6AnlRcIHw" isUnique="false"/>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_F5ZrE0yDEee57Y32oh_xaQ" name="module" visibility="private" type="_F36dU0yDEee57Y32oh_xaQ" isUnique="false"/>
+              <ownedAttribute xmi:type="uml:Property" xmi:id="_F5ZrFEyDEee57Y32oh_xaQ" name="subject" visibility="private" type="_F4NYQUyDEee57Y32oh_xaQ" isUnique="false"/>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F4z1MkyDEee57Y32oh_xaQ" name="XMLErrorsReporter" specification="_F4XJQUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    this.notifications = notifications;&#xD;
+    this.module = module;&#xD;
+    this.subject = subject;&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5GwIUyDEee57Y32oh_xaQ" name="warning" specification="_F48_IUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    doNotification(exception, Gravity.Warning);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5GwJEyDEee57Y32oh_xaQ" name="error" specification="_F5GwIkyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    doNotification(exception, Gravity.Error);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5GwJ0yDEee57Y32oh_xaQ" name="fatalError" specification="_F5GwJUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    doNotification(exception, Gravity.Fatal);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_F5ZrEUyDEee57Y32oh_xaQ" name="doNotification" specification="_F5QhIUyDEee57Y32oh_xaQ">
+                <language>JAVA</language>
+                <body>&#xD;
+    Message message = new Message(exception.getMessage());&#xD;
+    Notification notification = new Notification(module, gravity, subject, message);&#xD;
+    Artifact artifact = new Artifact(exception.getPublicId());&#xD;
+    LocationImpl location = new LocationImpl(artifact, -1, exception.getColumnNumber(), exception.getLineNumber());&#xD;
+    ContextualNotification contextualNotification = new ContextualNotification(notification, location);&#xD;
+    notifications.add(contextualNotification);&#xD;
+</body>
+              </ownedBehavior>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_F4XJQUyDEee57Y32oh_xaQ" name="XMLErrorsReporter" visibility="public" method="_F4z1MkyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F4qEMUyDEee57Y32oh_xaQ" name="notifications" type="_oYHTAjmgEeeyd6AnlRcIHw"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F4z1MEyDEee57Y32oh_xaQ" name="module" type="_F36dU0yDEee57Y32oh_xaQ"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F4z1MUyDEee57Y32oh_xaQ" name="subject" type="_F4NYQUyDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_F48_IUyDEee57Y32oh_xaQ" name="warning" visibility="public" method="_F5GwIUyDEee57Y32oh_xaQ" raisedException="_F48_I0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F48_IkyDEee57Y32oh_xaQ" name="exception" type="_F4z1M0yDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_F5GwIkyDEee57Y32oh_xaQ" name="error" visibility="public" method="_F5GwJEyDEee57Y32oh_xaQ" raisedException="_F48_I0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F5GwI0yDEee57Y32oh_xaQ" name="exception" type="_F4z1M0yDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_F5GwJUyDEee57Y32oh_xaQ" name="fatalError" visibility="public" method="_F5GwJ0yDEee57Y32oh_xaQ" raisedException="_F48_I0yDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F5GwJkyDEee57Y32oh_xaQ" name="exception" type="_F4z1M0yDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+              <ownedOperation xmi:type="uml:Operation" xmi:id="_F5QhIUyDEee57Y32oh_xaQ" name="doNotification" visibility="protected" method="_F5ZrEUyDEee57Y32oh_xaQ">
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F5QhIkyDEee57Y32oh_xaQ" name="exception" type="_F4z1M0yDEee57Y32oh_xaQ"/>
+                <ownedParameter xmi:type="uml:Parameter" xmi:id="_F5ZrEEyDEee57Y32oh_xaQ" name="gravity" type="_F5GwKEyDEee57Y32oh_xaQ"/>
+              </ownedOperation>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_-MBIp0yCEee57Y32oh_xaQ" name="Map">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_-MBIqEyCEee57Y32oh_xaQ" name="Entry"/>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_F167oBlyEeezd7Cccvt1Vg">
@@ -99,5 +871,29 @@
       <appliedProfile xmi:type="uml:Profile" href="pathmap://Codegen_PROFILES/Codegen.profile.uml#_fPDsIBa-EearhdjjJ6cVzQ"/>
     </profileApplication>
   </uml:Model>
+  <PapyrusJava:External xmi:id="_oUFuoDmgEeeyd6AnlRcIHw" name="java.lang.String" base_Classifier="_oT8ksjmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oUYpkDmgEeeyd6AnlRcIHw" name="java.io.File" base_Classifier="_oUPfojmgEeeyd6AnlRcIHw"/>
   <PapyrusJava:External xmi:id="_oUsLkjmgEeeyd6AnlRcIHw" name="FrameStack" base_Classifier="_oUsLkTmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oVutYjmgEeeyd6AnlRcIHw" name="org.jdom2.Document" base_Classifier="_oVutYTmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oWxPMDmgEeeyd6AnlRcIHw" name="org.eclipse.emf.common.util.URI" base_Classifier="_oWoFRDmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oW7AMzmgEeeyd6AnlRcIHw" name="java.net.URI" base_Classifier="_oW7AMjmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oXXsIDmgEeeyd6AnlRcIHw" name="org.eclipse.emf.ecore.resource.ResourceSet" base_Classifier="_oXN7JDmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oX9iADmgEeeyd6AnlRcIHw" name="javax.xml.validation.Schema" base_Classifier="_oX0YFDmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oYHTAzmgEeeyd6AnlRcIHw" name="org.xmlgen.notifications.Notifications" base_Classifier="_oYHTAjmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oYREBDmgEeeyd6AnlRcIHw" name="org.xml.sax.ErrorHandler" base_Classifier="_oYREAzmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_oYj-8DmgEeeyd6AnlRcIHw" name="org.xmlgen.notifications.Notification" base_Classifier="_oYaN9DmgEeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_cOcUADm3Eeeyd6AnlRcIHw" name="java.util.Set" base_Classifier="_cOTKFzm3Eeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_cOcUBzm3Eeeyd6AnlRcIHw" name="org.eclipse.emf.ecore.resource.Resource" base_Classifier="_cOcUBjm3Eeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_cOmFAjm3Eeeyd6AnlRcIHw" name="java.util.Vector" base_Classifier="_cOmFATm3Eeeyd6AnlRcIHw"/>
+  <PapyrusJava:External xmi:id="_F4NYQEyDEee57Y32oh_xaQ" name="org.xmlgen.notifications.Notification.Module" base_Classifier="_F36dU0yDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_F4XJQEyDEee57Y32oh_xaQ" name="org.xmlgen.notifications.Notification.Subject" base_Classifier="_F4NYQUyDEee57Y32oh_xaQ"/>
+  <standard:Create xmi:id="_F4qEMEyDEee57Y32oh_xaQ" base_BehavioralFeature="_F4XJQUyDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_F48_IEyDEee57Y32oh_xaQ" name="org.xml.sax.SAXParseException" base_Classifier="_F4z1M0yDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_F5GwIEyDEee57Y32oh_xaQ" name="org.xml.sax.SAXException" base_Classifier="_F48_I0yDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_F5QhIEyDEee57Y32oh_xaQ" name="org.xmlgen.notifications.Notification.Gravity" base_Classifier="_F5GwKEyDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_amsZgEyDEee57Y32oh_xaQ" name="java.util.HashMap" base_Classifier="_9fnVokyCEee57Y32oh_xaQ"/>
+  <standard:Create xmi:id="_aooTMEyDEee57Y32oh_xaQ" base_BehavioralFeature="_aoeiMUyDEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_eSHiYkyDEee57Y32oh_xaQ" name="FrameStack" base_Classifier="_8sBViUyCEee57Y32oh_xaQ"/>
+  <PapyrusJava:External xmi:id="_eSjnQEyDEee57Y32oh_xaQ" name="java.lang.Class" base_Classifier="_eSadWUyDEee57Y32oh_xaQ"/>
+  <standard:Create xmi:id="_eS3JQEyDEee57Y32oh_xaQ" base_BehavioralFeature="_eStYTUyDEee57Y32oh_xaQ"/>
 </xmi:XMI>

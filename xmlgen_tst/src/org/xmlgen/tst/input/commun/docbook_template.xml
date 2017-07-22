@@ -6,7 +6,7 @@
       xmlns:ns="http://www.w3.org/1999/xlink"
       xmlns:db="http://docbook.org/ns/docbook">
   <info>
-    <title><?xmlgen data_source1->at(1).name ?></title>
+    <title><?xmlgen uml->at(1).name ?></title>
 
     <?xmlgen [AUTHOR]
             auteur : info.author, 
@@ -35,32 +35,91 @@
     </author>
 
     <?xmlgen end [AUTHOR]
-   ?>
+    ?>
 
     <pubdate/>
   </info>
 
-  <?xmlgen package : data_source1.nestedPackage->closure(package : ecore::EPackage | package.nestedPackage)
+  <?xmlgen package : uml.nestedPackage->closure(package : ecore::EPackage | package.nestedPackage)
    ?>
 
   <chapter>
     <title>Package <?xmlgen package.name?> (from <?xmlgen package.nestingPackage.name ?>)</title>
 
-    <!--
+    <?xmlgen comment : package.ownedComment
+    ?>
+
+    <para><?xmlgen comment.body ?></para>
+
+    <?xmlgen end 
+    ?>
+
     <?xmlgen [DIAGRAMS_OF_THIS_CHAPTER]
-             relatedDiagram : data_source2->select(d | d.styles->at(3).owner = package) 
+             relatedDiagram : notation->select(d | d.styles->at(3).owner = package) 
    ?>
--->
 
-    <section>
-      <title/>
+    <figure>
+      <title><?xmlgen relatedDiagram.name ?></title>
 
-      <para><?xmlgen 'world'.sayHello() ?></para>
-    </section>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="???">
+            <?xmlgen attr fileref = relatedDiagram.svg(outputDir, imagesPath, 800, 600) ?>
+          </imagedata>
+        </imageobject>
+      </mediaobject>
+    </figure>
 
-    <!--
     <?xmlgen end [DIAGRAMS_OF_THIS_CHAPTER]
    ?>
--->
+
+    <?xmlgen classifier : package.packagedElement->filter(uml::Classifier)
+    ?>
+
+    <?xmlgen ancestor : classifier.generalization
+   ?>
+
+    <itemizedlist>
+      <listitem>
+        <para><?xmlgem ancestor.name ?></para>
+      </listitem>
+
+      <listitem>
+        <itemizedlist>
+          <listitem>
+            <para><?xmlgem ancestor.name ?></para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+
+    <?xmlgen end
+    ?>
+
+    <table>
+      <title><?xmlgen packagedElement.name
+     ?></title>
+
+      <tgroup cols="1">
+        <thead>
+          <row>
+            <entry align="center"/>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry/>
+          </row>
+
+          <row>
+            <entry/>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <?xmlgen end
+   ?>
   </chapter>
 </book>
