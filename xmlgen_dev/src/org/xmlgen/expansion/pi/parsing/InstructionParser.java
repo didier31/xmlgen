@@ -14,8 +14,6 @@ import org.eclipse.acceleo.query.runtime.Query;
 import org.eclipse.acceleo.query.runtime.QueryParsing;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.jdom2.ProcessingInstruction;
-import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -27,11 +25,13 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PILexer;
 import org.xmlgen.parser.pi.PIParser;
+import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
+import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,55 +47,82 @@ public class InstructionParser
 	 *           the pi
 	 * @return the parser rule context
 	 */
-	static public ParserRuleContext parse(ProcessingInstruction pi)
+	static public ParserRuleContext parse(String pi)
 	{
 		InputPIContext inputPI = doParse(pi);
 		ContentContext content = inputPI.content();
 		if (content != null)
 		{
-			if (content.attributeContent() != null)
-			{
-				return content.attributeContent();
-			}
-			else if (content.elementContent() != null)
-			{
-				return content.elementContent();
-			}
-			else
-			{
-				assert (false);
-				return null;
-			}
+			return content(content);
 		}
 		else
 		{
-			CapturesContext captures = inputPI.captures();
-			if (captures != null)
+			TaggedContext tagged = inputPI.tagged();
+			if (tagged != null)
 			{
-				return captures;
+				return tagged(tagged);
 			}
 			else
 			{
-				EndContext end = inputPI.end();
-				if (end != null)
+				InsertContext insert = inputPI.insert();
+				if (insert != null)
 				{
-					return end;
+					return insert;
 				}
 				else
 				{
-					InsertContext insert = inputPI.insert();
-					if (insert != null)
-					{
-						return insert;
-					}
-					else
-					{
-						assert (false);
-						return null;
-					}
+					assert (false);
+					return null;
+				}
+			}			
+		}
+	}
+	
+	static protected ParserRuleContext content(ContentContext content)
+	{
+		if (content.attributeContent() != null)
+		{
+			return content.attributeContent();
+		}
+		else if (content.elementContent() != null)
+		{
+			return content.elementContent();
+		}
+		else
+		{
+			assert (false);
+			return null;
+		}
+	}
+	
+	static protected ParserRuleContext tagged(TaggedContext tagged)
+	{
+		CapturesContext captures = tagged.captures();
+		if (captures != null)
+		{
+			return captures;
+		}
+		else
+		{
+			EndContext end = tagged.end();
+			if (end != null)
+			{
+				return end;
+			}
+			else
+			{
+				BeginContext begin = tagged.begin();
+				if (begin != null)
+				{
+					return begin;
+				}
+				else
+				{
+					assert (false);
+					return null;
 				}
 			}
-		}
+		}		
 	}
 
 	/**
@@ -107,11 +134,11 @@ public class InstructionParser
 	 *           the pi
 	 * @return the ast result
 	 */
-	public static AstResult parseQuery(String query, LocatedProcessingInstruction pi)
+	public static AstResult parseQuery(String query, int line, int column)
 	{
 		IQueryBuilderEngine builder = QueryParsing.newBuilder(queryEnvironment);
 		AstResult astResult = builder.build(query);
-		notifyErrors(astResult, pi);
+		notifyErrors(astResult, line, column);
 		return astResult;
 	}
 
@@ -135,9 +162,9 @@ public class InstructionParser
 	 *           the pi
 	 * @return the input PI context
 	 */
-	protected static InputPIContext doParse(ProcessingInstruction pi)
+	protected static InputPIContext doParse(String pi)
 	{
-		PILexer lexer = new PILexer(CharStreams.fromString(pi.getData()));
+		PILexer lexer = new PILexer(CharStreams.fromString(pi));
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
 		parser.addErrorListener(new SyntaxErrorListener());
 		InputPIContext inputPI = parser.inputPI();
@@ -152,7 +179,7 @@ public class InstructionParser
 	 * @param pi
 	 *           the pi
 	 */
-	protected static void notifyErrors(AstResult compiledQuery, LocatedProcessingInstruction pi)
+	protected static void notifyErrors(AstResult compiledQuery, int line, int column)
 	{
 		List<Error> errors = compiledQuery.getErrors();
 		for (Error error : errors)
@@ -160,7 +187,7 @@ public class InstructionParser
 			Message message = new Message(error.toString());
 			Notification notification = new Notification(Module.Parser, Gravity.Fatal, Subject.Template, message);
 			Artifact artefact = new Artifact("");
-			LocationImpl location = new LocationImpl(artefact, -1, pi.getColumn(), pi.getLine());
+			LocationImpl location = new LocationImpl(artefact, -1, column, line);
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			Notifications.getInstance().add(contextual);
 		}

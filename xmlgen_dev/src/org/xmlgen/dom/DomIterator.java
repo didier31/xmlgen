@@ -1,23 +1,20 @@
 /*
  * 
  */
-package org.xmlgen.template.dom;
+package org.xmlgen.dom;
 
 import java.util.List;
+
 import org.jdom2.Content;
-import org.jdom2.Element;
 import org.jdom2.Parent;
+import org.xmlgen.template.dom.specialization.content.Element;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Iterator.
  */
-public class DomIterator
+abstract public class DomIterator
 {
-
-	/** The node. */
-	Content node;
-
 	/**
 	 * Instantiates a new iterator.
 	 *
@@ -90,4 +87,8 @@ public class DomIterator
 			node = null;
 		}
 	}
+	
+
+	/** The node. */
+	private Content node;
 }

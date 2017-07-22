@@ -1,10 +1,9 @@
 /*
  * 
  */
-package org.xmlgen.template.dom.specialization;
+package org.xmlgen.template.dom.specialization.instructions;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 
 // TODO: Auto-generated Javadoc
@@ -22,10 +21,10 @@ abstract public class ContentInstruction extends ExpansionInstruction
 	 * @param queryText
 	 *           the query text
 	 */
-	protected ContentInstruction(LocatedProcessingInstruction pi, String queryText)
+	protected ContentInstruction(String queryText, int line, int column)
 	{
-		super(pi);
-		AstResult compiledQuery = InstructionParser.parseQuery(queryText, pi);
+		super(queryText, line, column);
+		AstResult compiledQuery = InstructionParser.parseQuery(queryText, line, column);
 		if (compiledQuery.getErrors().isEmpty())
 		{
 			setCompiledQuery(compiledQuery);

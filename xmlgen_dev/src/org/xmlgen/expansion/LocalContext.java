@@ -2,14 +2,14 @@ package org.xmlgen.expansion;
 
 import java.util.Stack;
 
-import org.xmlgen.template.dom.specialization.CapturesInstruction;
+import org.xmlgen.template.dom.specialization.instructions.StructuralInstruction;
 
 public class LocalContext
 {
-	public Stack<CapturesInstruction> getCapturesStack()
+	public Stack<StructuralInstruction> getStructuresStack()
 	{
-		return capturesStack;
+		return structuresStack;
 	}
 
-	private Stack<CapturesInstruction> capturesStack = new Stack<CapturesInstruction>();
+	private Stack<StructuralInstruction> structuresStack = new Stack<StructuralInstruction>();	
 }

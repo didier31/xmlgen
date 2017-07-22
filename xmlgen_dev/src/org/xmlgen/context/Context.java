@@ -28,10 +28,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
-import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.located.LocatedJDOMFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -47,6 +45,8 @@ import org.xmlgen.notifications.Notification.Subject;
 
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.cmdline.CmdlineParser;
+import org.xmlgen.template.dom.specialization.content.Template;
+import org.xmlgen.template.dom.specialization.factory.TemplateDomFactory;
 
 /**
  * Context is usually initialized by the command line parser : - xml template
@@ -217,7 +217,7 @@ public class Context
 	 *
 	 * @return the xml template document
 	 */
-	public Document getXmlTemplateDocument()
+	public Template getXmlTemplateDocument()
 	{
 		return xmlTemplateDocument;
 	}
@@ -306,10 +306,10 @@ public class Context
 		assert (getXmlTemplate() != null);
 
 		SAXBuilder jdomBuilder = new SAXBuilder();
-		jdomBuilder.setJDOMFactory(new LocatedJDOMFactory());
+		jdomBuilder.setJDOMFactory(new TemplateDomFactory());
 		try
 		{
-			xmlTemplateDocument = jdomBuilder.build(getXmlTemplate());
+			xmlTemplateDocument = (Template) jdomBuilder.build(getXmlTemplate());
 		}
 		catch (JDOMException e)
 		{
@@ -678,7 +678,7 @@ public class Context
 	private String xmlTemplateFilename = null;
 
 	/** The xml template document. */
-	private Document xmlTemplateDocument = null;
+	private Template xmlTemplateDocument = null;
 
 	/** The output. */
 	private File output = null;

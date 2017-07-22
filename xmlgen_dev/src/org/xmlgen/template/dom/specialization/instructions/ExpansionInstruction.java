@@ -1,7 +1,7 @@
 /*
  * 
  */
-package org.xmlgen.template.dom.specialization;
+package org.xmlgen.template.dom.specialization.instructions;
 
 import java.util.List;
 
@@ -26,35 +26,22 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.AttributeContentContext;
+import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
-import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.template.dom.specialization.content.ProcessingInstruction;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ExpansionInstruction.
  */
-abstract public class ExpansionInstruction extends LocatedProcessingInstruction
+abstract public class ExpansionInstruction extends ProcessingInstruction
 {
 
 	/** The Constant piMarker. */
 	public final static String piMarker = "xmlgen";
-
-	/**
-	 * Test is ProcessingInstruction is an expand PI.
-	 *
-	 * @param pi
-	 *           the pi
-	 * @return true, if is expand PI
-	 */
-	static public boolean isExpandPI(ProcessingInstruction pi)
-	{
-		return piMarker.compareToIgnoreCase(pi.getTarget()) == 0;
-	}
 
 	/**
 	 * Creates the.
@@ -63,35 +50,38 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 	 *           the pi
 	 * @return the expansion instruction
 	 */
-	public static ExpansionInstruction create(LocatedProcessingInstruction pi)
+	public static ExpansionInstruction create(String pi, int line, int column)
 	{
-		assert isExpandPI(pi);
 		ParserRuleContext instruction = InstructionParser.parse(pi);
 		ExpansionInstruction domInstruction = null;
 		if (instruction instanceof CapturesContext)
 		{
 			CapturesContext capturesInstruction = (CapturesContext) instruction;
-			domInstruction = new CapturesInstruction(pi, capturesInstruction);
+			domInstruction = new CapturesInstruction(pi, capturesInstruction, line, column);
+		}
+		else if (instruction instanceof BeginContext)
+		{
+			BeginContext beginContext = (BeginContext) instruction;
+			return new BeginInstruction(pi, beginContext, line, column);
 		}
 		else if (instruction instanceof EndContext)
 		{
 			EndContext endContext = (EndContext) instruction;
-			return new EndInstruction(pi, endContext);
+			domInstruction = new EndInstruction(pi, endContext, line, column);
 		}
 		else if (instruction instanceof AttributeContentContext)
 		{
 			AttributeContentContext attributeContentInstruction = (AttributeContentContext) instruction;
-			domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction);
+			domInstruction = new AttributeContentInstruction(pi, attributeContentInstruction, line, column);
 		}
 		else if (instruction instanceof ElementContentContext)
 		{
 			ElementContentContext elementContentInstruction = (ElementContentContext) instruction;
-			domInstruction = new ElementContentInstruction(pi, elementContentInstruction);
+			domInstruction = new ElementContentInstruction(elementContentInstruction, line, column);
 		}
 		else if (instruction instanceof InsertContext)
 		{
-			InsertContext insertInstruction = (InsertContext) instruction;
-			domInstruction = new InsertInstruction(pi, insertInstruction);
+			domInstruction = new InsertInstruction(pi, line, column);
 		}
 		else
 		{
@@ -107,15 +97,11 @@ abstract public class ExpansionInstruction extends LocatedProcessingInstruction
 	 * @param pi
 	 *           the pi
 	 */
-	protected ExpansionInstruction(LocatedProcessingInstruction pi)
+	protected ExpansionInstruction(String data, int line, int column)
 	{
-		super(pi.getTarget(), pi.getData());
-		setColumn(pi.getColumn());
-		setLine(pi.getLine());
-		Element parent = pi.getParentElement();
-		int i = parent.indexOf(pi);
-		parent.removeContent(i);
-		parent.addContent(i, this);
+		super(piMarker, data);
+		setLine(line);
+		setColumn(column);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /*
  * 
  */
-package cmdline;
+package org.xmlgen.tst;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,9 +87,8 @@ public class TestCmdline {
 	protected void prepareRun()
 	{
 		String methodName = new Exception().getStackTrace()[1].getMethodName();
-
-		odir = new File("utests"+ File.separator 
-                      + "cmdline" + File.separator
+	
+		odir = new File(homePath
                       + "output" + File.separator
                       + methodName + File.separator);
 			
@@ -122,8 +121,10 @@ public class TestCmdline {
 		err.println("\n" + toString(Notifications.getInstance()));
 	}
 	
+	private final String homePath = System.getProperty("user.dir") + "/src/org/xmlgen/tst/"; 
+	
 	/** The cdir. */
-	private String cdir = "utests/cmdline/input/common/";
+	private String cdir = homePath + "/input/common/";
 	
 	/** The odir. */
 	private File odir;
@@ -147,7 +148,7 @@ public class TestCmdline {
 				            "--template", template,
 				            "--schema", schema,
 				            "--output", output,
-				            "--services", "cmdline.Hello"};
+				            "--services", ""};
 		
 		run(vargs); 
 	}
@@ -162,15 +163,18 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String dataSource1 = "'" + cdir + "design.uml'";
-		String info = "'" + cdir + "info.xml'";
+		String uml = "'/" + cdir + "design.uml'";
+		String notation = "'" + cdir + "design.notation'";
+		String info = "'/" + cdir + "info.xml'";
 		String template = "'" + cdir + "docbook_template.xml'";
 		String output = "'" + odir.getPath() + File.separator + "output.xml'";
 		
-		String[] vargs = {"data_source1=", dataSource1, "info=", info,
+		String[] vargs = { "uml=", uml,
+				           "notation=", notation,
+				           "info=", info,			
 				            "--template", template,
 				            "--trace",
-				            "--services", "cmdline.Hello",
+				            "--services", "org.xmlgen.tst.ExpansionServices",
 				            "--output", output};
 		
 		run(vargs);

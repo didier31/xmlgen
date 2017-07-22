@@ -1,14 +1,16 @@
 /*
  * 
  */
-package org.xmlgen.template.dom.specialization;
+package org.xmlgen.template.dom.specialization.instructions;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.jdom2.Attribute;
 import org.jdom2.located.LocatedElement;
-import org.jdom2.located.LocatedProcessingInstruction;
+import org.xmlgen.dom.template.TemplateIterator;
+import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -35,9 +37,9 @@ public class AttributeContentInstruction extends ContentInstruction
 	 * @param parsedPI
 	 *           the parsed PI
 	 */
-	protected AttributeContentInstruction(LocatedProcessingInstruction pi, AttributeContentContext parsedPI)
+	protected AttributeContentInstruction(String pi, AttributeContentContext parsedPI, int line, int column)
 	{
-		super(pi, parsedPI.expression().getText());
+		super(parsedPI.expression().getText(), line, column);
 		attributeId = parsedPI.attributeID().Ident().getText();
 		TerminalNode prefixToken = parsedPI.attributeID().prefix() != null ? parsedPI.attributeID().prefix().Ident()
 				: null;
@@ -49,7 +51,6 @@ public class AttributeContentInstruction extends ContentInstruction
 				prefix = prefix.substring(0, prefix.length() - 1);
 			}
 		}
-		setAttribute();
 	}
 
 	/**
@@ -86,6 +87,37 @@ public class AttributeContentInstruction extends ContentInstruction
 		}
 	}
 
+	@Override
+	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	{
+		if (expansionContext.isExecuting())
+		{
+			Attribute attribute = getAttribute();
+
+			if (attribute != null)
+			{
+				Object computedValue = eval();
+				Attribute attributeClone = attribute.clone();
+				if (computedValue != null)
+				{
+					attributeClone.setValue(computedValue.toString());
+				}
+
+				Vector<Cloneable> attributes = new Vector<Cloneable>(1);
+				attributes.add(attributeClone);
+				return attributes;
+			}
+			else
+			{
+				return new Vector<Cloneable>(0);
+			}
+		}
+		else
+		{
+			return new Vector<Cloneable>(0);
+		}
+	}
+
 	/**
 	 * Gets the attribute id.
 	 *
@@ -103,6 +135,10 @@ public class AttributeContentInstruction extends ContentInstruction
 	 */
 	public Attribute getAttribute()
 	{
+		if (attrNode == null)
+		{
+			setAttribute();
+		}
 		return attrNode;
 	}
 
@@ -127,4 +163,5 @@ public class AttributeContentInstruction extends ContentInstruction
 
 	/** The attr node. */
 	private Attribute attrNode = null;
+
 }

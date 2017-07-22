@@ -8,7 +8,6 @@ import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.xmlgen.context.Context;
-import org.xmlgen.expansion.Expander;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -19,6 +18,7 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.cmdline.SmartCmdlineParser;
+import org.xmlgen.template.dom.specialization.content.Template;
 
 public class Xmlgen
 {
@@ -46,13 +46,13 @@ public class Xmlgen
 		Notifications notifications = Notifications.getInstance();
 		HashMap<Gravity, Integer> counts = notifications.getCounts();
 
-		Expander expander = new Expander();
-
 		Document document = null;
 		
 		if (counts.get(Gravity.Error) == 0 && counts.get(Gravity.Fatal) == 0)
 		{
-			document = expander.expand(Context.getInstance().getXmlTemplateDocument());
+			Template template = Context.getInstance().getXmlTemplateDocument();
+			
+			document = template.expand();
 
 			XMLOutputter xml = new XMLOutputter();
 			xml.setFormat(Format.getPrettyFormat());

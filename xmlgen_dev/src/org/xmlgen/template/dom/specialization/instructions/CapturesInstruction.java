@@ -1,18 +1,16 @@
 /*
  * 
  */
-package org.xmlgen.template.dom.specialization;
+package org.xmlgen.template.dom.specialization.instructions;
 
 import java.util.Iterator;
 import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.jdom2.Content;
-import org.jdom2.located.LocatedProcessingInstruction;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
-import org.xmlgen.context.FrameStack;
+import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
@@ -25,6 +23,7 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.CaptureContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
+import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,7 +31,6 @@ import org.xmlgen.parser.pi.PIParser.CapturesContext;
  */
 public class CapturesInstruction extends IterativeInstruction
 {
-
 	/**
 	 * Instantiates a new captures instruction.
 	 *
@@ -41,9 +39,14 @@ public class CapturesInstruction extends IterativeInstruction
 	 * @param capturesInstruction
 	 *           the captures instruction
 	 */
-	public CapturesInstruction(LocatedProcessingInstruction pi, CapturesContext capturesContext)
+	protected CapturesInstruction(String data, CapturesContext capturesContext, int line, int column)
 	{
-		super(pi, capturesContext.label().Ident() == null ? "" : capturesContext.label().Ident().getText());
+		super(data, (TaggedContext) capturesContext.getParent(), line, column);
+		initFields(capturesContext, line, column);
+	}
+
+	private void initFields(CapturesContext capturesContext, int line, int column)
+	{
 		int capturesCount = capturesContext.capture().size();
 		datasourcesIDs = new Vector<String>(capturesCount);
 		iterators = new Vector<Iterator<Object>>(capturesCount);
@@ -52,7 +55,7 @@ public class CapturesInstruction extends IterativeInstruction
 		for (CaptureContext capture : capturesContext.capture())
 		{
 			String queryToParse = capture.expression().getText();
-			AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, pi);
+			AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, line, column);
 			String id = capture.dataID().getText();
 			if (!datasourcesIDs.contains(id))
 			{
@@ -68,21 +71,18 @@ public class CapturesInstruction extends IterativeInstruction
 	}
 
 	/**
-	 * Creates a new context
-	 *  and Initialize loop variables iterators in it 
+	 * Creates a new context and Initialize loop variables iterators in it
 	 * 
-	 * loop variables are temporarily set with with their whole content (not available for the loop body) 
-	 * in the order of their declaration
-	 * in order to allow references to the previous ones
-	 * in definitions of the following ones in the instruction.
+	 * loop variables are temporarily set with with their whole content (not
+	 * available for the loop body) in the order of their declaration in order to
+	 * allow references to the previous ones in definitions of the following ones
+	 * in the instruction.
 	 * 
 	 */
-
-	public void initialize()
+	@Override
+	protected void doInitialisation(ExpansionContext expansionContext)
 	{
-		super.initialize();
-		
-		// Initializes references in the just new created frame in stack		
+		// Initializes references in the just new created frame in stack
 		int i = 0;
 		for (AstResult captureQuery : captureQueries)
 		{
@@ -98,18 +98,26 @@ public class CapturesInstruction extends IterativeInstruction
 			i++;
 		}
 	}
-	
+
 	/**
 	 * Iterate.
 	 *
 	 * @return if something has been effectively iterated.
 	 */
-	public boolean iterate()
+	@Override
+	protected boolean iterateImpl(ExpansionContext expansionContext)
+	{
+		boolean iterating = doIterate();
+		return iterating;
+	}
+	
+	protected boolean doIterate()
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
-
+		
 		int i = 0;
-		boolean notAtTheEnd = false;
+		boolean iterating = false;
+		
 		for (String id : datasourcesIDs)
 		{
 			Iterator<Object> iterator = iterators.get(i);
@@ -117,65 +125,26 @@ public class CapturesInstruction extends IterativeInstruction
 			{
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
-				notAtTheEnd = true;
+				iterating = true;
 				traceIteration(id, object);
 			}
 			i++;
 		}
-		return notAtTheEnd;
+		return iterating;
 	}
-	
-	public boolean toIterate()
+
+	@Override
+	public boolean isFinished()
 	{
-		boolean notAtTheEnd = true;
-		for (int i = 0; i < iterators.size() && notAtTheEnd; i++)
+		boolean isFinished = true;
+		for (int i = 0; i < iterators.size() && isFinished; i++)
 		{
 			Iterator<Object> iterator = iterators.get(i);
-			notAtTheEnd = iterator.hasNext();
+			isFinished = !iterator.hasNext();
 		}
-		return notAtTheEnd;
-	}
-	
-	@Override
-	public void terminate(Content lastInstruction)
-	{
-		if (lastInstruction instanceof EndInstruction)
-		{
-			EndInstruction endInstruction = (EndInstruction) lastInstruction;
-			checkEndName(endInstruction);
-		}
-		super.terminate();
+		return isFinished;
 	}
 
-	/**
-	 * Check that the name of the end instruction is the same 
-	 * as the related capture instruction.
-	 * 
-	 * Notify the user if it is not the case.
-	 * 
-	 * @param endInstruction
-	 */
-	protected void checkEndName(EndInstruction endInstruction)
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame currentFrame = frameStack.peek();
-		String frameName = currentFrame.getName();
-
-		if ((frameName == null && endInstruction.getLabel() != null) 
-				|| 
-			  frameName != null && endInstruction.getLabel() != null && !frameName.equals(endInstruction.getLabel()))
-		{
-			Message message = new Message("Expecting " + frameName + ", not " + endInstruction.getLabel());
-			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-					message);
-			Artifact artifact = new Artifact("End instruction");
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, endInstruction.getColumn(),
-					endInstruction.getLine());
-			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
-			Notifications.getInstance().add(contextual);
-		}
-	}	
-	
 	/**
 	 * Notify duplicate id.
 	 *
@@ -218,33 +187,6 @@ public class CapturesInstruction extends IterativeInstruction
 	}
 
 	/**
-	 * Adds the to current frame.
-	 *
-	 * @param id
-	 *           the id
-	 * @param value
-	 *           the value
-	 */
-	protected void addToCurrentFrame(String id, Object value)
-	{
-		Frame currentFrame = Context.getInstance().getFrameStack().peek();
-		assert (!currentFrame.containsKey(id));
-		currentFrame.put(id, value);
-		traceReferenceDeclaration(id, currentFrame);
-	}
-
-	protected void traceReferenceDeclaration(String id, Frame frame)
-	{
-		if (Context.getInstance().isTrace())
-		{
-			Message message = new Message(frame.toString() + " adding " + id);
-			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
-					message);
-			Notifications.getInstance().add(notification);
-		}
-	}
-	
-	/**
 	 * Trace for user.
 	 *
 	 * @param id
@@ -268,7 +210,7 @@ public class CapturesInstruction extends IterativeInstruction
 	}
 
 	/** The duplicate data source reference. */
-	Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error,
+	private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error,
 			Subject.DataSource, Message.Duplicate_Reference);
 
 	/** The Constant serialVersionUID. */
@@ -282,6 +224,8 @@ public class CapturesInstruction extends IterativeInstruction
 
 	/** parsed capture queries */
 	private Vector<AstResult> captureQueries;
+
+
 
 	/** The notifications. */
 	static private Notifications notifications = Notifications.getInstance();
