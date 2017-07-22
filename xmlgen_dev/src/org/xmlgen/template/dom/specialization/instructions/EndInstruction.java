@@ -99,7 +99,7 @@ public class EndInstruction extends StructuralInstruction
 		if ((frameName == null && getLabel() != null)
 				|| frameName != null && getLabel() != null && !frameName.equals(getLabel()))
 		{
-			Message message = new Message("Expecting " + frameName + ", not " + getLabel());
+			Message message = new Message("Expecting the end instruction " + frameName + ", not the one named " + getLabel());
 			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
 					message);
 			Artifact artifact = new Artifact("End instruction");
