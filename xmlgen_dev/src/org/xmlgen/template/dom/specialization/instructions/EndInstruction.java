@@ -6,8 +6,6 @@ package org.xmlgen.template.dom.specialization.instructions;
 import java.util.Vector;
 
 import org.xmlgen.context.Context;
-import org.xmlgen.context.Frame;
-import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.notifications.Artifact;
@@ -21,19 +19,18 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
-import org.xmlgen.template.dom.specialization.content.Element;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EndInstruction.
  */
 @SuppressWarnings("serial")
-public class EndInstruction extends StructuralInstruction
+public class EndInstruction extends TaggedInstruction
 {
 	@Override
 	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
 	{
-		if (expansionContext.isExecuting())
+		if (expansionContext.upperStructureIsExecuting())
 		{
 			traceEndInstruction();
 			StructuralInstruction structuralInstruction = expansionContext.getRelatedStructure();
@@ -43,27 +40,13 @@ public class EndInstruction extends StructuralInstruction
 				 * Notify the user for his error.
 				*/ 
 			}
-			else if (structuralInstruction instanceof BeginInstruction)
+			else if (structuralInstruction.isFinished())
 			{
 				close(structuralInstruction, expansionContext);
 			}
-			else if (structuralInstruction instanceof CapturesInstruction)
-			{
-				CapturesInstruction capturesInstruction = (CapturesInstruction) structuralInstruction;
-				if (!capturesInstruction.isFinished())
-				{
-					it.set(capturesInstruction);
-				}
-				else
-				{
-					close(capturesInstruction, expansionContext);
-				}
-			}
 			else
 			{
-				// Todo : Internal Error : StructureInstruction class hierarchy
-				// inconsistency with this multiple if
-				assert (false);
+				it.set(structuralInstruction);
 			}
 		}
 		return new Vector<Cloneable>(0);
@@ -71,9 +54,7 @@ public class EndInstruction extends StructuralInstruction
 
 	protected void close(StructuralInstruction structuralInstruction, ExpansionContext expansionContext)
 	{
-		checkEndName();
-		Element parent = (Element) getParent();
-		parent.popFrame(this);
+		checkEndLabel(structuralInstruction);
 		structuralInstruction.end(expansionContext);
 	}
 
@@ -87,19 +68,16 @@ public class EndInstruction extends StructuralInstruction
 	 */
 	protected EndInstruction(String pi, EndContext endContext, int line, int column)
 	{
-		super(pi, (TaggedContext) endContext.getParent(), line, column);
+		super(pi, (TaggedContext) endContext.getParent(), line, column);		
 	}
 
-	protected void checkEndName()
+	protected void checkEndLabel(StructuralInstruction structuralInstruction)
 	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame currentFrame = frameStack.peek();
-		String frameName = currentFrame.getName();
-
-		if ((frameName == null && getLabel() != null)
-				|| frameName != null && getLabel() != null && !frameName.equals(getLabel()))
+		String structureName = structuralInstruction.getLabel();
+		if ((structureName == null && getLabel() != null)
+				|| structureName != null && getLabel() != null && !structureName.equals(getLabel()))
 		{
-			Message message = new Message("Expecting the end instruction " + frameName + ", not the one named " + getLabel());
+			Message message = new Message("Expecting the end instruction " + structureName + ", not the one named " + getLabel());
 			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
 					message);
 			Artifact artifact = new Artifact("End instruction");
@@ -131,8 +109,27 @@ public class EndInstruction extends StructuralInstruction
 	}
 
 	@Override
-	public boolean isFinished()
+	public String getLabel()
 	{
-		return true;
+		return label;
 	}
+	
+	/**
+	 * Sets the label.
+	 *
+	 * @param label
+	 *           the new label
+	 */
+	protected void setLabel(String label)
+	{
+		this.label = label;
+	}
+	
+	protected void setLabel(TaggedContext taggedContext)
+	{
+		String label = taggedContext == null || taggedContext.label() == null ? "" : taggedContext.label().Label().getText();
+		setLabel(label);
+	}
+	
+	private String label;
 }

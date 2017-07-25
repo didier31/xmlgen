@@ -1,5 +1,6 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
+import java.util.Stack;
 import java.util.Vector;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
@@ -80,29 +81,41 @@ public class BeginInstruction extends StructuralInstruction
 	}
 
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
 	{
-		if (expansionContext.isExecuting())
+		initialize(expansionContext);
+		Object guardResult = eval(guard);
+		boolean executionGranted = (guardResult != null || (guardResult instanceof Boolean && (Boolean) guardResult));
+		if (executionGranted)
 		{
-			Object guardResult = eval(guard);
-			boolean executionGranted = (guardResult != null || (guardResult instanceof Boolean && (Boolean) guardResult));
-			if (executionGranted)
-			{
-				initialize(expansionContext);
-				setDefinitions();
-			}
-			else
-			{
-				disableExecution();
-			}
+			setDefinitions();
 		}
+		else
+		{
+			disableExecution();
+		}
+		setFinished();
 		return new Vector<Cloneable>(0);
 	}
 
 	@Override
-	public void end(ExpansionContext expansionContext)
+	protected void createState(ExpansionContext expansionContext)
 	{
-		expansionContext.getContext().getStructuresStack().pop();
-		enableExecution();
+		State currentState = new State(expansionContext);
+		states.push(currentState);		
 	}
+
+	@Override
+	protected State currentState()
+	{
+		return states.peek();
+	}
+
+	@Override
+	protected void deleteState()
+	{
+		states.pop();
+	}
+	
+	private Stack<State> states = new Stack<State>();
 }

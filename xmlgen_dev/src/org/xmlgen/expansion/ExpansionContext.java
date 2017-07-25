@@ -21,7 +21,7 @@ public class ExpansionContext extends Stack<LocalContext>
 			return isExecuting;
 		}
 	}
-	
+
 	public StructuralInstruction getRelatedStructure()
 	{
 		Stack<StructuralInstruction> currentStructuresStack = getContext().getStructuresStack();
@@ -33,8 +33,8 @@ public class ExpansionContext extends Stack<LocalContext>
 		{
 			return getContext().getStructuresStack().peek();
 		}
-	}	
-	
+	}
+
 	public BeginInstruction getCurrentBegin()
 	{
 		int i = size() - 1;
@@ -44,41 +44,71 @@ public class ExpansionContext extends Stack<LocalContext>
 			Stack<StructuralInstruction> structuresStack = elementAt(i).getStructuresStack();
 			int j = structuresStack.size() - 1;
 			while (j > 0 && foundInstr == null)
-			{			
+			{
 				try
 				{
 					foundInstr = (BeginInstruction) structuresStack.elementAt(j);
 				}
 				catch (ClassCastException e)
-				{}
+				{
+				}
 				j--;
 			}
 			i--;
 		}
-	return foundInstr;
-	}	
-	
+		return foundInstr;
+	}
+
 	public StructuralInstruction getMotherStructure()
 	{
-		int i = size() - 1;
-		StructuralInstruction foundInstr = null;
-		while (i >= 0 && (foundInstr == null))
+		LocalContext localContext = getContext();
+		Stack<StructuralInstruction> structuresStack = localContext.getStructuresStack();
+		if (structuresStack.isEmpty())
 		{
-			Stack<StructuralInstruction> structuresStack = elementAt(i).getStructuresStack();
-			if (!structuresStack.isEmpty())
-			{
-				foundInstr = structuresStack.peek();
-			}
-			i--;
+			return null;
 		}
-	return foundInstr;		
+		else
+		{
+			StructuralInstruction structuralInstruction = structuresStack.peek();
+			return structuralInstruction;
+		}
 	}
 	
+	public boolean upperStructureIsExecuting()
+	{
+		StructuralInstruction upperStructure = getGrandmotherStructure();
+		if (upperStructure == null)
+		{
+			return true;
+		}
+		else
+		{
+			return upperStructure.isExecuting();
+		}
+	}
+
+	protected StructuralInstruction getGrandmotherStructure()
+	{
+		LocalContext localContext = getContext();
+		Stack<StructuralInstruction> structuresStack = localContext.getStructuresStack();
+		StructuralInstruction structuralInstruction;
+		
+		if (structuresStack.size() < 2)
+		{
+			structuralInstruction = null;
+		}
+		else
+		{
+			structuralInstruction = structuresStack.elementAt(structuresStack.size() - 2);
+		}
+		return structuralInstruction;
+	}
+
 	public void push()
 	{
 		push(new LocalContext());
 	}
-	
+
 	public LocalContext getContext()
 	{
 		return peek();

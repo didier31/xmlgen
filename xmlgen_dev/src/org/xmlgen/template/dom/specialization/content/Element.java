@@ -6,23 +6,10 @@ import java.util.Vector;
 import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Namespace;
-import org.jdom2.located.Located;
 import org.jdom2.located.LocatedElement;
-import org.xmlgen.context.Context;
-import org.xmlgen.context.Frame;
-import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.Expandable;
 import org.xmlgen.expansion.ExpansionContext;
-import org.xmlgen.notifications.Artifact;
-import org.xmlgen.notifications.ContextualNotification;
-import org.xmlgen.notifications.LocationImpl;
-import org.xmlgen.notifications.Notification;
-import org.xmlgen.notifications.Notifications;
-import org.xmlgen.notifications.Notification.Gravity;
-import org.xmlgen.notifications.Notification.Message;
-import org.xmlgen.notifications.Notification.Module;
-import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.template.dom.specialization.instructions.StructuralInstruction;
 
 @SuppressWarnings("serial")
@@ -61,8 +48,14 @@ public class Element extends LocatedElement implements Expandable
 		expansionContext.push();
 		Stack<StructuralInstruction> structureStack = expansionContext.getContext().getStructuresStack();
 		boolean isFinished;
+		/*
+		 * Do while there are unfinished iterative statements
+		 */
 		do
 		{
+			/*
+			 * Walks through element's children, expanding them
+			 */
 			while (childrenIt.current() != null)
 			{
 				Object current = childrenIt.current();
@@ -75,6 +68,12 @@ public class Element extends LocatedElement implements Expandable
 				}
 			}
 			
+			/*
+			 * Walks through the last structural instructions of the 
+			 * context, starting by the innermost to outermost and terminate the finished ones.
+			 * and terminates them.
+			 * Stops when the first unfinished one. 
+			 */
 			isFinished = true;			
 			while (!structureStack.isEmpty() && isFinished)
 			{				
@@ -92,7 +91,14 @@ public class Element extends LocatedElement implements Expandable
 		}
 		while (!structureStack.isEmpty());
 
+		/*
+		 * Now the current local expansion context is accomplished,
+		 * pop it 
+		 */
 		expansionContext.pop();
+		/*
+		 * attach expanded content to this cloned element
+		 */
 		setChildren((Element) thisClone.get(0), expanded);
 		}
 		return thisClone;
@@ -113,62 +119,6 @@ public class Element extends LocatedElement implements Expandable
 				Content childContent = (Content) child;
 				toRoot.addContent(childContent);
 			}
-		}
-	}
-	
-	/**
-	 * Pop the frame on top of the stack.
-	 * 
-	 * Notify the user if it can be done.
-	 *
-	 * @param located
-	 * 
-	 */
-	public void popFrame(Located located)
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		if (frameStack.isEmpty())
-		{
-			Message message = new Message("No more frame to discard");
-			Notification noMoreFrameToDiscard = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
-					message);
-
-			Artifact artifact = new Artifact("");
-			int line = located.getLine(), column = located.getColumn();
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, column, line);
-			ContextualNotification contextual = new ContextualNotification(noMoreFrameToDiscard, locationImpl);
-
-			Notifications.getInstance().add(contextual);
-		}
-		else
-		{
-			popFrame();
-		}
-	}
-
-	protected void popFrame()
-	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		Frame framePoped = frameStack.peek();
-		frameStack.pop();
-		tracePop(framePoped);
-	}
-
-	/**
-	 * 
-	 * Trace Frame operation
-	 * 
-	 * @param op
-	 * @param frame
-	 */
-	protected void tracePop(Frame frame)
-	{
-		if (Context.getInstance().isTrace())
-		{
-			Message message = new Message("pop " + frame);
-			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
-					message);
-			Notifications.getInstance().add(notification);
 		}
 	}
 }

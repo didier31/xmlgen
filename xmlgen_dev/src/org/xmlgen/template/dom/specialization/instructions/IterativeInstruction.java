@@ -9,77 +9,85 @@ import org.xmlgen.parser.pi.PIParser.TaggedContext;
 @SuppressWarnings("serial")
 public abstract class IterativeInstruction extends StructuralInstruction
 {
-	protected IterativeInstruction(String data,TaggedContext taggedContext, int line, int column)
+	protected IterativeInstruction(String data, TaggedContext taggedContext, int line, int column)
 	{
 		super(data, taggedContext, line, column);
 	}
-	
+
+	protected boolean isInitialized(ExpansionContext expansionContext)
+	{
+		boolean isInitialized;
+		StructuralInstruction structuralInstruction = expansionContext.getMotherStructure();
+		
+		if (this == structuralInstruction)
+		{
+			isInitialized = true;
+		}
+		else
+		{
+			isInitialized = false;
+		}
+		return isInitialized;
+	}
+
 	@Override
 	final protected void initialize(ExpansionContext expansionContext)
-	{		
-		if (!isInitialized())
+	{
+
+		if (!isInitialized(expansionContext))
 		{
-		super.initialize(expansionContext);
-		doInitialisation(expansionContext);
-		isInitialized = true;
+			super.initialize(expansionContext);
+			doInitialisation(expansionContext);
 		}
 	}
-	
+
 	@Override
 	public void end(ExpansionContext expansionContext)
 	{
 		super.end(expansionContext);
-		isInitialized = false;
 	}
-	
-	protected boolean isInitialized()
-	{
-		return isInitialized;
-	}
-	
-	abstract protected void doInitialisation(ExpansionContext expansionContext); 
+
+	abstract protected void doInitialisation(ExpansionContext expansionContext);
 
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
-	{	
+	protected Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	{
 		initialize(expansionContext);
 		if (expansionContext.isExecuting())
 		{
-			boolean isIterating = iterate(expansionContext);
-			if (!isIterating)
+			iterate(expansionContext);
+			if (isFinished())
 			{
 				disableExecution();
 			}
 		}
 		return new Vector<Cloneable>(0);
 	}
-	
+
 	/**
 	 * Iterate.
 	 *
 	 * @return if something has been effectively iterated.
 	 */
 
-	final public boolean iterate(ExpansionContext expansionContext)
+	final public void iterate(ExpansionContext expansionContext)
 	{
-		boolean isIterating = iterateImpl(expansionContext);
-		return isIterating;
+		boolean isFinished = iterateImpl(expansionContext);
+		setCompletion(isFinished);
 	}
-	
+
 	abstract protected boolean iterateImpl(ExpansionContext expansionContext);
-	
+
 	public String getLabel()
 	{
 		return label;
 	}
-	
-	
+
 	protected void setLabel(String label)
 	{
 		this.label = label;
 	}
-			
+
 	private String label;
-	
-	private boolean isInitialized;
+
 }
