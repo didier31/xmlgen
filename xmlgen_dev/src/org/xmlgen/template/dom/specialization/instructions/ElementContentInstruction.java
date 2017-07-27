@@ -48,9 +48,9 @@ public class ElementContentInstruction extends ContentInstruction
 	 * @param parsedPI
 	 *           the parsed PI
 	 */
-	protected ElementContentInstruction(ElementContentContext parsedPI, int line, int column)
+	protected ElementContentInstruction(String pi, ElementContentContext parsedPI, int line, int column)
 	{
-		super(parsedPI.expression().getText(), line, column);
+		super(getText(pi, parsedPI.expression()), line, column);
 	}
 
 	/** The Constant serialVersionUID. */

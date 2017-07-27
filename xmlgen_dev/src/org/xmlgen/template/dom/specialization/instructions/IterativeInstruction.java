@@ -18,7 +18,7 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	{
 		boolean isInitialized;
 		StructuralInstruction structuralInstruction = expansionContext.getMotherStructure();
-		
+
 		if (this == structuralInstruction)
 		{
 			isInitialized = true;
@@ -52,14 +52,10 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	@Override
 	protected Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
 	{
-		initialize(expansionContext);
-		if (expansionContext.isExecuting())
+		iterate(expansionContext);
+		if (isFinished())
 		{
-			iterate(expansionContext);
-			if (isFinished())
-			{
-				disableExecution();
-			}
+			disableExecution();
 		}
 		return new Vector<Cloneable>(0);
 	}
@@ -77,17 +73,4 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	}
 
 	abstract protected boolean iterateImpl(ExpansionContext expansionContext);
-
-	public String getLabel()
-	{
-		return label;
-	}
-
-	protected void setLabel(String label)
-	{
-		this.label = label;
-	}
-
-	private String label;
-
 }

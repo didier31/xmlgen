@@ -12,7 +12,7 @@ inputPI : (tagged | content | insert) EOF
 tagged: label? (captures | begin | end)
 ;
 
-insert: Insert;
+insert: Insert Label?;
 
 captures : capture (',' capture)*
 ;

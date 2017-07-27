@@ -60,9 +60,10 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	final public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
 	{
 		Vector<Cloneable> expanded;
-		initialize(expansionContext);
-		if (isExecuting())
+		
+		if (expansionContext.isExecuting())
 		{	
+			initialize(expansionContext);
 			expanded = doExpandMySelf(it, expansionContext);
 		}
 		else
@@ -86,15 +87,15 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	{
 		Frame currentFrame = Context.getInstance().getFrameStack().peek();
 		assert (!currentFrame.containsKey(id));
-		currentFrame.put(id, value);
 		traceReferenceDeclaration(id, currentFrame);
+		currentFrame.put(id, value);
 	}
 
 	protected void traceReferenceDeclaration(String id, Frame frame)
 	{
 		if (Context.getInstance().isTrace())
 		{
-			Message message = new Message(frame.toString() + " adding " + id);
+			Message message = new Message(frame.toString() + " += [" + id + "]");
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
 					message);
 			Notifications.getInstance().add(notification);

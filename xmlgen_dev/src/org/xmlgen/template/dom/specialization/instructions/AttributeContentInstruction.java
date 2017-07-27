@@ -39,7 +39,7 @@ public class AttributeContentInstruction extends ContentInstruction
 	 */
 	protected AttributeContentInstruction(String pi, AttributeContentContext parsedPI, int line, int column)
 	{
-		super(parsedPI.expression().getText(), line, column);
+		super(getText(pi, parsedPI.expression()), line, column);
 		attributeId = parsedPI.attributeID().Ident().getText();
 		TerminalNode prefixToken = parsedPI.attributeID().prefix() != null ? parsedPI.attributeID().prefix().Ident()
 				: null;

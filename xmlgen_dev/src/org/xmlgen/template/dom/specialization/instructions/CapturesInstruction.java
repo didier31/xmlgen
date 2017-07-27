@@ -55,7 +55,7 @@ public class CapturesInstruction extends IterativeInstruction
 
 		for (CaptureContext capture : capturesContext.capture())
 		{
-			String queryToParse = capture.expression().getText();
+			String queryToParse = getText(getData(), capture.expression());
 			AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, getLine(), getColumn());
 			String id = capture.dataID().getText();
 			if (!datasourcesIDs.contains(id))

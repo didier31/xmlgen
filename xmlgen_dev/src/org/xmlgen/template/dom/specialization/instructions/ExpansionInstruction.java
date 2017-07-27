@@ -77,11 +77,12 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 		else if (instruction instanceof ElementContentContext)
 		{
 			ElementContentContext elementContentInstruction = (ElementContentContext) instruction;
-			domInstruction = new ElementContentInstruction(elementContentInstruction, line, column);
+			domInstruction = new ElementContentInstruction(pi, elementContentInstruction, line, column);
 		}
 		else if (instruction instanceof InsertContext)
 		{
-			domInstruction = new InsertInstruction(pi, line, column);
+			InsertContext insertInstruction = (InsertContext) instruction; 
+			domInstruction = new InsertInstruction(pi, insertInstruction, line, column);
 		}
 		else
 		{
@@ -188,6 +189,12 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 		{
 			return null;
 		}
+	}
+	
+	static protected String getText(String pi, ParserRuleContext parserRuleContext)
+	{
+		String text = pi.substring(parserRuleContext.start.getStartIndex(), parserRuleContext.stop.getStopIndex() + 1);
+		return text;
 	}
 
 	/**

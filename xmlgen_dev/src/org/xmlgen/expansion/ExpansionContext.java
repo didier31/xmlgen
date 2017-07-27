@@ -35,7 +35,7 @@ public class ExpansionContext extends Stack<LocalContext>
 		}
 	}
 
-	public BeginInstruction getCurrentBegin()
+	public BeginInstruction getCurrentBegin(String label)
 	{
 		int i = size() - 1;
 		BeginInstruction foundInstr = null;
@@ -48,6 +48,14 @@ public class ExpansionContext extends Stack<LocalContext>
 				try
 				{
 					foundInstr = (BeginInstruction) structuresStack.elementAt(j);
+					if (label != null)
+					{
+						String instrLabel = foundInstr.getLabel(); 
+						if (!instrLabel.equals(label))
+						{
+							foundInstr = null;
+						}
+					}
 				}
 				catch (ClassCastException e)
 				{
@@ -71,19 +79,6 @@ public class ExpansionContext extends Stack<LocalContext>
 		{
 			StructuralInstruction structuralInstruction = structuresStack.peek();
 			return structuralInstruction;
-		}
-	}
-	
-	public boolean upperStructureIsExecuting()
-	{
-		StructuralInstruction upperStructure = getGrandmotherStructure();
-		if (upperStructure == null)
-		{
-			return true;
-		}
-		else
-		{
-			return upperStructure.isExecuting();
 		}
 	}
 

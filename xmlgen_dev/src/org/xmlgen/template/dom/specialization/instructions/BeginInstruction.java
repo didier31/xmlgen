@@ -34,11 +34,19 @@ public class BeginInstruction extends StructuralInstruction
 	private void initFields(BeginContext beginContext, int line, int column)
 	{
 		GuardContext guardContext = beginContext.guard();
-		String guardStr = guardContext != null ? guardContext.expression().getText() : "true"; 
+		String guardStr;
+		if (guardContext != null)
+		{
+			ExpressionContext expressionContext = guardContext.expression();
+			guardStr = getText(this.getData(), expressionContext);
+		}
+		else
+		{
+			guardStr = "true";
+		}			
 		
 		guard = InstructionParser.parseQuery(guardStr, line, column);
-		
-		
+				
 		DefinitionsContext definitions = beginContext.definitions();
 		final int definitionsCount = definitions == null ? 0 : definitions.definition().size();
 		datasourcesIDs = new Vector<String>(definitionsCount);
@@ -49,7 +57,7 @@ public class BeginInstruction extends StructuralInstruction
 			for (DefinitionContext definition : definitions.definition())
 			{
 				ExpressionContext expression = definition.expression();
-				String queryToParse = this.getData().substring(expression.start.getStartIndex(), expression.stop.getStopIndex()+1);
+				String queryToParse = getText(this.getData(), expression);
 				AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, line, column);
 				String id = definition.dataID().getText();
 				datasourcesIDs.add(id);
@@ -83,9 +91,8 @@ public class BeginInstruction extends StructuralInstruction
 	@Override
 	public Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
 	{
-		initialize(expansionContext);
 		Object guardResult = eval(guard);
-		boolean executionGranted = (guardResult != null || (guardResult instanceof Boolean && (Boolean) guardResult));
+		boolean executionGranted = (guardResult != null && (guardResult instanceof Boolean && (Boolean) guardResult));
 		if (executionGranted)
 		{
 			setDefinitions();
@@ -93,6 +100,10 @@ public class BeginInstruction extends StructuralInstruction
 		else
 		{
 			disableExecution();
+			if (!(guardResult instanceof Boolean))
+			{
+				// TODO: Notify user that guard has not the correct type 
+			}
 		}
 		setFinished();
 		return new Vector<Cloneable>(0);

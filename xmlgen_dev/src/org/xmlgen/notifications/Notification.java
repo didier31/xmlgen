@@ -108,7 +108,9 @@ public class Notification
 		/** The Configuration. */
 		Configuration("Configuration"),
 		/** Uset service */
-		UserService("User service");
+		UserService("User service"),
+		/** xmlgen instruction */
+		Instruction("Instruction");
 
 		/*
 		 * (non-Javadoc)
