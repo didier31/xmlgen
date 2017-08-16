@@ -11,26 +11,25 @@ import org.xmlgen.template.dom.specialization.content.Element;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Iterator.
+ * An iterator class for DOM 
  */
 abstract public class DomIterator
 {
 	/**
 	 * Instantiates a new iterator.
-	 *
-	 * @param node
-	 *           the node
+	 * 
+	 * @param node : position of the iterator.
 	 */
-	public DomIterator(Content node)
+	protected DomIterator(Content node)
 	{
 		set(node);
 	}
 
 	/**
-	 * Sets the.
+	 * Sets the position of the iterator.
 	 *
-	 * @param node
-	 *           the node
+	 * @param node : position of the iterator after call.
+	 * 
 	 */
 	public void set(Content node)
 	{
@@ -38,9 +37,9 @@ abstract public class DomIterator
 	}
 
 	/**
-	 * Current.
+	 * Gets the content at current position.
 	 *
-	 * @return the content
+	 * @return the current content node.
 	 */
 	public Content current()
 	{
@@ -48,7 +47,8 @@ abstract public class DomIterator
 	}
 
 	/**
-	 * Descendant.
+	 * Fowards the position to the first child of the current position.
+	 * 
 	 */
 	public void descendant()
 	{
@@ -72,7 +72,7 @@ abstract public class DomIterator
 	}
 
 	/**
-	 * Sibling.
+	 * Forward to the next sibling.
 	 */
 	public void sibling()
 	{
@@ -89,6 +89,8 @@ abstract public class DomIterator
 	}
 	
 
-	/** The node. */
+	/** 
+	 * the node representing the current position
+	 */
 	private Content node;
 }

@@ -4,7 +4,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.xmlgen.context.Context;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
@@ -25,9 +25,9 @@ public class BeginInstruction extends StructuralInstruction
 	private Vector<String> datasourcesIDs;
 	private AstResult guard;
 
-	protected BeginInstruction(String pi, BeginContext beginContext, int line, int column)
+	protected BeginInstruction(String pi, BeginContext beginContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(pi, (TaggedContext) beginContext.getParent(), line, column);
+		super(pi, (TaggedContext) beginContext.getParent(), line, column, xmlgen);
 		initFields(beginContext, line, column);
 	}
 
@@ -39,6 +39,10 @@ public class BeginInstruction extends StructuralInstruction
 		{
 			ExpressionContext expressionContext = guardContext.expression();
 			guardStr = getText(this.getData(), expressionContext);
+			if (guardStr.equals(""))
+			{
+				guardStr = "false";
+			}
 		}
 		else
 		{
@@ -82,14 +86,15 @@ public class BeginInstruction extends StructuralInstruction
 		}
 	}
 
+	@Override
 	protected void pushDatasourcesContext(Frame newFrame)
 	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
-		frameStack.pushR(newFrame);
+		FrameStack frameStack = getXmlgen().getFrameStack();
+		frameStack.push(newFrame);
 	}
 
 	@Override
-	public Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> doExpandMySelf(TemplateIterator it)
 	{
 		Object guardResult = eval(guard);
 		boolean executionGranted = (guardResult != null && (guardResult instanceof Boolean && (Boolean) guardResult));

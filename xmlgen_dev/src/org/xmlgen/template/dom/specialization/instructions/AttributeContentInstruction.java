@@ -9,13 +9,13 @@ import java.util.Vector;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.jdom2.Attribute;
 import org.jdom2.located.LocatedElement;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
-import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
@@ -37,9 +37,9 @@ public class AttributeContentInstruction extends ContentInstruction
 	 * @param parsedPI
 	 *           the parsed PI
 	 */
-	protected AttributeContentInstruction(String pi, AttributeContentContext parsedPI, int line, int column)
+	protected AttributeContentInstruction(String pi, AttributeContentContext parsedPI, int line, int column, Xmlgen xmlgen)
 	{
-		super(getText(pi, parsedPI.expression()), line, column);
+		super(getText(pi, parsedPI.expression()), line, column, xmlgen);
 		attributeId = parsedPI.attributeID().Ident().getText();
 		TerminalNode prefixToken = parsedPI.attributeID().prefix() != null ? parsedPI.attributeID().prefix().Ident()
 				: null;
@@ -83,13 +83,14 @@ public class AttributeContentInstruction extends ContentInstruction
 			Artifact artifact = new Artifact(parent.getQualifiedName());
 			LocationImpl location = new LocationImpl(artifact, -1, parent.getColumn(), parent.getLine());
 			ContextualNotification contextualAttributeNotFound = new ContextualNotification(attributeNotFound, location);
-			Notifications.getInstance().add(contextualAttributeNotFound);
+			getXmlgen().getNotifications().add(contextualAttributeNotFound);
 		}
 	}
 
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
+		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
 		if (expansionContext.isExecuting())
 		{
 			Attribute attribute = getAttribute();

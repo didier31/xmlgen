@@ -6,6 +6,8 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.jdom2.Content;
+import org.xmlgen.Xmlgen;
+import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
@@ -14,17 +16,21 @@ import org.xmlgen.template.dom.specialization.content.Element;
 @SuppressWarnings("serial")
 public class InsertInstruction extends ExpansionInstruction
 {	
-	protected InsertInstruction(String pi, InsertContext insertInstruction, int line, int column)
+	protected InsertInstruction(String pi, InsertContext insertInstruction, int line, int column, Xmlgen xmlgen)
 	{
-		super(pi, line, column);
+		super(pi, line, column, xmlgen);
 		TerminalNode labelContext = insertInstruction.Label();
 		label = labelContext != null ? labelContext.getText() : null;
 	}
 	
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
-		super.expandMySelf(it, expansionContext);
+		Xmlgen xmlgen = getXmlgen();
+		ExpansionContext expansionContext = xmlgen.getExpansionContext();
+		
+		super.expandMySelf(it);
+		
 		if (expansionContext.isExecuting())
 		{
 			BeginInstruction insertBlock = expansionContext.getCurrentBegin(label);
@@ -36,11 +42,19 @@ public class InsertInstruction extends ExpansionInstruction
 			
 			Collection<Content> structureContent = structureOf(insertBlock);
 			
-			Element element = new Element("dummy");
+			Element element = new Element("dummy", xmlgen);
 			element.addContent(structureContent);
 			
-			TemplateIterator recursiveIt = new TemplateIterator(insertBlock);  
-			Vector<Cloneable> expanded = element.expandMySelf(recursiveIt, expansionContext, false);
+			TemplateIterator recursiveIt = new TemplateIterator(insertBlock);
+			
+			FrameStack frameStack = getXmlgen().getFrameStack();
+			
+			frameStack.pushNumbering();
+			
+			Vector<Cloneable> expanded = element.expandMySelf(recursiveIt, false);
+			
+			frameStack.popNumbering();
+			
 			return expanded;
 		}
 		else
@@ -55,8 +69,9 @@ public class InsertInstruction extends ExpansionInstruction
 		Stack<StructuralInstruction> structures = new Stack<StructuralInstruction>();
 		Vector<Content> structure = new Vector<Content>(0); 
 		do
-		{		
-			Content content = structureIt.current().clone();
+		{	
+			Content templaceContent = structureIt.current(); 
+			Content content = templaceContent.clone();
 			structure.addElement(content);
 			if (content instanceof StructuralInstruction)
 			{
@@ -82,8 +97,7 @@ public class InsertInstruction extends ExpansionInstruction
 					else
 					{
 						structures.pop();
-					}
-					
+					}					
 				}
 			}		
 		structureIt.sibling();

@@ -6,6 +6,7 @@ package org.xmlgen.template.dom.specialization.instructions;
 import java.util.Vector;
 
 import org.jdom2.Text;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.parser.pi.PIParser.ElementContentContext;
@@ -17,8 +18,9 @@ import org.xmlgen.parser.pi.PIParser.ElementContentContext;
 public class ElementContentInstruction extends ContentInstruction
 {
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
+		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
 		if (expansionContext.isExecuting())
 		{
 			Object computedValue = eval();
@@ -48,9 +50,9 @@ public class ElementContentInstruction extends ContentInstruction
 	 * @param parsedPI
 	 *           the parsed PI
 	 */
-	protected ElementContentInstruction(String pi, ElementContentContext parsedPI, int line, int column)
+	protected ElementContentInstruction(String pi, ElementContentContext parsedPI, int line, int column, Xmlgen xmlgen)
 	{
-		super(getText(pi, parsedPI.expression()), line, column);
+		super(getText(pi, parsedPI.expression()), line, column, xmlgen);
 	}
 
 	/** The Constant serialVersionUID. */

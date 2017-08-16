@@ -1,13 +1,16 @@
 package org.xmlgen;
 
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.xmlgen.context.Context;
+import org.xmlgen.context.FrameStack;
+import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -22,54 +25,93 @@ import org.xmlgen.template.dom.specialization.content.Template;
 
 public class Xmlgen
 {
+	public Xmlgen(Notifications notifications, FrameStack frameStack)
+	{
+		this.notifications = notifications;
+		this.frameStack = frameStack;
+		context = new Context(this);
+		expansionContext = new ExpansionContext();
+	}
 
+	public Notifications getNotifications()
+	{
+		return notifications;
+	}
+	
+	public Context getContext()
+	{
+		return context;
+	}
+	
+	public FrameStack getFrameStack()
+	{
+		return frameStack;
+	}
+	
+	public ExpansionContext getExpansionContext()
+	{
+		return expansionContext;
+	}
+	
 	public static void main(String[] args)
 	{
-		Xmlgen xmlgen = new Xmlgen();
+		Notifications notifications = new Notifications();
+		Xmlgen xmlgen = new Xmlgen(notifications, new FrameStack(""));
 		xmlgen.perform(args, null);
-		System.err.print(xmlgen.toString(Notifications.getInstance()));
+		System.err.print(xmlgen.toString(xmlgen.getNotifications()));
 	}
 
 	public void perform(String[] vargs, ClassLoader userServicesClassloader)
-	{
-		Context.clear();		
-		Notifications.getInstance().clear();
-		
-		Context context = Context.getInstance();
-		context.setUserServicesClassLoader(userServicesClassloader);
+	{				
+		notifications.clear();	
 
-		SmartCmdlineParser parser = new SmartCmdlineParser(vargs);
+		SmartCmdlineParser parser = new SmartCmdlineParser(vargs, this);
 		parser.parse();
 		
-		context.check();
+		perfom(context, userServicesClassloader);
+	}
 
-		Notifications notifications = Notifications.getInstance();
+	public void perfom(Context context, ClassLoader userServicesClassloader)
+	{
+		context.setUserServicesClassLoader(userServicesClassloader);
+		context.check(true);
+
+		Notifications notifications = getNotifications();
 		HashMap<Gravity, Integer> counts = notifications.getCounts();
-
-		Document document = null;
 		
 		if (counts.get(Gravity.Error) == 0 && counts.get(Gravity.Fatal) == 0)
 		{
-			Template template = Context.getInstance().getXmlTemplateDocument();
-			
-			document = template.expand();
+			doExpansion();
+		}
+	}
 
-			XMLOutputter xml = new XMLOutputter();
-			xml.setFormat(Format.getPrettyFormat());
-			
-			PrintStream xmlOutput = null;
-			try
+	public void doExpansion()
+	{
+		Document document;
+		Template template = context.getXmlTemplateDocument();
+		
+		document = template.expand(this);
+		
+		XMLOutputter xml = new XMLOutputter();
+		xml.setFormat(Format.getPrettyFormat());
+		
+		FileOutputStream xmlOutput = null;
+		
+		try
+		{
+			xmlOutput = new FileOutputStream(context.getOutput());
+			if (document != null)
 			{
-				xmlOutput = new PrintStream(context.getOutput());
-				if (document != null)
-				{
-					xmlOutput.println(xml.outputString(document));
-				}
+				xml.output(document, xmlOutput);
 			}
-			catch (FileNotFoundException e)
-			{
-				Notifications.getInstance().add(cant_write_output);
-			}
+		}
+		catch (FileNotFoundException e)
+		{
+			getNotifications().add(cant_write_output);
+		}
+		catch (IOException e)
+		{
+			// TODO Notify an error to user.
 		}
 	}
 
@@ -112,12 +154,17 @@ public class Xmlgen
 	return string;
 	}
 	
-		public String fixedLengthString(String string, int length) 
-		{
-		    return String.format("%1$"+length+ "s", string);
-		}		
-		
+	public String fixedLengthString(String string, int length) 
+	{
+	    return String.format("%1$"+length+ "s", string);
+	}		
+			
+	private Notifications notifications;
+	private FrameStack frameStack;
+	private Context context;
+	private ExpansionContext expansionContext;
+	
 	final static Message message = new Message("output can't be written on mass storage.");
 	final static Notification cant_write_output = new Notification(Module.Parser, Gravity.Error, Subject.Output,
-			message);
+			                                                         message);
 }

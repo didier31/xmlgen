@@ -5,6 +5,7 @@ import java.util.Map;
 import org.jdom2.Document;
 import org.jdom2.Namespace;
 import org.jdom2.located.LocatedJDOMFactory;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.template.dom.specialization.content.CDATA;
 import org.xmlgen.template.dom.specialization.content.Comment;
 import org.xmlgen.template.dom.specialization.content.DocType;
@@ -17,6 +18,11 @@ import org.xmlgen.template.dom.specialization.instructions.ExpansionInstruction;
 
 public class TemplateDomFactory extends LocatedJDOMFactory
 {
+	public TemplateDomFactory(Xmlgen xmlgen)
+	{
+		this.xmlgen = xmlgen;
+	}
+
 	public Document document(Element rootElement, DocType docType)
 	{
 		Template template = new Template(rootElement, docType);
@@ -59,7 +65,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 	
 	@Override
 	public CDATA cdata(int line, int col, String text) {
-		final CDATA ret = new CDATA(text);
+		final CDATA ret = new CDATA(text, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -67,7 +73,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public Text text(int line, int col, String text) {
-		final Text ret = new Text(text);
+		final Text ret = new Text(text, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -75,7 +81,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public Comment comment(int line, int col, String text) {
-		final Comment ret = new Comment(text);
+		final Comment ret = new Comment(text, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -101,7 +107,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public DocType docType(int line, int col, String elementName) {
-		final DocType ret = new DocType(elementName);
+		final DocType ret = new DocType(elementName, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -109,7 +115,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public Element element(int line, int col, String name, Namespace namespace) {
-		final Element ret = new Element(name, namespace);
+		final Element ret = new Element(name, namespace, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -117,7 +123,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public Element element(int line, int col, String name) {
-		final Element ret = new Element(name);
+		final Element ret = new Element(name, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -125,7 +131,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public Element element(int line, int col, String name, String uri) {
-		final Element ret = new Element(name, uri);
+		final Element ret = new Element(name, uri, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -134,7 +140,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 	@Override
 	public Element element(int line, int col, String name, String prefix,
 			String uri) {
-		final Element ret = new Element(name, prefix, uri);
+		final Element ret = new Element(name, prefix, uri, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -142,7 +148,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public EntityRef entityRef(int line, int col, String name) {
-		final EntityRef ret = new EntityRef(name);
+		final EntityRef ret = new EntityRef(name, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -151,7 +157,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 	@Override
 	public EntityRef entityRef(int line, int col, String name, String publicID,
 			String systemID) {
-		final EntityRef ret = new EntityRef(name, publicID, systemID);
+		final EntityRef ret = new EntityRef(name, publicID, systemID, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -159,7 +165,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public EntityRef entityRef(int line, int col, String name, String systemID) {
-		final EntityRef ret = new EntityRef(name, systemID);
+		final EntityRef ret = new EntityRef(name, systemID, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -173,22 +179,23 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 		
 		if (ExpansionInstruction.piMarker.compareToIgnoreCase(target) == 0)
 		{
-			processingInstruction = ExpansionInstruction.create(data, line, col);
+			processingInstruction = ExpansionInstruction.create(data, line, col, xmlgen);
 		}
 		else
 		{
-			processingInstruction = processingInstruction(line, col, target, data);
+			processingInstruction = new ProcessingInstruction(target, data, xmlgen);
 		}
 		
 		processingInstruction.setLine(line);
 		processingInstruction.setColumn(col);
+			
 		return processingInstruction;
 	}
 	
 	@Override
 	public ProcessingInstruction processingInstruction(int line, int col,
 			String target) {
-		final ProcessingInstruction ret = new ProcessingInstruction(target);
+		final ProcessingInstruction ret = new ProcessingInstruction(target, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
@@ -197,9 +204,11 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 	@Override
 	public ProcessingInstruction processingInstruction(int line, int col,
 			String target, Map<String, String> data) {
-		final ProcessingInstruction ret = new ProcessingInstruction(target, data);
+		final ProcessingInstruction ret = new ProcessingInstruction(target, data, xmlgen);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;
 	}
+	
+	private Xmlgen xmlgen;
 }

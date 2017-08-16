@@ -6,23 +6,22 @@ package org.xmlgen.tst;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
-
 import org.junit.Test;
 import org.xmlgen.context.Context;
+import org.xmlgen.context.FrameStack;
 import org.xmlgen.Xmlgen;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
-import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notifications;
+import org.xmlgen.notifications.Notified;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TestCmdline.
  */
-public class TestCmdline {
+public class TestCmdline implements Notified {
 	
 	/**
 	 * Fixed length string.
@@ -69,14 +68,14 @@ public class TestCmdline {
 			  + "\n"; 		
 		}
 
-	HashMap<Gravity, Integer> counts = notifications.getCounts();	
+/*	HashMap<Gravity, Integer> counts = notifications.getCounts();	
 		
  	for (Gravity g : Gravity.values())
  	{
  		string += g.toString() + ":" + counts.get(g) + "    ";
  	}
 	
- 	string += "\n";
+ 	string += "\n";*/
  	
 	return string;
 	}
@@ -88,9 +87,11 @@ public class TestCmdline {
 	{
 		String methodName = new Exception().getStackTrace()[1].getMethodName();
 	
-		odir = new File(homePath
-                      + "output" + File.separator
-                      + methodName + File.separator);
+		String outDirPathString = homePath + '/'
+                                + "output" + '/'
+                                + methodName;
+		
+		odir = new File(outDirPathString);
 			
 		if (odir.isDirectory())
 		{
@@ -98,6 +99,8 @@ public class TestCmdline {
 		}
 	    odir.mkdir();
 	}
+	
+	private PrintStream err = null;
 	
 	/**
 	 * Run.
@@ -107,21 +110,23 @@ public class TestCmdline {
 	 */
 	protected void run(String[] vargs) throws IOException
 	{
-		PrintStream err = new PrintStream(new File(odir, "stderr"));		
+		err = new PrintStream(new File(odir, "stderr"));		
 		System.setErr(err);
 		
-		new Xmlgen().perform(vargs, null);
+		Notifications notifications = new Notifications(); //.getInstance().clearNotifiedQueue();
+		notifications.add(this);
 		
-		Context context = Context.getInstance();
+		Xmlgen xmlgen = new Xmlgen(notifications, new FrameStack(""));
+		xmlgen.perform(vargs, null);
+	
+		Context context = xmlgen.getContext();
 		
 		PrintStream output = new PrintStream(new File(odir, "stdout"));
 		output.println("context = " + context.toString());
-		output.close();
-		
-		err.println("\n" + toString(Notifications.getInstance()));
+		output.close();	
 	}
 	
-	private final String homePath = System.getProperty("user.dir") + "/src/org/xmlgen/tst/"; 
+	private final String homePath = "C:/Users/didier/git/xmlgen/xmlgen_tst" + "/src/org/xmlgen/tst"; 
 	
 	/** The cdir. */
 	private String cdir = homePath + "/input/common/";
@@ -148,8 +153,7 @@ public class TestCmdline {
 				            "--template", template,
 				            "--schema", schema,
 				            "--output", output,
-				            "--services", ""};
-		
+				            "--services", ""};		
 		run(vargs); 
 	}
 	
@@ -163,20 +167,28 @@ public class TestCmdline {
 	{
 		prepareRun();
 		
-		String uml = "'/" + cdir + "design.uml'";
-		String notation = "'" + cdir + "design.notation'";
-		String info = "'/" + cdir + "info.xml'";
-		String template = "'" + cdir + "docbook_template.xml'";
-		String output = "'" + odir.getPath() + File.separator + "output.xml'";
+		String uml = "'file://" + cdir + "design.uml'";
+		String info = "'file://" + cdir + "info.xml'";
+		String date= "\"" + "27-07-2017" + "\"";
+		String config = "\"../../input/common\"";
+		String url = "\".\"";
+		String commondir = "\"" + cdir + "\"";
+		String template = "'file:/" + cdir + "overview_template.xhtml'";
+		String outputDir = odir.getPath();
+		String outputFilename = "output.xhtml";
+		String output = "'" + outputDir + "/" + outputFilename + "'";
 		
 		String[] vargs = { "uml=", uml,
-				           "notation=", notation,
-				           "info=", info,			
-				            "--template", template,
+				           "info=", info,
+				           "url=", url,
+				           "cdir=", commondir,
+				           "outputFilename = ", "\"" + outputFilename + "\"",
+				           "outputDir=", "\"" + outputDir + "\"",
+				           "config=", config,
+				           "date=", date,
+				            "--template ", template,
 				            "--trace",
-				            "--services", "org.xmlgen.tst.ExpansionServices",
-				            "--output", output};
-		
+				            "--output", output};		
 		run(vargs);
 	}
 
@@ -198,8 +210,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -219,8 +230,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -242,8 +252,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -265,8 +274,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -287,8 +295,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "data_source1=", dataSource1,
 				            "--template", template,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -308,8 +315,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}	
 	
@@ -328,8 +334,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template 
-				           };
-		
+				         };		
 		run(vargs);
 	}	
 	
@@ -351,8 +356,7 @@ public class TestCmdline {
 				            "--template", template,
 				            "--schema", schema,
 				            "--output", output 
-				           };
-		
+				           };		
 		run(vargs);
 	}
 	
@@ -374,8 +378,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -399,8 +402,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 		
 		File datasource_denied = new File(dataSource1.substring(1, dataSource1.length()-1));
@@ -427,8 +429,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -450,8 +451,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				          "--template", template,
 				          "--schema", schema,
-				          "--output", output };
-		
+				          "--output", output };		
 		run(vargs);
 	}
 
@@ -471,8 +471,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1=", dataSource1, 
 				          "--template", template,
-				          "--output", output };
-		
+				          "--output", output };		
 		run(vargs);
 	}
 	
@@ -494,8 +493,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 		
 		prepareRun();
@@ -542,8 +540,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1", dataSource1,    // Syntax error : is 'equal sign has been omitted'.
 				          "--template", template,
-				          "--output", output };
-		
+				          "--output", output };		
 		run(vargs);
 	}
 	
@@ -563,8 +560,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"6939data_source1=", dataSource1,   // lexical error : is 'an identifier never begins with digits'.
 				          "--template", template,
-				          "--output", output };
-		
+				          "--output", output };		
 		run(vargs);
 	}
 	
@@ -584,8 +580,7 @@ public class TestCmdline {
 		
 		String[] vargs = {"data_source1=", dataSource1, 
 				          "--tempate", template,   // misspelled --template option
-				          "--output", output };
-		
+				          "--output", output };		
 	run(vargs);
 	}	
 	
@@ -607,8 +602,7 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
 	}
 	
@@ -630,8 +624,15 @@ public class TestCmdline {
 		String[] vargs = {"data_source1=", dataSource1, 
 				            "--template", template,
 				            "--schema", schema,
-				            "--output", output };
-		
+				            "--output", output };		
 		run(vargs);
+	}
+
+	@Override
+	public void notification(Notification notification) 
+	{
+		Notifications nots = new Notifications();
+		nots.add(notification);
+		err.println("\n" + toString(nots));
 	}	
 }

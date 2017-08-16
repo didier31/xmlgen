@@ -3,35 +3,26 @@
  */
 package org.xmlgen.expansion.pi.parsing;
 
-import java.util.List;
-
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.eclipse.acceleo.query.ast.Error;
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment;
 import org.eclipse.acceleo.query.runtime.Query;
 import org.eclipse.acceleo.query.runtime.QueryParsing;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.xmlgen.notifications.Artifact;
-import org.xmlgen.notifications.ContextualNotification;
-import org.xmlgen.notifications.LocationImpl;
-import org.xmlgen.notifications.Notification;
-import org.xmlgen.notifications.Notifications;
-import org.xmlgen.notifications.Notification.Gravity;
-import org.xmlgen.notifications.Notification.Message;
-import org.xmlgen.notifications.Notification.Module;
-import org.xmlgen.notifications.Notification.Subject;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.parser.pi.PILexer;
 import org.xmlgen.parser.pi.PIParser;
 import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
 import org.xmlgen.parser.pi.PIParser.ContentContext;
 import org.xmlgen.parser.pi.PIParser.EndContext;
+import org.xmlgen.parser.pi.PIParser.ExpandContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
+import org.xmlgen.parser.pi.PIParser.UserServiceContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,9 +38,9 @@ public class InstructionParser
 	 *           the pi
 	 * @return the parser rule context
 	 */
-	static public ParserRuleContext parse(String pi)
+	static public ParserRuleContext parse(String pi, int line, int column, Xmlgen xmlgen)
 	{
-		InputPIContext inputPI = doParse(pi);
+		InputPIContext inputPI = doParse(pi, line, column, xmlgen);
 		ContentContext content = inputPI.content();
 		if (content != null)
 		{
@@ -71,8 +62,25 @@ public class InstructionParser
 				}
 				else
 				{
-					assert (false);
-					return null;
+					UserServiceContext userService = inputPI.userService();
+					if (userService != null)
+					{
+						return userService;
+					}
+					else 
+					{
+						ExpandContext expandContext = inputPI.expand();
+						if (expandContext != null)
+						{
+							return expandContext;
+						}
+						else
+						{
+							assert (false);
+							return null;
+						}
+					}
+
 				}
 			}			
 		}
@@ -138,7 +146,6 @@ public class InstructionParser
 	{
 		IQueryBuilderEngine builder = QueryParsing.newBuilder(queryEnvironment);
 		AstResult astResult = builder.build(query);
-		notifyErrors(astResult, line, column);
 		return astResult;
 	}
 
@@ -162,34 +169,12 @@ public class InstructionParser
 	 *           the pi
 	 * @return the input PI context
 	 */
-	protected static InputPIContext doParse(String pi)
+	protected static InputPIContext doParse(String pi, int line, int column, Xmlgen xmlgen)
 	{
 		PILexer lexer = new PILexer(CharStreams.fromString(pi));
 		PIParser parser = new PIParser(new CommonTokenStream(lexer));
-		parser.addErrorListener(new SyntaxErrorListener());
+		parser.addErrorListener(new SyntaxErrorListener(line, column, xmlgen));
 		InputPIContext inputPI = parser.inputPI();
 		return inputPI;
-	}
-
-	/**
-	 * Notify errors.
-	 *
-	 * @param compiledQuery
-	 *           the compiled query
-	 * @param pi
-	 *           the pi
-	 */
-	protected static void notifyErrors(AstResult compiledQuery, int line, int column)
-	{
-		List<Error> errors = compiledQuery.getErrors();
-		for (Error error : errors)
-		{
-			Message message = new Message(error.toString());
-			Notification notification = new Notification(Module.Parser, Gravity.Fatal, Subject.Template, message);
-			Artifact artefact = new Artifact("");
-			LocationImpl location = new LocationImpl(artefact, -1, column, line);
-			ContextualNotification contextual = new ContextualNotification(notification, location);
-			Notifications.getInstance().add(contextual);
-		}
 	}
 }

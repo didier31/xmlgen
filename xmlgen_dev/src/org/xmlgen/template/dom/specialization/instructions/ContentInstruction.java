@@ -4,6 +4,7 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 
 // TODO: Auto-generated Javadoc
@@ -21,9 +22,9 @@ abstract public class ContentInstruction extends ExpansionInstruction
 	 * @param queryText
 	 *           the query text
 	 */
-	protected ContentInstruction(String queryText, int line, int column)
+	protected ContentInstruction(String queryText, int line, int column, Xmlgen xmlgen)
 	{
-		super(queryText, line, column);
+		super(queryText, line, column, xmlgen);
 		AstResult compiledQuery = InstructionParser.parseQuery(queryText, line, column);
 		if (compiledQuery.getErrors().isEmpty())
 		{

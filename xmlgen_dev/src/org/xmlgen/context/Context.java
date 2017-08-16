@@ -2,16 +2,16 @@ package org.xmlgen.context;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment;
-import org.eclipse.acceleo.query.runtime.IService;
-import org.eclipse.acceleo.query.runtime.ServiceUtils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
@@ -26,14 +26,20 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
+import org.eclipse.papyrus.designer.languages.java.profile.PapyrusJava.PapyrusJavaPackage;
+import org.eclipse.papyrus.sysml.util.SysmlResource;
+import org.eclipse.uml2.uml.UMLPlugin;
+import org.eclipse.uml2.uml.resource.UMLResource;
+import org.eclipse.uml2.uml.resource.XMI2UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmlgen.expansion.pi.parsing.InstructionParser;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -69,23 +75,16 @@ import org.xmlgen.template.dom.specialization.factory.TemplateDomFactory;
  */
 public class Context
 {
-
-	/**
-	 * Clear Context singleton
-	 */
-	static public void clear()
+	public Context(Xmlgen xmlgen)
 	{
-		instance = new Context();
+		this();
+		notifications = xmlgen.getNotifications();
+		this.xmlgen = xmlgen;
 	}
 
-	/**
-	 * Gets the single instance of Context.
-	 *
-	 * @return single instance of Context
-	 */
-	public static Context getInstance()
+	protected Context()
 	{
-		return instance;
+		resourceSet.setURIResourceMap(new HashMap<URI, Resource>());
 	}
 
 	/**
@@ -129,16 +128,6 @@ public class Context
 	}
 
 	/**
-	 * Gets the frame stack.
-	 *
-	 * @return the frame stack
-	 */
-	public FrameStack getFrameStack()
-	{
-		return frameStack;
-	}
-
-	/**
 	 * Sets the user services class loader.
 	 * 
 	 * @param userServicesClassLoader
@@ -167,7 +156,14 @@ public class Context
 	 */
 	public void setOutput(String output)
 	{
+		if (output != null)
+		{
 		this.output = new File(output);
+		}
+		else
+		{
+			this.output = null;
+		}
 	}
 
 	/**
@@ -230,7 +226,7 @@ public class Context
 		String string = "template=" + getXmlTemplate() + '\n' + "schema=" + getSchema() + '\n' + "output=" + getOutput()
 				+ '\n';
 
-		string += getFrameStack().toString();
+		string += xmlgen.getFrameStack().toString();
 
 		return string;
 	}
@@ -238,10 +234,13 @@ public class Context
 	/**
 	 * Check context : - Schema - Template and against schema - Output
 	 */
-	public void check()
+	public void check(boolean dataSourcesAsWell)
 	{
 		checkSchemaAndTemplate();
-		checkAndCaptureDataSources();
+		if (dataSourcesAsWell)
+		{
+			checkAndCaptureDataSources();
+		}
 		checkOutput();
 	}
 
@@ -306,7 +305,7 @@ public class Context
 		assert (getXmlTemplate() != null);
 
 		SAXBuilder jdomBuilder = new SAXBuilder();
-		jdomBuilder.setJDOMFactory(new TemplateDomFactory());
+		jdomBuilder.setJDOMFactory(new TemplateDomFactory(getXmlgen()));
 		try
 		{
 			xmlTemplateDocument = (Template) jdomBuilder.build(getXmlTemplate());
@@ -321,6 +320,13 @@ public class Context
 		catch (IOException e)
 		{
 		}
+		//TODO : Check xmlTemplateDocument is not null => Notify user otherwise.
+	}
+
+	protected Xmlgen getXmlgen()
+	{
+		// TODO Auto-generated method stub
+		return xmlgen;
 	}
 
 	/**
@@ -426,62 +432,100 @@ public class Context
 			}
 			else
 			{
-				// Todo:
+				// TODO:
 			}
 		}
 	}
 
 	/**
-	 * Register EMF packages : -
-	 * http://www.eclipse.org/gmf/runtime/1.0.2/notation - xml
+	 * Register EMF packages 
 	 */
 	protected void registerEMFpackages()
 	{
+		/**
+		 * UML inits
+		 */
 		UMLResourcesUtil.initLocalRegistries(resourceSet);
+		
+		String umlResourcePath = UMLResourcesUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		try 
+		{
+			umlResourcePath = URLDecoder.decode(umlResourcePath, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) 
+		{
+			e.printStackTrace();
+		}
+		URI umlResourcePluginURI = URI.createURI("jar:file:" + umlResourcePath + "!/");
+		
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(UMLResource.LIBRARIES_PATHMAP),
+				umlResourcePluginURI.appendSegment("libraries").appendSegment(""));
+		
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(UMLResource.METAMODELS_PATHMAP),
+				umlResourcePluginURI.appendSegment("metamodels").appendSegment(""));
+		
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI),
+				umlResourcePluginURI.appendSegment("libraries").appendSegment("UMLPrimitiveTypes.library.uml"));
+		
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(UMLResource.UML_METAMODEL_URI),
+				umlResourcePluginURI.appendSegment("metamodels").appendSegment("UML.metamodel.uml"));
+
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(UMLResource.UML2_PROFILE_URI),
+				umlResourcePluginURI.appendSegment("profiles").appendSegment("UML2.profile.uml"));		
+		
+		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionToFactoryMap.put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
+		extensionToFactoryMap.put(UMLResource.PROFILE_FILE_EXTENSION, UMLResource.Factory.INSTANCE );
+		extensionToFactoryMap.put("uml", XMI2UMLResource.Factory.INSTANCE);
+		
+		/**
+		 * Sysml inits
+		 */		
+		
+		String sysmlResourcePath = SysmlResource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		try 
+		{
+			sysmlResourcePath = URLDecoder.decode(sysmlResourcePath, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) 
+		{
+			e.printStackTrace();
+		}	
+		
+		URI sysmlResourcePluginURI = URI.createURI("jar:file:" + sysmlResourcePath + "!/");
+		
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI(SysmlResource.SYSML_PROFILE_URI),
+				sysmlResourcePluginURI.appendSegment("profiles").appendSegment("SysML.profile.uml"));		
+		
+		/**
+		 * Papyrus profile init
+		 */
+				
+		String papyrusJavaProfileResourcePath = PapyrusJavaPackage.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		try 
+		{
+			papyrusJavaProfileResourcePath = URLDecoder.decode(papyrusJavaProfileResourcePath, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) 
+		{
+			e.printStackTrace();
+		}		
+		
+     URI papyrusJavaProfileResourcePluginURI = URI.createURI("jar:file:" + papyrusJavaProfileResourcePath + "!/");
+		
+     URI papyrusJavaProfileURI = papyrusJavaProfileResourcePluginURI.appendSegment("profiles").appendSegment("PapyrusJava.profile.uml");  
+	  resourceSet.getURIConverter().getURIMap().put(URI.createURI("pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml"), papyrusJavaProfileURI);
+
+		resourceSet.getPackageRegistry().put(PapyrusJavaPackage.eNS_URI , PapyrusJavaPackage.eINSTANCE);	
+		
+		UMLPlugin.getEPackageNsURIToProfileLocationMap().put(PapyrusJavaPackage.eNS_URI,
+				                                               URI.createURI("pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"));
+	  
+		/**
+		 * XML Resources
+		 */
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml",
-				new GenericXMLResourceFactoryImpl());
-	}
-
-	/**
-	 * 
-	 * Make a java class accessible for queries.
-	 * 
-	 * @param userServiceName
-	 *           the name of the java class.
-	 */
-	public void registerUserService(String userServiceName)
-	{
-		ClassLoader classLoader = getUserServicesClassloader();
-		if (classLoader == null)
-		{
-			classLoader = getClass().getClassLoader();
-		}
-
-		try
-		{
-			Class<?> _class = classLoader.loadClass(userServiceName);
-			registerUserService(_class);
-		}
-		catch (ClassNotFoundException e)
-		{
-			Message message = new Message(e.getMessage());
-			Notification notification = new Notification(Notification.Module.Parameters_check, Notification.Gravity.Error,
-					Notification.Subject.UserService, message);
-			Notifications.getInstance().add(notification);
-		}
-	}
-
-	/**
-	 * 
-	 * Make a java class accessible for queries.
-	 * 
-	 * @param serviceClass
-	 */
-	public void registerUserService(Class<?> serviceClass)
-	{
-		IQueryEnvironment env = InstructionParser.getQueryEnv();
-		Set<IService> userServices = ServiceUtils.getServices(env, serviceClass);
-		ServiceUtils.registerServices(env, userServices);
+				new GenericXMLResourceFactoryImpl());			
 	}
 
 	/**
@@ -577,7 +621,7 @@ public class Context
 	{
 		registerEMFpackages();
 
-		FrameStack frameStack = getFrameStack();
+		FrameStack frameStack = xmlgen.getFrameStack();
 		Set<String> dataSourcesIds = frameStack.keySet();
 
 		checkDataSourceExistence(dataSourcesIds);
@@ -619,6 +663,7 @@ public class Context
 				frameStack.put(dataSourceId, object);
 			}
 		}
+		EcoreUtil.resolveAll(resourceSet);
 	}
 
 	/**
@@ -657,20 +702,14 @@ public class Context
 		return fileURI;
 	}
 
-	/**
-	 * Hide default constructor to enforce singleton.
+	/*
+	 * Parent Xmlgen instance
 	 */
-	protected Context()
-	{
-		resourceSet.setURIResourceMap(new HashMap<URI, Resource>());
-	}
-
+	private Xmlgen xmlgen;
+	
 	/** The resource set. */
-	ResourceSetImpl resourceSet = new ResourceSetImpl();
-
-	/** The instance. */
-	static private Context instance = new Context();
-
+	private ResourceSetImpl resourceSet = new ResourceSetImpl();
+	
 	/** ClassLoader for loading the user services */
 	private ClassLoader userServicesClassloader;
 
@@ -689,14 +728,11 @@ public class Context
 	/** The schema. */
 	private Schema schema = null;
 
-	/** The frame stack. */
-	private FrameStack frameStack = new FrameStack("");
-
 	/** The trace. */
 	private boolean trace;
 
 	/** The notifications. */
-	private Notifications notifications = Notifications.getInstance();
+	private Notifications notifications;
 
 	/* No suitable language for schema, found */
 	final private Notification no_language_for_schema = new Notification(Module.Parameters_check, Gravity.Error,

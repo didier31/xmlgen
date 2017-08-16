@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <?xmlgen [Heading] begin 
+                           title = name
+  ?>
+  <head>
+    <title><?xmlgen title.toUpperFirst() ?></title>
+
+    <meta content="2016-01-12" name="date"><?xmlgen attr content = date ?></meta>
+
+    <meta content="???" name="keywords"><?xmlgen attr content = title ?></meta>
+
+    <link href="./files/stylesheet.css" rel="stylesheet" title="Style"
+          type="text/css"><?xmlgen attr href = config + '/files/stylesheet.css' ?></link>
+
+    <script src="./files/script.js.téléchargement" type="text/javascript"
+            xml:space="preserve"></script>
+  </head>
+
+  <body><script type="text/javascript" xml:space="preserve">/*<![CDATA[*/
+  /*]]>*/<?xmlgen '/*<![CDATA[*///
+    try {
+        if (location.href.indexOf(\'is-external=true\') == -1) {
+            parent.document.title="' + title.toUpperFirst() + '";
+        }
+    }
+    catch(err) {
+    }
+//
+///*]]>*/'
+?>/*<![CDATA[*/
+/*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
+  browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
+  <?xmlgen [Heading] end ?>
+    <div class="topNav">
+      <a id="navbar.top">
+       <!--  --> </a>
+      <div class="skipNav">
+        <a
+        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-summary.html#skip.navbar.top"
+        title="Skip navigation links">Skip navigation links</a>
+      </div>
+      <a id="navbar.top.firstrow">
+       <!--  --> </a>
+      <ul class="navList" title="Navigation">
+        <li>
+          <a
+          href="???">
+		  <?xmlgen attr href = url + '/' + outputFilename ?>
+		  Overview
+		  </a>
+        </li>
+        <li class="navBarCell1Rev">
+          Package
+        </li>
+        <li>
+          Class
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-use.html">Use</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-tree.html">Tree</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/deprecated-list.html">Deprecated</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/index-files/index-1.html">Index</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/help-doc.html">Help</a>
+        </li>
+      </ul>
+    </div>
+    <div class="subNav">
+      <ul class="navList">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/editor/presentation/package-summary.html">Prev Package</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/util/package-summary.html">Next Package</a>
+        </li>
+      </ul>
+      <ul class="navList">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/index.html?org/eclipse/uml2/uml/profile/standard/package-summary.html">Frames</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-summary.html">No Frames</a>
+        </li>
+      </ul>
+      <ul class="navList" id="allclasses_navbar_top" style="display: block;">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/allclasses-noframe.html">All Classes</a>
+        </li>
+      </ul>
+      <div><script type="text/javascript" xml:space="preserve">//<![CDATA[
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //
+//]]></script>
+      </div>
+      <a id="skip.navbar.top">
+       <!--  --> </a>
+    </div>
+    <!--  ========= END OF TOP NAVBAR ========= -->
+    <div class="header">
+      <h1 title="Package" class="title">
+        <?xmlgen name ?>
+      </h1>
+    </div>
+    <div class="contentContainer">
+      <ul class="blockList">
+	    <?xmlgen [Interfaces] begin
+		                      interfaces = package.packagedElement->filter(uml::Interface)
+		?>
+		<?xmlgen [Interfaces] begin when not interfaces->isEmpty()
+		                      class = 'rowColor'
+		?>		
+        <li class="blockList">
+          <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+            <caption>
+              <span>Interface Summary</span><span class="tabEnd"> </span>
+            </caption>
+            <tbody>
+              <tr>
+                <th class="colFirst" scope="col">
+                  Interface
+                </th>
+                <th class="colLast" scope="col">
+                  Description
+                </th>
+              </tr>
+            </tbody>
+            <tbody>
+			<?xmlgen [Interface] begin when not interfaces->isEmpty() 
+			                     interface = interfaces->first(),
+                                 interfaces = interfaces->asSequence()->subSequence(2, interfaces->size()),
+			   			         class = if class = 'rowColor' then
+								              'altColor'
+								   	     else
+										      'rowColor'
+										 endif
+		      ?>
+              <tr class="???">
+			    <?xmlgen attr class=class ?>
+                <td class="colFirst">
+                  <a
+                  href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/Auxiliary.html"
+                  title="???">
+				  <?xmlgen attr title = 'interface in ' + name ?>
+				  <?xmlgen interface.name ?>
+				  </a>
+                </td>
+                <td class="colLast">
+				  <?xmlgen comment : interface.ownedComment ?>
+                  <div class="block">
+					<?xmlgen comment.literalComment() ?>
+                  </div>
+                </td>
+              </tr>
+			<?xmlgen [Interface] end ?>
+            </tbody>
+          </table>
+        </li>
+        <?xmlgen [Interfaces] end ?>
+		<?xmlgen [Interfaces] end ?>
+		
+	    <?xmlgen [Classes] begin
+		                      classes = package.packagedElement->filter(uml::Class)
+		?>
+		<?xmlgen [Classes] begin when classes <> null and not classes->isEmpty()
+		                      class = 'rowColor',
+							  clazz = null
+		?>		
+        <li class="blockList">
+          <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+            <caption>
+              <span>Class Summary</span><span class="tabEnd"> </span>
+            </caption>
+            <tbody>
+              <tr>
+                <th class="colFirst" scope="col">
+                  Class
+                </th>
+                <th class="colLast" scope="col">
+                  Description
+                </th>
+              </tr>
+            </tbody>
+            <tbody>
+			<?xmlgen [Class] begin when classes <> null and not classes->isEmpty()
+			                     previousClass = clazz,
+			                     clazz = classes->first(),
+                                 classes = classes->asSequence()->subSequence(2, classes->size()),
+								 nextClass = if classes <> null and not classes->isEmpty() then 
+								                classes->first()
+								             else
+											    null
+											 endif,
+			   			         class = if class = 'rowColor' then
+								              'altColor'
+								   	     else
+										      'rowColor'
+										 endif
+		      ?>
+			  
+			<?xmlgen begin
+				 template = 'file:/' + cdir + 'class_details_template.xhtml',
+				 classfilename = name + '.' + clazz.name + '_details.xhtml',
+		         output = outputDir + '/' + classfilename,
+				 trace = 'yes'
+		   ?>
+		   <?xmlgen <Expand> 
+		  ?>
+		  <?xmlgen end export: classfilename
+		  ?>
+			  
+              <tr class="???">
+			    <?xmlgen attr class=class ?>
+                <td class="colFirst">
+                  <a
+                  href="???"
+                  title="???">
+				  <?xmlgen attr href = url + '/' + classfilename ?>
+				  <?xmlgen attr title = 'class in ' + name ?>
+				  <?xmlgen clazz.name ?>
+				  </a>
+                </td>
+                <td class="colLast">
+				  <?xmlgen comment : clazz.ownedComment ?>
+                  <div class="block">
+					<?xmlgen comment.literalComment() ?>
+                  </div>
+                </td>
+              </tr>
+			  <?xmlgen <Insert [Class]> ?>
+			<?xmlgen [Class] end ?>
+            </tbody>
+          </table>
+        </li>
+        <?xmlgen [Classes] end ?>
+		<?xmlgen [Classes] end ?>
+      </ul>
+    </div>
+    <!--  ======= START OF BOTTOM NAVBAR ====== -->
+    <div class="bottomNav">
+      <a id="navbar.bottom">
+       <!--  --> </a>
+      <div class="skipNav">
+        <a
+        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-summary.html#skip.navbar.bottom"
+        title="Skip navigation links">Skip navigation links</a>
+      </div>
+      <a id="navbar.bottom.firstrow">
+       <!--  --> </a>
+      <ul class="navList" title="Navigation">
+        <li>
+          <a
+          href="???">
+		  <?xmlgen attr href = url + '/' + outputFilename ?>
+		  Overview</a>		  
+        </li>
+        <li class="navBarCell1Rev">
+          Package
+        </li>
+        <li>
+          Class
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-use.html">Use</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-tree.html">Tree</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/deprecated-list.html">Deprecated</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/index-files/index-1.html">Index</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/help-doc.html">Help</a>
+        </li>
+      </ul>
+      <div class="aboutLanguage">
+       Powered by Xmlgen
+      </div>
+    </div>
+    <div class="subNav">
+      <ul class="navList">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/editor/presentation/package-summary.html">Prev Package</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/util/package-summary.html">Next Package</a>
+        </li>
+      </ul>
+      <ul class="navList">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/index.html?org/eclipse/uml2/uml/profile/standard/package-summary.html">Frames</a>
+        </li>
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/package-summary.html">No Frames</a>
+        </li>
+      </ul>
+      <ul class="navList" id="allclasses_navbar_bottom" style="display: block;">
+        <li>
+          <a
+          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/allclasses-noframe.html">All Classes</a>
+        </li>
+      </ul>
+      <div><script type="text/javascript" xml:space="preserve">//<![CDATA[
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //
+//]]></script>
+      </div>
+      <a id="skip.navbar.bottom">
+       <!--  --> </a>
+    </div>
+    <!--  ======== END OF BOTTOM NAVBAR ======= -->
+  </body>
+</html>

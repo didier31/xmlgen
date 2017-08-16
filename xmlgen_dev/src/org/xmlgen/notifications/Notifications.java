@@ -15,17 +15,6 @@ import org.xmlgen.notifications.Notification.Gravity;
  */
 public class Notifications extends LinkedList<Notification> implements Notifier
 {
-
-	/**
-	 * Gets the single instance of Notifications.
-	 *
-	 * @return single instance of Notifications
-	 */
-	static public Notifications getInstance()
-	{
-		return instance;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -92,12 +81,24 @@ public class Notifications extends LinkedList<Notification> implements Notifier
 	public void add(Notified notififed)
 	{
 		notifieds.add(notififed);
-	}
+	}		
 
 	@Override
 	public void clearNotifiedQueue()
 	{
 		notifieds.clear();
+	}
+	
+	@Override
+	public Vector<Notified> getNotified()
+	{
+		return notifieds;
+	}
+	
+	@Override
+	public void setNotified(Vector<Notified> notifieds)
+	{
+		this.notifieds = notifieds;
 	}
 	
 	/** The instance. */

@@ -7,6 +7,7 @@ import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Namespace;
 import org.jdom2.located.LocatedElement;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.Expandable;
 import org.xmlgen.expansion.ExpansionContext;
@@ -16,35 +17,40 @@ import org.xmlgen.template.dom.specialization.instructions.StructuralInstruction
 public class Element extends LocatedElement implements Expandable
 {
 
-	public Element(String name)
+	public Element(String name, Xmlgen xmlgen)
 	{
 		super(name);
+		this.xmlgen = xmlgen;
 	}
 
-	public Element(String name, String uri)
+	public Element(String name, String uri, Xmlgen xmlgen)
 	{
 		super(name, uri);
+		this.xmlgen = xmlgen;
 	}
 
-	public Element(String name, String prefix, String uri)
+	public Element(String name, String prefix, String uri, Xmlgen xmlgen)
 	{
 		super(name, prefix, uri);
+		this.xmlgen = xmlgen;
 	}
 
-	public Element(String name, Namespace namespace)
+	public Element(String name, Namespace namespace, Xmlgen xmlgen)
 	{
 		super(name, namespace);
+		this.xmlgen = xmlgen;
 	}
 
 	@Override
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
-		Vector<Cloneable> expanded = expandMySelf(it, expansionContext, true);
+		Vector<Cloneable> expanded = expandMySelf(it, true);
 		return expanded;
 	}
 
-	public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext, boolean regular)
+	public Vector<Cloneable> expandMySelf(TemplateIterator it, boolean regular)
 	{
+		ExpansionContext expansionContext = xmlgen.getExpansionContext();
 		if (expansionContext.isExecuting())
 		{
 			Vector<Cloneable> thisClone = Util.expand(this, expansionContext);
@@ -66,7 +72,7 @@ public class Element extends LocatedElement implements Expandable
 				{
 					Object current = childrenIt.current();
 					Expandable expandable = (Expandable) childrenIt.current();
-					Vector<Cloneable> localExpanded = expandable.expandMySelf(childrenIt, expansionContext);
+					Vector<Cloneable> localExpanded = expandable.expandMySelf(childrenIt);
 					expanded.addAll(localExpanded);
 					if (childrenIt.current() == current)
 					{
@@ -77,7 +83,7 @@ public class Element extends LocatedElement implements Expandable
 				/*
 				 * Walks through the last structural instructions of the context,
 				 * starting by the innermost to outermost and terminate the finished
-				 * ones. and terminates them. Stops when the first unfinished one.
+				 * ones. Stops when the first unfinished one.
 				 */
 				isFinished = true;
 				while (!structureStack.isEmpty() && isFinished)
@@ -136,4 +142,6 @@ public class Element extends LocatedElement implements Expandable
 			}
 		}
 	}
+	
+	private Xmlgen xmlgen;
 }

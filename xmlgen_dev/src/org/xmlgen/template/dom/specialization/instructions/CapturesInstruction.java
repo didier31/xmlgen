@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
-import org.xmlgen.context.Context;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Frame;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
@@ -40,9 +40,9 @@ public class CapturesInstruction extends IterativeInstruction
 	 * @param capturesInstruction
 	 *           the captures instruction
 	 */
-	protected CapturesInstruction(String data, CapturesContext capturesContext, int line, int column)
+	protected CapturesInstruction(String data, CapturesContext capturesContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, (TaggedContext) capturesContext.getParent(), line, column);
+		super(data, (TaggedContext) capturesContext.getParent(), line, column, xmlgen);
 		initFields(capturesContext);
 	}
 	
@@ -116,7 +116,7 @@ public class CapturesInstruction extends IterativeInstruction
 	@Override
 	protected boolean iterateImpl(ExpansionContext expansionContext)
 	{
-		Frame currentFrame = Context.getInstance().getFrameStack().peek();
+		Frame currentFrame = getXmlgen().getFrameStack().peek();
 		
 		Vector<Iterator<Object>> iterators = iterators();
 		int i = 0;
@@ -151,6 +151,7 @@ public class CapturesInstruction extends IterativeInstruction
 		// TODO : Resolve -1 problem for column parameter.
 		LocationImpl location = new LocationImpl(new Artifact(id), startToken.getStartIndex(), -1, startToken.getLine());
 		ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
+		Notifications notifications = getXmlgen().getNotifications();
 		notifications.add(contextNotification);
 	}
 
@@ -165,7 +166,12 @@ public class CapturesInstruction extends IterativeInstruction
 	private Iterator<Object> createEMFIterator(Object result)
 	{
 		Iterator<Object> iterator;
-		if (result instanceof Iterable)
+		if (result == null)
+		{
+			Vector<Object> results = new Vector<Object>(0);
+			iterator = results.iterator();
+		}
+		else if (result instanceof Iterable)
 		{
 			iterator = ((Iterable<Object>) result).iterator();
 		}
@@ -195,7 +201,7 @@ public class CapturesInstruction extends IterativeInstruction
 	 */
 	protected void traceIteration(String id, Object object)
 	{
-		if (Context.getInstance().isTrace())
+		if (getXmlgen().getContext().isTrace())
 		{
 			String referenceValue = object != null ? object.toString() : "null";
 			Message message = new Message(id + " = " + referenceValue);
@@ -204,6 +210,7 @@ public class CapturesInstruction extends IterativeInstruction
 			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getColumn(),
 					getLine());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications(); 
 			notifications.add(contextual);
 		}
 	}
@@ -249,9 +256,6 @@ public class CapturesInstruction extends IterativeInstruction
 
 	/** parsed capture queries */
 	private Vector<AstResult> captureQueries;
-
-	/** The notifications. */
-	static private Notifications notifications = Notifications.getInstance();
 
 	@Override
 	protected void createState(ExpansionContext expansionContext)

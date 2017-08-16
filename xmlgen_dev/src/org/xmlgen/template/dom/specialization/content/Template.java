@@ -6,6 +6,7 @@ import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.DocType;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.Expandable;
 import org.xmlgen.expansion.ExpansionContext;
@@ -28,18 +29,21 @@ public class Template extends org.jdom2.Document
 		super(rootElement);
 	}
 
-	public Document expand()
+	public Document expand(Xmlgen xmlgen)
 	{
+		ExpansionContext expansionContext = xmlgen.getExpansionContext();
+		
 		expansionContext.push();
 		Content rootContent = getRootElement();
 		Expandable expandableContent = (Expandable) rootContent;
 		TemplateIterator it = new TemplateIterator(rootContent);
-		Vector<Cloneable> node = expandableContent.expandMySelf(it, expansionContext);
+		Vector<Cloneable> node = expandableContent.expandMySelf(it);
 		expansionContext.pop();
+		
 		assert node.size() == 1 && node.get(0) instanceof Element;
-		Document expandedDocument = new Document((Element) node.get(0), getDocType());
+		Element root = (Element) node.get(0);
+		Document expandedDocument = new Document(root);
+		
 		return expandedDocument;
-	}
-
-	private ExpansionContext expansionContext = new ExpansionContext();
+	}	
 }

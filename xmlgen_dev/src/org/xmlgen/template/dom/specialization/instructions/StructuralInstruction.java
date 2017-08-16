@@ -4,7 +4,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 import org.jdom2.located.Located;
-import org.xmlgen.context.Context;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
@@ -23,9 +23,9 @@ import org.xmlgen.parser.pi.PIParser.TaggedContext;
 @SuppressWarnings("serial")
 abstract public class StructuralInstruction extends TaggedInstruction
 {
-	protected StructuralInstruction(String data, TaggedContext taggedContext, int line, int column)
+	protected StructuralInstruction(String data, TaggedContext taggedContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, taggedContext, line, column);
+		super(data, taggedContext, line, column, xmlgen);
 	}
 
 	protected void initialize(ExpansionContext expansionContext)
@@ -40,7 +40,12 @@ abstract public class StructuralInstruction extends TaggedInstruction
 		expansionContext.getContext().getStructuresStack().push(this);
 		String label = getLabel();
 		Frame newFrame = new Frame(label);
-		FrameStack frameStack = Context.getInstance().getFrameStack();
+		pushDatasourcesContext(newFrame);
+	}
+	
+	protected void pushDatasourcesContext(Frame newFrame)
+	{
+		FrameStack frameStack = getXmlgen().getFrameStack();
 		frameStack.push(newFrame);
 	}
 	
@@ -57,23 +62,17 @@ abstract public class StructuralInstruction extends TaggedInstruction
 
 	abstract protected void deleteState();
 
-	final public Vector<Cloneable> expandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	final public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
 		Vector<Cloneable> expanded;
 		
-		if (expansionContext.isExecuting())
-		{	
-			initialize(expansionContext);
-			expanded = doExpandMySelf(it, expansionContext);
-		}
-		else
-		{
-			 expanded = new Vector<Cloneable>(0);
-		}
+		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
+		initialize(expansionContext);
+		expanded = doExpandMySelf(it);
 		return expanded;
 	}
 	
-	abstract protected Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext);
+	abstract protected Vector<Cloneable> doExpandMySelf(TemplateIterator it);
 	
 	/**
 	 * Adds the to current frame.
@@ -85,20 +84,24 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	 */
 	protected void addToCurrentFrame(String id, Object value)
 	{
-		Frame currentFrame = Context.getInstance().getFrameStack().peek();
-		assert (!currentFrame.containsKey(id));
-		traceReferenceDeclaration(id, currentFrame);
+		FrameStack frameStack = getXmlgen().getFrameStack(); 
+		Frame currentFrame = frameStack.peek();
+		traceReferenceDeclaration(id, value, currentFrame);
 		currentFrame.put(id, value);
 	}
 
-	protected void traceReferenceDeclaration(String id, Frame frame)
+	protected void traceReferenceDeclaration(String id, Object value, Frame frame)
 	{
-		if (Context.getInstance().isTrace())
+		if (getXmlgen().getContext().isTrace())
 		{
 			Message message = new Message(frame.toString() + " += [" + id + "]");
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
 					message);
-			Notifications.getInstance().add(notification);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(notification);
+			message = new Message(id + " = " + value);
+			notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource, message);
+			notifications.add(notification);
 		}
 	}
 
@@ -147,7 +150,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	 */
 	public void popFrame(Located located)
 	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
+		FrameStack frameStack = getXmlgen().getFrameStack();
 		if (frameStack.isEmpty())
 		{
 			Message message = new Message("No more frame to discard");
@@ -159,7 +162,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 			LocationImpl locationImpl = new LocationImpl(artifact, -1, column, line);
 			ContextualNotification contextual = new ContextualNotification(noMoreFrameToDiscard, locationImpl);
 
-			Notifications.getInstance().add(contextual);
+			getXmlgen().getNotifications().add(contextual);
 		}
 		else
 		{
@@ -169,7 +172,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 
 	protected void popFrame()
 	{
-		FrameStack frameStack = Context.getInstance().getFrameStack();
+		FrameStack frameStack = getXmlgen().getFrameStack();
 		Frame framePoped = frameStack.peek();
 		frameStack.pop();
 		tracePop(framePoped);
@@ -184,16 +187,16 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	 */
 	protected void tracePop(Frame frame)
 	{
-		if (Context.getInstance().isTrace())
+		if (getXmlgen().getContext().isTrace())
 		{
 			Message message = new Message("pop " + frame);
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
 					message);
-			Notifications.getInstance().add(notification);
+			getXmlgen().getNotifications().add(notification);
 		}
 	}
 	
-	protected class State
+	protected static class State
 	{
 
 		public State(ExpansionContext expansionContext)

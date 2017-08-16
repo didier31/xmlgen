@@ -5,14 +5,16 @@ package org.xmlgen.context;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FrameStack.
+ * 
+ * @author Didier Garcin
  */
 public class FrameStack implements Map<String, Object>
 {
@@ -29,6 +31,28 @@ public class FrameStack implements Map<String, Object>
 	public FrameStack(String frameName)
 	{
 		stack.push(new Frame(frameName));
+		pushNumbering();
+	}
+	
+	/**
+	 * Gets frames count
+	 * @return the number of frames
+	 */
+	public int framesCount()
+	{
+		return stack.size();
+	}
+	
+	
+	/**
+	 * Gets the frame at 
+	 *
+	 * @param index
+	 * @return the frame at index
+	 */
+	public Frame elementAt(int index)
+	{
+		return stack.elementAt(index);
 	}
 
 	/**
@@ -63,7 +87,7 @@ public class FrameStack implements Map<String, Object>
 		String keyStr = (String) key;
 		boolean found = false;
 		int i = stack.size()-1;
-		while (found && i >= 0)
+		while (!found && i >= 0)
 		{
 		found = stack.elementAt(i).containsKey(keyStr);
 			i--;
@@ -103,13 +127,18 @@ public class FrameStack implements Map<String, Object>
 	public Object get(Object key)
 	{
 		int i = stack.size();
-		Object value;
-		do
+		Object value = null;
+		boolean found = false;
+		while (!found && i > 0)
 		{
 			i--;
-			value = stack.elementAt(i).get(key);
-		}
-		while (value == null && i > 0);
+			Frame frame = stack.elementAt(i);
+			found =  frame.containsKey(key);
+			if (found)
+			{
+				value = stack.elementAt(i).get(key);
+			}
+		}		
 		return value;
 	}
 
@@ -228,21 +257,9 @@ public class FrameStack implements Map<String, Object>
 	 */
 	public void push(Frame frame)
 	{
-		float level = stack.size();
-		frame.setLevel(level);
-		stack.push(frame);			
-	}
-	
-	/**
-	 * Push on stack, a frame due to a recursive iteration.
-	 *
-	 * @param frame
-	 *           the frame
-	 */
-	public void pushR(Frame frame)
-	{
-		float level = stack.peek().getLevel() + 0.1F;
-		frame.setLevel(level);
+		Integer level = numbering.peek() + 1;
+		numbering.set(numbering.size() - 1, level);
+		frame.setLevel(numberingToString());
 		stack.push(frame);			
 	}
 
@@ -278,12 +295,19 @@ public class FrameStack implements Map<String, Object>
 	@Override
 	public Set<java.util.Map.Entry<String, Object>> entrySet()
 	{
-		ArrayList<java.util.Map.Entry<String, Object>> copy = new ArrayList<java.util.Map.Entry<String, Object>>(size());
+		HashMap<String, Object> identifiers = new HashMap<String, Object>(size()); 
+		ArrayList<java.util.Map.Entry<String, Object>> copy = new ArrayList<java.util.Map.Entry<String, Object>>(size());		
 		for (int i = stack.size() - 1; i >= 0; i--)
 		{
 			for (Entry<String, Object> e : stack.elementAt(i).entrySet())
 			{
-				copy.add(new MyEntry<String, Object>(e.getKey(), e.getValue()));
+				String identifier = e.getKey();
+				if (!identifiers.containsKey(identifier))
+				{
+					Object value = e.getValue();
+					copy.add(new MyEntry<String, Object>(identifier, value));
+					identifiers.put(identifier, null);
+				}				
 			}
 		}
 		return new HashSet<java.util.Map.Entry<String, Object>>(copy);
@@ -355,4 +379,26 @@ public class FrameStack implements Map<String, Object>
 			return old;
 		}
 	}
+	
+	public void pushNumbering()
+	{
+		numbering.push(0);
+	}
+	
+	public void popNumbering()
+	{
+		numbering.pop();
+	}	
+	
+	protected String numberingToString()
+	{
+		String numberingStr = numbering.firstElement().toString();
+		for (int i = 1; i < numbering.size(); i++)
+		{
+			numberingStr += "." + numbering.elementAt(i).toString();
+		}
+		return numberingStr;
+	}
+	
+	private Stack<Integer> numbering = new Stack<Integer>(); 
 }

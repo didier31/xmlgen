@@ -18,14 +18,27 @@ import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 
 import java.io.File;
+
+import org.xmlgen.Xmlgen;
 }
 
 @parser::members 
 {   
+	public CmdlineParser(TokenStream tokenStream, Xmlgen xmlgen)
+	{
+		this(tokenStream);
+		this.xmlgen = xmlgen;
+		notifications = xmlgen.getNotifications();
+		context = xmlgen.getContext();
+	}
+	
+	private Xmlgen xmlgen;
+	private Context context;
+		private Notifications notifications;
+	
 	final private Notification argumentValueMissing = new Notification(Module.Parameters_check, Gravity.Error, Subject.Command_Line, Message.Argument_Value_Missing);	
 	final private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource, Message.Duplicate_Reference);
 	
-	final private Notifications notifications = Notifications.getInstance();
 	
 	public class Filename
 	{
@@ -61,14 +74,13 @@ cmd
 	| schema
 	| output
 	| trace
-	| user_services
 ;
 
 dataSource
 :
 	id = Ident '=' constant = (Filename | Real | Integer | String)
 	{
-	                                           FrameStack frameStack = Context.getInstance().getFrameStack();
+	                                           FrameStack frameStack = xmlgen.getFrameStack();
 	                                           Frame topFrame = frameStack.peek();
 	                                           if ($id.type == Ident)
 	                                           {
@@ -124,14 +136,14 @@ output
 	                                           if ($filename.type == Filename)
 	                                           {
 	                                           	  String filename = $filename.text.substring(1, $filename.text.length()-1);
-	                                           	  Context.getInstance().setOutput(filename);		                                       
+	                                           	  context.setOutput(filename);		                                       
 		                                       }
 		                                       else
 		                                       {
 		                                       	  LocationImpl location = new LocationImpl(new Artifact($text), $filename.index, $filename.pos, $filename.line);	  
 	                                              ContextualNotification contextNotification = new ContextualNotification(argumentValueMissing, location);
 	                                              notifications.add(contextNotification); 
-		                                       	  Context.getInstance().setOutput(null);
+		                                       	  context.setOutput(null);
 		                                       }
     }
 
@@ -144,14 +156,14 @@ schema
 	                                           if ($filename.type == Filename)
 	                                           {
 	                                           	  String filename = $filename.text.substring(1, $filename.text.length()-1);
-	                                           	  Context.getInstance().setSchema(filename);		                                       
+	                                           	  context.setSchema(filename);		                                       
 		                                       }
 		                                       else
 		                                       {
 		                                       	  LocationImpl location = new LocationImpl(new Artifact($text), $filename.index, $filename.pos, $filename.line);	  
 	                                              ContextualNotification contextNotification = new ContextualNotification(argumentValueMissing, location);
 	                                              notifications.add(contextNotification); 
-		                                       	  Context.getInstance().setSchema(null);
+		                                       	  context.setSchema(null);
 		                                       }
     }
 
@@ -164,14 +176,14 @@ template
 	                                           if ($filename.type == Filename)
 	                                           {
 	                                           	  String filename = $filename.text.substring(1, $filename.text.length()-1);
-	                                           	  Context.getInstance().setXmlTemplate(filename);		                                       
+	                                           	  context.setXmlTemplate(filename);		                                       
 		                                       }
 		                                       else
 		                                       {
 		                                       	  LocationImpl location = new LocationImpl(new Artifact($text), $filename.index, $filename.pos, $filename.line);	  
 	                                              ContextualNotification contextNotification = new ContextualNotification(argumentValueMissing, location);
 	                                              notifications.add(contextNotification); 
-		                                       	  Context.getInstance().setXmlTemplate(null);
+		                                       	  context.setXmlTemplate(null);
 		                                       }
     }
 
@@ -181,32 +193,9 @@ trace
 :
 	'--trace'
 	{
-		                                        Context.getInstance().setTrace();
+		                                        context.setTrace();
     }
 
-;
-
-user_services
-:
-	'--services' servicesList
-;
-
-servicesList
-:
-	ident = dottedIdent servicesList
-	{
-                                                Context.getInstance().registerUserService($ident.text);
-    }
-
-	|
-;
-
-dottedIdent
-:
-	Ident
-	(
-		'.' Ident
-	)*
 ;
 
 Filename

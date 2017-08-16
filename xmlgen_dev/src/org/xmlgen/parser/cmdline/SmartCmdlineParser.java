@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.xmlgen.Xmlgen;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,7 +25,7 @@ public class SmartCmdlineParser extends CmdlineParser
 	 *           the vargs
 	 * @return the common token stream
 	 */
-	static protected CommonTokenStream get(String[] vargs)
+	static protected CommonTokenStream get(String[] vargs, Xmlgen xmlgen)
 	{
 		String args = "";
 		for (String arg : vargs)
@@ -33,7 +34,7 @@ public class SmartCmdlineParser extends CmdlineParser
 		}
 		CmdlineLexer lexer = new CmdlineLexer(CharStreams.fromString(args));
 		lexer.removeErrorListener(ConsoleErrorListener.INSTANCE);
-		lexer.addErrorListener(new SyntaxErrorListener());
+		lexer.addErrorListener(new SyntaxErrorListener(xmlgen));
 		return new CommonTokenStream(lexer);
 	}
 
@@ -43,11 +44,11 @@ public class SmartCmdlineParser extends CmdlineParser
 	 * @param vargs
 	 *           the vargs
 	 */
-	public SmartCmdlineParser(String[] vargs)
+	public SmartCmdlineParser(String[] vargs, Xmlgen xmlgen)
 	{
-		super(get(vargs));
+		super(get(vargs, xmlgen), xmlgen);
 		removeErrorListener(ConsoleErrorListener.INSTANCE);
-		addErrorListener(new SyntaxErrorListener());
+		addErrorListener(new SyntaxErrorListener(xmlgen));
 	}
 
 	/**

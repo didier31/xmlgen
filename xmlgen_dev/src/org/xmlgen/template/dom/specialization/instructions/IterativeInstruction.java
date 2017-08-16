@@ -2,6 +2,7 @@ package org.xmlgen.template.dom.specialization.instructions;
 
 import java.util.Vector;
 
+import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
@@ -9,9 +10,9 @@ import org.xmlgen.parser.pi.PIParser.TaggedContext;
 @SuppressWarnings("serial")
 public abstract class IterativeInstruction extends StructuralInstruction
 {
-	protected IterativeInstruction(String data, TaggedContext taggedContext, int line, int column)
+	protected IterativeInstruction(String data, TaggedContext taggedContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, taggedContext, line, column);
+		super(data, taggedContext, line, column, xmlgen);
 	}
 
 	protected boolean isInitialized(ExpansionContext expansionContext)
@@ -50,8 +51,9 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	abstract protected void doInitialisation(ExpansionContext expansionContext);
 
 	@Override
-	protected Vector<Cloneable> doExpandMySelf(TemplateIterator it, ExpansionContext expansionContext)
+	protected Vector<Cloneable> doExpandMySelf(TemplateIterator it)
 	{
+		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
 		iterate(expansionContext);
 		if (isFinished())
 		{

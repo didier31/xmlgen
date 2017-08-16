@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xmlgen <load doc_for_papyrus.ExpansionServices>
+?>
+<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+      xmlns:ns5="http://www.w3.org/2000/svg"
+      xmlns:ns4="http://www.w3.org/1999/xhtml"
+      xmlns:ns3="http://www.w3.org/1998/Math/MathML"
+      xmlns:ns="http://www.w3.org/1999/xlink"
+      xmlns:db="http://docbook.org/ns/docbook">
+  <info>
+    <title><?xmlgen uml->at(1).name ?></title>
+
+    <?xmlgen [AUTHOR]
+            auteur : info.author, 
+            prenom : auteur.firstname, 
+            nom : auteur.lastname 
+    ?>
+
+    <author>
+      <personname><firstname>
+           
+
+          <?xmlgen prenom ?>
+
+           
+        </firstname> <surname>
+           
+
+          <?xmlgen nom ?>
+
+           
+        </surname></personname>
+
+      <affiliation>
+        <orgname/>
+      </affiliation>
+    </author>
+
+    <?xmlgen [AUTHOR] end
+    ?>
+
+    <pubdate/>
+  </info>
+
+  <?xmlgen package : uml->closure(package : uml::Package | package.nestedPackage)
+   ?>
+
+  <chapter>
+    <title>Package <?xmlgen package.name?></title>
+
+    <?xmlgen [Comments] comment : package.ownedComment
+    ?>
+
+    <para><?xmlgen comment.body ?></para>
+
+    <?xmlgen [Comments] 
+             end
+    ?>
+
+    <?xmlgen [Diagrams]
+             relatedDiagram : notation->select(d | d.styles->at(3).owner = package) 
+   ?>
+
+    <figure>
+      <title><?xmlgen relatedDiagram.name ?></title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="???">
+            <?xmlgen attr fileref = relatedDiagram.svg(outputDir, imagesPath, 800, 600) ?>
+          </imagedata>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <?xmlgen [Diagrams] 
+             end 
+   ?>
+
+    <?xmlgen [Classifiers] classifier : package.packagedElement->filter(uml::Classifier)
+    ?>
+
+    <section>
+      <title><?xmlgen classifier.name
+      ?></title>
+
+      <para><?xmlgen [Descendants] begin 
+                                   descendants = classifier.ancestors()->reverse()
+   ?> <?xmlgen [DirectDescendants] begin when descendants <> null and not descendants->isEmpty()
+    
+    directDescendants = descendants->first(), 
+    descendants = (if descendants->size() > 1 then 
+                      descendants->asSequence()->subSequence(2, descendants->size()) 
+                   else 
+                      Sequence{}
+                   endif)
+   ?> <itemizedlist>
+          <?xmlgen [Descendant] descendant : directDescendants ?>
+
+          <listitem>
+            <para><?xmlgen descendant.name ?></para>
+          </listitem>
+
+          <?xmlgen [Descendant] end ?>
+
+          <?xmlgen [SubsequentDescendance] begin when not descendants->isEmpty() ?>
+
+          <listitem>
+            <?xmlgen <Insert [DirectDescendants]> ?>
+
+            <?xmlgen [Void] begin when false ?>
+
+            <para/>
+
+            <?xmlgen [Void] end ?>
+          </listitem>
+
+          <?xmlgen [SubsequentDescendance] end ?>
+        </itemizedlist> <?xmlgen [DirectDescendants] end
+       ?> <?xmlgen [Descendants] end ?></para>
+    </section>
+
+    <?xmlgen [Classifiers] end
+   ?>
+  </chapter>
+</book>

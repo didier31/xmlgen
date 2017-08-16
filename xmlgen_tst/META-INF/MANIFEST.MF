@@ -4,13 +4,21 @@ Bundle-Name: xmlgen_tst
 Bundle-SymbolicName: xmlgen_tst
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.xmlgen.tst,
- org.xmlgen.tst.input.commun
+ org.xmlgen.tst.input.common
 Import-Package: org.eclipse.core.runtime,
  org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.resource,
  org.eclipse.gmf.runtime.diagram.core.preferences,
  org.eclipse.gmf.runtime.diagram.ui,
  org.eclipse.gmf.runtime.diagram.ui.image,
  org.eclipse.gmf.runtime.diagram.ui.render.util,
  org.eclipse.gmf.runtime.notation,
+ org.eclipse.papyrus.designer.languages.java.profile.PapyrusJava,
+ org.eclipse.papyrus.designer.languages.java.profile.PapyrusJava.impl,
+ org.eclipse.papyrus.designer.languages.java.profile.PapyrusJava.util,
+ org.eclipse.papyrus.designer.languages.java.reverse.ast,
+ org.eclipse.uml2.uml,
  org.junit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

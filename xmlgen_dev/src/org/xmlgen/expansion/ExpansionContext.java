@@ -43,7 +43,7 @@ public class ExpansionContext extends Stack<LocalContext>
 		{
 			Stack<StructuralInstruction> structuresStack = elementAt(i).getStructuresStack();
 			int j = structuresStack.size() - 1;
-			while (j > 0 && foundInstr == null)
+			while (j >= 0 && foundInstr == null)
 			{
 				try
 				{
@@ -80,23 +80,6 @@ public class ExpansionContext extends Stack<LocalContext>
 			StructuralInstruction structuralInstruction = structuresStack.peek();
 			return structuralInstruction;
 		}
-	}
-
-	protected StructuralInstruction getGrandmotherStructure()
-	{
-		LocalContext localContext = getContext();
-		Stack<StructuralInstruction> structuresStack = localContext.getStructuresStack();
-		StructuralInstruction structuralInstruction;
-		
-		if (structuresStack.size() < 2)
-		{
-			structuralInstruction = null;
-		}
-		else
-		{
-			structuralInstruction = structuresStack.elementAt(structuresStack.size() - 2);
-		}
-		return structuralInstruction;
 	}
 
 	public void push()

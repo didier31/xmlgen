@@ -6,6 +6,7 @@ package org.xmlgen.parser.cmdline;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -28,7 +29,10 @@ import org.xmlgen.notifications.Notifications;
  */
 public class SyntaxErrorListener extends BaseErrorListener
 {
-
+	public SyntaxErrorListener(Xmlgen xmlgen)
+	{
+		this.notifications = xmlgen.getNotifications();
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,6 +50,8 @@ public class SyntaxErrorListener extends BaseErrorListener
 		Artifact artifact = new Artifact("");
 		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, charPositionInLine, line);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
-		Notifications.getInstance().add(contextualNotification);
+		notifications.add(contextualNotification);
 	}
+	
+	private Notifications notifications;	
 }

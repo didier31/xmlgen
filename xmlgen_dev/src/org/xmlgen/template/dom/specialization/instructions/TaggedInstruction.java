@@ -1,13 +1,14 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
+import org.xmlgen.Xmlgen;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 @SuppressWarnings("serial")
 public class TaggedInstruction extends ExpansionInstruction
 {
-	protected TaggedInstruction(String data, TaggedContext taggedContext, int line, int column)
+	protected TaggedInstruction(String data, TaggedContext taggedContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, line, column);
+		super(data, line, column, xmlgen);
 		setLabel(taggedContext);
 	}
 	

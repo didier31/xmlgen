@@ -3,9 +3,12 @@
  */
 package org.xmlgen.expansion.pi.parsing;
 
+import java.io.File;
+
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+import org.xmlgen.Xmlgen;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
@@ -14,7 +17,6 @@ import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
-import org.xmlgen.notifications.Notifications;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +30,12 @@ import org.xmlgen.notifications.Notifications;
  */
 public class SyntaxErrorListener extends BaseErrorListener
 {
+	public SyntaxErrorListener(int line, int column, Xmlgen xmlgen)
+	{
+		this.baseLine = line;
+		this.baseColumn = column;
+		this.xmlgen = xmlgen;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -43,9 +51,14 @@ public class SyntaxErrorListener extends BaseErrorListener
 	{
 		Message message = new Message(msg);
 		Notification syntax_error = new Notification(Module.Parser, Gravity.Error, Subject.Template, message);
-		Artifact artifact = new Artifact("");
-		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, charPositionInLine, line);
+		File template = new File(xmlgen.getContext().getXmlTemplate());
+		Artifact artifact = new Artifact(template.getName());
+		LocationImpl localisation = new LocationImpl(artifact, 0, baseColumn, baseLine);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
-		Notifications.getInstance().add(contextualNotification);
+		xmlgen.getNotifications().add(contextualNotification);
 	}
+	
+	private Xmlgen xmlgen;
+	private int baseLine;
+	private int baseColumn;
 }

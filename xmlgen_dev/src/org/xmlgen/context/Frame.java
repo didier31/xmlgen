@@ -1,27 +1,34 @@
 package org.xmlgen.context;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
- * The class Frame
+ * Holds the variables and constants for a given structure's instance.  
+ * 
+ * @author Didier Garcin
+ * 
  */
+@SuppressWarnings("serial")
 public class Frame extends HashMap<String, Object>
 {
-
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 652656178360546296L;
-
 	/** The name. */
 	private String name;
+	String level;
 
-	/** The level. */
-	private float level = 0;
-
+	/**
+	 * 
+	 */
+	public void setLevel(String level)
+	{
+		this.level = level;
+	}
+	
 	/**
 	 * Instantiates a new frame.
 	 *
-	 * @param name
-	 *           the name
+	 * @param name : the name of the frame.
 	 */
 	public Frame(String name)
 	{
@@ -30,45 +37,39 @@ public class Frame extends HashMap<String, Object>
 	}
 
 	/**
-	 * Gets the name.
+	 * Gets the name of the frame.
 	 *
-	 * @return the name
+	 * @return its name
 	 */
 	public String getName()
 	{
 		return name;
 	}
-
+	
 	/**
-	 * Gets the level.
-	 *
-	 * @return the level
+	 * 
+	 * Returns an overview of its state.
+	 * 
+	 * @return the string representation.  
+	 * 
 	 */
-	public float getLevel()
-	{
-		return level;
-	}
-	
-	@Override
-	public Object put(String key, Object value)
-	{
-		return super.put(key, value);
-	}
-	
 	@Override
 	public String toString()
 	{
-		String levelString = Math.floor(level) == level ? Integer.toString((int) level).toString() : Float.toString(level);  
 		return "frame <" 
             + (name != null ? name : "") 
             +  ">, level " 
-            +  levelString
+            +  level
             + " "
             + keySet().toString();
 	}
-
-	public void setLevel(float level)
+	
+	static private NumberFormat decimalFormat = NumberFormat.getInstance(Locale.US);
+	
+	static
 	{
-		this.level = level;
+		decimalFormat.setMinimumFractionDigits(0);
+		decimalFormat.setMaximumFractionDigits(1);
+		decimalFormat.setMinimumIntegerDigits(0);
 	}
 }
