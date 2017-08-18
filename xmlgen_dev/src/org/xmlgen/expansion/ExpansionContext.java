@@ -35,7 +35,7 @@ public class ExpansionContext extends Stack<LocalContext>
 		}
 	}
 
-	public BeginInstruction getCurrentBegin(String label)
+	public BeginInstruction getBegin(String label)
 	{
 		int i = size() - 1;
 		BeginInstruction foundInstr = null;

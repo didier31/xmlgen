@@ -1,6 +1,7 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -21,6 +22,13 @@ public class InsertInstruction extends ExpansionInstruction
 		super(pi, line, column, xmlgen);
 		TerminalNode labelContext = insertInstruction.Label();
 		label = labelContext != null ? labelContext.getText() : null;
+		TerminalNode identContext = insertInstruction.Ident();
+		blockId = identContext != null ? identContext.getText() : null;
+		if (blockId != null)
+		{
+			BeginInstruction insertedBegin = getBegin(blockId);
+			setInsertedBlock(insertedBegin);
+		}
 	}
 	
 	@Override
@@ -29,29 +37,26 @@ public class InsertInstruction extends ExpansionInstruction
 		Xmlgen xmlgen = getXmlgen();
 		ExpansionContext expansionContext = xmlgen.getExpansionContext();
 		
-		super.expandMySelf(it);
-		
 		if (expansionContext.isExecuting())
 		{
-			BeginInstruction insertBlock = expansionContext.getCurrentBegin(label);
-			
-			if (insertBlock == null)
+			/**
+			 * structureElement == null means, it is the label that sets it at expansion-time. 
+			 */
+			if (insertedBlock == null)
 			{
-				// TODO Notify an error to user : no begin/end with this label 
+				BeginInstruction insertedBegin = getBegin(expansionContext);
+				setInsertedBlock(insertedBegin);
 			}
 			
-			Collection<Content> structureContent = structureOf(insertBlock);
-			
-			Element element = new Element("dummy", xmlgen);
-			element.addContent(structureContent);
-			
-			TemplateIterator recursiveIt = new TemplateIterator(insertBlock);
+			List<Content> block = insertedBlock.getContent();  
+			Content beginInstruction = block.get(0);
+			TemplateIterator recursiveIt = new TemplateIterator(beginInstruction);
 			
 			FrameStack frameStack = getXmlgen().getFrameStack();
 			
 			frameStack.pushNumbering();
 			
-			Vector<Cloneable> expanded = element.expandMySelf(recursiveIt, false);
+			Vector<Cloneable> expanded = insertedBlock.expandMySelf(recursiveIt, false);
 			
 			frameStack.popNumbering();
 			
@@ -61,6 +66,45 @@ public class InsertInstruction extends ExpansionInstruction
 		{
 			return new Vector<Cloneable>(0);
 		}
+	}
+
+	protected BeginInstruction getBegin(String blockId)
+	{ 
+		assert(blockId != null);
+		BeginInstruction insertedBegin;
+		boolean constainsKey = getXmlgen().containsBlock(blockId);
+		if (constainsKey)
+		{
+			insertedBegin = getXmlgen().getBlock(blockId);
+		}
+		else
+		{
+		   // TODO Notify an error to user 
+			insertedBegin = null; 
+		}
+		return insertedBegin;
+	}
+	
+	protected BeginInstruction getBegin(ExpansionContext expansionContext)
+	{
+		BeginInstruction insertedBegin;		
+		{
+			insertedBegin = expansionContext.getBegin(label);
+			if (insertedBegin == null)
+			{
+				// TODO Notify an error to user : no begin/end with this label
+			}
+		}
+
+		return insertedBegin;
+	}
+	
+	protected void setInsertedBlock(BeginInstruction insertedBegin)
+	{
+		assert(insertedBegin != null);
+		Collection<Content> structureContent = structureOf(insertedBegin);
+		insertedBlock = new Element("dummy", getXmlgen());
+		insertedBlock.addContent(structureContent);
 	}
 	
 	protected Collection<Content> structureOf(StructuralInstruction structuralInstruction)
@@ -107,4 +151,6 @@ public class InsertInstruction extends ExpansionInstruction
 	}
 	
 	private String label = null;
+	private String blockId = null;
+	private Element insertedBlock = null;
 }

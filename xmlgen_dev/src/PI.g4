@@ -26,7 +26,7 @@ dottedIdent
 tagged: label? (captures | begin | end)
 ;
 
-insert: '<' Insert Label? '>'
+insert: '<' Insert (Label | Ident) '>'
 ;
 
 captures : capture (',' capture)*
@@ -50,7 +50,13 @@ elementContent : expression
 attributeID : prefix? Ident
 ;
 
-begin: Begin  guard? definitions?
+begin: Begin store?  guard? definitions?
+;
+
+store: Store Ident
+;
+
+Store: [Ss][Tt][Oo][Rr][Ee]
 ;
 
 guard: When expression

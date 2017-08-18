@@ -3,6 +3,7 @@ package org.xmlgen.template.dom.specialization.instructions;
 import java.util.Stack;
 import java.util.Vector;
 
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Frame;
@@ -15,6 +16,7 @@ import org.xmlgen.parser.pi.PIParser.DefinitionContext;
 import org.xmlgen.parser.pi.PIParser.DefinitionsContext;
 import org.xmlgen.parser.pi.PIParser.ExpressionContext;
 import org.xmlgen.parser.pi.PIParser.GuardContext;
+import org.xmlgen.parser.pi.PIParser.StoreContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 @SuppressWarnings("serial")
@@ -29,6 +31,15 @@ public class BeginInstruction extends StructuralInstruction
 	{
 		super(pi, (TaggedContext) beginContext.getParent(), line, column, xmlgen);
 		initFields(beginContext, line, column);
+		
+		StoreContext storeContext = beginContext.store();
+		
+		if (storeContext != null)
+		{
+			TerminalNode identContext = storeContext.Ident();
+			String myId = identContext.getText();
+			getXmlgen().setBlock(myId, this);
+		}
 	}
 
 	private void initFields(BeginContext beginContext, int line, int column)
