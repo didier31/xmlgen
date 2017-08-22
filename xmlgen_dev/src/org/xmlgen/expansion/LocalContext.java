@@ -11,5 +11,14 @@ public class LocalContext
 		return structuresStack;
 	}
 
-	private Stack<StructuralInstruction> structuresStack = new Stack<StructuralInstruction>();	
+	private Stack<StructuralInstruction> structuresStack = new Stack<StructuralInstruction>()
+			{
+		@Override public StructuralInstruction push(StructuralInstruction s) { 
+			return super.push(s); }
+		@Override public StructuralInstruction pop()
+		{
+			StructuralInstruction s = super.pop();
+			return s;
+		}
+			};	
 }

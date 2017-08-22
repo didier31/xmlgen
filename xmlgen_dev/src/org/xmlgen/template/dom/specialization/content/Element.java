@@ -92,7 +92,7 @@ public class Element extends LocatedElement implements Expandable
 					isFinished = structuralInstruction.isFinished();
 					if (isFinished)
 					{
-						structuralInstruction.end(expansionContext);
+						structuralInstruction.end();
 					}
 					else
 					{

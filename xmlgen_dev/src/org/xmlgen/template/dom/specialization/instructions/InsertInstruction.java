@@ -48,15 +48,20 @@ public class InsertInstruction extends ExpansionInstruction
 				setInsertedBlock(insertedBegin);
 			}
 			
-			List<Content> block = insertedBlock.getContent();  
-			Content beginInstruction = block.get(0);
+			List<Content> block = insertedBlock.getContent(); 
+			
+			BeginInstruction beginInstruction = (BeginInstruction) block.get(0);
+			beginInstruction.newInstance();
+			
 			TemplateIterator recursiveIt = new TemplateIterator(beginInstruction);
 			
 			FrameStack frameStack = getXmlgen().getFrameStack();
 			
 			frameStack.pushNumbering();
 			
+			expansionContext.incInsertInProgressCount();
 			Vector<Cloneable> expanded = insertedBlock.expandMySelf(recursiveIt, false);
+			expansionContext.decInsertInProgressCount();
 			
 			frameStack.popNumbering();
 			

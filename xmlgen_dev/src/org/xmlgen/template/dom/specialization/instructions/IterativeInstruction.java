@@ -15,41 +15,13 @@ public abstract class IterativeInstruction extends StructuralInstruction
 		super(data, taggedContext, line, column, xmlgen);
 	}
 
-	protected boolean isInitialized(ExpansionContext expansionContext)
-	{
-		boolean isInitialized;
-		StructuralInstruction structuralInstruction = expansionContext.getMotherStructure();
-
-		if (this == structuralInstruction)
-		{
-			isInitialized = true;
-		}
-		else
-		{
-			isInitialized = false;
-		}
-		return isInitialized;
-	}
-
 	@Override
-	final protected void initialize(ExpansionContext expansionContext)
+	protected void initialize()
 	{
-
-		if (!isInitialized(expansionContext))
-		{
-			super.initialize(expansionContext);
-			doInitialisation(expansionContext);
-		}
+		super.initialize();
+		currentState().setCompletion(false);
 	}
-
-	@Override
-	public void end(ExpansionContext expansionContext)
-	{
-		super.end(expansionContext);
-	}
-
-	abstract protected void doInitialisation(ExpansionContext expansionContext);
-
+	
 	@Override
 	protected Vector<Cloneable> doExpandMySelf(TemplateIterator it)
 	{

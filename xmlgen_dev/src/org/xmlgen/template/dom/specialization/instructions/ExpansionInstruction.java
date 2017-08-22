@@ -42,7 +42,7 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 {
 
 	/** The Constant piMarker. */
-	public final static String piMarker = "xmlgen";
+	public final static String piMarker = "gen";
 
 	/**
 	 * Creates the.

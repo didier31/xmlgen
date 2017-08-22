@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.jdom2.Document;
-import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.xmlgen.context.Context;
 import org.xmlgen.context.FrameStack;
@@ -94,7 +93,6 @@ public class Xmlgen
 		document = template.expand(this);
 		
 		XMLOutputter xml = new XMLOutputter();
-		xml.setFormat(Format.getPrettyFormat());
 		
 		FileOutputStream xmlOutput = null;
 		

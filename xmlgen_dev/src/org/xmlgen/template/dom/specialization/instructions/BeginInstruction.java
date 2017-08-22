@@ -128,7 +128,7 @@ public class BeginInstruction extends StructuralInstruction
 	@Override
 	protected void createState(ExpansionContext expansionContext)
 	{
-		State currentState = new State(expansionContext);
+		State currentState = new State();
 		states.push(currentState);		
 	}
 
@@ -142,6 +142,12 @@ public class BeginInstruction extends StructuralInstruction
 	protected void deleteState()
 	{
 		states.pop();
+	}
+	
+	@Override
+	protected boolean thereIsNoState()
+	{
+		return states.isEmpty();
 	}
 	
 	private Stack<State> states = new Stack<State>();

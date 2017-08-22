@@ -2,12 +2,14 @@ package org.xmlgen.context;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.GenericXMLResourceFactoryImpl;
 import org.eclipse.papyrus.designer.languages.java.profile.PapyrusJava.PapyrusJavaPackage;
-import org.eclipse.papyrus.sysml.util.SysmlResource;
 import org.eclipse.uml2.uml.UMLPlugin;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resource.XMI2UMLResource;
@@ -305,6 +306,7 @@ public class Context
 		assert (getXmlTemplate() != null);
 
 		SAXBuilder jdomBuilder = new SAXBuilder();
+		jdomBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		jdomBuilder.setJDOMFactory(new TemplateDomFactory(getXmlgen()));
 		try
 		{
@@ -482,7 +484,7 @@ public class Context
 		 * Sysml inits
 		 */		
 		
-		String sysmlResourcePath = SysmlResource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+/*		String sysmlResourcePath = SysmlResource.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		try 
 		{
 			sysmlResourcePath = URLDecoder.decode(sysmlResourcePath, "UTF-8");
@@ -495,7 +497,7 @@ public class Context
 		URI sysmlResourcePluginURI = URI.createURI("jar:file:" + sysmlResourcePath + "!/");
 		
 		resourceSet.getURIConverter().getURIMap().put(URI.createURI(SysmlResource.SYSML_PROFILE_URI),
-				sysmlResourcePluginURI.appendSegment("profiles").appendSegment("SysML.profile.uml"));		
+				sysmlResourcePluginURI.appendSegment("profiles").appendSegment("SysML.profile.uml"));	*/	
 		
 		/**
 		 * Papyrus profile init
@@ -521,6 +523,29 @@ public class Context
 		UMLPlugin.getEPackageNsURIToProfileLocationMap().put(PapyrusJavaPackage.eNS_URI,
 				                                               URI.createURI("pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"));
 	  
+		/**
+		 * Papyrus java library init
+		*/ 	
+		ClassLoader classLoader = getClass().getClassLoader();
+		URL resourceURL = classLoader.getResource("models/JavaLibrary.uml");
+		URI javaLibraryURI = URI.createURI(resourceURL.getFile());
+		
+	   Resource resource = resourceSet.createResource(javaLibraryURI);
+	   InputStream resourceInputStream = classLoader.getResourceAsStream("models/JavaLibrary.uml"); 
+		
+		try
+		{
+			resource.load(resourceInputStream, null);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI("pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml"), javaLibraryURI);
+		// Map the resource to able to resolve EMF proxies.
+		resourceSet.getURIResourceMap().put(javaLibraryURI, resource);
+		
 		/**
 		 * XML Resources
 		 */

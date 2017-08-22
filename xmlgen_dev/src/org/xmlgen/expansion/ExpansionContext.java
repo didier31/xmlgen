@@ -87,8 +87,32 @@ public class ExpansionContext extends Stack<LocalContext>
 		push(new LocalContext());
 	}
 
+	@Override
+	public LocalContext pop()
+	{
+		LocalContext localContext = super.pop();
+		return localContext;
+	}
+	
 	public LocalContext getContext()
 	{
 		return peek();
 	}
+
+	public void incInsertInProgressCount()
+	{
+		insertInProgressCount++;
+	}
+	
+	public void decInsertInProgressCount()
+	{
+		insertInProgressCount--;
+	}
+	
+	public int getInsertInProgressCount()
+	{
+		return insertInProgressCount;
+	}
+	
+	private int insertInProgressCount = 0;
 }

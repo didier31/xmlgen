@@ -107,7 +107,7 @@ public class TemplateDomFactory extends LocatedJDOMFactory
 
 	@Override
 	public DocType docType(int line, int col, String elementName) {
-		final DocType ret = new DocType(elementName, xmlgen);
+		final DocType ret = new DocType(elementName);
 		ret.setLine(line);
 		ret.setColumn(col);
 		return ret;

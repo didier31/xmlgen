@@ -28,31 +28,50 @@ abstract public class StructuralInstruction extends TaggedInstruction
 		super(data, taggedContext, line, column, xmlgen);
 	}
 
-	protected void initialize(ExpansionContext expansionContext)
+	protected void initialize()
 	{
-		createState(expansionContext);
-		State state = currentState();
-		Stack<StructuralInstruction> structuresStack = expansionContext.getContext().getStructuresStack();
-		if (!structuresStack.isEmpty())
+		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
+
+		int actualInsertInProgressCount = expansionContext.getInsertInProgressCount();
+		if (thereIsNoState() || currentState().getInsertInProgressCount() < actualInsertInProgressCount)
 		{
-			state.setExecution(structuresStack.peek().isExecuting());
+			createState(expansionContext);
 		}
-		expansionContext.getContext().getStructuresStack().push(this);
-		String label = getLabel();
-		Frame newFrame = new Frame(label);
-		pushDatasourcesContext(newFrame);
+		State state = currentState();
+		if (!state.isInitialized())
+		{
+			Stack<StructuralInstruction> structuresStack = expansionContext.getContext().getStructuresStack();
+			if (!structuresStack.isEmpty())
+			{
+				state.setExecution(structuresStack.peek().isExecuting());
+			}
+			structuresStack.push(this);
+			String label = getLabel();
+			Frame newFrame = new Frame(label);
+			pushDatasourcesContext(newFrame);
+			state.setInitialized();
+		}
 	}
-	
+
 	protected void pushDatasourcesContext(Frame newFrame)
 	{
 		FrameStack frameStack = getXmlgen().getFrameStack();
 		frameStack.push(newFrame);
 	}
-	
-	public void end(ExpansionContext expansionContext)
+
+	public void newInstance()
 	{
-		popFrame(this);
-		expansionContext.getContext().getStructuresStack().pop();
+	}
+
+	public void end()
+	{
+		if (currentState().isInitialized())
+		{
+			popFrame(this);
+			Stack<StructuralInstruction> structureStack = getXmlgen().getExpansionContext().getContext()
+					.getStructuresStack();
+			structureStack.pop();
+		}
 		deleteState();
 	}
 
@@ -60,20 +79,28 @@ abstract public class StructuralInstruction extends TaggedInstruction
 
 	abstract protected State currentState();
 
+	abstract protected boolean thereIsNoState();
+
 	abstract protected void deleteState();
 
 	final public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
 		Vector<Cloneable> expanded;
-		
 		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
-		initialize(expansionContext);
-		expanded = doExpandMySelf(it);
+		initialize();
+		if (expansionContext.isExecuting())
+		{
+			expanded = doExpandMySelf(it);
+		}
+		else
+		{
+			expanded = new Vector<Cloneable>(0);
+		}
 		return expanded;
 	}
-	
+
 	abstract protected Vector<Cloneable> doExpandMySelf(TemplateIterator it);
-	
+
 	/**
 	 * Adds the to current frame.
 	 *
@@ -84,7 +111,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 	 */
 	protected void addToCurrentFrame(String id, Object value)
 	{
-		FrameStack frameStack = getXmlgen().getFrameStack(); 
+		FrameStack frameStack = getXmlgen().getFrameStack();
 		Frame currentFrame = frameStack.peek();
 		traceReferenceDeclaration(id, value, currentFrame);
 		currentFrame.put(id, value);
@@ -107,39 +134,45 @@ abstract public class StructuralInstruction extends TaggedInstruction
 
 	protected void enableExecution()
 	{
-		currentState().isExecuting = true;
+		currentState().enableExecution();
 	}
 
 	protected void disableExecution()
 	{
-		currentState().isExecuting = false;
+		currentState().disableExecution();
 	}
 
 	protected void setFinished()
 	{
-		currentState().isFinished = true;
+		currentState().setFinished();
 	}
 
 	protected void setCompletion(boolean isFinished)
 	{
-		currentState().isFinished = isFinished;
+		currentState().setCompletion(isFinished);
 	}
 
 	protected void setReadyToRun()
 	{
-		currentState().isFinished = false;
+		setCompletion(false);
 	}
 
 	public boolean isExecuting()
 	{
-		return currentState().isExecuting;
+		return currentState().isExecuting();
 	}
 
 	public boolean isFinished()
 	{
-		return currentState().isFinished;
+		return currentState().isFinished();
 	}
 
+	public boolean isInitialized()
+	{
+		return currentState().isInitialized();
+	}
+
+	
 	/**
 	 * Pop the frame on top of the stack.
 	 * 
@@ -177,7 +210,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 		frameStack.pop();
 		tracePop(framePoped);
 	}
-	
+
 	/**
 	 * 
 	 * Trace Frame operation
@@ -195,13 +228,15 @@ abstract public class StructuralInstruction extends TaggedInstruction
 			getXmlgen().getNotifications().add(notification);
 		}
 	}
-	
-	protected static class State
+
+	protected class State
 	{
 
-		public State(ExpansionContext expansionContext)
+		public State()
 		{
+			ExpansionContext expansionContext = getXmlgen().getExpansionContext();
 			setExecution(expansionContext.isExecuting());
+			insertInProgressCount = expansionContext.getInsertInProgressCount();
 		}
 
 		protected void enableExecution()
@@ -234,6 +269,11 @@ abstract public class StructuralInstruction extends TaggedInstruction
 			isFinished = false;
 		}
 
+		private void setInitialized()
+		{
+			isInitialized = true;
+		}
+
 		public boolean isExecuting()
 		{
 			return isExecuting;
@@ -244,7 +284,19 @@ abstract public class StructuralInstruction extends TaggedInstruction
 			return isFinished;
 		}
 
-		private boolean isFinished = false;
+		private boolean isInitialized()
+		{
+			return isInitialized;
+		}
+
+		private int getInsertInProgressCount()
+		{
+			return insertInProgressCount;
+		}
+
+		private boolean isInitialized = false;
 		private boolean isExecuting = true;
+		private boolean isFinished = true;
+		private int insertInProgressCount;
 	}
 }

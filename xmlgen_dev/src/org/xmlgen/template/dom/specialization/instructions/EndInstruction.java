@@ -84,7 +84,7 @@ public class EndInstruction extends TaggedInstruction
 		{
 			exports();
 		}
-		structuralInstruction.end(expansionContext);
+		structuralInstruction.end();
 	}
 
 	protected void exports()

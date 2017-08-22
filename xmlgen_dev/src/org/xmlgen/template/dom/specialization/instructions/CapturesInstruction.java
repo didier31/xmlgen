@@ -45,7 +45,7 @@ public class CapturesInstruction extends IterativeInstruction
 		super(data, (TaggedContext) capturesContext.getParent(), line, column, xmlgen);
 		initFields(capturesContext);
 	}
-	
+
 	private void initFields(CapturesContext capturesContext)
 	{
 		int capturesCount = capturesContext.capture().size();
@@ -61,7 +61,7 @@ public class CapturesInstruction extends IterativeInstruction
 			if (!datasourcesIDs.contains(id))
 			{
 				datasourcesIDs.add(id);
-				captureQueries.add(parsedQuery);				
+				captureQueries.add(parsedQuery);
 			}
 			else
 			{
@@ -85,27 +85,33 @@ public class CapturesInstruction extends IterativeInstruction
 	 * 
 	 */
 	@Override
-	protected void doInitialisation(ExpansionContext expansionContext)
+	protected void initialize()
 	{
-		int size = datasourcesIDs.size();
-		Vector<Iterator<Object>> iterators = new Vector<Iterator<Object>>(size);
-		iterators.setSize(size);
-		// Initializes references in the just new created frame in stack
-		int i = 0;
-		for (AstResult captureQuery : captureQueries)
+		super.initialize();
+		State currentState = currentState();
+		if (!currentState.isInitialized())
 		{
-			Object result = null;
-			if (captureQuery.getErrors().isEmpty())
+			int size = datasourcesIDs.size();
+			Vector<Iterator<Object>> iterators = new Vector<Iterator<Object>>(size);
+			iterators.setSize(size);
+			// Initializes references in the just new created frame in stack
+			int i = 0;
+			for (AstResult captureQuery : captureQueries)
 			{
-				result = eval(captureQuery);
+				Object result = null;
+				if (captureQuery.getErrors().isEmpty())
+				{
+					result = eval(captureQuery);
+				}
+				Iterator<Object> iterator = createEMFIterator(result);
+				assert (iterator != null);
+				iterators.set(i, iterator);
+				addToCurrentFrame(datasourcesIDs.get(i), result);
+				i++;
 			}
-			Iterator<Object> iterator = createEMFIterator(result);
-			assert (iterator != null);
-			iterators.set(i, iterator);
-			addToCurrentFrame(datasourcesIDs.get(i), result);
-			i++;
+			setIterators(iterators);
+			currentState.setInitialized();
 		}
-		setIterators(iterators);
 	}
 
 	/**
@@ -117,11 +123,11 @@ public class CapturesInstruction extends IterativeInstruction
 	protected boolean iterateImpl(ExpansionContext expansionContext)
 	{
 		Frame currentFrame = getXmlgen().getFrameStack().peek();
-		
+
 		Vector<Iterator<Object>> iterators = iterators();
 		int i = 0;
 		boolean iterating = false;
-		
+
 		for (String id : datasourcesIDs)
 		{
 			Iterator<Object> iterator = iterators.get(i);
@@ -183,12 +189,12 @@ public class CapturesInstruction extends IterativeInstruction
 		}
 		return iterator;
 	}
-	
+
 	Vector<Iterator<Object>> iterators()
 	{
-	State currentState = currrentState();
-	Vector<Iterator<Object>> iterators = currentState.getIterators();
-	return iterators;
+		State currentState = currrentState();
+		Vector<Iterator<Object>> iterators = currentState.getIterators();
+		return iterators;
 	}
 
 	/**
@@ -210,7 +216,7 @@ public class CapturesInstruction extends IterativeInstruction
 			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getColumn(),
 					getLine());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
-			Notifications notifications = getXmlgen().getNotifications(); 
+			Notifications notifications = getXmlgen().getNotifications();
 			notifications.add(contextual);
 		}
 	}
@@ -219,7 +225,7 @@ public class CapturesInstruction extends IterativeInstruction
 	{
 		return states.peek();
 	}
-	
+
 	/** The duplicate data source reference. */
 	private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error,
 			Subject.DataSource, Message.Duplicate_Reference);
@@ -229,29 +235,39 @@ public class CapturesInstruction extends IterativeInstruction
 
 	/** The datasources Ids. */
 	private Vector<String> datasourcesIDs;
-	
-	private Stack<State> states = new Stack<State>(); 
-	
-	
+
+	private Stack<State> states = new Stack<State>();
+
 	protected class State extends IterativeInstruction.State
-	{		
-	public State(ExpansionContext expansionContext)
+	{
+		public State()
 		{
-			super(expansionContext);
+			super();
 		}
-	
-	public Vector<Iterator<Object>> getIterators()
-	{
-		return iterators;
-	}
-	
-	public void setIterators(Vector<Iterator<Object>> iterators)
-	{
-		this.iterators = iterators;
-	}
-	
-	/** The iterators. */
-	private Vector<Iterator<Object>> iterators;
+
+		public Vector<Iterator<Object>> getIterators()
+		{
+			return iterators;
+		}
+
+		public void setIterators(Vector<Iterator<Object>> iterators)
+		{
+			this.iterators = iterators;
+		}
+
+		private boolean isInitialized()
+		{
+			return isInitialized;
+		}
+
+		private void setInitialized()
+		{
+			isInitialized = true;
+		}
+
+		/** The iterators. */
+		private Vector<Iterator<Object>> iterators;
+		private boolean isInitialized = false;
 	}
 
 	/** parsed capture queries */
@@ -259,9 +275,9 @@ public class CapturesInstruction extends IterativeInstruction
 
 	@Override
 	protected void createState(ExpansionContext expansionContext)
-	{		
-		State currentState = new State(expansionContext);
-		states.push(currentState);	
+	{
+		State currentState = new State();
+		states.push(currentState);
 	}
 
 	@Override
@@ -274,5 +290,11 @@ public class CapturesInstruction extends IterativeInstruction
 	protected State currentState()
 	{
 		return states.peek();
+	}
+
+	@Override
+	protected boolean thereIsNoState()
+	{
+		return states.isEmpty();
 	}
 }

@@ -77,7 +77,7 @@ exports: Export ':' Ident (',' Ident)*
 label: Label
 ;
 
-Label: '[' Ident ']'
+Label: '[' .*? ']'
 ;
 
 End: [Ee][nN][Dd]
