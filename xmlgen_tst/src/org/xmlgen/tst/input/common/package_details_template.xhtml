@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
+
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <?xmlgen [Heading] begin 
+  <?gen [Heading] begin 
                            title = name
   ?>
   <head>
-    <title><?xmlgen title.toUpperFirst() ?></title>
+    <title><?gen title.toUpperFirst() ?></title>
 
-    <meta content="2016-01-12" name="date"><?xmlgen attr content = date ?></meta>
+    <meta content="2016-01-12" name="date"><?gen attr content = date ?></meta>
 
-    <meta content="???" name="keywords"><?xmlgen attr content = title ?></meta>
+    <meta content="???" name="keywords"><?gen attr content = title ?></meta>
 
     <link href="./files/stylesheet.css" rel="stylesheet" title="Style"
-          type="text/css"><?xmlgen attr href = config + '/files/stylesheet.css' ?></link>
+          type="text/css">
+		  <?gen attr href = config + '/files/stylesheet.css' ?>
+	</link>
 
-    <script src="./files/script.js.téléchargement" type="text/javascript"
-            xml:space="preserve"></script>
+    <script src="???/script.js" 
+	        type="text/javascript"
+            xml:space="preserve">
+	<?gen attr src = config + '/files/script.js' ?>
+	</script>
   </head>
 
   <body><script type="text/javascript" xml:space="preserve">/*<![CDATA[*/
-  /*]]>*/<?xmlgen '/*<![CDATA[*///
+  /*]]>*/<?gen '/*<![CDATA[*///
     try {
         if (location.href.indexOf(\'is-external=true\') == -1) {
             parent.document.title="' + title.toUpperFirst() + '";
@@ -32,7 +41,7 @@
 ?>/*<![CDATA[*/
 /*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
-  <?xmlgen [Heading] end ?>
+  <?gen [Heading] end ?>
     <div class="topNav">
       <a id="navbar.top">
        <!--  --> </a>
@@ -47,7 +56,7 @@
         <li>
           <a
           href="???">
-		  <?xmlgen attr href = url + '/' + outputFilename ?>
+		  <?gen attr href = url + '/' + outputFilename ?>
 		  Overview
 		  </a>
         </li>
@@ -123,15 +132,15 @@
     <!--  ========= END OF TOP NAVBAR ========= -->
     <div class="header">
       <h1 title="Package" class="title">
-        <?xmlgen name ?>
+        <?gen name ?>
       </h1>
     </div>
     <div class="contentContainer">
       <ul class="blockList">
-	    <?xmlgen [Interfaces] begin
+	    <?gen [Interfaces] begin
 		                      interfaces = package.packagedElement->filter(uml::Interface)
 		?>
-		<?xmlgen [Interfaces] begin when not interfaces->isEmpty()
+		<?gen [Interfaces] begin when not interfaces->isEmpty()
 		                      class = 'rowColor'
 		?>		
         <li class="blockList">
@@ -150,7 +159,7 @@
               </tr>
             </tbody>
             <tbody>
-			<?xmlgen [Interface] begin when not interfaces->isEmpty() 
+			<?gen [Interface] begin when not interfaces->isEmpty() 
 			                     interface = interfaces->first(),
                                  interfaces = interfaces->asSequence()->subSequence(2, interfaces->size()),
 			   			         class = if class = 'rowColor' then
@@ -160,33 +169,33 @@
 										 endif
 		      ?>
               <tr class="???">
-			    <?xmlgen attr class=class ?>
+			    <?gen attr class=class ?>
                 <td class="colFirst">
                   <a
                   href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/Auxiliary.html"
                   title="???">
-				  <?xmlgen attr title = 'interface in ' + name ?>
-				  <?xmlgen interface.name ?>
+				  <?gen attr title = 'interface in ' + name ?>
+				  <?gen interface.name ?>
 				  </a>
                 </td>
                 <td class="colLast">
-				  <?xmlgen comment : interface.ownedComment ?>
+				  <?gen comment : interface.ownedComment ?>
                   <div class="block">
-					<?xmlgen comment.literalComment() ?>
+					<?gen comment.literalComment() ?>
                   </div>
                 </td>
               </tr>
-			<?xmlgen [Interface] end ?>
+			<?gen [Interface] end ?>
             </tbody>
           </table>
         </li>
-        <?xmlgen [Interfaces] end ?>
-		<?xmlgen [Interfaces] end ?>
+        <?gen [Interfaces] end ?>
+		<?gen [Interfaces] end ?>
 		
-	    <?xmlgen [Classes] begin
-		                      classes = package.packagedElement->filter(uml::Class)
+	    <?gen [Classes] begin
+		                      classes = package.packagedElement->filter(uml::Class)->sortedBy(c | c.name)
 		?>
-		<?xmlgen [Classes] begin when classes <> null and not classes->isEmpty()
+		<?gen [Classes] begin when classes <> null and not classes->isEmpty()
 		                      class = 'rowColor',
 							  clazz = null
 		?>		
@@ -206,7 +215,7 @@
               </tr>
             </tbody>
             <tbody>
-			<?xmlgen [Class] begin when classes <> null and not classes->isEmpty()
+			<?gen [Class] begin when classes <> null and not classes->isEmpty()
 			                     previousClass = clazz,
 			                     clazz = classes->first(),
                                  classes = classes->asSequence()->subSequence(2, classes->size()),
@@ -222,42 +231,42 @@
 										 endif
 		      ?>
 			  
-			<?xmlgen begin
+			<?gen begin
 				 template = 'file:/' + cdir + 'class_details_template.xhtml',
 				 classfilename = name + '.' + clazz.name + '_details.xhtml',
 		         output = outputDir + '/' + classfilename,
 				 trace = 'yes'
 		   ?>
-		   <?xmlgen <Expand> 
+		   <?gen <Expand> 
 		  ?>
-		  <?xmlgen end export: classfilename
+		  <?gen end export: classfilename
 		  ?>
 			  
               <tr class="???">
-			    <?xmlgen attr class=class ?>
+			    <?gen attr class=class ?>
                 <td class="colFirst">
                   <a
                   href="???"
                   title="???">
-				  <?xmlgen attr href = url + '/' + classfilename ?>
-				  <?xmlgen attr title = 'class in ' + name ?>
-				  <?xmlgen clazz.name ?>
+				  <?gen attr href = url + '/' + classfilename ?>
+				  <?gen attr title = 'class in ' + name ?>
+				  <?gen clazz.name ?>
 				  </a>
                 </td>
                 <td class="colLast">
-				  <?xmlgen comment : clazz.ownedComment ?>
+				  <?gen comment : clazz.ownedComment ?>
                   <div class="block">
-					<?xmlgen comment.literalComment() ?>
+					<?gen comment.literalComment() ?>
                   </div>
                 </td>
               </tr>
-			  <?xmlgen <Insert [Class]> ?>
-			<?xmlgen [Class] end ?>
+			  <?gen <Insert [Class]> ?>
+			<?gen [Class] end ?>
             </tbody>
           </table>
         </li>
-        <?xmlgen [Classes] end ?>
-		<?xmlgen [Classes] end ?>
+        <?gen [Classes] end ?>
+		<?gen [Classes] end ?>
       </ul>
     </div>
     <!--  ======= START OF BOTTOM NAVBAR ====== -->
@@ -275,7 +284,7 @@
         <li>
           <a
           href="???">
-		  <?xmlgen attr href = url + '/' + outputFilename ?>
+		  <?gen attr href = url + '/' + outputFilename ?>
 		  Overview</a>		  
         </li>
         <li class="navBarCell1Rev">

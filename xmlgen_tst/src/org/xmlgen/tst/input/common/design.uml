@@ -6400,10 +6400,12 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_lrkeoIGpEeeVJrxcG2d44A" name="ClassLoader"/>
         <packagedElement xmi:type="uml:Package" xmi:id="_NVhmMoG8EeeQSOgOL7YWQA" name="context">
-          <packagedElement xmi:type="uml:Class" xmi:id="_NV1IM4G8EeeQSOgOL7YWQA" name="ClassLoader"/>
           <packagedElement xmi:type="uml:Class" xmi:id="_NW3qAIG8EeeQSOgOL7YWQA" name="Frame" visibility="public">
             <generalization xmi:type="uml:Generalization" xmi:id="_NW3qA4G8EeeQSOgOL7YWQA" general="_NW3qAYG8EeeQSOgOL7YWQA"/>
-            <ownedAttribute xmi:type="uml:Property" xmi:id="_NW3qBIG8EeeQSOgOL7YWQA" name="name" visibility="private" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_NW3qBIG8EeeQSOgOL7YWQA" name="name" visibility="private" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5r-hkITNEeecCOIE1jkCug" value="1"/>
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5sbNgITNEeecCOIE1jkCug" value="1"/>
+            </ownedAttribute>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_NW3qBYG8EeeQSOgOL7YWQA" name="level" visibility="private" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_NXBbDIG8EeeQSOgOL7YWQA" name="decimalFormat" visibility="private" isStatic="true" type="_NXBbCoG8EeeQSOgOL7YWQA" isUnique="false">
               <defaultValue xmi:type="uml:OpaqueExpression" xmi:id="_NXBbDYG8EeeQSOgOL7YWQA" name="defaultValue">
@@ -6858,13 +6860,15 @@
             </ownedComment>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EZYHLEeeQSOgOL7YWQA" name="xmlgen" type="_NVhmNIG8EeeQSOgOL7YWQA" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EZoHLEeeQSOgOL7YWQA" name="resourceSet" type="_NWkvG4G8EeeQSOgOL7YWQA" isUnique="false"/>
-            <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EaIHLEeeQSOgOL7YWQA" name="userServicesClassloader" isUnique="false"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EaIHLEeeQSOgOL7YWQA" name="userServicesClassloader" type="_lrkeoIGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EaYHLEeeQSOgOL7YWQA" name="xmlTemplateFilename" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EaoHLEeeQSOgOL7YWQA" name="xmlTemplateDocument" type="_NWIDKIG8EeeQSOgOL7YWQA" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6Ea4HLEeeQSOgOL7YWQA" name="output" type="_NV1IPIG8EeeQSOgOL7YWQA" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EbIHLEeeQSOgOL7YWQA" name="schemaFilename" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EbYHLEeeQSOgOL7YWQA" name="schema" type="_NWt5BIG8EeeQSOgOL7YWQA" isUnique="false"/>
-            <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6Eb4HLEeeQSOgOL7YWQA" name="trace" isUnique="false"/>
+            <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6Eb4HLEeeQSOgOL7YWQA" name="trace" isUnique="false">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+            </ownedAttribute>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pU6EcIHLEeeQSOgOL7YWQA" name="notifications" type="_lrLdEoGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pVD1YIHLEeeQSOgOL7YWQA" name="no_language_for_schema" type="_lr0WQIGpEeeVJrxcG2d44A" isUnique="false"/>
             <ownedAttribute xmi:type="uml:Property" xmi:id="_pVD1YYHLEeeQSOgOL7YWQA" name="templateMissing" type="_lr0WQIGpEeeVJrxcG2d44A" isUnique="false"/>
@@ -7452,7 +7456,7 @@
                 </specification>
               </ownedLiteral>
             </nestedClassifier>
-            <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_TD8hnoG8EeeQSOgOL7YWQA" name="Gravity" visibility="public">
+            <nestedClassifier xmi:type="uml:Enumeration" xmi:id="_TD8hnoG8EeeQSOgOL7YWQA" name="Gravity" visibility="private">
               <ownedAttribute xmi:type="uml:Property" xmi:id="_TEFrg4G8EeeQSOgOL7YWQA" name="string" visibility="public" type="_WbUAoIGpEeeVJrxcG2d44A" isUnique="false"/>
               <ownedOperation xmi:type="uml:Operation" xmi:id="_TD8hp4G8EeeQSOgOL7YWQA" name="toString" visibility="public">
                 <ownedParameter xmi:type="uml:Parameter" xmi:id="_TD8hqIG8EeeQSOgOL7YWQA" type="_WbUAoIGpEeeVJrxcG2d44A" direction="return"/>
@@ -9063,7 +9067,7 @@
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WDOWMIG8EeeQSOgOL7YWQA" name="expansionContext" type="_lrfmIYGpEeeVJrxcG2d44A"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WDXgEYG8EeeQSOgOL7YWQA" name="currentState" visibility="protected" method="_WDXgFYG8EeeQSOgOL7YWQA">
-                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WDXgFIG8EeeQSOgOL7YWQA" type="_WOUy4YG8EeeQSOgOL7YWQA" direction="return"/>
+                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WDXgFIG8EeeQSOgOL7YWQA" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WDXgFoG8EeeQSOgOL7YWQA" name="deleteState" visibility="protected" method="_WDXgF4G8EeeQSOgOL7YWQA"/>
                 </packagedElement>
@@ -9240,7 +9244,7 @@
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WD0MAIG8EeeQSOgOL7YWQA" name="expansionContext" type="_lrfmIYGpEeeVJrxcG2d44A"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WD0MAYG8EeeQSOgOL7YWQA" name="currentState" visibility="protected" isAbstract="true">
-                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WD0MAoG8EeeQSOgOL7YWQA" type="_WOUy4YG8EeeQSOgOL7YWQA" direction="return"/>
+                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WD0MAoG8EeeQSOgOL7YWQA" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WD0MA4G8EeeQSOgOL7YWQA" name="deleteState" visibility="protected" isAbstract="true"/>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WD0MBIG8EeeQSOgOL7YWQA" name="expandMySelf" visibility="public" isLeaf="true" method="_WD99AIG8EeeQSOgOL7YWQA">
@@ -9976,7 +9980,7 @@
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WJsxlYG8EeeQSOgOL7YWQA" name="serviceClass" type="_WJsxkoG8EeeQSOgOL7YWQA"/>
                   </ownedOperation>
                 </packagedElement>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WKATkIG8EeeQSOgOL7YWQA" name="AttributeContentInstruction" visibility="public">
+                <packagedElement xmi:type="uml:Class" xmi:id="_WKATkIG8EeeQSOgOL7YWQA" name="AttributeContentInstruction" visibility="protected">
                   <generalization xmi:type="uml:Generalization" xmi:id="_WKATkYG8EeeQSOgOL7YWQA" general="_WCU-QYG8EeeQSOgOL7YWQA"/>
                   <ownedAttribute xmi:type="uml:Property" xmi:id="_WKmJcIG8EeeQSOgOL7YWQA" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isUnique="false">
                     <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_8heigBydEduyofBvg4RL2w"/>
@@ -10540,14 +10544,14 @@
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WNlMA4G8EeeQSOgOL7YWQA" name="object" type="_NXeG_oG8EeeQSOgOL7YWQA"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WNlMBYG8EeeQSOgOL7YWQA" name="currrentState" visibility="protected" method="_WNuV8oG8EeeQSOgOL7YWQA">
-                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WNuV8YG8EeeQSOgOL7YWQA" type="_WOUy4YG8EeeQSOgOL7YWQA" direction="return"/>
+                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WNuV8YG8EeeQSOgOL7YWQA" direction="return"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WOLB4oG8EeeQSOgOL7YWQA" name="createState" visibility="protected" method="_WOLB5IG8EeeQSOgOL7YWQA">
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WOLB44G8EeeQSOgOL7YWQA" name="expansionContext" type="_lrfmIYGpEeeVJrxcG2d44A"/>
                   </ownedOperation>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WOLB5YG8EeeQSOgOL7YWQA" name="deleteState" visibility="protected" method="_WOLB5oG8EeeQSOgOL7YWQA"/>
                   <ownedOperation xmi:type="uml:Operation" xmi:id="_WOUy4IG8EeeQSOgOL7YWQA" name="currentState" visibility="protected" method="_WOUy5IG8EeeQSOgOL7YWQA">
-                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WOUy44G8EeeQSOgOL7YWQA" type="_WOUy4YG8EeeQSOgOL7YWQA" direction="return"/>
+                    <ownedParameter xmi:type="uml:Parameter" xmi:id="_WOUy44G8EeeQSOgOL7YWQA" direction="return"/>
                   </ownedOperation>
                   <nestedClassifier xmi:type="uml:Class" xmi:id="_WNlMBoG8EeeQSOgOL7YWQA" name="State" visibility="protected">
                     <generalization xmi:type="uml:Generalization" xmi:id="_WN4G9IG8EeeQSOgOL7YWQA" general="_WN4G8oG8EeeQSOgOL7YWQA"/>
@@ -10581,7 +10585,6 @@
                     </ownedOperation>
                   </nestedClassifier>
                 </packagedElement>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WOUy4YG8EeeQSOgOL7YWQA" name="State"/>
               </packagedElement>
             </packagedElement>
           </packagedElement>
@@ -10889,13 +10892,11 @@
   <PapyrusJava:External xmi:id="_lrPHcIGpEeeVJrxcG2d44A" name="org.xmlgen.notifications.Notifications" base_Classifier="_lrLdEoGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_lrSx0IGpEeeVJrxcG2d44A" name="org.xmlgen.context.FrameStack" base_Classifier="_lrQVkYGpEeeVJrxcG2d44A"/>
   <standard:Create xmi:id="_lrXqUIGpEeeVJrxcG2d44A" base_BehavioralFeature="_lrSx0YGpEeeVJrxcG2d44A"/>
-  <PapyrusJava:External xmi:id="_lrdw8IGpEeeVJrxcG2d44A" name="org.xmlgen.context.Context" base_Classifier="_lratoYGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_lriCYIGpEeeVJrxcG2d44A" name="org.xmlgen.expansion.ExpansionContext" base_Classifier="_lrfmIYGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_lrm64IGpEeeVJrxcG2d44A" name="ClassLoader" base_Classifier="_lrkeoIGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_lrzIIIGpEeeVJrxcG2d44A" name="org.xmlgen.notifications.Notification.Message" base_Classifier="_lrwr4YGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_lr2ygIGpEeeVJrxcG2d44A" name="org.xmlgen.notifications.Notification" base_Classifier="_lr0WQIGpEeeVJrxcG2d44A"/>
   <PapyrusJava:External xmi:id="_NVrXMIG8EeeQSOgOL7YWQA" name="org.xmlgen.Xmlgen" base_Classifier="_NVhmNIG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_NV1INIG8EeeQSOgOL7YWQA" name="ClassLoader" base_Classifier="_NV1IM4G8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_NV1IPYG8EeeQSOgOL7YWQA" name="java.io.File" base_Classifier="_NV1IPIG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_NWIDIIG8EeeQSOgOL7YWQA" name="org.eclipse.emf.ecore.resource.ResourceSet" base_Classifier="_NV-SO4G8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_NWIDKYG8EeeQSOgOL7YWQA" name="org.xmlgen.template.dom.specialization.content.Template" base_Classifier="_NWIDKIG8EeeQSOgOL7YWQA"/>
@@ -10935,7 +10936,6 @@
   <standard:Create xmi:id="_RibrgIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_RiShlIG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_RibrhoG8EeeQSOgOL7YWQA" name="org.antlr.v4.runtime.Recognizer" base_Classifier="_RibrhYG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_RilcgIG8EeeQSOgOL7YWQA" name="org.antlr.v4.runtime.RecognitionException" base_Classifier="_Ribrh4G8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_RivNgYG8EeeQSOgOL7YWQA" name="org.xmlgen.dom.template.TemplateIterator" base_Classifier="_PxyNQoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_RivNhIG8EeeQSOgOL7YWQA" name="java.util.Vector" base_Classifier="_RivNg4G8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_Ri4XeIG8EeeQSOgOL7YWQA" name="org.xmlgen.template.dom.specialization.instructions.StructuralInstruction" base_Classifier="_Ri4Xd4G8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_RjCIcIG8EeeQSOgOL7YWQA" name="org.xmlgen.template.dom.specialization.instructions.BeginInstruction" base_Classifier="_Ri4XfIG8EeeQSOgOL7YWQA"/>
@@ -10963,7 +10963,6 @@
   <PapyrusJava:External xmi:id="_T_pU0YG8EeeQSOgOL7YWQA" name="org.antlr.v4.runtime.tree.ParseTree" base_Classifier="_T_pU0IG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_T_yewIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_T_pU1oG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_V80MIIG8EeeQSOgOL7YWQA" name="org.jdom2.located.LocatedCDATA" base_Classifier="_V8qbJoG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_V80MIoG8EeeQSOgOL7YWQA" name="org.xmlgen.expansion.Expandable" base_Classifier="_RivNgIG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_V80MJYG8EeeQSOgOL7YWQA" base_BehavioralFeature="_V80MJIG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_V89WGYG8EeeQSOgOL7YWQA" name="org.jdom2.located.LocatedComment" base_Classifier="_V89WGIG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_V9HHE4G8EeeQSOgOL7YWQA" base_BehavioralFeature="_V9HHEoG8EeeQSOgOL7YWQA"/>
@@ -11000,8 +10999,6 @@
   <standard:Create xmi:id="_WCevQIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WCU-SYG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WC60J4G8EeeQSOgOL7YWQA" name="org.xmlgen.parser.pi.PIParser.BeginContext" base_Classifier="_WC60JoG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_WDElIIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WC60KIG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_WDOWJ4G8EeeQSOgOL7YWQA" name="org.xmlgen.context.Frame" base_Classifier="_NW3qAIG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_WDXgE4G8EeeQSOgOL7YWQA" name="State" base_Classifier="_WDXgEoG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_WDhRE4G8EeeQSOgOL7YWQA" base_BehavioralFeature="_WDhREoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WEtj5IG8EeeQSOgOL7YWQA" name="org.jdom2.located.Located" base_Classifier="_WEtj44G8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_WFAe0oG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WFAe0YG8EeeQSOgOL7YWQA"/>
@@ -11026,8 +11023,6 @@
   <standard:Create xmi:id="_WM1lIIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WMr0IoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WNRqA4G8EeeQSOgOL7YWQA" name="org.xmlgen.parser.pi.PIParser.CaptureContext" base_Classifier="_WNRqAoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WNbbAoG8EeeQSOgOL7YWQA" name="java.util.Iterator" base_Classifier="_WNbbAYG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_WNuV8IG8EeeQSOgOL7YWQA" name="State" base_Classifier="_WNlMBoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WN4G84G8EeeQSOgOL7YWQA" name="IterativeInstruction.State" base_Classifier="_WN4G8oG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_WN4G9oG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WN4G9YG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_WOUy4oG8EeeQSOgOL7YWQA" name="State" base_Classifier="_WOUy4YG8EeeQSOgOL7YWQA"/>
 </xmi:XMI>

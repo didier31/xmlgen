@@ -11,7 +11,7 @@
   <info>
     <title/>
 
-    <?xmlgen var=toto ?>
+    <?gen var=toto ?>
 
     <author>
       <personname><firstname/><surname/></personname>

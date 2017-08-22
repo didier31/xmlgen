@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><?xmlgen clazz.name.toUpperFirst() ?></title>
+    <title><?gen clazz.name.toUpperFirst() ?></title>
 
-    <meta content="??/??/????" name="date"><?xmlgen attr content = date ?></meta>
+    <meta content="??/??/????" name="date"><?gen attr content = date ?></meta>
 
-    <meta content="???" name="keywords"><?xmlgen attr content = title ?></meta>
+    <meta content="???" name="keywords"><?gen attr content = title ?></meta>
 
-    <link href="./files/stylesheet.css" rel="stylesheet" title="Style"
-          type="text/css"><?xmlgen attr href = config + '/files/stylesheet.css' ?></link>
+    <link href="files/stylesheet.css" rel="stylesheet" title="Style"
+          type="text/css"><?gen attr href = config + '/files/stylesheet.css' ?></link>
 
-    <script src="./files/script.js.téléchargement" type="text/javascript"
-            xml:space="preserve"></script>
+    <script src="files/script.js" type="text/javascript"
+            xml:space="preserve">
+			<?gen attr src = config + '/files/script.js' ?>
+			</script>
   </head>
 
   <body>
-  <script type="text/javascript" xml:space="preserve">/*<![CDATA[*/
-  /*]]>*/<?xmlgen '/*<![CDATA[*///
+  <script type="text/javascript" xml:space="preserve">// <?gen '<![CDATA[
     try {
         if (location.href.indexOf(\'is-external=true\') == -1) {
-            parent.document.title="' + clazz.name.toUpperFirst() + '";
+            parent.document.title="' + clazz.name + '";
         }
     }
     catch(err) {
     }
-//
-///*]]>*/'
-?>/*<![CDATA[*/
-/*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
+	var methods = {"i0":9,"i1":10};
+	var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+	var altColor = "altColor";
+	var rowColor = "rowColor";
+	var tableTab = "tableTab";
+	var activeTableTab = "activeTableTab";	
+//]]>' ?> </script> <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
     <div class="topNav">
       <a id="navbar.top">
@@ -43,7 +52,7 @@
         <li>
           <a
           href="???">
-		  <?xmlgen attr href = url + '/' + outputFilename ?>
+		  <?gen attr href = url + '/' + outputFilename ?>
 		  Overview		  
 		  </a>
 		  
@@ -51,7 +60,7 @@
         <li>
           <a
           href="???">
-		  <?xmlgen attr href = url + '/' + outPackagefilename ?>
+		  <?gen attr href = url + '/' + outPackagefilename ?>
 		  Package
 		  </a>
         </li>
@@ -81,55 +90,54 @@
       </ul>
     </div>
     <div class="subNav">
-	  <?xmlgen begin 
-	  previousClass2 = previousClass,
-      nextClass2 = nextClass
+	  <?gen [ClassifierNavigation] begin 
+	                               store classifier_navigation
+	                               when previousClass <> null or nextClass <> null 	                                        
 	  ?>
-	  <?xmlgen begin when previousClass <> null or nextClass <> null ?>
       <ul class="navList">
-	  <?xmlgen begin when previousClass <> null ?>
+	    <?gen [PreviousClass] begin 		
+		                      neighborClass = previousClass,
+					          linkText = 'Prev Class'
+		?>
+		<?gen [Classifier_Button_Link] begin 
+		                             store classifier_link_button
+        ?>									 
+		<?gen [WithNeighborClass] begin 
+		                             when neighborClass <> null		         	
+		         classFilename = name + '.' + neighborClass.name + '_details.xhtml',
+		         classifierTypeStr = if neighborClass.oclIsKindOf(uml::Interface) then
+				                        'interface '
+				   				     else if neighborClass.oclIsKindOf(uml::Class) then
+				                        'class '
+									 else
+									    ''
+									 endif
+									 endif									   
+		  ?>
         <li>
           <a
           href="reference to class details doc"
           title="classifierType in package name">
-		  <?xmlgen begin 
-		           classFilename = name + '.' + previousClass.name + '_details.xhtml',
-				   classifierTypeStr = if previousClass.oclKindOf(uml::Interface) then
-				                          'interface '
-									   else if previousClass.oclKindOf(uml::Class) then
-				                          'class '
-									   else
-									      ''
-									   endif
-									   endif
-									   
-		  ?>
-		  <?xmlgen attr href = url + '/' + classFilename ?>
-		  <?xmlgen attr title = classifierTypeStr + ' in ' + name ?>
+		  <?gen attr href = url + '/' + classFilename ?>
+		  <?gen attr title = classifierTypeStr + ' in ' + name ?>
 		  <span
-          class="typeNameLink">Prev Class</span></a>
+          class="typeNameLink"> <?gen linkText ?> </span></a>
         </li>
-		<?xmlgen begin when nextClass <> null ?>
-        <li>
-          <a
-          href="reference to class details doc"
-          title="classifierType in package name">
-		  <?xmlgen begin 
-		           classFilename = name + '.' + nextClass.name + '_details.xhtml',
-				   classifierTypeStr = if previousClass.oclKindOf(uml::Interface) then
-				                          'interface '
-									   else if previousClass.oclKindOf(uml::Class) then
-				                          'class '
-									   else
-									      ''
-									   endif
-									   endif
-		  ?>
-		  <?xmlgen attr href = url + '/' + classFilename ?>
-		  <?xmlgen attr title = classifierTypeStr + ' in ' + name ?><span
-          class="typeNameLink">Next Class</span></a>
-        </li>
+		<?gen [WithNeighborClass] end ?>
+		
+		<?gen [WithoutNeighborClass] begin when neighborClass = null ?>
+        <li> <?gen linkText ?> </li>
+		<?gen [WithoutNeighborClass] end ?>
+		<?gen [Classifier_Button_Link] end ?>
+		<?gen [PreviousClass] end ?>
+		
+		<?gen [NextClass] begin		
+				       neighborClass = nextClass,
+					   linkText = 'Next Class'
+		?>		
+		<?gen <Insert classifier_link_button> ?>
       </ul>
+	  <?gen [ClassifierNavigation] end ?>
       <ul class="navList">
         <li>
           <a
@@ -204,20 +212,23 @@
     <!--  ======== START OF CLASS DATA ======== -->
     <div class="header">
       <div class="subTitle">
-        <?xmlgen name ?>
+        <?gen name ?>
       </div>
       <h2 title="Class ???" class="title">
-	    <?xmlgen attr title = 'Class ' + clazz.name ?>
-        <?xmlgen 'Class ' + clazz.name ?>
+	    <?gen attr title = 'Class ' + clazz.name ?>
+        <?gen 'Class ' + clazz.name ?>
       </h2>
     </div>
     <div class="contentContainer">	
 	
-	<?xmlgen [Descendants] begin 
-                                   descendants = clazz.ancestors()->reverse() + Sequence{ clazz }
+	<?gen [InheritageHierarchy] begin when clazz.oclIsKindOf(uml::Class) or clazz.oclIsKindOf(uml::Interface)
+	?>
+	<?gen [Descendants] begin
+	                    ancestors = clazz.ancestors(),
+                     	descendants = ancestors->reverse() + Sequence{ clazz }
     ?> 
     
-	<?xmlgen [DirectDescendants] begin when descendants <> null and not descendants->isEmpty()
+	<?gen [DirectDescendants] begin when descendants <> null and not descendants->isEmpty()
     
     directDescendants = descendants->first(), 
     descendants = (if descendants->size() > 1 then 
@@ -226,26 +237,32 @@
                       Sequence{}
                    endif)
    ?>
-	
       <ul class="inheritance">
         <li>
-		<?xmlgen [Descendant] begin directDescNames = directDescendants->collect(c : uml::Classifier | c.qualifiedName) ?>
-         <?xmlgen directDescNames->collect(name : String | name.replaceAll('::', '.').replace('[^\\.]*\\.', ''))->sep(', ')->toString() ?>
-		 <?xmlgen [Descendant] end ?>
+		<?gen [Descendant] begin directDescNames = directDescendants->collect(c : uml::Classifier | c.qualifiedName) ?>
+         <?gen directDescNames->collect(name : String | name.replaceAll('::', '.').replace('[^\\.]*\\.', ''))->sep(', ')->toString() ?>
+		 <?gen [Descendant] end ?>
         </li>
-		<?xmlgen [SubsequentDescendance] begin when not descendants->isEmpty() ?>
+		<?gen [SubsequentDescendance] begin when not descendants->isEmpty() ?>
         <li>
-          <?xmlgen <Insert [DirectDescendants]> ?>
+          <?gen <Insert [DirectDescendants]> ?>
         </li>
-		<?xmlgen [SubsequentDescendance] end ?>
+		<?gen [SubsequentDescendance] end ?>
       </ul>
-	  <?xmlgen [DirectDescendants] end ?> 
-	  <?xmlgen [Descendants] end ?>
+	  <?gen [DirectDescendants] end ?> 
+	  <?gen [Descendants] end export: ancestors ?>
+	  <?gen [InheritageHierarchy] end export: ancestors ?>
 	  
+	  <?gen begin 
+	  isEnumeration = clazz.oclIsKindOf(uml::Enumeration)
+	  ?>
+	  <?gen [InterfaceRealization] begin when clazz.oclIsKindOf(uml::Class) and not isEnumeration ?>
+      <?gen begin when clazz.interfaceRealization <> null ?>
+	  <?gen begin when not clazz.interfaceRealization->isEmpty() ?>
       <div class="description">
         <ul class="blockList">
           <li class="blockList">
-		  <?xmlgen [Implemented_Interfaces] begin when clazz.interfaceRealization->notEmpty()
+		  <?gen [Implemented_Interfaces] begin when not clazz.interfaceRealization->isEmpty()
 		                                    interfaces = clazz.interfaceRealization->collect(ir : uml::InterfaceRealization | ir.supplier)
 		  ?>
             <dl>
@@ -253,55 +270,66 @@
                 All Implemented Interfaces:
               </dt>
               <dd>
-                <?xmlgen interfaces->collect(i : uml::Interface | i.qualifiedName) ?>
+                <?gen interfaces->collect(i : uml::Interface | i.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''))->sep(', ')->toString() ?>
               </dd>
             </dl>
-			<?xmlgen [Implemented_Interfaces] end ?>
+			<?gen [Implemented_Interfaces] end ?>
             <hr />
             <br />
-<pre xml:space="preserve"><?xmlgen if clazz.visibility <> uml::VisibilityKind::package then 
-                                      clazz.visibility.toString() + ' '
+<pre xml:space="preserve">
+                          <?gen begin 
+						           classifier = clazz ?>
+                          <?gen [Qualifiers] begin 
+						                        store qualifiers ?>
+                          <?gen if classifier.visibility <> uml::VisibilityKind::package then 
+                                      classifier.visibility.toString() + ' '
                                    else
                                       ''								   
 								   endif 
 						  ?> 
-						  <?xmlgen if clazz.isAbstract then 
+						  <?gen if classifier.isAbstract then 
 						              'abstract ' 
                                    else
                                       ''									  
 						           endif 
 					      ?> 
-						  <?xmlgen if clazz.isFinalSpecialization then 
+						  <?gen if classifier.isFinalSpecialization then 
 						              'final '
                                    else
                                       ''									  
 								   endif
-  					      ?>class <span class="typeNameLabel"><?xmlgen clazz.name ?></span>
-			  <?xmlgen begin 
+  					      ?>
+						  <?gen [Qualifiers] end ?>
+						  <?gen end ?>class <span class="typeNameLabel"><?gen clazz.name ?></span>
+			  <?gen begin 
 			           generalNames = clazz.general->collect(c : uml::Classifier | c.qualifiedName->toString().replaceAll('::', '.').replace('[^\\.]*\\.', ''))
 			  ?>
-			  <?xmlgen begin when generalNames->notEmpty() 
+			  <?gen begin when generalNames <> null and not generalNames->isEmpty() 
 			           generalNamesStr = generalNames->sep(', ')->toString()
 			  ?>
-extends <?xmlgen generalNamesStr ?>
-              <?xmlgen end ?>
-			  <?xmlgen end ?>
+extends <?gen generalNamesStr ?>
+              <?gen end ?>
+			  <?gen end ?>
 </pre>
-            <?xmlgen comment : clazz.ownedComment ?>
+            <?gen comment : clazz.ownedComment ?>
             <div class="block">
-			<?xmlgen comment.literalComment() ?>
+			<?gen comment.literalComment() ?>
                <!--  begin-user-doc -->
                <!--  end-user-doc -->
             </div>
           </li>
         </ul>
       </div>
+	  <?gen end ?>
+	  <?gen end ?>
+	  <?gen [InterfaceRealization] end ?>
       <div class="summary">
         <ul class="blockList">
           <li class="blockList">
+		    <?gen [NestedClasses] begin when clazz.oclIsKindOf(uml::Class) ?>
             <!--  ======== NESTED CLASS SUMMARY ======== -->
             <ul class="blockList">
-			  <?xmlgen nestedClass : clazz.nestedClassifier ?>
+			  <?gen nestedClass : clazz.nestedClassifier ?>
               <li class="blockList">
                 <a id="nested.class.summary">
                  <!--  --> </a>
@@ -324,55 +352,37 @@ extends <?xmlgen generalNamesStr ?>
                     <tr class="altColor">
                       <td class="colFirst">
                         <code>
-						<?xmlgen if nestedClass.visibility <> uml::VisibilityKind::package then 
-                                      nestedClass.visibility.toString()
-                                   else
-                                      ''								   
-								   endif 
-						  ?> 
-						  <?xmlgen if nestedClass.isStatic then 
-						              'static' 
-                                   else
-                                      ''									  
-						           endif 
-						  ?>
-						  <?xmlgen if nestedClass.isAbstract then 
-						              'abstract' 
-                                   else
-                                      ''									  
-						           endif 
-					      ?> 
-						  <?xmlgen if nestedClass.isFinalSpecialization then 
-						              'final'
-                                   else
-                                      ''									  
-								   endif
-  					      ?>
+						<?gen begin 
+						         classifier = nestedClass
+						?>
+						<?gen <Insert qualifiers> 
+						?>
+						<?gen end ?>
 						class
 						</code>
                       </td>
                       <td class="colLast">					  
                         <code><span class="memberNameLink">
-			   		    <?xmlgen begin
+			   		    <?gen begin
 				                 template = 'file:/' + cdir + 'class_details_template.xhtml',
 				                 classfilename = name + '.' + clazz.name + '.' + nestedClass.name + '_details.xhtml',
 		                         output = outputDir + '/' + classfilename,
 								 clazz = nestedClass,
 				                 trace = 'yes'
 		                ?>
-		                <?xmlgen <Expand> 
+		                <?gen <Expand> 
 		                ?>
-		                <?xmlgen end export: classfilename
+		                <?gen end export: classfilename
 		                ?>
 						<a href="???"
                         title="class in ???">
-						<?xmlgen attr href = url + '/' + classfilename ?>
-						<?xmlgen attr title = 'class in ' + name ?>
-						<?xmlgen clazz.name + '.' + nestedClass.name ?>
+						<?gen attr href = url + '/' + classfilename ?>
+						<?gen attr title = 'class in ' + name ?>
+						<?gen clazz.name + '.' + nestedClass.name ?>
 						</a></span></code>
-						<?xmlgen comment : nestedClass.ownedComment ?>
+						<?gen comment : nestedClass.ownedComment ?>
                         <div class="block">
-                          <?xmlgen comment.literalComment() ?>
+                          <?gen comment.literalComment() ?>
                         </div>
                       </td>
                     </tr>
@@ -380,24 +390,31 @@ extends <?xmlgen generalNamesStr ?>
                 </table>
                 <ul class="blockList">
                   <li class="blockList">
-				  <?xmlgen begin clazzQualifiedName = name + '.' + clazz.name ?>
+				  <?gen begin clazzQualifiedName = name + '.' + clazz.name ?>
                     <a
-                    id="???">
+                    id="nested.classes.inherited.from.class.???">
                      <!--  --> 
-					 <?xmlgen attr id = 'nested.classes.inherited.from.class' + '.' + clazzQualifiedName ?>
+					 <?gen attr id = 'nested.classes.inherited.from.class' + '.' + clazzQualifiedName ?>
 					 </a>
                     <h3>
-                      <?xmlgen 'Nested classes/interfaces inherited from class ' + clazzQualifiedName ?>
+                      <?gen 'Nested classes/interfaces inherited from class ' + clazzQualifiedName ?>
                     </h3>
-                    <code>org.eclipse.emf.common.EMFPlugin.EclipsePlugin,
-                    org.eclipse.emf.common.EMFPlugin.InternalEclipsePlugin,
-                    org.eclipse.emf.common.EMFPlugin.InternalHelper,
-                    org.eclipse.emf.common.EMFPlugin.OSGiDelegatingBundleActivator</code>
+					<?gen begin
+					         ancestors = clazz.general,
+					         inheritedNestedClasses = ancestors->collect(c : uml::Classifier | c.nestedClassifier),
+							 theirQualifiedNames = inheritedNestedClasses->collect(c : uml::Classifer | c.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')),
+							 theirQualifiedNames = theirQualifiedNames->sep(', ')->toString()
+					?>
+                    <code>
+					<?gen theirQualifiedNames ?>
+					</code>
                   </li>
                 </ul>
               </li>
             </ul>
+			<?gen [NestedClasses] end ?>
             <!--  =========== FIELD SUMMARY =========== -->
+			<?gen [Fields] begin when clazz.oclIsKindOf(uml::Class) or clazz.oclIsKindOf(uml::DataType) ?>
             <ul class="blockList">
               <li class="blockList">
                 <a id="field.summary">
@@ -409,7 +426,14 @@ extends <?xmlgen generalNamesStr ?>
                   <caption>
                     <span>Fields</span><span class="tabEnd"> </span>
                   </caption>
+				  <?gen begin
+				  fields = clazz.ownedAttribute,
+				  class = 'rowColor' 
+				  ?>
                   <tbody>
+				  <?gen begin 
+				        when fields <> null
+				  ?>
                     <tr>
                       <th class="colFirst" scope="col">
                         Modifier and Type
@@ -418,48 +442,106 @@ extends <?xmlgen generalNamesStr ?>
                         Field and Description
                       </th>
                     </tr>
-                    <tr class="altColor">
+					<?gen [Field] begin 
+				        when not fields->isEmpty()
+						
+						class = if class = 'altColor' then 'rowColor' else 'altColor' endif,
+						field = fields->first(),
+						fields = fields->subSequence(2, fields->size())
+				    ?>
+                    <tr class="???">
+					<?gen attr class = class ?>
                       <td class="colFirst">
-                        <code>static <a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.html"
-                        title="class in org.eclipse.uml2.uml.profile.standard">StandardPlugin</a></code>
+                        <code>
+						 <?gen if field.isStatic then 
+						          'static ' 
+                               else
+                                    ''									  
+						       endif 
+					      ?>
+						  <?gen if field.isStatic then 
+						          'const ' 
+                               else
+                                  ''									  
+						       endif 
+					      ?> 
+						  <?gen if field.visibility <> uml::VisibilityKind::package then 
+                                 field.visibility.toString() + ' '
+                              else
+                                   ''								   
+						      endif 
+						  ?> 
+  					    <a
+                        href="???_class_details"
+                        title="class in ???">
+						<?gen [Field2] begin
+                              typeIsAproxy = field.type,						
+							  type = field.type,
+						      nameSpaceStr = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''), 
+							  fieldTypename = type.name								
+						?>
+						<?gen attr href = url + '/' + nameSpaceStr + '.' + fieldTypename + '_details.xhtml' 
+						?>
+						<?gen attr title = 'class in ' + nameSpaceStr 
+						?>
+						<?gen fieldTypename ?>
+						<?gen if field.upperValue <> null then
+						         if field.upperValue.isComputable() then
+  						            if field.upperValue.unlimitedValue() <> '' or field.upperValue.integerValue() > 1 then
+								       '[]'
+								    else
+								       ''
+								    endif
+						         else
+							        ''
+						         endif
+							  else
+							     ''
+							  endif
+						?>						
+						</a></code>
                       </td>
                       <td class="colLast">
                         <code><span class="memberNameLink"><a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.html#INSTANCE">INSTANCE</a></span></code>
+                        href="???thisFilename#???field name">
+						<?gen attr href=url + '/' + classfilename + '#' + field.name ?>
+						<?gen field.name ?>
+						</a></span></code>
+						<?gen comment : field.ownedComment ?>
                         <div class="block">
-                          Keep track of the singleton
+			            <?gen comment.literalComment() ?>
                         </div>
                       </td>
                     </tr>
+					<?gen <Insert [Field]> ?>
                   </tbody>
                 </table>
+				<?gen [Fields of ancestors] begin
+				                            fieldsGroupedByAncestor = ancestors->collect(c | Sequence{c.ownedAttribute->select(p : uml::Property | not (p.isStatic or p.visibility = uml::VisibilityKind::private))}) ?>
+				<?gen begin when not fieldsGroupedByAncestor->select(fields | not fields->isEmpty())->isEmpty() ?>
                 <ul class="blockList">
+				<?gen fields : fieldsGroupedByAncestor, ancestor : ancestors ?>
+				  <?gen begin when not fields->isEmpty()
+				        classQualifiedName = ancestor.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')
+				  ?>
                   <li class="blockList">
                     <a
-                    id="fields.inherited.from.class.org.eclipse.emf.common.EMFPlugin">
+                    id="fields.inherited.from.class.???classQualifiedName???">
+					<?gen attr id = 'fields.inherited.from.class.' + classQualifiedName ?>
                      <!--  --> </a>
                     <h3>
-                      Fields inherited from class org.eclipse.emf.common.EMFPlugin
+                      Fields inherited from class <?gen classQualifiedName ?>
                     </h3>
-                    <code>delegateResourceLocators, IS_ECLIPSE_RUNNING,
-                    IS_RESOURCES_BUNDLE_AVAILABLE</code>
+                    <code>
+					<?gen fields->collect(p | p.name)->sep(', ')->toString() ?>
+					</code>
                   </li>
                 </ul>
-                <ul class="blockList">
-                  <li class="blockList">
-                    <a
-                    id="fields.inherited.from.class.org.eclipse.emf.common.util.DelegatingResourceLocator">
-                     <!--  --> </a>
-                    <h3>
-                      Fields inherited from class org.eclipse.emf.common.util.DelegatingResourceLocator
-                    </h3>
-                    <code>baseURL, images, resourceBundle, shouldTranslate,
-                    strings, untranslatedResourceBundle, untranslatedStrings</code>
-                  </li>
-                </ul>
+				<?gen end ?>
+				<?gen [Fields of ancestors] end ?>
               </li>
             </ul>
+			<?gen [Fields] end ?>
             <!--  ======== CONSTRUCTOR SUMMARY ======== -->
             <ul class="blockList">
               <li class="blockList">
@@ -496,22 +578,20 @@ extends <?xmlgen generalNamesStr ?>
               <li class="blockList">
                 <a id="method.summary">
                  <!--  --> </a>
-                <h3>
-                  Method Summary
-                </h3>
+                <h3>Method Summary</h3>
                 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
                   <caption>
                     <span id="t0" class="activeTableTab"><span>All Methods</span><span
-                    class="tabEnd"> </span></span><span
+                    class="tabEnd">&nbsp;</span></span><span
                     id="t1" class="tableTab"><span><a
                     href="javascript:show(1);">Static Methods</a></span><span
-                    class="tabEnd"> </span></span><span
+                    class="tabEnd">&nbsp;</span></span><span
                     id="t2" class="tableTab"><span><a
                     href="javascript:show(2);">Instance Methods</a></span><span
-                    class="tabEnd"> </span></span><span
+                    class="tabEnd">&nbsp;</span></span><span
                     id="t4" class="tableTab"><span><a
                     href="javascript:show(8);">Concrete Methods</a></span><span
-                    class="tabEnd"> </span></span>
+                    class="tabEnd">&nbsp;</span></span>
                   </caption>
                   <tbody>
                     <tr>
@@ -737,7 +817,7 @@ extends <?xmlgen generalNamesStr ?>
         <a
         href="???#skip.navbar.bottom"
         title="Skip navigation links">
-		<?xmlgen attr href = url + '/' + classfilename + '#skip.navbar.bottom' ?>
+		<?gen attr href = url + '/' + classfilename + '#skip.navbar.bottom' ?>
 		Skip navigation links		
 		</a>	
       </div>
@@ -747,13 +827,13 @@ extends <?xmlgen generalNamesStr ?>
         <li>
           <a
           href="???">
-		  <?xmlgen attr href = url + '/' + classfilename ?>
+		  <?gen attr href = url + '/' + classfilename ?>
 		  Overview
 		  </a>
         </li>
         <li>
           <a href="???">
-		  <?xmlgen attr href = url + '/' + outPackagefilename ?>
+		  <?gen attr href = url + '/' + outPackagefilename ?>
 		  Package
 		  </a>		  
         </li>
@@ -786,20 +866,7 @@ extends <?xmlgen generalNamesStr ?>
       </div>
     </div>
     <div class="subNav">
-      <ul class="navList">
-        <li>
-          <a
-          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPackage.Literals.html"
-          title="interface in org.eclipse.uml2.uml.profile.standard"><span
-          class="typeNameLink">Prev Class</span></a>
-        </li>
-        <li>
-          <a
-          href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.Implementation.html"
-          title="class in org.eclipse.uml2.uml.profile.standard"><span
-          class="typeNameLink">Next Class</span></a>
-        </li>
-      </ul>
+    <?gen <Insert classifier_navigation> ?>
       <ul class="navList">
         <li>
           <a

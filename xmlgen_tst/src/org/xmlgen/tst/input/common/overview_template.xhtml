@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-  <?xmlgen <Load org.xmlgen.tst.ExpansionServices>
+  <?gen <Load org.xmlgen.tst.ExpansionServices>
   ?>
-  <?xmlgen [Heading] begin 
+  <?gen [Heading] begin 
   		                   model = uml->at(1),
                            title = model.name
   ?>
   <head>
-    <title><?xmlgen title.toUpperFirst() ?></title>
+    <title><?gen title.toUpperFirst() ?></title>
 
-    <meta content="2016-01-12" name="date"><?xmlgen attr content = date ?></meta>
+    <meta content="2016-01-12" name="date"><?gen attr content = date ?></meta>
 
-    <meta content="???" name="keywords"><?xmlgen attr content = title ?></meta>
+    <meta content="???" name="keywords"><?gen attr content = title ?></meta>
 
     <link href="???/stylesheet.css" rel="stylesheet" title="Style"
-          type="text/css"><?xmlgen attr href = config + '/files/stylesheet.css' ?></link>
+          type="text/css"><?gen attr href = config + '/files/stylesheet.css' ?></link>
 
     <script src="???/script.js" type="text/javascript"
             xml:space="preserve">
-			<?xmlgen attr src = config + '/files/script.js' ?>
+			<?gen attr src = config + '/files/script.js' ?>
     </script>			
   </head>
 
   <body><script type="text/javascript" xml:space="preserve">/*<![CDATA[*/
-  /*]]>*/<?xmlgen '/*<![CDATA[*///
+  /*]]>*/<?gen '/*<![CDATA[*///
     try {
         if (location.href.indexOf(\'is-external=true\') == -1) {
             parent.document.title="' + title.toUpperFirst() + '";
@@ -36,10 +41,10 @@
 ?>/*<![CDATA[*/
 /*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
-  <?xmlgen [Heading] end
+  <?gen [Heading] end
 ?> <div class="topNav"><a name="navbar_top"><!--  --></a><div
   class="skipNav"><a href="overview-summary.html#skip-navbar_top"
-  title="Skip navigation links">Skip navigation links <?xmlgen attr href = url + '/' + outputFilename + '#skip-navbar_top'
+  title="Skip navigation links">Skip navigation links <?gen attr href = url + '/' + outputFilename + '#skip-navbar_top'
     ?></a></div><a name="navbar_top_firstrow"><!--  --></a><ul class="navList"
       title="Navigation">
       <li class="navBarCell1Rev">Overview</li>
@@ -50,16 +55,16 @@
 
       <li>Use</li>
 
-      <li><a href="overview-tree.html"><?xmlgen attr href = url + '/overview-tree.html'
+      <li><a href="overview-tree.html"><?gen attr href = url + '/overview-tree.html'
          ?> Tree</a></li>
 
-      <li><a href="deprecated-list.html"><?xmlgen attr href = url + '/deprecated-list.html'
+      <li><a href="deprecated-list.html"><?gen attr href = url + '/deprecated-list.html'
          ?> Deprecated</a></li>
 
-      <li><a href="index-files/index-1.html"><?xmlgen attr href = url + '/index-files/index-1.html'
+      <li><a href="index-files/index-1.html"><?gen attr href = url + '/index-files/index-1.html'
      ?> Index</a></li>
 
-      <li><a href="help-doc.html"><?xmlgen attr href = url + '/help-doc.html'
+      <li><a href="help-doc.html"><?gen attr href = url + '/help-doc.html'
      ?> Help</a></li>
     </ul><div class="aboutLanguage"><strong>Powered
   by<br />Xmlgen</strong></div></div> <div class="subNav"><ul class="navList">
@@ -69,16 +74,16 @@
     </ul><ul class="navList">
       <li>
 	  <a href="index.html?overview-summary.html" target="_top">
-	  <?xmlgen attr href = url + '/index.html?' + outputFilename ?> 
+	  <?gen attr href = url + '/index.html?' + outputFilename ?> 
 	  Frames
 	  </a>
 	  </li>
 
-      <li><a href="overview-summary.html" target="_top"><?xmlgen attr href = url + '/' + outputFilename
+      <li><a href="overview-summary.html" target="_top"><?gen attr href = url + '/' + outputFilename
      ?> No Frames</a></li>
     </ul><ul class="navList" id="allclasses_navbar_top"
       style="display: block;">
-      <li><a href="allclasses-noframe.html"><?xmlgen attr href = url + '/allclasses-noframe.html'
+      <li><a href="allclasses-noframe.html"><?gen attr href = url + '/allclasses-noframe.html'
      ?> All Classes</a></li>
     </ul><div><script type="text/javascript" xml:space="preserve">/*<![CDATA[*///
   allClassesLink = document.getElementById("allclasses_navbar_top");
@@ -91,14 +96,14 @@
   //
 ///*]]>*/</script></div><a id="skip.navbar.top" name="skip.navbar.top"><!--  --></a></div>
   <!--  ========= END OF TOP NAVBAR ========= --> <div class="header"><h1
-  class="title"><?xmlgen title.toUpperFirst() ?><br /></h1></div> <div class="header">
+  class="title"><?gen title.toUpperFirst() ?><br /></h1></div> <div class="header">
   <div class="subTitle">
   <div class="block">
-  This document presents <?xmlgen title ?>.
+  This document presents <?gen title ?>.
   </div>
-  <?xmlgen comment : model.ownedComment ?>
+  <?gen comment : model.ownedComment ?>
   <div class="block">
-  <?xmlgen comment.literalComment() ?>
+  <?gen comment.literalComment() ?>
   </div>
   </div>
   </div> <div class="contentContainer"><table border="0"
@@ -115,20 +120,19 @@
       </tbody>
 
       <tbody>
-        <?xmlgen [Model] begin 
+        <?gen [Model] begin 
 				packages = model.nestedPackage->sortedBy(p | p.qualifiedName),
                 class = 'rowColor',
 				parentName = '',
 				allNamedElements = packages->closure(package : uml::Package | package.nestedPackage),
-				allNamedElements = allNamedElements->closure(package : uml::Package | package.packagedElement),
+				allNamedElements = allNamedElements->closure(package : uml::Package | if package.oclIsKindOf(uml::Package) then package.packagedElement else Sequence{} endif),
 				allNamedElements = allNamedElements->reject(e | not (e.oclIsKindOf(uml::Classifier) or e.oclIsKindOf(uml::Package))),
-				allNamedElements = allNamedElements->closure(class : uml::Class | class.ownedAttribute),
-				allNamedElements = allNamedElements->closure(class : uml::Class | class.ownedOperation),
-				allNamedElements = allNamedElements->closure(interface : uml::Interface | interface.ownedOperation),
-				elementsMap = allNamedElements->map();
+				allNamedElements = allNamedElements->closure(class : uml::Class | if class.eClass().eGet('ownedAttribute') <> null then class.ownedAttribute else Sequence{} endif),
+				allNamedElements = allNamedElements->closure(classifier : uml::Classifier | if classifier.eClass().eGet('ownedOperation') <> null then class.ownedOperation else Sequence{} endif),
+				elementsMap = allNamedElements->map()
 	   ?>
 	   
-        <?xmlgen [NextPackage] begin when not packages->isEmpty()
+        <?gen [NextPackage] begin when not packages->isEmpty()
 		                                package = packages->first(),												 
 										 
 										name = parentName 
@@ -150,7 +154,7 @@
 										aClassifierWithoutExternalStereotype = (package.packagedElement->filter(uml::Classifier))->any(c | (c.getAppliedStereotypes()->collect(k | k.getKeyword()))->forAll(k | k <> 'External'))
 		?>		
 		
-        <?xmlgen [SignificativePackage] begin when aClassifierWithoutExternalStereotype <> null
+        <?gen [SignificativePackage] begin when aClassifierWithoutExternalStereotype <> null
 												   and 
 												   not (package.ownedComment->isEmpty() and package.packagedElement->filter(uml::Classifier)->isEmpty())
                                               class = if class = 'altColor' then
@@ -159,52 +163,57 @@
 													     'altColor'
 											          endif
 		?>
-		<?xmlgen begin
+		<?gen [PackageDetails] begin
 				 template = 'file:/' + cdir + 'package_details_template.xhtml',
 				 outPackagefilename = name + '_details.xhtml',
 		         output = outputDir + '/' + outPackagefilename,
 				 trace = 'yes'
 		?>
-		<?xmlgen <Expand> 
+		<?gen <Expand> 
 		?>
-		<?xmlgen end export: outPackagefilename
+		<?gen [PackageDetails] end export: outPackagefilename
 		?>
 		
         <tr class="">
-          <?xmlgen attr class = class ?>
+          <?gen attr class = class ?>
           <td class="colFirst">
 		  <a href="???">
-		  <?xmlgen attr href = url + '/' + outPackagefilename ?>
-		  <?xmlgen name ?>
+		  <?gen attr href = url + '/' + outPackagefilename ?>
+		  <?gen name ?>
 		  </a>
 		  </td>
 
-          <td class="colLast"><?xmlgen [Comments] comment : package.ownedComment
-         ?><div class="block"><?xmlgen comment.literalComment() ?></div><?xmlgen [Comments] end ?></td>
+          <td class="colLast">
+		  <?gen [Comments] comment : package.ownedComment ?>
+		  <div class="block">
+		  <?gen comment.literalComment() ?>
+		  </div>
+		  <?gen [Comments] end ?>
+		  </td>
         </tr>
 
-        <?xmlgen [SignificativePackage] end 
+        <?gen [SignificativePackage] end 
 		         export: class 
 		?>	
 
-		<?xmlgen <Insert [NextPackage]> ?>
+		<?gen <Insert [NextPackage]> ?>
 		
-		<?xmlgen [NestedPackages] begin 
+		<?gen [NestedPackages] begin 
 		         parentName = name,
 		         packages = package.nestedPackage->sortedBy(p | p.qualifiedName)
 		?>
 		
-        <?xmlgen <Insert [NextPackage]> ?>
+        <?gen <Insert [NextPackage]> ?>
 		
-		<?xmlgen [NestedPackages] end
+		<?gen [NestedPackages] end
 		         export: class 
 		?>
 
-        <?xmlgen [NextPackage] end
+        <?gen [NextPackage] end
 		         export: class 
 		?>
 
-        <?xmlgen [Model] end ?>
+        <?gen [Model] end ?>
       </tbody>
     </table>
 	</div> 
@@ -213,7 +222,7 @@
   class="skipNav"><a
   href="???"
   title="Skip navigation links">
-  <?xmlgen attr href= url + '/' + outputFilename + '#skip.navbar.bottom' ?>
+  <?gen attr href= url + '/' + outputFilename + '#skip.navbar.bottom' ?>
   Skip navigation links
   </a>
   </div>
@@ -228,16 +237,16 @@
 
       <li>Use</li>
 
-      <li><a href="overview-tree.html"><?xmlgen attr href = url + '/overview-tree.html'
+      <li><a href="overview-tree.html"><?gen attr href = url + '/overview-tree.html'
      ?> Tree</a></li>
 
-      <li><a href="deprecated-list.html"><?xmlgen attr href = url + '/deprecated-list.html'
+      <li><a href="deprecated-list.html"><?gen attr href = url + '/deprecated-list.html'
      ?> Deprecated</a></li>
 
-      <li><a href="index-1.html"><?xmlgen attr href = url + '/index-1.html'
+      <li><a href="index-1.html"><?gen attr href = url + '/index-1.html'
      ?> Index</a></li>
 
-      <li><a href="help-doc.html"><?xmlgen attr href = url + '/help-doc.html'
+      <li><a href="help-doc.html"><?gen attr href = url + '/help-doc.html'
      ?> Help</a></li>
     </ul><div class="aboutLanguage"><strong>Powered
   by<br />Xmlgen</strong></div></div> <div class="subNav"><ul class="navList">
@@ -245,19 +254,19 @@
 
       <li>Next</li>
     </ul><ul class="navList">
-      <li><a href="index.html?overview-summary.html" target="_top"><?xmlgen attr href = url + '/index.html?' + outputFilename ?> 
+      <li><a href="index.html?overview-summary.html" target="_top"><?gen attr href = url + '/index.html?' + outputFilename ?> 
 	  Frames
 	  </a>
 	  </li>
 
       <li>
-	  <a href="overview-summary.html" target="_top"><?xmlgen attr href = url + '/' + outputFilename ?> 
+	  <a href="overview-summary.html" target="_top"><?gen attr href = url + '/' + outputFilename ?> 
 	  No Frames
 	  </a>
 	  </li>
     </ul><ul class="navList" id="allclasses_navbar_bottom"
       style="display: block;">
-      <li><a href="allclasses-noframe.html"><?xmlgen attr href = url + '/allclasses-noframe.html'
+      <li><a href="allclasses-noframe.html"><?gen attr href = url + '/allclasses-noframe.html'
      ?> All Classes</a></li>
     </ul><div><script type="text/javascript" xml:space="preserve">/*<![CDATA[*///
   allClassesLink = document.getElementById("allclasses_navbar_bottom");

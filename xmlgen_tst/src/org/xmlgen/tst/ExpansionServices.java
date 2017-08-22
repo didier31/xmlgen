@@ -156,24 +156,16 @@ public class ExpansionServices
 		{
 			NamedElement namedElement = (NamedElement) iterator.next();
 			String target = null;
-			if (namedElement instanceof org.eclipse.uml2.uml.Package)
+			if (namedElement instanceof org.eclipse.uml2.uml.Package
+				||
+				namedElement instanceof org.eclipse.uml2.uml.Classifier
+				||
+				namedElement instanceof org.eclipse.uml2.uml.Operation
+				||
+				namedElement instanceof org.eclipse.uml2.uml.Property)
 			{
-				
+				map.put(namedElement.getQualifiedName(), target);	
 			}
-			else if (namedElement instanceof org.eclipse.uml2.uml.Classifier)
-			{
-				
-			}
-			else if (namedElement instanceof org.eclipse.uml2.uml.Operation)
-			{
-				
-			}
-			else if (namedElement instanceof org.eclipse.uml2.uml.Property)
-			{
-				
-			}
-			
-			map.put(namedElement.getQualifiedName(), target);
 		}
 		return map;
 	}

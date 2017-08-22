@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xmlgen <load doc_for_papyrus.ExpansionServices>
+<?gen <load doc_for_papyrus.ExpansionServices>
 ?>
 <book version="5.0" xmlns="http://docbook.org/ns/docbook"
       xmlns:ns5="http://www.w3.org/2000/svg"
@@ -8,9 +8,9 @@
       xmlns:ns="http://www.w3.org/1999/xlink"
       xmlns:db="http://docbook.org/ns/docbook">
   <info>
-    <title><?xmlgen uml->at(1).name ?></title>
+    <title><?gen uml->at(1).name ?></title>
 
-    <?xmlgen [AUTHOR]
+    <?gen [AUTHOR]
             auteur : info.author, 
             prenom : auteur.firstname, 
             nom : auteur.lastname 
@@ -20,13 +20,13 @@
       <personname><firstname>
            
 
-          <?xmlgen prenom ?>
+          <?gen prenom ?>
 
            
         </firstname> <surname>
            
 
-          <?xmlgen nom ?>
+          <?gen nom ?>
 
            
         </surname></personname>
@@ -36,57 +36,57 @@
       </affiliation>
     </author>
 
-    <?xmlgen [AUTHOR] end
+    <?gen [AUTHOR] end
     ?>
 
     <pubdate/>
   </info>
 
-  <?xmlgen package : uml->closure(package : uml::Package | package.nestedPackage)
+  <?gen package : uml->closure(package : uml::Package | package.nestedPackage)
    ?>
 
   <chapter>
-    <title>Package <?xmlgen package.name?></title>
+    <title>Package <?gen package.name?></title>
 
-    <?xmlgen [Comments] comment : package.ownedComment
+    <?gen [Comments] comment : package.ownedComment
     ?>
 
-    <para><?xmlgen comment.body ?></para>
+    <para><?gen comment.body ?></para>
 
-    <?xmlgen [Comments] 
+    <?gen [Comments] 
              end
     ?>
 
-    <?xmlgen [Diagrams]
+    <?gen [Diagrams]
              relatedDiagram : notation->select(d | d.styles->at(3).owner = package) 
    ?>
 
     <figure>
-      <title><?xmlgen relatedDiagram.name ?></title>
+      <title><?gen relatedDiagram.name ?></title>
 
       <mediaobject>
         <imageobject>
           <imagedata fileref="???">
-            <?xmlgen attr fileref = relatedDiagram.svg(outputDir, imagesPath, 800, 600) ?>
+            <?gen attr fileref = relatedDiagram.svg(outputDir, imagesPath, 800, 600) ?>
           </imagedata>
         </imageobject>
       </mediaobject>
     </figure>
 
-    <?xmlgen [Diagrams] 
+    <?gen [Diagrams] 
              end 
    ?>
 
-    <?xmlgen [Classifiers] classifier : package.packagedElement->filter(uml::Classifier)
+    <?gen [Classifiers] classifier : package.packagedElement->filter(uml::Classifier)
     ?>
 
     <section>
-      <title><?xmlgen classifier.name
+      <title><?gen classifier.name
       ?></title>
 
-      <para><?xmlgen [Descendants] begin 
+      <para><?gen [Descendants] begin 
                                    descendants = classifier.ancestors()->reverse()
-   ?> <?xmlgen [DirectDescendants] begin when descendants <> null and not descendants->isEmpty()
+   ?> <?gen [DirectDescendants] begin when descendants <> null and not descendants->isEmpty()
     
     directDescendants = descendants->first(), 
     descendants = (if descendants->size() > 1 then 
@@ -95,32 +95,32 @@
                       Sequence{}
                    endif)
    ?> <itemizedlist>
-          <?xmlgen [Descendant] descendant : directDescendants ?>
+          <?gen [Descendant] descendant : directDescendants ?>
 
           <listitem>
-            <para><?xmlgen descendant.name ?></para>
+            <para><?gen descendant.name ?></para>
           </listitem>
 
-          <?xmlgen [Descendant] end ?>
+          <?gen [Descendant] end ?>
 
-          <?xmlgen [SubsequentDescendance] begin when not descendants->isEmpty() ?>
+          <?gen [SubsequentDescendance] begin when not descendants->isEmpty() ?>
 
           <listitem>
-            <?xmlgen <Insert [DirectDescendants]> ?>
+            <?gen <Insert [DirectDescendants]> ?>
 
-            <?xmlgen [Void] begin when false ?>
+            <?gen [Void] begin when false ?>
 
             <para/>
 
-            <?xmlgen [Void] end ?>
+            <?gen [Void] end ?>
           </listitem>
 
-          <?xmlgen [SubsequentDescendance] end ?>
-        </itemizedlist> <?xmlgen [DirectDescendants] end
-       ?> <?xmlgen [Descendants] end ?></para>
+          <?gen [SubsequentDescendance] end ?>
+        </itemizedlist> <?gen [DirectDescendants] end
+       ?> <?gen [Descendants] end ?></para>
     </section>
 
-    <?xmlgen [Classifiers] end
+    <?gen [Classifiers] end
    ?>
   </chapter>
 </book>
