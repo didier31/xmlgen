@@ -127,8 +127,9 @@
 				allNamedElements = packages->closure(package : uml::Package | package.nestedPackage),
 				allNamedElements = allNamedElements->closure(package : uml::Package | if package.oclIsKindOf(uml::Package) then package.packagedElement else Sequence{} endif),
 				allNamedElements = allNamedElements->reject(e | not (e.oclIsKindOf(uml::Classifier) or e.oclIsKindOf(uml::Package))),
-				allNamedElements = allNamedElements->closure(class : uml::Class | if class.eClass().eGet('ownedAttribute') <> null then class.ownedAttribute else Sequence{} endif),
-				allNamedElements = allNamedElements->closure(classifier : uml::Classifier | if classifier.eClass().eGet('ownedOperation') <> null then class.ownedOperation else Sequence{} endif),
+				allNamedElements = allNamedElements->closure(class : uml::Class | if class.eClass().getEStructuralFeature('ownedAttribute') <> null then class.ownedAttribute else Sequence{} endif),
+				allNamedElements = allNamedElements->closure(classifier : uml::Classifier | if classifier.eClass().getEStructuralFeature('ownedOperation') <> null then class.ownedOperation else Sequence{} endif),
+                allNamedElements = allNamedElements->select(e | e.getAppliedStereotype('PapyrusJava::External') = null),
 				elementsMap = allNamedElements->map()
 	   ?>
 	   

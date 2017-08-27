@@ -22,6 +22,32 @@
   </head>
 
   <body>
+  <?gen begin
+        methods = clazz.ownedOperation->select(m | m.getAppliedStereotype('StandardProfile::Create') = null),
+        table_methodIds_cat = Sequence{}
+?>
+    <?gen [Loop] method : methods ?>
+      <?gen begin when method.isAbstract 
+            categories = 4
+      ?>
+      <?gen end export: categories ?>
+      <?gen begin when not method.isAbstract 
+            categories = 8
+      ?>
+      <?gen end export: categories ?>
+      <?gen begin when method.isStatic 
+            categories = categories + 1
+      ?>
+      <?gen end export: categories ?>
+      <?gen begin when not method.isStatic 
+            categories = categories + 2
+      ?> 
+      <?gen end export: categories ?>
+      <?gen begin
+            table_methodIds_cat = table_methodIds_cat->including('"' + method.id() + '":' + categories)
+      ?>
+      <?gen end export: table_methodIds_cat ?>
+    <?gen [Loop] end export: table_methodIds_cat ?>
   <script type="text/javascript" xml:space="preserve">// <?gen '<![CDATA[
     try {
         if (location.href.indexOf(\'is-external=true\') == -1) {
@@ -30,13 +56,16 @@
     }
     catch(err) {
     }
-	var methods = {"i0":9,"i1":10};
+	var methods = {' + table_methodIds_cat->sep(',')->toString() + '};
 	var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 	var altColor = "altColor";
 	var rowColor = "rowColor";
 	var tableTab = "tableTab";
 	var activeTableTab = "activeTableTab";	
-//]]>' ?> </script> <noscript> &lt;div&gt;JavaScript is disabled on your
+//]]>' ?> 
+</script>
+<?gen end ?>
+ <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
     <div class="topNav">
       <a id="navbar.top">
@@ -302,7 +331,7 @@
 						  <?gen [Qualifiers] end ?>
 						  <?gen end ?>class <span class="typeNameLabel"><?gen clazz.name ?></span>
 			  <?gen begin 
-			           generalNames = clazz.general->collect(c : uml::Classifier | c.qualifiedName->toString().replaceAll('::', '.').replace('[^\\.]*\\.', ''))
+			           generalNames = clazz.general->collect(c : uml::Classifier | c.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''))
 			  ?>
 			  <?gen begin when generalNames <> null and not generalNames->isEmpty() 
 			           generalNamesStr = generalNames->sep(', ')->toString()
@@ -447,6 +476,7 @@ extends <?gen generalNamesStr ?>
 						
 						class = if class = 'altColor' then 'rowColor' else 'altColor' endif,
 						field = fields->first(),
+                        object = field,
 						fields = fields->subSequence(2, fields->size())
 				    ?>
                     <tr class="???">
@@ -459,7 +489,7 @@ extends <?gen generalNamesStr ?>
                                     ''									  
 						       endif 
 					      ?>
-						  <?gen if field.isStatic then 
+						  <?gen if field.isReadOnly then 
 						          'const ' 
                                else
                                   ''									  
@@ -471,23 +501,30 @@ extends <?gen generalNamesStr ?>
                                    ''								   
 						      endif 
 						  ?> 
-  					    <a
-                        href="???_class_details"
-                        title="class in ???">
-						<?gen [Field2] begin
-                              typeIsAproxy = field.type,						
-							  type = field.type,
-						      nameSpaceStr = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''), 
-							  fieldTypename = type.name								
-						?>
-						<?gen attr href = url + '/' + nameSpaceStr + '.' + fieldTypename + '_details.xhtml' 
-						?>
-						<?gen attr title = 'class in ' + nameSpaceStr 
-						?>
-						<?gen fieldTypename ?>
-						<?gen if field.upperValue <> null then
-						         if field.upperValue.isComputable() then
-  						            if field.upperValue.unlimitedValue() <> '' or field.upperValue.integerValue() > 1 then
+                          <?gen [WriteType] begin store parameterType 
+                                                  when object.type <> null
+                                  type = object.type,
+                                  qualifiedName = if type <> null then type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '') else 'void' endif,
+                                  packageQualifiedName = type.eContainer().qualifiedName,
+                                  packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
+                                  isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = type)
+                          ?>
+                          <?gen begin when isTypeInScope                                   
+                          ?>
+                          <a
+                          href="??? class_details.html"
+                          title="class in ???">
+                           <?gen attr href = url + '/' + qualifiedName + '_details.xhtml' ?>
+                           <?gen attr title = 'class in ' + packageQualifiedName ?>
+                           <?gen type.name ?>
+                          </a>                        
+                          <?gen end ?>
+                          <?gen begin when not isTypeInScope ?>
+                          <?gen type.name ?>
+                          <?gen end ?>
+                          <?gen if object.upperValue <> null then
+						         if object.upperValue.isComputable() then
+  						            if object.upperValue.unlimitedValue() <> '' or object.upperValue.integerValue() > 1 then
 								       '[]'
 								    else
 								       ''
@@ -498,8 +535,9 @@ extends <?gen generalNamesStr ?>
 							  else
 							     ''
 							  endif
-						?>						
-						</a></code>
+                          ?>
+                          <?gen [WriteType] end ?>
+                      </code>
                       </td>
                       <td class="colLast">
                         <code><span class="memberNameLink"><a
@@ -517,7 +555,8 @@ extends <?gen generalNamesStr ?>
                   </tbody>
                 </table>
 				<?gen [Fields of ancestors] begin
-				                            fieldsGroupedByAncestor = ancestors->collect(c | Sequence{c.ownedAttribute->select(p : uml::Property | not (p.isStatic or p.visibility = uml::VisibilityKind::private))}) ?>
+                                            ancestors = ancestors->flatten(),
+				                            fieldsGroupedByAncestor = ancestors->collect(c | Sequence{c.ownedAttribute->select(p : uml::Property | p.visibility <> uml::VisibilityKind::private)}) ?>
 				<?gen begin when not fieldsGroupedByAncestor->select(fields | not fields->isEmpty())->isEmpty() ?>
                 <ul class="blockList">
 				<?gen fields : fieldsGroupedByAncestor, ancestor : ancestors ?>
@@ -543,6 +582,12 @@ extends <?gen generalNamesStr ?>
             </ul>
 			<?gen [Fields] end ?>
             <!--  ======== CONSTRUCTOR SUMMARY ======== -->
+			<?gen [Constructors Summary 1] begin 
+			                               constructors = clazz.ownedOperation->select(op | op.getAppliedStereotype('StandardProfile::Create') <> null)
+			?>
+			<?gen [Constructors Summary 2] begin
+			      when not constructors->isEmpty()
+		    ?>
             <ul class="blockList">
               <li class="blockList">
                 <a id="constructor.summary">
@@ -560,20 +605,52 @@ extends <?gen generalNamesStr ?>
                         Constructor and Description
                       </th>
                     </tr>
-                    <tr class="altColor">
+					<?gen begin class = 'rowColor' ?>
+					<?gen constructor : constructors ?>
+					<?gen begin 
+					      class = if class = 'altColor' then 'rowColor' else 'altColor' endif 
+				    ?>
+                    <tr class="???">
+					<?gen attr class = class ?>
                       <td class="colOne">
                         <code><span class="memberNameLink"><a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.html#StandardPlugin--">StandardPlugin</a></span>()</code>
+                        href="classfilename_details_path???#constructorID???">
+						<?gen attr href = url + '/' + classfilename + '#' + constructor.id() ?>
+                        <?gen if constructor.visibility <> uml::VisibilityKind::package then 
+                                 constructor.visibility.toString() + ' '
+                              else
+                                   ''								   
+						      endif 
+						  ?> 
+						<?gen clazz.name ?></a></span>
+						<?gen begin parameters = constructor.ownedParameter,
+                                    parametersStr = Sequence{} ?>
+						  <?gen [Parameters loop] parameter : parameters ?> 
+						  <?gen begin
+						  parametersStr = parametersStr + Sequence{ parameter.type.name + ' ' + parameter.name }
+						  ?>
+						  <?gen end export: parametersStr ?>
+						  <?gen [Parameters loop] end export: parametersStr ?>
+						(<?gen parametersStr->sep(', ')->toString()?>)
+						</code>
+						<?gen comment : constructor.ownedComment ?>
                         <div class="block">
-                          Create the instance
+                          <?gen comment.literalComment() ?>
                         </div>
                       </td>
                     </tr>
+					<?gen end export: class ?>
                   </tbody>
                 </table>
               </li>
             </ul>
+			<?gen [Constructors Summary 2] end ?>
+			<?gen [Constructors Summary 1] end ?>
             <!--  ========== METHOD SUMMARY =========== -->
+            <?gen [Methods Summary 1] begin 
+                            methods = clazz.ownedOperation->select(m | m.getAppliedStereotype('StandardProfile::Create') = null)
+            ?>
+            <?gen [Methods Summary 2] begin when not methods->isEmpty() ?>
             <ul class="blockList">
               <li class="blockList">
                 <a id="method.summary">
@@ -602,32 +679,129 @@ extends <?gen generalNamesStr ?>
                         Method and Description
                       </th>
                     </tr>
-                    <tr id="i0" class="altColor">
+                    <?gen [Methods] begin 
+                          class = 'altRow'
+                    ?>
+                    <?gen [MethodsLoop] method : methods ?>
+                    <?gen [Method] begin 
+                                   methodName = method.name,
+                                   result = method.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return),
+                                   class = if class = 'altColor' then 'altRow' else 'altColor' endif
+                    ?>
+                    <tr id="i0" class="???">
+                      <?gen attr class = class ?>
                       <td class="colFirst">
-                        <code>static <a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.Implementation.html"
-                        title="class in org.eclipse.uml2.uml.profile.standard">StandardPlugin.Implementation</a></code>
+                        <code> <?gen if method.isStatic then 
+						          'static ' 
+                               else
+                                    ''									  
+						       endif 
+					      ?>
+                          <?gen if method.isAbstract then
+						          'abstract ' 
+                               else
+                                    ''									  
+						       endif 
+					      ?>
+						  <?gen if method.isLeaf then 
+						          'final ' 
+                               else
+                                  ''									  
+						       endif 
+					      ?> 
+						  <?gen if method.visibility <> uml::VisibilityKind::package then 
+                                 method.visibility.toString() + ' '
+                              else
+                                   ''								   
+						      endif 
+						  ?>
+                          <?gen [Writing the result type] begin when result <> null 
+                                                          object = result
+                          ?>
+                          <?gen [Writing the type] begin store parameterType when object.type <> null
+                                  type = object.type,
+                                  typeName = if type <> null then
+                                                type.name
+                                             else
+                                                'void'
+                                             endif,
+                                  qualifiedName = if type <> null then 
+                                                     type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '') 
+                                                  else 
+                                                     'void' 
+                                                  endif,
+                                  packageQualifiedName = if type <> null then 
+                                                            type.eContainer().qualifiedName
+                                                         else
+                                                            ''
+                                                         endif,
+                                  packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
+                                  isTypeInScope = if type <> null then 
+                                                     allNamedElements->exists(n : uml::NamedElement | n = type) 
+                                                  else
+                                                     false
+                                                  endif
+                          ?>
+                          <?gen begin when isTypeInScope                                   
+                          ?>
+                          <a
+                          href="??? class_details.html"
+                          title="class in ???">
+                           <?gen attr href = url + '/' + qualifiedName + '_details.xhtml' ?>
+                           <?gen attr title = 'class in ' + packageQualifiedName ?>
+                           <?gen typeName ?>
+                          </a>                        
+                          <?gen end ?>
+                          <?gen begin when not isTypeInScope ?>
+                          <?gen typeName ?>
+                          <?gen end ?>
+                          <?gen if object.upperValue <> null then
+						         if object.upperValue.isComputable() then
+  						            if object.upperValue.unlimitedValue() <> '' or object.upperValue.integerValue() > 1 then
+								       '[]'
+								    else
+								       ''
+								    endif
+						         else
+							        ''
+						         endif
+							  else
+							     ''
+							  endif
+                          ?>
+                          <?gen [Writing the type] end ?>
+                          <?gen [Writing the result type] end ?>
+                          <?gen begin when result = null ?>void                          
+                          </code>
                       </td>
                       <td class="colLast">
                         <code><span class="memberNameLink"><a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.html#getPlugin--">getPlugin</a></span>()</code>
+                        href="thisFile#id???">
+                        <?gen attr href = url + '/' + classfilename + '#' + method.id() ?>
+                        <?gen methodName ?></a></span>(<?gen [ParametersWrite] begin when not method.ownedParameter->isEmpty()
+                                                             parameters = method.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
+                                                             commas = parameters->collect(p | ', ')->subSequence(1, parameters->size() - 1)->including('')
+                                                       ?>
+                                                       <?gen [ParametersLoop] parameter : parameters, comma : commas ?>
+                                                       <?gen begin 
+                                                             object = parameter ?>
+                                                       <?gen <Insert parameterType> ?>
+                                                       <?gen ' ' + parameter.name + comma ?>
+                                                       <?gen end ?>
+                                                       <?gen [ParametersLoop] end ?>
+                                                       <?gen [ParametersWrite] end ?>)</code>
+                        <?gen begin when not clazz.ownedComment->isEmpty()
+                              comment = clazz.ownedComment->first() ?>
                         <div class="block">
-                          Returns the singleton instance of the Eclipse plugin
-                        </div>
+			            <?gen comment.literalComment() ?>
+                        <!--  begin-user-doc -->
+                        <!--  end-user-doc -->
+                        </div>                        
                       </td>
                     </tr>
-                    <tr id="i1" class="rowColor">
-                      <td class="colFirst">
-                        <code>org.eclipse.emf.common.util.ResourceLocator</code>
-                      </td>
-                      <td class="colLast">
-                        <code><span class="memberNameLink"><a
-                        href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/StandardPlugin.html#getPluginResourceLocator--">getPluginResourceLocator</a></span>()</code>
-                        <div class="block">
-                          Returns the singleton instance of the Eclipse plugin
-                        </div>
-                      </td>
-                    </tr>
+                    <?gen [Method] end export: class ?>
+                    <?gen [MethodsLoop] end ?>
+                    <?gen [Methods] end ?>
                   </tbody>
                 </table>
                 <ul class="blockList">
@@ -681,6 +855,8 @@ extends <?gen generalNamesStr ?>
                 </ul>
               </li>
             </ul>
+          <?gen [Methods Summary 2] end ?>
+          <?gen [Methods Summary 1] end ?>
           </li>
         </ul>
       </div>

@@ -20,6 +20,7 @@ import org.eclipse.gmf.runtime.diagram.ui.render.util.CopyToImageUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Stereotype;
 import org.jdom2.Document;
@@ -31,15 +32,19 @@ import org.jdom2.output.XMLOutputter;
 
 public class ExpansionServices 
 {
-	/*public EList<Stereotype> getAppliedStereotypes(Element element)
-	{
-		EList<Stereotype> stereotypes = element.getApplicableStereotypes(); 
-		return stereotypes;
-	}*/
-	
 	public String getKeyword(Stereotype stereotype)
 	{
 		return stereotype.getKeyword(false);
+	}
+	
+	public String id(EObject object)
+	{
+		return Integer.toHexString(object.hashCode());
+	}
+	
+	public Stereotype getAppliedStereotype(Element element, String stereotypeQualifiedName)
+	{
+		return element.getAppliedStereotype(stereotypeQualifiedName);
 	}
 	
 	public EList<EList<Classifier>> ancestors(Classifier classifier)
@@ -145,7 +150,7 @@ public class ExpansionServices
 	
 	protected String generateSvgFilename(Diagram diagram)
 	{
-		return Integer.toHexString(diagram.hashCode()) + ".svg";
+		return id(diagram) + ".svg";
 	}
 	
 	public HashMap<String, String> map(java.util.LinkedHashSet list)
@@ -168,6 +173,19 @@ public class ExpansionServices
 			}
 		}
 		return map;
+	}
+	
+	public EList<Object> flatten(EList<EList<Object>> listOfLists)
+	{
+		EList<Object> flatList = new BasicEList<Object>(0);
+		if (listOfLists != null)
+		{
+			for (EList<?> list : listOfLists)
+			{
+				flatList.addAll(list);
+			}
+		}
+		return flatList;
 	}
 	
 	public String literalComment(Comment comment)
