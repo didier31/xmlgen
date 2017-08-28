@@ -119,20 +119,17 @@
       </ul>
     </div>
     <div class="subNav">
-	  <?gen [ClassifierNavigation] begin 
-	                               store classifier_navigation
+	  <?gen classifier_navigation def previousClass : uml::Classifier, 
+                                      nextClass : uml::Classifier
+      ?>
+      <?gen [ClassifierNavigation] begin
 	                               when previousClass <> null or nextClass <> null 	                                        
 	  ?>
       <ul class="navList">
-	    <?gen [PreviousClass] begin 		
-		                      neighborClass = previousClass,
-					          linkText = 'Prev Class'
-		?>
-		<?gen [Classifier_Button_Link] begin 
-		                             store classifier_link_button
+		<?gen classifier_link_button def neighborClass : uml::Classifier, linkText : String
         ?>									 
 		<?gen [WithNeighborClass] begin 
-		                             when neighborClass <> null		         	
+		                          when neighborClass <> null		         	
 		         classFilename = name + '.' + neighborClass.name + '_details.xhtml',
 		         classifierTypeStr = if neighborClass.oclIsKindOf(uml::Interface) then
 				                        'interface '
@@ -157,16 +154,14 @@
 		<?gen [WithoutNeighborClass] begin when neighborClass = null ?>
         <li> <?gen linkText ?> </li>
 		<?gen [WithoutNeighborClass] end ?>
-		<?gen [Classifier_Button_Link] end ?>
-		<?gen [PreviousClass] end ?>
-		
-		<?gen [NextClass] begin		
-				       neighborClass = nextClass,
-					   linkText = 'Next Class'
-		?>		
-		<?gen <Insert classifier_link_button> ?>
+		<?gen classifier_link_button end ?>
+        <?gen <Insert classifier_link_button previousClass, 'Prev Class'> ?>
+			
+		<?gen <Insert classifier_link_button nextClass, 'Next Class'> ?>
       </ul>
 	  <?gen [ClassifierNavigation] end ?>
+      <?gen classifier_navigation end ?>
+      <?gen <Insert classifier_navigation previousClass, nextClass> ?>
       <ul class="navList">
         <li>
           <a
@@ -306,14 +301,11 @@
             <hr />
             <br />
 <pre xml:space="preserve">
-                          <?gen begin 
-						           classifier = clazz ?>
-                          <?gen [Qualifiers] begin 
-						                        store qualifiers ?>
+                          <?gen qualifiers def classifier : uml::Classifier ?>
                           <?gen if classifier.visibility <> uml::VisibilityKind::package then 
                                       classifier.visibility.toString() + ' '
                                    else
-                                      ''								   
+                                      ' '								   
 								   endif 
 						  ?> 
 						  <?gen if classifier.isAbstract then 
@@ -328,8 +320,7 @@
                                       ''									  
 								   endif
   					      ?>
-						  <?gen [Qualifiers] end ?>
-						  <?gen end ?>class <span class="typeNameLabel"><?gen clazz.name ?></span>
+						  <?gen qualifiers end ?><?gen <Insert qualifiers clazz> ?>class <span class="typeNameLabel"><?gen clazz.name ?></span>
 			  <?gen begin 
 			           generalNames = clazz.general->collect(c : uml::Classifier | c.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''))
 			  ?>
@@ -381,13 +372,7 @@ extends <?gen generalNamesStr ?>
                     <tr class="altColor">
                       <td class="colFirst">
                         <code>
-						<?gen begin 
-						         classifier = nestedClass
-						?>
-						<?gen <Insert qualifiers> 
-						?>
-						<?gen end ?>
-						class
+						<?gen <Insert qualifiers nestedClass> ?>class
 						</code>
                       </td>
                       <td class="colLast">					  
@@ -476,7 +461,6 @@ extends <?gen generalNamesStr ?>
 						
 						class = if class = 'altColor' then 'rowColor' else 'altColor' endif,
 						field = fields->first(),
-                        object = field,
 						fields = fields->subSequence(2, fields->size())
 				    ?>
                     <tr class="???">
@@ -501,7 +485,8 @@ extends <?gen generalNamesStr ?>
                                    ''								   
 						      endif 
 						  ?> 
-                          <?gen [WriteType] begin store parameterType 
+                          <?gen parameterType def object : uml::TypedElement ?> 
+                          <?gen [WriteType] begin 
                                                   when object.type <> null
                                   type = object.type,
                                   qualifiedName = if type <> null then type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '') else 'void' endif,
@@ -537,6 +522,8 @@ extends <?gen generalNamesStr ?>
 							  endif
                           ?>
                           <?gen [WriteType] end ?>
+                          <?gen parameterType end ?>
+                          <?gen <Insert parameterType field> ?>
                       </code>
                       </td>
                       <td class="colLast">
@@ -715,32 +702,16 @@ extends <?gen generalNamesStr ?>
                                    ''								   
 						      endif 
 						  ?>
-                          <?gen [Writing the result type] begin when result <> null 
-                                                          object = result
+                          <?gen parameterType def object : uml::TypedElement ?>
+                          <?gen [Writing the non-void type] begin when object <> null                                                             
+                                  type = object.type 
                           ?>
-                          <?gen [Writing the type] begin store parameterType when object.type <> null
-                                  type = object.type,
-                                  typeName = if type <> null then
-                                                type.name
-                                             else
-                                                'void'
-                                             endif,
-                                  qualifiedName = if type <> null then 
-                                                     type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '') 
-                                                  else 
-                                                     'void' 
-                                                  endif,
-                                  packageQualifiedName = if type <> null then 
-                                                            type.eContainer().qualifiedName
-                                                         else
-                                                            ''
-                                                         endif,
+                          <?gen                             begin when type <> null 
+                                  typeName = type.name,
+                                  qualifiedName = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
+                                  packageQualifiedName = type.eContainer().qualifiedName,
                                   packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
-                                  isTypeInScope = if type <> null then 
-                                                     allNamedElements->exists(n : uml::NamedElement | n = type) 
-                                                  else
-                                                     false
-                                                  endif
+                                  isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = type)
                           ?>
                           <?gen begin when isTypeInScope                                   
                           ?>
@@ -769,9 +740,14 @@ extends <?gen generalNamesStr ?>
 							     ''
 							  endif
                           ?>
-                          <?gen [Writing the type] end ?>
-                          <?gen [Writing the result type] end ?>
-                          <?gen begin when result = null ?>void                          
+                          <?gen end  export: type ?>
+                          <?gen [Writing the non-void type] end export: type ?>
+                          <?gen [Writing the void type] begin when object = null or type = null ?>void
+                          <?gen [Writing the void type] end ?>
+                          <?gen parameterType end ?>
+
+                          <?gen <Insert parameterType result> ?>
+<?gen <Insert parameterType OrderedSet{} > ?>
                           </code>
                       </td>
                       <td class="colLast">
@@ -783,11 +759,8 @@ extends <?gen generalNamesStr ?>
                                                              commas = parameters->collect(p | ', ')->subSequence(1, parameters->size() - 1)->including('')
                                                        ?>
                                                        <?gen [ParametersLoop] parameter : parameters, comma : commas ?>
-                                                       <?gen begin 
-                                                             object = parameter ?>
-                                                       <?gen <Insert parameterType> ?>
+                                                       <?gen <Insert parameterType parameter> ?>
                                                        <?gen ' ' + parameter.name + comma ?>
-                                                       <?gen end ?>
                                                        <?gen [ParametersLoop] end ?>
                                                        <?gen [ParametersWrite] end ?>)</code>
                         <?gen begin when not clazz.ownedComment->isEmpty()
@@ -1042,7 +1015,7 @@ extends <?gen generalNamesStr ?>
       </div>
     </div>
     <div class="subNav">
-    <?gen <Insert classifier_navigation> ?>
+    <?gen <Insert classifier_navigation previousClass, nextClass> ?>
       <ul class="navList">
         <li>
           <a

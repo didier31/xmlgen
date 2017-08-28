@@ -70,9 +70,8 @@ public class Element extends LocatedElement implements Expandable
 				 */
 				while (childrenIt.current() != null)
 				{
-					Object current = childrenIt.current();
-					Expandable expandable = (Expandable) childrenIt.current();
-					Vector<Cloneable> localExpanded = expandable.expandMySelf(childrenIt);
+					Expandable current = (Expandable) childrenIt.current();
+					Vector<Cloneable> localExpanded = current.expandMySelf(childrenIt);
 					expanded.addAll(localExpanded);
 					if (childrenIt.current() == current)
 					{

@@ -113,7 +113,7 @@ public class ExpandInstruction extends ExpansionInstruction
 			Message message = new Message(msg);
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
 					message);
-			LocationImpl location = new LocationImpl(new Artifact(""), -1, getColumn(), getLine());
+			LocationImpl location = new LocationImpl(new Artifact(""), -1, getLine(), getColumn());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			Notifications notifications = getXmlgen().getNotifications(); 
 			notifications.add(contextual);

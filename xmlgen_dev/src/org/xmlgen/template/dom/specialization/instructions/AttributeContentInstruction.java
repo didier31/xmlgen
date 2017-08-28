@@ -81,7 +81,7 @@ public class AttributeContentInstruction extends ContentInstruction
 			Notification attributeNotFound = new Notification(Module.Parser, Gravity.Error, Subject.Template,
 					attributeNotFoundMessage);
 			Artifact artifact = new Artifact(parent.getQualifiedName());
-			LocationImpl location = new LocationImpl(artifact, -1, parent.getColumn(), parent.getLine());
+			LocationImpl location = new LocationImpl(artifact, -1, parent.getLine(), parent.getColumn());
 			ContextualNotification contextualAttributeNotFound = new ContextualNotification(attributeNotFound, location);
 			getXmlgen().getNotifications().add(contextualAttributeNotFound);
 		}

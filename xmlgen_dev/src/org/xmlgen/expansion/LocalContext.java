@@ -11,6 +11,7 @@ public class LocalContext
 		return structuresStack;
 	}
 
+	@SuppressWarnings("serial")
 	private Stack<StructuralInstruction> structuresStack = new Stack<StructuralInstruction>()
 			{
 		@Override public StructuralInstruction push(StructuralInstruction s) { 

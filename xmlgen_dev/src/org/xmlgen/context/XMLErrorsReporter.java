@@ -86,7 +86,7 @@ public class XMLErrorsReporter implements ErrorHandler
 		Message message = new Message(exception.getMessage());
 		Notification notification = new Notification(module, gravity, subject, message);
 		Artifact artifact = new Artifact(exception.getPublicId());
-		LocationImpl location = new LocationImpl(artifact, -1, exception.getColumnNumber(), exception.getLineNumber());
+		LocationImpl location = new LocationImpl(artifact, -1, exception.getLineNumber(), exception.getColumnNumber());
 		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
 		notifications.add(contextualNotification);
 	}

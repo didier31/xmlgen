@@ -1,15 +1,15 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.xmlgen.Xmlgen;
-import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 @SuppressWarnings("serial")
 public class TaggedInstruction extends ExpansionInstruction
 {
-	protected TaggedInstruction(String data, TaggedContext taggedContext, int line, int column, Xmlgen xmlgen)
+	protected TaggedInstruction(String data, String tag, int line, int column, Xmlgen xmlgen)
 	{
 		super(data, line, column, xmlgen);
-		setLabel(taggedContext);
+		setLabel(tag);
 	}
 	
 	/**
@@ -30,13 +30,14 @@ public class TaggedInstruction extends ExpansionInstruction
 	 */
 	private void setLabel(String label)
 	{
-		this.label = label;
+		
+		this.label = label != null ? label : "" ;
 	}
-
-	private void setLabel(TaggedContext taggedContext)
+	
+	static protected String getLabel(TerminalNode terminalNode)
 	{
-		String label = taggedContext == null || taggedContext.label() == null ? "" : taggedContext.label().Label().getText();
-		setLabel(label);
+		String labelStr = terminalNode != null ? terminalNode.getText() : "";			
+		return labelStr;
 	}
 	
 	private String label;

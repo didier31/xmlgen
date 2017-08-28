@@ -3,7 +3,6 @@ package org.xmlgen.template.dom.specialization.instructions;
 import java.util.Stack;
 import java.util.Vector;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Frame;
@@ -11,13 +10,20 @@ import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
+import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notifications;
+import org.xmlgen.notifications.Notification.Gravity;
+import org.xmlgen.notifications.Notification.Message;
+import org.xmlgen.notifications.Notification.Module;
+import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.BeginContext;
 import org.xmlgen.parser.pi.PIParser.DefinitionContext;
 import org.xmlgen.parser.pi.PIParser.DefinitionsContext;
 import org.xmlgen.parser.pi.PIParser.ExpressionContext;
 import org.xmlgen.parser.pi.PIParser.GuardContext;
-import org.xmlgen.parser.pi.PIParser.StoreContext;
-import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 @SuppressWarnings("serial")
 public class BeginInstruction extends StructuralInstruction
@@ -29,17 +35,8 @@ public class BeginInstruction extends StructuralInstruction
 
 	protected BeginInstruction(String pi, BeginContext beginContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(pi, (TaggedContext) beginContext.getParent(), line, column, xmlgen);
+		super(pi, getLabel(beginContext.Label()), line, column, xmlgen);
 		initFields(beginContext, line, column);
-		
-		StoreContext storeContext = beginContext.store();
-		
-		if (storeContext != null)
-		{
-			TerminalNode identContext = storeContext.Ident();
-			String myId = identContext.getText();
-			getXmlgen().setBlock(myId, this);
-		}
 	}
 
 	private void initFields(BeginContext beginContext, int line, int column)
@@ -112,6 +109,7 @@ public class BeginInstruction extends StructuralInstruction
 		if (executionGranted)
 		{
 			setDefinitions();
+			setExecuted();
 		}
 		else
 		{
@@ -122,7 +120,22 @@ public class BeginInstruction extends StructuralInstruction
 			}
 		}
 		setFinished();
+		traceEntry(executionGranted);
 		return new Vector<Cloneable>(0);
+	}
+
+	protected void traceEntry(boolean executionGranted)
+	{
+		if (getXmlgen().getContext().isTrace())
+		{
+			final String guardPassed = "guard " + (executionGranted ? "passed" : "not passed");
+			Message message = new Message(" begin: " + guardPassed);
+			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource, message);
+			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getLine(), getColumn());
+			ContextualNotification contextual = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(contextual);
+		}
 	}
 
 	@Override

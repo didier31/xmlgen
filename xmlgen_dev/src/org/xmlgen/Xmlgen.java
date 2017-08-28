@@ -21,7 +21,7 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.cmdline.SmartCmdlineParser;
 import org.xmlgen.template.dom.specialization.content.Template;
-import org.xmlgen.template.dom.specialization.instructions.BeginInstruction;
+import org.xmlgen.template.dom.specialization.instructions.TemplateDef;
 
 public class Xmlgen
 {
@@ -158,27 +158,27 @@ public class Xmlgen
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
-	public void setBlock(String id, BeginInstruction beginInstruction)
+	public void addTemplate(String id, TemplateDef templateDef)
 	{
-		 declaredBlocks.put(id, beginInstruction);
+		templateDefs.put(id, templateDef);
 	}
 	
-	public boolean containsBlock(String id)
+	public boolean containsTemplate(String id)
 	{
-		return declaredBlocks.containsKey(id);
+		return templateDefs.containsKey(id);
 	}
 	
-	public BeginInstruction getBlock(String id)
+	public TemplateDef getTemplateDef(String id)
 	{
-		BeginInstruction beginInstruction = declaredBlocks.get(id);
-		return beginInstruction;
+		TemplateDef templateDef = templateDefs.get(id);
+		return templateDef;
 	}
 			
 	private Notifications notifications;
 	private FrameStack frameStack;
 	private Context context;
 	private ExpansionContext expansionContext;
-	private HashMap<String, BeginInstruction> declaredBlocks = new HashMap<String, BeginInstruction>();
+	private HashMap<String, TemplateDef> templateDefs = new HashMap<String, TemplateDef>();
 	
 	final static Message message = new Message("output can't be written on mass storage.");
 	final static Notification cant_write_output = new Notification(Module.Parser, Gravity.Error, Subject.Output,

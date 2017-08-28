@@ -6,7 +6,17 @@ package org.xmlgen.parser.pi;
 
 import Query;
 
-inputPI : (tagged | content | insert | userService | expand) EOF
+inputPI : (tagged | content | insert | userService | expand | templateDef) EOF
+;
+
+
+templateDef: Ident Def (parameter (',' parameter)*)?
+;
+
+Def: [Dd][Ee][Ff];
+
+
+parameter: Ident ':' typeLiteral
 ;
 
 expand: '<' Expand '>'
@@ -23,13 +33,18 @@ dottedIdent
 	)*
 ;
 
-tagged: label? (captures | begin | end)
+tagged: captures | begin | end
 ;
 
-insert: '<' Insert (Label | Ident) '>'
+insert: '<' Insert (Label | templateCall) '>'
+;
+templateCall: Ident (effectiveParameter (',' effectiveParameter)*)?
 ;
 
-captures : capture (',' capture)*
+effectiveParameter: (Ident '=')? expression 
+;
+
+captures : label=Label? capture (',' capture)*
 ;
 
 capture : dataID ':' expression
@@ -50,10 +65,7 @@ elementContent : expression
 attributeID : prefix? Ident
 ;
 
-begin: Begin store?  guard? definitions?
-;
-
-store: Store Ident
+begin: label=Label? Begin guard? definitions?
 ;
 
 Store: [Ss][Tt][Oo][Rr][Ee]
@@ -68,13 +80,10 @@ definitions: definition (',' definition)*
 definition: dataID '=' expression
 ;
 
-end: End exports?
+end: (id=Ident? | label=Label?) End exports?
 ;
 
 exports: Export ':' Ident (',' Ident)*
-;
-
-label: Label
 ;
 
 Label: '[' .*? ']'

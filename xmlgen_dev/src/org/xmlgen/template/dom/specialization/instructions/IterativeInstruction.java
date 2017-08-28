@@ -5,14 +5,13 @@ import java.util.Vector;
 import org.xmlgen.Xmlgen;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
-import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 @SuppressWarnings("serial")
 public abstract class IterativeInstruction extends StructuralInstruction
 {
-	protected IterativeInstruction(String data, TaggedContext taggedContext, int line, int column, Xmlgen xmlgen)
+	protected IterativeInstruction(String data, String label, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, taggedContext, line, column, xmlgen);
+		super(data, label, line, column, xmlgen);
 	}
 
 	@Override

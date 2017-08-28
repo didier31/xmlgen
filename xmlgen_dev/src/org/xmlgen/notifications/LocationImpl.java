@@ -27,7 +27,7 @@ public class LocationImpl extends Artifact implements Location
 	 * @param lineNumber
 	 *           the line number
 	 */
-	public LocationImpl(Artifact artefact, int characterOffset, int columnNumber, int lineNumber)
+	public LocationImpl(Artifact artefact, int characterOffset, int lineNumber, int columnNumber)
 	{
 		super(artefact);
 		this.characterOffset = characterOffset;

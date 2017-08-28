@@ -24,7 +24,6 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.CaptureContext;
 import org.xmlgen.parser.pi.PIParser.CapturesContext;
-import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,7 +41,7 @@ public class CapturesInstruction extends IterativeInstruction
 	 */
 	protected CapturesInstruction(String data, CapturesContext capturesContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(data, (TaggedContext) capturesContext.getParent(), line, column, xmlgen);
+		super(data, getLabel(capturesContext.Label()) , line, column, xmlgen);
 		initFields(capturesContext);
 	}
 
@@ -91,25 +90,29 @@ public class CapturesInstruction extends IterativeInstruction
 		State currentState = currentState();
 		if (!currentState.isInitialized())
 		{
-			int size = datasourcesIDs.size();
-			Vector<Iterator<Object>> iterators = new Vector<Iterator<Object>>(size);
-			iterators.setSize(size);
-			// Initializes references in the just new created frame in stack
-			int i = 0;
-			for (AstResult captureQuery : captureQueries)
+			ExpansionContext expansionContext = getXmlgen().getExpansionContext();
+			if (expansionContext.isExecuting())
 			{
-				Object result = null;
-				if (captureQuery.getErrors().isEmpty())
+				int size = datasourcesIDs.size();
+				Vector<Iterator<Object>> iterators = new Vector<Iterator<Object>>(size);
+				iterators.setSize(size);
+				// Initializes references in the just new created frame in stack
+				int i = 0;
+				for (AstResult captureQuery : captureQueries)
 				{
-					result = eval(captureQuery);
+					Object result = null;
+					if (captureQuery.getErrors().isEmpty())
+					{
+						result = eval(captureQuery);
+					}
+					Iterator<Object> iterator = createEMFIterator(result);
+					assert (iterator != null);
+					iterators.set(i, iterator);
+					addToCurrentFrame(datasourcesIDs.get(i), result);
+					i++;
 				}
-				Iterator<Object> iterator = createEMFIterator(result);
-				assert (iterator != null);
-				iterators.set(i, iterator);
-				addToCurrentFrame(datasourcesIDs.get(i), result);
-				i++;
+				setIterators(iterators);
 			}
-			setIterators(iterators);
 			currentState.setInitialized();
 		}
 	}
@@ -126,7 +129,7 @@ public class CapturesInstruction extends IterativeInstruction
 
 		Vector<Iterator<Object>> iterators = iterators();
 		int i = 0;
-		boolean iterating = false;
+		boolean iterating = true;
 
 		for (String id : datasourcesIDs)
 		{
@@ -135,8 +138,13 @@ public class CapturesInstruction extends IterativeInstruction
 			{
 				Object object = iterators.get(i).next();
 				currentFrame.put(id, object);
-				iterating = true;
 				traceIteration(id, object);
+				setExecuted();
+			}
+			else
+			{
+				iterating = false;
+				break;
 			}
 			i++;
 		}
@@ -155,7 +163,7 @@ public class CapturesInstruction extends IterativeInstruction
 	{
 		Token startToken = capture.dataID().getStart();
 		// TODO : Resolve -1 problem for column parameter.
-		LocationImpl location = new LocationImpl(new Artifact(id), startToken.getStartIndex(), -1, startToken.getLine());
+		LocationImpl location = new LocationImpl(new Artifact(id), startToken.getStartIndex(), startToken.getLine(), startToken.getCharPositionInLine());
 		ContextualNotification contextNotification = new ContextualNotification(duplicateDataSourceReference, location);
 		Notifications notifications = getXmlgen().getNotifications();
 		notifications.add(contextNotification);
@@ -210,11 +218,10 @@ public class CapturesInstruction extends IterativeInstruction
 		if (getXmlgen().getContext().isTrace())
 		{
 			String referenceValue = object != null ? object.toString() : "null";
-			Message message = new Message(id + " = " + referenceValue);
+			Message message = new Message("iteration: " + id + " = " + referenceValue);
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.DataSource,
 					message);
-			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getColumn(),
-					getLine());
+			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getLine(), getColumn());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			Notifications notifications = getXmlgen().getNotifications();
 			notifications.add(contextual);

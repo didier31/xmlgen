@@ -22,6 +22,7 @@ import org.xmlgen.parser.pi.PIParser.ExpandContext;
 import org.xmlgen.parser.pi.PIParser.InputPIContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
+import org.xmlgen.parser.pi.PIParser.TemplateDefContext;
 import org.xmlgen.parser.pi.PIParser.UserServiceContext;
 
 // TODO: Auto-generated Javadoc
@@ -76,9 +77,16 @@ public class InstructionParser
 						}
 						else
 						{
-							assert (false);
-							// TODO : Notifiy error to user
-							return null;
+							TemplateDefContext templateDefContext = inputPI.templateDef();
+							if (templateDefContext != null)
+							{
+								return templateDefContext;
+							}
+							else
+							{
+								// TODO : Notifiy error to user
+								return null;
+							}
 						}
 					}
 

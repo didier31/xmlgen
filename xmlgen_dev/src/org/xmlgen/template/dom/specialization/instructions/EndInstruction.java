@@ -22,7 +22,6 @@ import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.ExportsContext;
-import org.xmlgen.parser.pi.PIParser.TaggedContext;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,7 +40,7 @@ public class EndInstruction extends TaggedInstruction
 	 */
 	protected EndInstruction(String pi, EndContext endContext, int line, int column, Xmlgen xmlgen)
 	{
-		super(pi, (TaggedContext) endContext.getParent(), line, column, xmlgen);
+		super(pi, getLabel(endContext), line, column, xmlgen);
 		ExportsContext exportContext = endContext.exports(); 
 		if (exportContext != null)
 		{
@@ -51,6 +50,16 @@ public class EndInstruction extends TaggedInstruction
 		{
 			exports = null;
 		}
+	}
+	
+	static protected String getLabel(EndContext endContext)
+	{
+		String labelStr = getLabel(endContext.Label());
+		if (labelStr.equals(""))
+		{
+			labelStr = getLabel(endContext.Ident());
+		}
+		return labelStr;
 	}
 
 	@Override
@@ -65,7 +74,7 @@ public class EndInstruction extends TaggedInstruction
 			 * is too much. Notify the user for his error.
 			 */
 		}
-		else if (structuralInstruction.isFinished())
+		else if (structuralInstruction.isFinished() || !structuralInstruction.executed())
 		{
 			close(structuralInstruction, expansionContext);
 		}
@@ -80,7 +89,7 @@ public class EndInstruction extends TaggedInstruction
 	{
 		checkEndLabel(structuralInstruction);
 		traceEndInstruction();
-		if (structuralInstruction.isExecuting())
+		if (structuralInstruction.executed())
 		{
 			exports();
 		}
@@ -138,7 +147,7 @@ public class EndInstruction extends TaggedInstruction
 			Notification blockNamesNotCorresponding = new Notification(Module.Expansion, Gravity.Warning, Subject.Template,
 					message);
 			Artifact artifact = new Artifact("End instruction");
-			LocationImpl locationImpl = new LocationImpl(artifact, -1, getColumn(), getLine());
+			LocationImpl locationImpl = new LocationImpl(artifact, -1, getLine(), getColumn());
 			ContextualNotification contextual = new ContextualNotification(blockNamesNotCorresponding, locationImpl);
 			getXmlgen().getNotifications().add(contextual);
 		}
@@ -160,8 +169,7 @@ public class EndInstruction extends TaggedInstruction
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.Instruction,
 					message);
 
-			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getColumn(),
-					getLine());
+			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getLine(), getColumn());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			getXmlgen().getNotifications().add(contextual);
 		}

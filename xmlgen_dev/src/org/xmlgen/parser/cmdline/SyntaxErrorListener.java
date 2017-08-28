@@ -48,7 +48,7 @@ public class SyntaxErrorListener extends BaseErrorListener
 		Notification syntax_error = new Notification(Module.Parser, Gravity.Error, Subject.Command_Line,
 				new Message(msg));
 		Artifact artifact = new Artifact("");
-		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, charPositionInLine, line);
+		LocationImpl localisation = new LocationImpl(artifact, charPositionInLine, line, charPositionInLine);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
 		notifications.add(contextualNotification);
 	}

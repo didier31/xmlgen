@@ -53,7 +53,7 @@ public class SyntaxErrorListener extends BaseErrorListener
 		Notification syntax_error = new Notification(Module.Parser, Gravity.Error, Subject.Template, message);
 		File template = new File(xmlgen.getContext().getXmlTemplate());
 		Artifact artifact = new Artifact(template.getName());
-		LocationImpl localisation = new LocationImpl(artifact, 0, baseColumn, baseLine);
+		LocationImpl localisation = new LocationImpl(artifact, 0, baseLine, baseColumn);
 		ContextualNotification contextualNotification = new ContextualNotification(syntax_error, localisation);
 		xmlgen.getNotifications().add(contextualNotification);
 	}

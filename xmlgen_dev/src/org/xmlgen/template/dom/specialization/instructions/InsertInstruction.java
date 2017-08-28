@@ -8,27 +8,43 @@ import java.util.Vector;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.jdom2.Content;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
+import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notification.Gravity;
+import org.xmlgen.notifications.Notification.Message;
+import org.xmlgen.notifications.Notification.Module;
+import org.xmlgen.notifications.Notification.Subject;
+import org.xmlgen.notifications.Notifications;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.xmlgen.template.dom.specialization.content.Element;
 
 @SuppressWarnings("serial")
-public class InsertInstruction extends ExpansionInstruction
+abstract class InsertInstruction extends ExpansionInstruction
 {	
-	protected InsertInstruction(String pi, InsertContext insertInstruction, int line, int column, Xmlgen xmlgen)
+	static public InsertInstruction create(String pi, InsertContext insertContext, int line, int column, Xmlgen xmlgen)
+	{
+		TerminalNode labelContext = insertContext.Label();
+		InsertInstruction insertInstruction;
+		if (labelContext != null)
+		{
+			insertInstruction = new InsertBlockInstruction(pi, labelContext, line, column, xmlgen); 
+		}
+		else
+		{
+			insertInstruction = new InsertTemplateInstruction(pi, insertContext.templateCall(), line, column, xmlgen);
+		}		
+	return insertInstruction;
+	}
+	
+	protected InsertInstruction(String pi, int line, int column, Xmlgen xmlgen)
 	{
 		super(pi, line, column, xmlgen);
-		TerminalNode labelContext = insertInstruction.Label();
-		label = labelContext != null ? labelContext.getText() : null;
-		TerminalNode identContext = insertInstruction.Ident();
-		blockId = identContext != null ? identContext.getText() : null;
-		if (blockId != null)
-		{
-			BeginInstruction insertedBegin = getBegin(blockId);
-			setInsertedBlock(insertedBegin);
-		}
 	}
 	
 	@Override
@@ -39,30 +55,20 @@ public class InsertInstruction extends ExpansionInstruction
 		
 		if (expansionContext.isExecuting())
 		{
-			/**
-			 * structureElement == null means, it is the label that sets it at expansion-time. 
-			 */
-			if (insertedBlock == null)
-			{
-				BeginInstruction insertedBegin = getBegin(expansionContext);
-				setInsertedBlock(insertedBegin);
-			}
+			trace();
+			Element body = getBody(); 			
+			List<Content> contents = body.getContent(); 			
+			Content instruction = contents.get(0);
 			
-			List<Content> block = insertedBlock.getContent(); 
+			TemplateIterator recursiveIt = new TemplateIterator(instruction);
 			
-			BeginInstruction beginInstruction = (BeginInstruction) block.get(0);
-			beginInstruction.newInstance();
-			
-			TemplateIterator recursiveIt = new TemplateIterator(beginInstruction);
-			
-			FrameStack frameStack = getXmlgen().getFrameStack();
-			
-			frameStack.pushNumbering();
-			
+			FrameStack frameStack = getXmlgen().getFrameStack();			
+			frameStack.pushNumbering();			
 			expansionContext.incInsertInProgressCount();
-			Vector<Cloneable> expanded = insertedBlock.expandMySelf(recursiveIt, false);
-			expansionContext.decInsertInProgressCount();
 			
+			Vector<Cloneable> expanded = expand(body, recursiveIt);
+			
+			expansionContext.decInsertInProgressCount();			
 			frameStack.popNumbering();
 			
 			return expanded;
@@ -73,43 +79,10 @@ public class InsertInstruction extends ExpansionInstruction
 		}
 	}
 
-	protected BeginInstruction getBegin(String blockId)
-	{ 
-		assert(blockId != null);
-		BeginInstruction insertedBegin;
-		boolean constainsKey = getXmlgen().containsBlock(blockId);
-		if (constainsKey)
-		{
-			insertedBegin = getXmlgen().getBlock(blockId);
-		}
-		else
-		{
-		   // TODO Notify an error to user 
-			insertedBegin = null; 
-		}
-		return insertedBegin;
-	}
-	
-	protected BeginInstruction getBegin(ExpansionContext expansionContext)
+	protected Vector<Cloneable> expand(Element body, TemplateIterator recursiveIt)
 	{
-		BeginInstruction insertedBegin;		
-		{
-			insertedBegin = expansionContext.getBegin(label);
-			if (insertedBegin == null)
-			{
-				// TODO Notify an error to user : no begin/end with this label
-			}
-		}
-
-		return insertedBegin;
-	}
-	
-	protected void setInsertedBlock(BeginInstruction insertedBegin)
-	{
-		assert(insertedBegin != null);
-		Collection<Content> structureContent = structureOf(insertedBegin);
-		insertedBlock = new Element("dummy", getXmlgen());
-		insertedBlock.addContent(structureContent);
+		Vector<Cloneable> expanded = body.expandMySelf(recursiveIt, false);
+		return expanded;
 	}
 	
 	protected Collection<Content> structureOf(StructuralInstruction structuralInstruction)
@@ -155,7 +128,20 @@ public class InsertInstruction extends ExpansionInstruction
 		return structure;
 	}
 	
-	private String label = null;
-	private String blockId = null;
-	private Element insertedBlock = null;
+	protected void trace()
+	{
+		Message message = new Message(this.getData());
+		Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.Template, message);
+		Xmlgen xmlgen = getXmlgen();
+		Context context = xmlgen.getContext();
+		Artifact artefact = new Artifact(context.getXmlTemplate());
+		LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+		Notifications notifications = getXmlgen().getNotifications();
+		notifications.add(contextualNotification);
+	}
+	
+	abstract protected Element getBody();
+	
+	protected Element body = null;
 }

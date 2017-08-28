@@ -7,176 +7,6 @@
     <ownedComment xmi:type="uml:Comment" xmi:id="_vKGoEIHJEeeQSOgOL7YWQA">
       <body>Data sources come from EMF or XML resources.</body>
     </ownedComment>
-    <packagedElement xmi:type="uml:Package" xmi:id="_WKO3sIGpEeeVJrxcG2d44A" name="importedTypes">
-      <packagedElement xmi:type="uml:Package" xmi:id="_WKO3sYGpEeeVJrxcG2d44A" name="QueryParser">
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKO3soGpEeeVJrxcG2d44A" name="EntryContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKWzgIGpEeeVJrxcG2d44A" name="VarRefContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKdhMYGpEeeVJrxcG2d44A" name="AddContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKk18IGpEeeVJrxcG2d44A" name="NavContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKsKsYGpEeeVJrxcG2d44A" name="OrContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WKxqQIGpEeeVJrxcG2d44A" name="LetExprContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WK3w4IGpEeeVJrxcG2d44A" name="ConditionalContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLMhAYGpEeeVJrxcG2d44A" name="CompContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLRZgoGpEeeVJrxcG2d44A" name="NotContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLWSAYGpEeeVJrxcG2d44A" name="MinContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLbxkIGpEeeVJrxcG2d44A" name="ImpliesContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLgqEoGpEeeVJrxcG2d44A" name="MultContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLk7gYGpEeeVJrxcG2d44A" name="LitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLrpMIGpEeeVJrxcG2d44A" name="AndContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WLwhsYGpEeeVJrxcG2d44A" name="XorContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WL2BQIGpEeeVJrxcG2d44A" name="ParenContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WL65wYGpEeeVJrxcG2d44A" name="BindingContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMAZUIGpEeeVJrxcG2d44A" name="AddOpContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMFR0YGpEeeVJrxcG2d44A" name="CompOpContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMKxYYGpEeeVJrxcG2d44A" name="FeatureContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMQQ8YGpEeeVJrxcG2d44A" name="CallOrApplyContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMVwgYGpEeeVJrxcG2d44A" name="CollectionCallContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMjL4IGpEeeVJrxcG2d44A" name="IterationCallContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMruwYGpEeeVJrxcG2d44A" name="ServiceCallContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WMxOUYGpEeeVJrxcG2d44A" name="LambdaExpressionContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WM2G0YGpEeeVJrxcG2d44A" name="CollectionIteratorContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WM7mYYGpEeeVJrxcG2d44A" name="ExpressionSequenceContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WNAe4YGpEeeVJrxcG2d44A" name="VariableDefinitionContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WNHzoYGpEeeVJrxcG2d44A" name="StringLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WNg1MIGpEeeVJrxcG2d44A" name="ErrorStringLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WNoJ8IGpEeeVJrxcG2d44A" name="IntegerLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WNzwIIGpEeeVJrxcG2d44A" name="RealLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WOCZoIGpEeeVJrxcG2d44A" name="TrueLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WONYwIGpEeeVJrxcG2d44A" name="FalseLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WOcpUIGpEeeVJrxcG2d44A" name="NullLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WOqEsIGpEeeVJrxcG2d44A" name="ExplicitSeqLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WO3gEIGpEeeVJrxcG2d44A" name="ExplicitSetLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WPEUYIGpEeeVJrxcG2d44A" name="EnumLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WPQhoIGpEeeVJrxcG2d44A" name="ErrorEnumLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WPcu4IGpEeeVJrxcG2d44A" name="TypeLitContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WPubsIGpEeeVJrxcG2d44A" name="StrTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WP-TUIGpEeeVJrxcG2d44A" name="IntTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WQM80IGpEeeVJrxcG2d44A" name="RealTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WQbmUIGpEeeVJrxcG2d44A" name="BooleanTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WQnzkYGpEeeVJrxcG2d44A" name="SeqTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WQ4SQIGpEeeVJrxcG2d44A" name="SetTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WRGUsIGpEeeVJrxcG2d44A" name="ClsTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WRWMUIGpEeeVJrxcG2d44A" name="ClassifierSetTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WRkOwIGpEeeVJrxcG2d44A" name="ClassifierTypeContext"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_WRvN4IGpEeeVJrxcG2d44A" name="ErrorClassifierTypeContext"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Package" xmi:id="_WR9QUIGpEeeVJrxcG2d44A" name="org">
-        <packagedElement xmi:type="uml:Package" xmi:id="_WR93YIGpEeeVJrxcG2d44A" name="antlr">
-          <packagedElement xmi:type="uml:Package" xmi:id="_WR-ecIGpEeeVJrxcG2d44A" name="v4">
-            <packagedElement xmi:type="uml:Package" xmi:id="_WR_FgIGpEeeVJrxcG2d44A" name="runtime">
-              <packagedElement xmi:type="uml:Class" xmi:id="_WR_skIGpEeeVJrxcG2d44A" name="ParserRuleContext"/>
-              <packagedElement xmi:type="uml:Package" xmi:id="_WSNvAIGpEeeVJrxcG2d44A" name="tree">
-                <packagedElement xmi:type="uml:Class" xmi:id="_WSOWEIGpEeeVJrxcG2d44A" name="TerminalNode"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WSW48IGpEeeVJrxcG2d44A" name="ErrorNode"/>
-                <packagedElement xmi:type="uml:Interface" xmi:id="_WSnXoIGpEeeVJrxcG2d44A" name="ParseTreeListener"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_T_pU0IG8EeeQSOgOL7YWQA" name="ParseTree"/>
-              </packagedElement>
-              <packagedElement xmi:type="uml:Package" xmi:id="_WXkJEIGpEeeVJrxcG2d44A" name="dfa">
-                <packagedElement xmi:type="uml:Class" xmi:id="_WXkwIIGpEeeVJrxcG2d44A" name="DFA"/>
-              </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_W6srUIGpEeeVJrxcG2d44A" name="Lexer"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_W9YL4IGpEeeVJrxcG2d44A" name="CharStream"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_RiShkYG8EeeQSOgOL7YWQA" name="BaseErrorListener"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_RibrhYG8EeeQSOgOL7YWQA" name="Recognizer"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_Ribrh4G8EeeQSOgOL7YWQA" name="RecognitionException"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_T_Vy1oG8EeeQSOgOL7YWQA" name="CommonTokenStream"/>
-            </packagedElement>
-          </packagedElement>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Package" xmi:id="_lrLdEIGpEeeVJrxcG2d44A" name="xmlgen">
-          <packagedElement xmi:type="uml:Package" xmi:id="_lrLdEYGpEeeVJrxcG2d44A" name="notifications">
-            <packagedElement xmi:type="uml:Class" xmi:id="_lrLdEoGpEeeVJrxcG2d44A" name="Notifications"/>
-            <packagedElement xmi:type="uml:Package" xmi:id="_lrwr4IGpEeeVJrxcG2d44A" name="Notification">
-              <packagedElement xmi:type="uml:Class" xmi:id="_lrwr4YGpEeeVJrxcG2d44A" name="Message"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_NYqZwoG8EeeQSOgOL7YWQA" name="Module"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_NYqZxIG8EeeQSOgOL7YWQA" name="Subject"/>
-              <packagedElement xmi:type="uml:Class" xmi:id="_NY9UuIG8EeeQSOgOL7YWQA" name="Gravity"/>
-            </packagedElement>
-            <packagedElement xmi:type="uml:Class" xmi:id="_lr0WQIGpEeeVJrxcG2d44A" name="Notification"/>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Package" xmi:id="_lrQVkIGpEeeVJrxcG2d44A" name="context">
-            <packagedElement xmi:type="uml:Class" xmi:id="_lrQVkYGpEeeVJrxcG2d44A" name="FrameStack"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_lratoYGpEeeVJrxcG2d44A" name="Context"/>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Package" xmi:id="_lrfmIIGpEeeVJrxcG2d44A" name="expansion">
-            <packagedElement xmi:type="uml:Class" xmi:id="_lrfmIYGpEeeVJrxcG2d44A" name="ExpansionContext"/>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Class" xmi:id="_NVhmNIG8EeeQSOgOL7YWQA" name="Xmlgen"/>
-          <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJIG8EeeQSOgOL7YWQA" name="template">
-            <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJYG8EeeQSOgOL7YWQA" name="dom">
-              <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJoG8EeeQSOgOL7YWQA" name="specialization">
-                <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJ4G8EeeQSOgOL7YWQA" name="content">
-                  <packagedElement xmi:type="uml:Class" xmi:id="_NWIDKIG8EeeQSOgOL7YWQA" name="Template"/>
-                </packagedElement>
-                <packagedElement xmi:type="uml:Package" xmi:id="_Ri4XdoG8EeeQSOgOL7YWQA" name="instructions">
-                  <packagedElement xmi:type="uml:Class" xmi:id="_Ri4Xd4G8EeeQSOgOL7YWQA" name="StructuralInstruction"/>
-                  <packagedElement xmi:type="uml:Class" xmi:id="_Ri4XfIG8EeeQSOgOL7YWQA" name="BeginInstruction"/>
-                </packagedElement>
-              </packagedElement>
-            </packagedElement>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Package" xmi:id="_Rh11ooG8EeeQSOgOL7YWQA" name="parser">
-            <packagedElement xmi:type="uml:Package" xmi:id="_Rh11o4G8EeeQSOgOL7YWQA" name="pi">
-              <packagedElement xmi:type="uml:Package" xmi:id="_Rh11pIG8EeeQSOgOL7YWQA" name="PIParser">
-                <packagedElement xmi:type="uml:Class" xmi:id="_Rh11pYG8EeeQSOgOL7YWQA" name="ContentContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_Rh11q4G8EeeQSOgOL7YWQA" name="TaggedContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_RiIwmIG8EeeQSOgOL7YWQA" name="InputPIContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WCU-R4G8EeeQSOgOL7YWQA" name="ElementContentContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WC60JoG8EeeQSOgOL7YWQA" name="BeginContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WFwFsoG8EeeQSOgOL7YWQA" name="EndContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WIl-UIG8EeeQSOgOL7YWQA" name="InsertContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WJG7sIG8EeeQSOgOL7YWQA" name="UserServiceContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WKATkoG8EeeQSOgOL7YWQA" name="AttributeContentContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WMr0IIG8EeeQSOgOL7YWQA" name="CapturesContext"/>
-                <packagedElement xmi:type="uml:Class" xmi:id="_WNRqAoG8EeeQSOgOL7YWQA" name="CaptureContext"/>
-              </packagedElement>
-            </packagedElement>
-          </packagedElement>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Package" xmi:id="_NYgowYG8EeeQSOgOL7YWQA" name="xml">
-          <packagedElement xmi:type="uml:Package" xmi:id="_NYgowoG8EeeQSOgOL7YWQA" name="sax">
-            <packagedElement xmi:type="uml:Interface" xmi:id="_NYgow4G8EeeQSOgOL7YWQA" name="ErrorHandler"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_NYzjtYG8EeeQSOgOL7YWQA" name="SAXParseException"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_NYzjuYG8EeeQSOgOL7YWQA" name="SAXException"/>
-          </packagedElement>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Package" xmi:id="_PxyNRYG8EeeQSOgOL7YWQA" name="jdom2">
-          <packagedElement xmi:type="uml:Class" xmi:id="_PxyNRoG8EeeQSOgOL7YWQA" name="Content"/>
-          <packagedElement xmi:type="uml:Package" xmi:id="_V8qbJYG8EeeQSOgOL7YWQA" name="located">
-            <packagedElement xmi:type="uml:Class" xmi:id="_V8qbJoG8EeeQSOgOL7YWQA" name="LocatedCDATA"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V89WGIG8EeeQSOgOL7YWQA" name="LocatedComment"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V9Q4EYG8EeeQSOgOL7YWQA" name="LocatedDocType"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V-Ae8YG8EeeQSOgOL7YWQA" name="LocatedElement"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V-mU1IG8EeeQSOgOL7YWQA" name="LocatedEntityRef"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V_DAwYG8EeeQSOgOL7YWQA" name="LocatedProcessingInstruction"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_V_ynp4G8EeeQSOgOL7YWQA" name="LocatedText"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_WAr_goG8EeeQSOgOL7YWQA" name="LocatedJDOMFactory"/>
-            <packagedElement xmi:type="uml:Class" xmi:id="_WEtj44G8EeeQSOgOL7YWQA" name="Located"/>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Class" xmi:id="_V-TZ64G8EeeQSOgOL7YWQA" name="Namespace"/>
-          <packagedElement xmi:type="uml:Class" xmi:id="_V_V7uYG8EeeQSOgOL7YWQA" name="Document"/>
-          <packagedElement xmi:type="uml:Class" xmi:id="_V_V7vIG8EeeQSOgOL7YWQA" name="Element"/>
-          <packagedElement xmi:type="uml:Class" xmi:id="_V_fssYG8EeeQSOgOL7YWQA" name="DocType"/>
-          <packagedElement xmi:type="uml:Class" xmi:id="_WKc_gYG8EeeQSOgOL7YWQA" name="Attribute"/>
-        </packagedElement>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Package" xmi:id="_NWt5AYG8EeeQSOgOL7YWQA" name="javax">
-        <packagedElement xmi:type="uml:Package" xmi:id="_NWt5AoG8EeeQSOgOL7YWQA" name="xml">
-          <packagedElement xmi:type="uml:Package" xmi:id="_NWt5A4G8EeeQSOgOL7YWQA" name="validation">
-            <packagedElement xmi:type="uml:Class" xmi:id="_NWt5BIG8EeeQSOgOL7YWQA" name="Schema"/>
-          </packagedElement>
-          <packagedElement xmi:type="uml:Package" xmi:id="_TDf1rIG8EeeQSOgOL7YWQA" name="stream">
-            <packagedElement xmi:type="uml:Interface" xmi:id="_TDf1rYG8EeeQSOgOL7YWQA" name="Location"/>
-          </packagedElement>
-        </packagedElement>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Package" xmi:id="_NXxB64G8EeeQSOgOL7YWQA" name="Map">
-        <packagedElement xmi:type="uml:Interface" xmi:id="_NXxB7IG8EeeQSOgOL7YWQA" name="Entry"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Package" xmi:id="_WN4G8YG8EeeQSOgOL7YWQA" name="IterativeInstruction">
-        <packagedElement xmi:type="uml:Class" xmi:id="_WN4G8oG8EeeQSOgOL7YWQA" name="State"/>
-      </packagedElement>
-    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_WKNpkIGpEeeVJrxcG2d44A" name="QueryBaseListener" visibility="public">
       <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_WKOQoYGpEeeVJrxcG2d44A" name="QueryBaseListener implements QueryListener" client="_WKNpkIGpEeeVJrxcG2d44A" supplier="_WKOQoIGpEeeVJrxcG2d44A" contract="_WKOQoIGpEeeVJrxcG2d44A"/>
       <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_WKUXQIGpEeeVJrxcG2d44A" name="enterEntry" specification="_WKTJIIGpEeeVJrxcG2d44A">
@@ -7381,7 +7211,7 @@
     return gravity;&#xD;
 </body>
             </ownedBehavior>
-            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_TE_DcoG8EeeQSOgOL7YWQA" name="getMessage" specification="_TE_DcIG8EeeQSOgOL7YWQA">
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_TE_DcoG8EeeQSOgOL7YWQA" name="getMessage" isFinalSpecialization="true" specification="_TE_DcIG8EeeQSOgOL7YWQA">
               <language>JAVA</language>
               <body>&#xD;
     return message;&#xD;
@@ -10554,7 +10384,6 @@
                     <ownedParameter xmi:type="uml:Parameter" xmi:id="_WOUy44G8EeeQSOgOL7YWQA" direction="return"/>
                   </ownedOperation>
                   <nestedClassifier xmi:type="uml:Class" xmi:id="_WNlMBoG8EeeQSOgOL7YWQA" name="State" visibility="protected">
-                    <generalization xmi:type="uml:Generalization" xmi:id="_WN4G9IG8EeeQSOgOL7YWQA" general="_WN4G8oG8EeeQSOgOL7YWQA"/>
                     <ownedAttribute xmi:type="uml:Property" xmi:id="_WOLB4IG8EeeQSOgOL7YWQA" name="iterators" visibility="private" type="_RivNg4G8EeeQSOgOL7YWQA" isUnique="false"/>
                     <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_WOB38YG8EeeQSOgOL7YWQA" name="State" specification="_WN4G9YG8EeeQSOgOL7YWQA">
                       <language>JAVA</language>
@@ -10591,8 +10420,6 @@
         </packagedElement>
       </packagedElement>
     </packagedElement>
-    <packagedElement xmi:type="uml:Package" xmi:id="_NV-SNYG8EeeQSOgOL7YWQA" name="emf"/>
-    <packagedElement xmi:type="uml:Package" xmi:id="_Rh-_loG8EeeQSOgOL7YWQA" name="acceleo"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_WbSLcIGpEeeVJrxcG2d44A" name="java">
       <packagedElement xmi:type="uml:Package" xmi:id="_WbTZkIGpEeeVJrxcG2d44A" name="lang">
         <packagedElement xmi:type="uml:Class" xmi:id="_WbUAoIGpEeeVJrxcG2d44A" name="String"/>
@@ -10655,6 +10482,171 @@
           </packagedElement>
         </packagedElement>
       </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_WKO3sYGpEeeVJrxcG2d44A" name="QueryParser">
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKO3soGpEeeVJrxcG2d44A" name="EntryContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKWzgIGpEeeVJrxcG2d44A" name="VarRefContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKdhMYGpEeeVJrxcG2d44A" name="AddContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKk18IGpEeeVJrxcG2d44A" name="NavContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKsKsYGpEeeVJrxcG2d44A" name="OrContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WKxqQIGpEeeVJrxcG2d44A" name="LetExprContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WK3w4IGpEeeVJrxcG2d44A" name="ConditionalContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLMhAYGpEeeVJrxcG2d44A" name="CompContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLRZgoGpEeeVJrxcG2d44A" name="NotContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLWSAYGpEeeVJrxcG2d44A" name="MinContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLbxkIGpEeeVJrxcG2d44A" name="ImpliesContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLgqEoGpEeeVJrxcG2d44A" name="MultContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLk7gYGpEeeVJrxcG2d44A" name="LitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLrpMIGpEeeVJrxcG2d44A" name="AndContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WLwhsYGpEeeVJrxcG2d44A" name="XorContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WL2BQIGpEeeVJrxcG2d44A" name="ParenContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WL65wYGpEeeVJrxcG2d44A" name="BindingContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMAZUIGpEeeVJrxcG2d44A" name="AddOpContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMFR0YGpEeeVJrxcG2d44A" name="CompOpContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMKxYYGpEeeVJrxcG2d44A" name="FeatureContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMQQ8YGpEeeVJrxcG2d44A" name="CallOrApplyContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMVwgYGpEeeVJrxcG2d44A" name="CollectionCallContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMjL4IGpEeeVJrxcG2d44A" name="IterationCallContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMruwYGpEeeVJrxcG2d44A" name="ServiceCallContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WMxOUYGpEeeVJrxcG2d44A" name="LambdaExpressionContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WM2G0YGpEeeVJrxcG2d44A" name="CollectionIteratorContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WM7mYYGpEeeVJrxcG2d44A" name="ExpressionSequenceContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WNAe4YGpEeeVJrxcG2d44A" name="VariableDefinitionContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WNHzoYGpEeeVJrxcG2d44A" name="StringLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WNg1MIGpEeeVJrxcG2d44A" name="ErrorStringLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WNoJ8IGpEeeVJrxcG2d44A" name="IntegerLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WNzwIIGpEeeVJrxcG2d44A" name="RealLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WOCZoIGpEeeVJrxcG2d44A" name="TrueLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WONYwIGpEeeVJrxcG2d44A" name="FalseLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WOcpUIGpEeeVJrxcG2d44A" name="NullLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WOqEsIGpEeeVJrxcG2d44A" name="ExplicitSeqLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WO3gEIGpEeeVJrxcG2d44A" name="ExplicitSetLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WPEUYIGpEeeVJrxcG2d44A" name="EnumLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WPQhoIGpEeeVJrxcG2d44A" name="ErrorEnumLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WPcu4IGpEeeVJrxcG2d44A" name="TypeLitContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WPubsIGpEeeVJrxcG2d44A" name="StrTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WP-TUIGpEeeVJrxcG2d44A" name="IntTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WQM80IGpEeeVJrxcG2d44A" name="RealTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WQbmUIGpEeeVJrxcG2d44A" name="BooleanTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WQnzkYGpEeeVJrxcG2d44A" name="SeqTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WQ4SQIGpEeeVJrxcG2d44A" name="SetTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WRGUsIGpEeeVJrxcG2d44A" name="ClsTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WRWMUIGpEeeVJrxcG2d44A" name="ClassifierSetTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WRkOwIGpEeeVJrxcG2d44A" name="ClassifierTypeContext"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_WRvN4IGpEeeVJrxcG2d44A" name="ErrorClassifierTypeContext"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_WR9QUIGpEeeVJrxcG2d44A" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_WR93YIGpEeeVJrxcG2d44A" name="antlr">
+        <packagedElement xmi:type="uml:Package" xmi:id="_WR-ecIGpEeeVJrxcG2d44A" name="v4">
+          <packagedElement xmi:type="uml:Package" xmi:id="_WR_FgIGpEeeVJrxcG2d44A" name="runtime">
+            <packagedElement xmi:type="uml:Class" xmi:id="_WR_skIGpEeeVJrxcG2d44A" name="ParserRuleContext"/>
+            <packagedElement xmi:type="uml:Package" xmi:id="_WSNvAIGpEeeVJrxcG2d44A" name="tree">
+              <packagedElement xmi:type="uml:Class" xmi:id="_WSOWEIGpEeeVJrxcG2d44A" name="TerminalNode"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WSW48IGpEeeVJrxcG2d44A" name="ErrorNode"/>
+              <packagedElement xmi:type="uml:Interface" xmi:id="_WSnXoIGpEeeVJrxcG2d44A" name="ParseTreeListener"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_T_pU0IG8EeeQSOgOL7YWQA" name="ParseTree"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_WXkJEIGpEeeVJrxcG2d44A" name="dfa">
+              <packagedElement xmi:type="uml:Class" xmi:id="_WXkwIIGpEeeVJrxcG2d44A" name="DFA"/>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Class" xmi:id="_W6srUIGpEeeVJrxcG2d44A" name="Lexer"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_W9YL4IGpEeeVJrxcG2d44A" name="CharStream"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_RiShkYG8EeeQSOgOL7YWQA" name="BaseErrorListener"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_RibrhYG8EeeQSOgOL7YWQA" name="Recognizer"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_Ribrh4G8EeeQSOgOL7YWQA" name="RecognitionException"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_T_Vy1oG8EeeQSOgOL7YWQA" name="CommonTokenStream"/>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_lrLdEIGpEeeVJrxcG2d44A" name="xmlgen">
+        <packagedElement xmi:type="uml:Package" xmi:id="_lrLdEYGpEeeVJrxcG2d44A" name="notifications">
+          <packagedElement xmi:type="uml:Class" xmi:id="_lrLdEoGpEeeVJrxcG2d44A" name="Notifications"/>
+          <packagedElement xmi:type="uml:Package" xmi:id="_lrwr4IGpEeeVJrxcG2d44A" name="Notification">
+            <packagedElement xmi:type="uml:Class" xmi:id="_lrwr4YGpEeeVJrxcG2d44A" name="Message"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_NYqZwoG8EeeQSOgOL7YWQA" name="Module"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_NYqZxIG8EeeQSOgOL7YWQA" name="Subject"/>
+            <packagedElement xmi:type="uml:Class" xmi:id="_NY9UuIG8EeeQSOgOL7YWQA" name="Gravity"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_lr0WQIGpEeeVJrxcG2d44A" name="Notification"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_lrQVkIGpEeeVJrxcG2d44A" name="context">
+          <packagedElement xmi:type="uml:Class" xmi:id="_lrQVkYGpEeeVJrxcG2d44A" name="FrameStack"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_lratoYGpEeeVJrxcG2d44A" name="Context"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_lrfmIIGpEeeVJrxcG2d44A" name="expansion">
+          <packagedElement xmi:type="uml:Class" xmi:id="_lrfmIYGpEeeVJrxcG2d44A" name="ExpansionContext"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_NVhmNIG8EeeQSOgOL7YWQA" name="Xmlgen"/>
+        <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJIG8EeeQSOgOL7YWQA" name="template">
+          <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJYG8EeeQSOgOL7YWQA" name="dom">
+            <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJoG8EeeQSOgOL7YWQA" name="specialization">
+              <packagedElement xmi:type="uml:Package" xmi:id="_NWIDJ4G8EeeQSOgOL7YWQA" name="content">
+                <packagedElement xmi:type="uml:Class" xmi:id="_NWIDKIG8EeeQSOgOL7YWQA" name="Template"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Package" xmi:id="_Ri4XdoG8EeeQSOgOL7YWQA" name="instructions">
+                <packagedElement xmi:type="uml:Class" xmi:id="_Ri4Xd4G8EeeQSOgOL7YWQA" name="StructuralInstruction"/>
+                <packagedElement xmi:type="uml:Class" xmi:id="_Ri4XfIG8EeeQSOgOL7YWQA" name="BeginInstruction"/>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_Rh11ooG8EeeQSOgOL7YWQA" name="parser">
+          <packagedElement xmi:type="uml:Package" xmi:id="_Rh11o4G8EeeQSOgOL7YWQA" name="pi">
+            <packagedElement xmi:type="uml:Package" xmi:id="_Rh11pIG8EeeQSOgOL7YWQA" name="PIParser">
+              <packagedElement xmi:type="uml:Class" xmi:id="_Rh11pYG8EeeQSOgOL7YWQA" name="ContentContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_Rh11q4G8EeeQSOgOL7YWQA" name="TaggedContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_RiIwmIG8EeeQSOgOL7YWQA" name="InputPIContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WCU-R4G8EeeQSOgOL7YWQA" name="ElementContentContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WC60JoG8EeeQSOgOL7YWQA" name="BeginContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WFwFsoG8EeeQSOgOL7YWQA" name="EndContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WIl-UIG8EeeQSOgOL7YWQA" name="InsertContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WJG7sIG8EeeQSOgOL7YWQA" name="UserServiceContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WKATkoG8EeeQSOgOL7YWQA" name="AttributeContentContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WMr0IIG8EeeQSOgOL7YWQA" name="CapturesContext"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_WNRqAoG8EeeQSOgOL7YWQA" name="CaptureContext"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_NYgowYG8EeeQSOgOL7YWQA" name="xml">
+        <packagedElement xmi:type="uml:Package" xmi:id="_NYgowoG8EeeQSOgOL7YWQA" name="sax">
+          <packagedElement xmi:type="uml:Interface" xmi:id="_NYgow4G8EeeQSOgOL7YWQA" name="ErrorHandler"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NYzjtYG8EeeQSOgOL7YWQA" name="SAXParseException"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NYzjuYG8EeeQSOgOL7YWQA" name="SAXException"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_PxyNRYG8EeeQSOgOL7YWQA" name="jdom2">
+        <packagedElement xmi:type="uml:Class" xmi:id="_PxyNRoG8EeeQSOgOL7YWQA" name="Content"/>
+        <packagedElement xmi:type="uml:Package" xmi:id="_V8qbJYG8EeeQSOgOL7YWQA" name="located">
+          <packagedElement xmi:type="uml:Class" xmi:id="_V8qbJoG8EeeQSOgOL7YWQA" name="LocatedCDATA"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V89WGIG8EeeQSOgOL7YWQA" name="LocatedComment"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V9Q4EYG8EeeQSOgOL7YWQA" name="LocatedDocType"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V-Ae8YG8EeeQSOgOL7YWQA" name="LocatedElement"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V-mU1IG8EeeQSOgOL7YWQA" name="LocatedEntityRef"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V_DAwYG8EeeQSOgOL7YWQA" name="LocatedProcessingInstruction"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_V_ynp4G8EeeQSOgOL7YWQA" name="LocatedText"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_WAr_goG8EeeQSOgOL7YWQA" name="LocatedJDOMFactory"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="_WEtj44G8EeeQSOgOL7YWQA" name="Located"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_V-TZ64G8EeeQSOgOL7YWQA" name="Namespace"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_V_V7uYG8EeeQSOgOL7YWQA" name="Document"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_V_V7vIG8EeeQSOgOL7YWQA" name="Element"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_V_fssYG8EeeQSOgOL7YWQA" name="DocType"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_WKc_gYG8EeeQSOgOL7YWQA" name="Attribute"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_NWt5AYG8EeeQSOgOL7YWQA" name="javax">
+      <packagedElement xmi:type="uml:Package" xmi:id="_NWt5AoG8EeeQSOgOL7YWQA" name="xml">
+        <packagedElement xmi:type="uml:Package" xmi:id="_NWt5A4G8EeeQSOgOL7YWQA" name="validation">
+          <packagedElement xmi:type="uml:Class" xmi:id="_NWt5BIG8EeeQSOgOL7YWQA" name="Schema"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_TDf1rIG8EeeQSOgOL7YWQA" name="stream">
+          <packagedElement xmi:type="uml:Interface" xmi:id="_TDf1rYG8EeeQSOgOL7YWQA" name="Location"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_NXxB64G8EeeQSOgOL7YWQA" name="Map">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_NXxB7IG8EeeQSOgOL7YWQA" name="Entry"/>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_WJ7VsIGpEeeVJrxcG2d44A">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WJ78wIGpEeeVJrxcG2d44A" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -10950,10 +10942,6 @@
   <PapyrusJava:StaticClassifier xmi:id="_TEZNgIG8EeeQSOgOL7YWQA" base_Classifier="_TEPch4G8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_TEZNgYG8EeeQSOgOL7YWQA" name="Message" base_Classifier="_TEPch4G8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_TEsIcIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_TEiXgIG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_TEsIdYG8EeeQSOgOL7YWQA" name="Module" base_Classifier="_TEsIdIG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_TE15cIG8EeeQSOgOL7YWQA" name="Gravity" base_Classifier="_TEsIdoG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_TE15coG8EeeQSOgOL7YWQA" name="Subject" base_Classifier="_TE15cYG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_TE15dIG8EeeQSOgOL7YWQA" name="Message" base_Classifier="_TE15c4G8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_TE_DYIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_TE15dYG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_TE_DZ4G8EeeQSOgOL7YWQA" base_BehavioralFeature="_TE_DZoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_TFR-UIG8EeeQSOgOL7YWQA" name="java.util.LinkedList" base_Classifier="_TFI0a4G8EeeQSOgOL7YWQA"/>
@@ -11023,6 +11011,5 @@
   <standard:Create xmi:id="_WM1lIIG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WMr0IoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WNRqA4G8EeeQSOgOL7YWQA" name="org.xmlgen.parser.pi.PIParser.CaptureContext" base_Classifier="_WNRqAoG8EeeQSOgOL7YWQA"/>
   <PapyrusJava:External xmi:id="_WNbbAoG8EeeQSOgOL7YWQA" name="java.util.Iterator" base_Classifier="_WNbbAYG8EeeQSOgOL7YWQA"/>
-  <PapyrusJava:External xmi:id="_WN4G84G8EeeQSOgOL7YWQA" name="IterativeInstruction.State" base_Classifier="_WN4G8oG8EeeQSOgOL7YWQA"/>
   <standard:Create xmi:id="_WN4G9oG8EeeQSOgOL7YWQA" base_BehavioralFeature="_WN4G9YG8EeeQSOgOL7YWQA"/>
 </xmi:XMI>

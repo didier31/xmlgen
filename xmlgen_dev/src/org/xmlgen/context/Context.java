@@ -624,8 +624,7 @@ public class Context
 
 			for (Diagnostic error : errors)
 			{
-				LocationImpl location = new LocationImpl(new Artifact(error.getLocation()), -1, error.getColumn(),
-						error.getLine());
+				LocationImpl location = new LocationImpl(new Artifact(error.getLocation()), -1, error.getLine(), error.getColumn());
 				Notification notification = new Notification(Module.Parameters_check, Gravity.Error, Subject.DataSource,
 						new Message(error.getMessage()));
 				notification = new ContextualNotification(notification, location);
