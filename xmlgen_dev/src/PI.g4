@@ -22,15 +22,16 @@ parameter: Ident ':' typeLiteral
 expand: '<' Expand '>'
 ;
 
-userService: '<' Load dottedIdent '>'
+userService: '<' Load loadArgument'>'
 ;
 
-dottedIdent
-:
-	Ident
-	(
-		'.' Ident
-	)*
+loadArgument: dottedIdent | filename
+;
+
+dottedIdent: DottedIdent
+;
+
+filename: Filename
 ;
 
 tagged: captures | begin | end
@@ -38,6 +39,7 @@ tagged: captures | begin | end
 
 insert: '<' Insert (Label | templateCall) '>'
 ;
+
 templateCall: Ident (effectiveParameter (',' effectiveParameter)*)?
 ;
 
@@ -108,6 +110,24 @@ prefix: Ident ':'
 ;
 
 Load: [Ll][Oo][Aa][Dd]
+;
+
+Filename: '##' 
+;
+
+fragment
+ESC
+:
+	'\\"'
+	| '\\\\'
+;
+
+DottedIdent
+:
+	Ident
+	(
+		'.' Ident
+	)*
 ;
 
 Insert: [Ii][Nn][Ss][Ee][Rr][Tt]
