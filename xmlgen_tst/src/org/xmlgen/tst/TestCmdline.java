@@ -191,6 +191,41 @@ public class TestCmdline implements Notified {
 				            "--output", output};		
 		run(vargs);
 	}
+	
+	/**
+	 * Nominal 1 2 without schema.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void nominal_1_2bis_without_schema() throws IOException
+	{
+		prepareRun();
+		
+		String uml = "'file://" + cdir + "design.uml'";
+		String info = "'file://" + cdir + "info.xml'";
+		String date= "\"" + "27-07-2017" + "\"";
+		String config = "\"../../input/common\"";
+		String url = "\".\"";
+		String commondir = "\"" + cdir + "\"";
+		String template = "'file:/" + cdir + "NewFile.xml'";
+		String outputDir = odir.getPath();
+		String outputFilename = "output.xhtml";
+		String output = "'" + outputDir + "/" + outputFilename + "'";
+		
+		String[] vargs = { "uml=", uml,
+				           "info=", info,
+				           "url=", url,
+				           "cdir=", commondir,
+				           "outputFilename = ", "\"" + outputFilename + "\"",
+				           "outputDir=", "\"" + outputDir + "\"",
+				           "config=", config,
+				           "date=", date,
+				            "--template ", template,
+				            "--trace",
+				            "--output", output};		
+		run(vargs);
+	}
 
 	/**
 	 * Nominal 1 3 with schema and http template.

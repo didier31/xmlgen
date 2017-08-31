@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+      <body xmlns="http://www.w3.org/1999/xhtml">
+	  <?gen classifier_navigation pure def previousClass : uml::Classifier, 
+                                           nextClass : uml::Classifier,
+										   packageName : String,
+										   url : String
+      ?>
+      <?gen [ClassifierNavigation] begin
+	                               when previousClass <> null or nextClass <> null 	                                        
+	  ?>
+      <ul class="navList">
+		<?gen classifier_link_button def neighborClass : uml::Classifier, linkText : String
+        ?>									 
+		<?gen [WithNeighborClass] begin 
+		                          when neighborClass <> null		         	
+		         classFilename = packageName + '.' + neighborClass.name + '_details.xhtml',
+		         classifierTypeStr = if neighborClass.oclIsKindOf(uml::Interface) then
+				                        'interface'
+				   				     else if neighborClass.oclIsKindOf(uml::Class) then
+				                        'class'
+									 else
+									    ''
+									 endif
+									 endif									   
+		  ?>
+        <li>
+          <a
+          href="reference to class details doc"
+          title="classifierType in package name">
+		  <?gen attr href = url + '/' + classFilename ?>
+		  <?gen attr title = classifierTypeStr + ' in ' + packageName ?>
+		  <span
+          class="typeNameLink"> <?gen linkText ?> </span></a>
+        </li>
+		<?gen [WithNeighborClass] end ?>
+		
+		<?gen [WithoutNeighborClass] begin when neighborClass = null ?>
+        <li> <?gen linkText ?> </li>
+		<?gen [WithoutNeighborClass] end ?>
+		<?gen classifier_link_button end ?>
+        <?gen <Insert classifier_link_button previousClass, 'Prev Class'> ?>			
+		<?gen <Insert classifier_link_button nextClass, 'Next Class'> ?>
+      </ul>
+	  <?gen [ClassifierNavigation] end ?>
+      <?gen classifier_navigation end ?>
+      </body>

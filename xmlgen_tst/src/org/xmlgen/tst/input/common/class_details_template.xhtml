@@ -2,9 +2,11 @@
 
 <!DOCTYPE html
    PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
-
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" > 
+   
 <html xmlns="http://www.w3.org/1999/xhtml">
+  <?gen <Import 'file:/' + cdir + 'template_defs.xml'> 
+  ?>  
   <head>
     <title><?gen clazz.name.toUpperFirst() ?></title>
 
@@ -119,49 +121,7 @@
       </ul>
     </div>
     <div class="subNav">
-	  <?gen classifier_navigation def previousClass : uml::Classifier, 
-                                      nextClass : uml::Classifier
-      ?>
-      <?gen [ClassifierNavigation] begin
-	                               when previousClass <> null or nextClass <> null 	                                        
-	  ?>
-      <ul class="navList">
-		<?gen classifier_link_button def neighborClass : uml::Classifier, linkText : String
-        ?>									 
-		<?gen [WithNeighborClass] begin 
-		                          when neighborClass <> null		         	
-		         classFilename = name + '.' + neighborClass.name + '_details.xhtml',
-		         classifierTypeStr = if neighborClass.oclIsKindOf(uml::Interface) then
-				                        'interface '
-				   				     else if neighborClass.oclIsKindOf(uml::Class) then
-				                        'class '
-									 else
-									    ''
-									 endif
-									 endif									   
-		  ?>
-        <li>
-          <a
-          href="reference to class details doc"
-          title="classifierType in package name">
-		  <?gen attr href = url + '/' + classFilename ?>
-		  <?gen attr title = classifierTypeStr + ' in ' + name ?>
-		  <span
-          class="typeNameLink"> <?gen linkText ?> </span></a>
-        </li>
-		<?gen [WithNeighborClass] end ?>
-		
-		<?gen [WithoutNeighborClass] begin when neighborClass = null ?>
-        <li> <?gen linkText ?> </li>
-		<?gen [WithoutNeighborClass] end ?>
-		<?gen classifier_link_button end ?>
-        <?gen <Insert classifier_link_button previousClass, 'Prev Class'> ?>
-			
-		<?gen <Insert classifier_link_button nextClass, 'Next Class'> ?>
-      </ul>
-	  <?gen [ClassifierNavigation] end ?>
-      <?gen classifier_navigation end ?>
-      <?gen <Insert classifier_navigation previousClass, nextClass> ?>
+      <?gen <Insert classifier_navigation previousClass, url = url, packageName = name, nextClass> ?>
       <ul class="navList">
         <li>
           <a
@@ -347,9 +307,9 @@ extends <?gen generalNamesStr ?>
         <ul class="blockList">
           <li class="blockList">
 		    <?gen [NestedClasses] begin when clazz.oclIsKindOf(uml::Class) ?>
+			<?gen [NestedClasses] begin when not clazz.nestedClassifier->isEmpty() ?>
             <!--  ======== NESTED CLASS SUMMARY ======== -->
             <ul class="blockList">
-			  <?gen nestedClass : clazz.nestedClassifier ?>
               <li class="blockList">
                 <a id="nested.class.summary">
                  <!--  --> </a>
@@ -369,7 +329,15 @@ extends <?gen generalNamesStr ?>
                         Class and Description
                       </th>
                     </tr>
-                    <tr class="altColor">
+					<?gen [class init] begin
+					                        class = 'rowColor'
+					?>
+					<?gen nestedClass : clazz.nestedClassifier ?>
+					<?gen [alternate class] begin 
+					                             class = if class = 'rowColor' then 'altColor' else 'rowColor' endif
+					?>
+                    <tr class="???Color">
+					<?gen attr class = class ?>
                       <td class="colFirst">
                         <code>
 						<?gen <Insert qualifiers nestedClass> ?>class
@@ -400,8 +368,15 @@ extends <?gen generalNamesStr ?>
                         </div>
                       </td>
                     </tr>
+					<?gen [alternate class] end export: class ?>
                   </tbody>
                 </table>
+				<?gen begin
+				         ancestors = clazz.general,
+				         inheritedNestedClasses = ancestors->collect(c : uml::Classifier | c.nestedClassifier),
+						 theirQualifiedNames = inheritedNestedClasses->collect(c : uml::Classifer | c.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')),
+						 theirQualifiedNames = theirQualifiedNames->sep(', ')->toString()
+				?>				
                 <ul class="blockList">
                   <li class="blockList">
 				  <?gen begin clazzQualifiedName = name + '.' + clazz.name ?>
@@ -413,12 +388,6 @@ extends <?gen generalNamesStr ?>
                     <h3>
                       <?gen 'Nested classes/interfaces inherited from class ' + clazzQualifiedName ?>
                     </h3>
-					<?gen begin
-					         ancestors = clazz.general,
-					         inheritedNestedClasses = ancestors->collect(c : uml::Classifier | c.nestedClassifier),
-							 theirQualifiedNames = inheritedNestedClasses->collect(c : uml::Classifer | c.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')),
-							 theirQualifiedNames = theirQualifiedNames->sep(', ')->toString()
-					?>
                     <code>
 					<?gen theirQualifiedNames ?>
 					</code>
@@ -426,6 +395,7 @@ extends <?gen generalNamesStr ?>
                 </ul>
               </li>
             </ul>
+			<?gen [NestedClasses] end ?>
 			<?gen [NestedClasses] end ?>
             <!--  =========== FIELD SUMMARY =========== -->
 			<?gen [Fields] begin when clazz.oclIsKindOf(uml::Class) or clazz.oclIsKindOf(uml::DataType) ?>
@@ -447,6 +417,13 @@ extends <?gen generalNamesStr ?>
                   <tbody>
 				  <?gen begin 
 				        when fields <> null
+					    fields = fields->select(f | f.visibility = uml::VisibilityKind::public)->sortedBy(f | f.name)
+						  	   +
+						         fields->select(f | f.visibility = uml::VisibilityKind::package)->sortedBy(f | f.name)
+							   +
+							     fields->select(f | f.visibility = uml::VisibilityKind::protected)->sortedBy(f | f.name)
+							   +
+								 fields->select(f | f.visibility = uml::VisibilityKind::private)->sortedBy(f | f.name)
 				  ?>
                     <tr>
                       <th class="colFirst" scope="col">
@@ -457,8 +434,7 @@ extends <?gen generalNamesStr ?>
                       </th>
                     </tr>
 					<?gen [Field] begin 
-				        when not fields->isEmpty()
-						
+				                        when not fields->isEmpty()
 						class = if class = 'altColor' then 'rowColor' else 'altColor' endif,
 						field = fields->first(),
 						fields = fields->subSequence(2, fields->size())
@@ -485,11 +461,14 @@ extends <?gen generalNamesStr ?>
                                    ''								   
 						      endif 
 						  ?> 
-                          <?gen parameterType def object : uml::TypedElement ?> 
-                          <?gen [WriteType] begin 
-                                                  when object.type <> null
-                                  type = object.type,
-                                  qualifiedName = if type <> null then type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '') else 'void' endif,
+                          <?gen writeType def object : uml::TypedElement ?>
+                          <?gen [Writing the non-void type] begin when object <> null                                                             
+																		  
+                                  type = object.type 
+                          ?>
+                          <?gen                             begin when type <> null 
+                                  typeName = type.name,
+                                  qualifiedName = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
                                   packageQualifiedName = type.eContainer().qualifiedName,
                                   packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
                                   isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = type)
@@ -501,11 +480,11 @@ extends <?gen generalNamesStr ?>
                           title="class in ???">
                            <?gen attr href = url + '/' + qualifiedName + '_details.xhtml' ?>
                            <?gen attr title = 'class in ' + packageQualifiedName ?>
-                           <?gen type.name ?>
+                           <?gen typeName ?>
                           </a>                        
                           <?gen end ?>
                           <?gen begin when not isTypeInScope ?>
-                          <?gen type.name ?>
+                          <?gen typeName ?>
                           <?gen end ?>
                           <?gen if object.upperValue <> null then
 						         if object.upperValue.isComputable() then
@@ -521,9 +500,10 @@ extends <?gen generalNamesStr ?>
 							     ''
 							  endif
                           ?>
-                          <?gen [WriteType] end ?>
-                          <?gen parameterType end ?>
-                          <?gen <Insert parameterType field> ?>
+                          <?gen end  ?>
+                          <?gen [Writing the non-void type] end export: type ?>
+                          <?gen writeType end ?>
+                          <?gen <Insert writeType field> ?>
                       </code>
                       </td>
                       <td class="colLast">
@@ -610,7 +590,7 @@ extends <?gen generalNamesStr ?>
 						      endif 
 						  ?> 
 						<?gen clazz.name ?></a></span>
-						<?gen begin parameters = constructor.ownedParameter,
+						<?gen begin parameters = constructor.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
                                     parametersStr = Sequence{} ?>
 						  <?gen [Parameters loop] parameter : parameters ?> 
 						  <?gen begin
@@ -637,7 +617,15 @@ extends <?gen generalNamesStr ?>
             <?gen [Methods Summary 1] begin 
                             methods = clazz.ownedOperation->select(m | m.getAppliedStereotype('StandardProfile::Create') = null)
             ?>
-            <?gen [Methods Summary 2] begin when not methods->isEmpty() ?>
+            <?gen [Methods Summary 2] begin when not methods->isEmpty() 
+			                          methods = methods->select(m | m.visibility = uml::VisibilityKind::public)->sortedBy(m | m.name)
+									            +
+												methods->select(m | m.visibility = uml::VisibilityKind::package)->sortedBy(m | m.name)
+												+
+												methods->select(m | m.visibility = uml::VisibilityKind::protected)->sortedBy(m | m.name)
+												+
+												methods->select(m | m.visibility = uml::VisibilityKind::private)->sortedBy(m | m.name)
+			?>
             <ul class="blockList">
               <li class="blockList">
                 <a id="method.summary">
@@ -670,101 +658,63 @@ extends <?gen generalNamesStr ?>
                           class = 'altRow'
                     ?>
                     <?gen [MethodsLoop] method : methods ?>
-                    <?gen [Method] begin 
-                                   methodName = method.name,
-                                   result = method.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return),
+                    <?gen [Method] begin
                                    class = if class = 'altColor' then 'altRow' else 'altColor' endif
                     ?>
+					<?gen operation def operation : uml::Operation, operationName : String, class : String ?>
+					<?gen [Operation] begin 
+                                           result = operation.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return)
+					?>
                     <tr id="i0" class="???">
+					  <?gen attr id = operation.id() ?>
                       <?gen attr class = class ?>
                       <td class="colFirst">
-                        <code> <?gen if method.isStatic then 
+                        <code> <?gen if operation.isStatic then 
 						          'static ' 
                                else
                                     ''									  
 						       endif 
 					      ?>
-                          <?gen if method.isAbstract then
+                          <?gen if operation.isAbstract then
 						          'abstract ' 
                                else
                                     ''									  
 						       endif 
 					      ?>
-						  <?gen if method.isLeaf then 
+						  <?gen if operation.isLeaf then 
 						          'final ' 
                                else
                                   ''									  
 						       endif 
 					      ?> 
-						  <?gen if method.visibility <> uml::VisibilityKind::package then 
-                                 method.visibility.toString() + ' '
+						  <?gen if operation.visibility <> uml::VisibilityKind::package then 
+                                 operation.visibility.toString() + ' '
                               else
                                    ''								   
 						      endif 
 						  ?>
-                          <?gen parameterType def object : uml::TypedElement ?>
-                          <?gen [Writing the non-void type] begin when object <> null                                                             
-                                  type = object.type 
-                          ?>
-                          <?gen                             begin when type <> null 
-                                  typeName = type.name,
-                                  qualifiedName = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
-                                  packageQualifiedName = type.eContainer().qualifiedName,
-                                  packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
-                                  isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = type)
-                          ?>
-                          <?gen begin when isTypeInScope                                   
-                          ?>
-                          <a
-                          href="??? class_details.html"
-                          title="class in ???">
-                           <?gen attr href = url + '/' + qualifiedName + '_details.xhtml' ?>
-                           <?gen attr title = 'class in ' + packageQualifiedName ?>
-                           <?gen typeName ?>
-                          </a>                        
-                          <?gen end ?>
-                          <?gen begin when not isTypeInScope ?>
-                          <?gen typeName ?>
-                          <?gen end ?>
-                          <?gen if object.upperValue <> null then
-						         if object.upperValue.isComputable() then
-  						            if object.upperValue.unlimitedValue() <> '' or object.upperValue.integerValue() > 1 then
-								       '[]'
-								    else
-								       ''
-								    endif
-						         else
-							        ''
-						         endif
-							  else
-							     ''
-							  endif
-                          ?>
-                          <?gen end  export: type ?>
-                          <?gen [Writing the non-void type] end export: type ?>
-                          <?gen [Writing the void type] begin when object = null or type = null ?>void
+						  <?gen [Writing type] begin when result <> null and result.type <> null ?>
+                          <?gen <Insert writeType result> ?>
+						  <?gen [Writing type] end ?>
+						  <?gen [Writing the void type] begin when (result = null or result.type = null) and operation.getAppliedStereotype('StandardProfile::Create') = null ?>void
                           <?gen [Writing the void type] end ?>
-                          <?gen parameterType end ?>
-
-                          <?gen <Insert parameterType result> ?>
-<?gen <Insert parameterType OrderedSet{} > ?>
                           </code>
                       </td>
                       <td class="colLast">
                         <code><span class="memberNameLink"><a
                         href="thisFile#id???">
-                        <?gen attr href = url + '/' + classfilename + '#' + method.id() ?>
-                        <?gen methodName ?></a></span>(<?gen [ParametersWrite] begin when not method.ownedParameter->isEmpty()
-                                                             parameters = method.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
+                        <?gen attr href = url + '/' + classfilename + '#' + operation.id() ?>
+                        <?gen operationName ?></a></span>(<?gen [ParametersWrite] begin when not operation.ownedParameter->isEmpty()
+                                                             parameters = operation.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
                                                              commas = parameters->collect(p | ', ')->subSequence(1, parameters->size() - 1)->including('')
                                                        ?>
                                                        <?gen [ParametersLoop] parameter : parameters, comma : commas ?>
-                                                       <?gen <Insert parameterType parameter> ?>
+                                                       <?gen <Insert writeType parameter> ?>
                                                        <?gen ' ' + parameter.name + comma ?>
                                                        <?gen [ParametersLoop] end ?>
                                                        <?gen [ParametersWrite] end ?>)</code>
-                        <?gen begin when not clazz.ownedComment->isEmpty()
-                              comment = clazz.ownedComment->first() ?>
+                        <?gen begin when not operation.ownedComment->isEmpty()
+                              comment = operation.ownedComment->first() ?>
                         <div class="block">
 			            <?gen comment.literalComment() ?>
                         <!--  begin-user-doc -->
@@ -772,6 +722,9 @@ extends <?gen generalNamesStr ?>
                         </div>                        
                       </td>
                     </tr>
+					<?gen [Operation] end ?>
+					<?gen operation end ?>
+					<?gen <Insert operation method, method.name, class> ?>
                     <?gen [Method] end export: class ?>
                     <?gen [MethodsLoop] end ?>
                     <?gen [Methods] end ?>
@@ -1015,7 +968,7 @@ extends <?gen generalNamesStr ?>
       </div>
     </div>
     <div class="subNav">
-    <?gen <Insert classifier_navigation previousClass, nextClass> ?>
+    <?gen <Insert classifier_navigation url = url, packageName = name, previousClass, nextClass> ?>
       <ul class="navList">
         <li>
           <a

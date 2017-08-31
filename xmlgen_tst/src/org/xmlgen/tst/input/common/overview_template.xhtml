@@ -5,11 +5,12 @@
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
   <?gen <Load org.xmlgen.tst.ExpansionServices>
   ?>
-  <?gen [Heading] begin 
-  		                   model = uml->at(1),
-                           title = model.name
+  <?gen [Body] begin 
+  		            model = uml->at(1),
+                    title = model.name
   ?>
   <head>
     <title><?gen title.toUpperFirst() ?></title>
@@ -41,7 +42,6 @@
 ?>/*<![CDATA[*/
 /*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
-  <?gen [Heading] end
 ?> <div class="topNav"><a name="navbar_top"><!--  --></a><div
   class="skipNav"><a href="overview-summary.html#skip-navbar_top"
   title="Skip navigation links">Skip navigation links <?gen attr href = url + '/' + outputFilename + '#skip-navbar_top'
@@ -281,4 +281,5 @@
 ///*]]>*/</script></div><a id="skip.navbar.bottom"
   name="skip.navbar.bottom"><!--  --></a></div> <!--  ======== END OF BOTTOM NAVBAR ======= -->
 </body>
+<?gen [Body] end ?>
 </html>
