@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
@@ -16,6 +17,7 @@ import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
 import org.xmlgen.notifications.LocationImpl;
 import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notifications;
 import org.xmlgen.notifications.Notification.Gravity;
 import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
@@ -67,12 +69,20 @@ public class EndInstruction extends TaggedInstruction
 	{
 		ExpansionContext expansionContext = getXmlgen().getExpansionContext();
 		StructuralInstruction structuralInstruction = expansionContext.getRelatedStructure();
+		// When not found
 		if (structuralInstruction == null)
 		{
-			/*
-			 * TODO : the end has no related beginning structure. Hence, This end
-			 * is too much. Notify the user for his error.
-			 */
+			String label = getLabel();
+
+			Message message = new Message("End instruction" + (label.equals("") ? "" : " with label '" + label + "'") + " has no related section beginning instruction.");
+			Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
+			Xmlgen xmlgen = getXmlgen();
+			Context context = xmlgen.getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(contextualNotification);
 		}
 		else if (structuralInstruction.isFinished() || !structuralInstruction.executed())
 		{
@@ -96,7 +106,7 @@ public class EndInstruction extends TaggedInstruction
 		structuralInstruction.end();
 	}
 
-	protected void exports()
+	public void exports()
 	{
 		if (exports != null)
 		{
@@ -106,15 +116,23 @@ public class EndInstruction extends TaggedInstruction
 			for (TerminalNode export : exports)
 			{
 				String exportedDataSourceId = export.getText();
-				Object dataSource = currentFrame.get(exportedDataSourceId);
-				if (dataSource != null || currentFrame.containsKey(exportedDataSourceId))
+				if (currentFrame.containsKey(exportedDataSourceId))
 				{
+					Object dataSource = currentFrame.get(exportedDataSourceId);
 					upperFrame.put(exportedDataSourceId, dataSource);
 					traceExport(exportedDataSourceId);
 				}
-				else
+				else if (!frameStack.containsKey(exportedDataSourceId))
 				{
-					// TODO: Notice user mispelled id
+					Message message = new Message("export: unknown '" + exportedDataSourceId + "'");
+					Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
+					Xmlgen xmlgen = getXmlgen();
+					Context context = xmlgen.getContext();
+					Artifact artefact = new Artifact(context.getXmlTemplate());
+					LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+					ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+					Notifications notifications = getXmlgen().getNotifications();
+					notifications.add(contextualNotification);
 				}
 			}
 		}

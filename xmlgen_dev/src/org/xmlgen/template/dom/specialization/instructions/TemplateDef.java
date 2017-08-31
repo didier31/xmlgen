@@ -19,6 +19,7 @@ import org.eclipse.acceleo.query.ast.impl.ErrorTypeLiteralImpl;
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.eclipse.emf.ecore.EClassifier;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
@@ -41,6 +42,11 @@ public class TemplateDef extends StructuralInstruction
 	public void setExecutable()
 	{
 		notExecutable = false;
+	}
+	
+	public boolean isPure()
+	{
+		return isPure;
 	}
 	
 	public boolean identifyPositionalParams(EffectiveParameter[] effectiveParameters)
@@ -68,7 +74,6 @@ public class TemplateDef extends StructuralInstruction
 			}
 			else				
 			{
-				// TODO: Notify user that formal and effective parameters at formalParameter.Id() are not compatible.
 				isSuccess = false;
 			}
 			idx++;
@@ -96,8 +101,7 @@ public class TemplateDef extends StructuralInstruction
 					FormalParameter formalParameter = formalParametersByName.get(id);
 					boolean parametersAreCompatible = checkIsKindOf(formalParameter, effectiveParam);
 					if (!parametersAreCompatible)
-					{
-						// TODO: Notify user, types are not compatible
+					{				
 						isSuccess = false;
 					}
 					/*
@@ -109,8 +113,8 @@ public class TemplateDef extends StructuralInstruction
 					formalParams.set(idx, null);
 				}
 				else
-				{
-					// TODO: Notify the user that the name doesn't exist.
+				{				
+					notify(Gravity.Error, "Unknown parameter '" + id +  "'");					
 					isSuccess = false;
 				}
 				/*
@@ -118,7 +122,10 @@ public class TemplateDef extends StructuralInstruction
 				 */
 				effectiveParams.remove(effectiveIdx);
 			}
-			effectiveIdx++;
+			else
+			{
+				effectiveIdx++;
+			}
 		}
 		return isSuccess;
 	}
@@ -140,7 +147,6 @@ public class TemplateDef extends StructuralInstruction
 			boolean isCorrect = checkIsKindOf(formalParameter, effectiveParameter);
 			if (!isCorrect)
 			{
-				// TODO: Notify type incompatibility
 				isSuccess = false;
 			}
 			i++;
@@ -169,15 +175,18 @@ public class TemplateDef extends StructuralInstruction
 		}
 		
 		boolean isKindOf = effectiveValue == null;
+		Class<? extends Object> effectiveClass = null;
 		if (!isKindOf)
 		{
-			Class<? extends Object> effectiveClass = effectiveValue.getClass();	
+			effectiveClass = effectiveValue.getClass();	
 			isKindOf = formalClass.isAssignableFrom(effectiveClass);
 		}
 		
 		if (!isKindOf)
 		{
-			// TODO : Notify user, the type is incompatible with the one of the formal parameter.
+			// Notify user that formal and effective parameters at formalParameter.Id() are not compatible.
+			notify(Gravity.Error, "Formal parameter named '" + formal.getId() + "' is constrained to " + formal.getTypeAsString()
+                             + ", found " + effectiveClass.getSimpleName() + " as effective parameter");
 		}		
 		return isKindOf; 
 	}
@@ -185,6 +194,7 @@ public class TemplateDef extends StructuralInstruction
 	protected TemplateDef(String data, TemplateDefContext templateDef, int line, int column, Xmlgen xmlgen)
 	{
 		super(data, templateDef.Ident().getText(), line, column, xmlgen);
+		isPure = templateDef.Pure() != null;
 		id = templateDef.Ident().getText();
 		List<ParameterContext> parameters = templateDef.parameter();
 		formalParameters = new FormalParameter[parameters.size()];
@@ -207,13 +217,13 @@ public class TemplateDef extends StructuralInstruction
 				else
 				{
 					typeReference = new ErrorTypeLiteral();
-					// TODO: Notify about bad type
+					notify(Gravity.Error, "Unknown type of parameter '" + id + "' for template '" + getId() + "'");
 				}
-				FormalParameter formalParameter = new FormalParameter(i, id, typeReference);
+				FormalParameter formalParameter = new FormalParameter(i, id, typeReference, clazzStr);
 				formalParameters[i] = formalParameter;
 				if (formalParametersByName.containsKey(id))
 				{
-					// TODO: Notify duplicate id
+					notify(Gravity.Error, "Redefinition of parameter '" + id +  "' in template '" + getId() + "'.");
 				}
 				else
 				{
@@ -222,9 +232,22 @@ public class TemplateDef extends StructuralInstruction
 				i++;
 			}
 		}
-		getXmlgen().addTemplate(getId(), this);
+		getXmlgen().addTemplate(this);
 	}
 
+	protected void notify(Gravity gravity, String messageStr)
+	{
+		Message message = new Message(messageStr);
+		Notification notification = new Notification(Module.Expansion, gravity, Subject.Template, message);
+		Xmlgen xmlgen = getXmlgen();
+		Context context = xmlgen.getContext();
+		Artifact artefact = new Artifact(context.getXmlTemplate());
+		LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+		Notifications notifications = getXmlgen().getNotifications();
+		notifications.add(contextualNotification);
+	}
+	
 	private boolean check_IsTypeReference(Expression expression, int position, int line, int column)
 	{
 		String errorMessage;
@@ -256,26 +279,20 @@ public class TemplateDef extends StructuralInstruction
 		{
 			errorMessage = "an unreconized expression";
 		}
-		errorMessage += " found at position " + position + ", expecting a type.";
-		Message message = new Message(errorMessage);
-		Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
-		Artifact artifact = new Artifact(getId());
-		LocationImpl location = new LocationImpl(artifact, -1, line, column);
-		ContextualNotification contextNotification = new ContextualNotification(notification, location);
-		
-		Notifications notifications = getXmlgen().getNotifications();
-		notifications.add(contextNotification);
+		errorMessage += " found at position " + position + ", expecting a type for template definition '" + getId() + "'.";
+		notify(Gravity.Error, errorMessage);
 		
 		return false;
 	}		
 
 	protected class FormalParameter
-	{
-		protected FormalParameter(int index, String id, TypeLiteral type)
+	{		
+		protected FormalParameter(int index, String id, TypeLiteral type, String typeAsStr)
 		{
 			this.index = index;
 			this.id = id;
 			this.type = type;
+			this.typeAsString = typeAsStr;
 		}
 
 		protected int getIndex()
@@ -292,10 +309,16 @@ public class TemplateDef extends StructuralInstruction
 		{
 			return type.getValue();
 		}
+		
+		protected String getTypeAsString()
+		{
+			return typeAsString;
+		}
 
 		private int index;
 		private String id;
 		private TypeLiteral type;
+		private String typeAsString;
 	}
 	
 	class ErrorTypeLiteral extends ErrorTypeLiteralImpl
@@ -336,11 +359,11 @@ public class TemplateDef extends StructuralInstruction
 		}
 		return new Vector<Cloneable>(0);
 	}
-
 	
 	private boolean notExecutable = true;
 	private Stack<State> states = new Stack<State>();
 	private String id;
+	private boolean isPure;
 	private FormalParameter[] formalParameters;
 	private HashMap<String, FormalParameter> formalParametersByName;
 }

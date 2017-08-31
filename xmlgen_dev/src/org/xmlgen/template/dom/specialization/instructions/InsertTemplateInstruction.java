@@ -8,10 +8,20 @@ import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.jdom2.Content;
 import org.jdom2.located.Located;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
+import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notifications;
+import org.xmlgen.notifications.Notification.Gravity;
+import org.xmlgen.notifications.Notification.Message;
+import org.xmlgen.notifications.Notification.Module;
+import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.EffectiveParameterContext;
 import org.xmlgen.parser.pi.PIParser.TemplateCallContext;
 import org.xmlgen.template.dom.specialization.content.Element;
@@ -53,7 +63,17 @@ public class InsertTemplateInstruction extends InsertInstruction
 			else
 			{
 				body = null;
-				// TODO Notify an error to user : no template with this id
+				String id = getId();
+
+				Message message = new Message("Unknown " + " template reference '" + id + "'");
+				Notification notification = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
+				Xmlgen xmlgen = getXmlgen();
+				Context context = xmlgen.getContext();
+				Artifact artefact = new Artifact(context.getXmlTemplate());
+				LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+				ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+				Notifications notifications = getXmlgen().getNotifications();
+				notifications.add(contextualNotification);
 			}
 		}
 		return body;
@@ -71,7 +91,15 @@ public class InsertTemplateInstruction extends InsertInstruction
 		}
 		else
 		{
-			// TODO Notify an error to user
+			Message message = new Message("Unknown template's identificator '" + templateId + "'");
+			Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
+			Context context = xmlgen.getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(contextualNotification);
+
 			templateDef = null;
 		}
 		return templateDef;
@@ -98,42 +126,80 @@ public class InsertTemplateInstruction extends InsertInstruction
 		TemplateDef templateDef = getTemplateDef();
 		Vector<Cloneable> expanded;
 
+		evaluateEffectiveParameters();
 		boolean isSuccess = templateDef.identifyPositionalParams(effectiveParameters);
 
 		if (isSuccess)
 		{
-			// Evaluate effective parameters
-			for (EffectiveParameter effectiveParameter : effectiveParameters)
+			// Push parameters frame
+			FrameStack contextualFrameStack = getXmlgen().getFrameStack();
+			Frame parametersFrame;
+			final String nameOfParametersFrame = "parameters of " + getId();
+			if (templateDef.isPure())
 			{
-				effectiveParameter.setValue(eval(effectiveParameter.getExpression()));
-			}
-
-			isSuccess = templateDef.checkTypeCompatibility(effectiveParameters);
-			if (isSuccess)
-			{
-				FrameStack frameStack = getXmlgen().getFrameStack();
-				Frame parametersFrame = new Frame("parameters of " + getId());
-				frameStack.push(parametersFrame);
-				// Passing parameters
-				for (EffectiveParameter effectiveParameter : effectiveParameters)
-				{
-					String paramId = effectiveParameter.getId();
-					Object paramValue = effectiveParameter.getValue();
-					addToCurrentFrame(paramId, paramValue);
-				}
-				expanded = body.expandMySelf(recursiveIt, false);
-				popFrame((Located) recursiveIt.current());
+				FrameStack pureFrameStack = new FrameStack(nameOfParametersFrame);
+				parametersFrame = pureFrameStack.peek();
+				getXmlgen().setFrameStack(pureFrameStack);
 			}
 			else
 			{
-				expanded = new Vector<Cloneable>(0);
+				parametersFrame = new Frame(nameOfParametersFrame);
 			}
+			contextualFrameStack.push(parametersFrame);
+			// Passing parameters
+			copyEffectiveParametersOnStack();
+			// Expand the template
+			expanded = body.expandMySelf(recursiveIt, false);
+			// if any, make jump exports over the parameters frame.
+			propagateExports(body);
+			getXmlgen().setFrameStack(contextualFrameStack);
+			// Pop parameters frame
+			popFrame((Located) recursiveIt.current());
 		}
 		else
 		{
 			expanded = new Vector<Cloneable>(0);
 		}
 		return expanded;
+	}
+
+	/**
+	 * 
+	 */
+	protected void evaluateEffectiveParameters()
+	{
+		// Evaluate effective parameters
+		for (EffectiveParameter effectiveParameter : effectiveParameters)
+		{
+			effectiveParameter.setValue(eval(effectiveParameter.getExpression()));
+		}
+	}
+
+	/**
+	 * @param body
+	 */
+	protected void propagateExports(Element body)
+	{
+		int lastContentIdx = body.getContentSize() - 1;
+		Content lastContent = body.getContent(lastContentIdx);
+		if (lastContent instanceof EndInstruction)
+		{
+			EndInstruction endInstruction = (EndInstruction) lastContent;
+			endInstruction.exports();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	protected void copyEffectiveParametersOnStack()
+	{
+		for (EffectiveParameter effectiveParameter : effectiveParameters)
+		{
+			String paramId = effectiveParameter.getId();
+			Object paramValue = effectiveParameter.getValue();
+			addToCurrentFrame(paramId, paramValue);
+		}
 	}
 
 	private String id;

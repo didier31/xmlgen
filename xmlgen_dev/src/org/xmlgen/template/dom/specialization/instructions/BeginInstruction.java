@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.eclipse.acceleo.query.runtime.IQueryBuilderEngine.AstResult;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
@@ -116,7 +117,14 @@ public class BeginInstruction extends StructuralInstruction
 			disableExecution();
 			if (!(guardResult instanceof Boolean))
 			{
-				// TODO: Notify user that guard has not the correct type 
+				Message message = new Message("Guard expression should be of boolean type");
+				Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
+				Context context = getXmlgen().getContext();
+				Artifact artefact = new Artifact(context.getXmlTemplate());
+				LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+				ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+				Notifications notifications = getXmlgen().getNotifications();
+				notifications.add(contextualNotification);
 			}
 		}
 		setFinished();

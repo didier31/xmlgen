@@ -4,7 +4,17 @@ import java.util.Collection;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.jdom2.Content;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.expansion.ExpansionContext;
+import org.xmlgen.notifications.Artifact;
+import org.xmlgen.notifications.ContextualNotification;
+import org.xmlgen.notifications.LocationImpl;
+import org.xmlgen.notifications.Notification;
+import org.xmlgen.notifications.Notifications;
+import org.xmlgen.notifications.Notification.Gravity;
+import org.xmlgen.notifications.Notification.Message;
+import org.xmlgen.notifications.Notification.Module;
+import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.template.dom.specialization.content.Element;
 
 @SuppressWarnings("serial")
@@ -43,7 +53,17 @@ public class InsertBlockInstruction extends InsertInstruction
 		BeginInstruction insertedBegin = expansionContext.getBegin(getLabel());
 		if (insertedBegin == null)
 		{
-			// TODO Notify an error to user : no begin/end with this label
+			String label = getLabel();
+
+			Message message = new Message("Unknown " + " label '" + label + "' of begin instruction");
+			Notification notification = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
+			Xmlgen xmlgen = getXmlgen();
+			Context context = xmlgen.getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(contextualNotification);
 		}
 		return insertedBegin;
 	}

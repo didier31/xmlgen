@@ -6,15 +6,14 @@ package org.xmlgen.parser.pi;
 
 import Query;
 
-inputPI : (tagged | content | insert | userService | expand | templateDef) EOF
+inputPI : (tagged | content | insert | userService| templateImport | expand | templateDef) EOF
 ;
 
-
-templateDef: Ident Def (parameter (',' parameter)*)?
+templateImport: '<' Import expression '>'
 ;
 
-Def: [Dd][Ee][Ff];
-
+templateDef: Ident Pure? Def (parameter (',' parameter)*)?
+;
 
 parameter: Ident ':' typeLiteral
 ;
@@ -22,16 +21,15 @@ parameter: Ident ':' typeLiteral
 expand: '<' Expand '>'
 ;
 
-userService: '<' Load loadArgument'>'
+userService: '<' Load dottedIdent '>'
 ;
 
-loadArgument: dottedIdent | filename
-;
-
-dottedIdent: DottedIdent
-;
-
-filename: Filename
+dottedIdent
+:
+	Ident
+	(
+		'.' Ident
+	)*
 ;
 
 tagged: captures | begin | end
@@ -39,7 +37,6 @@ tagged: captures | begin | end
 
 insert: '<' Insert (Label | templateCall) '>'
 ;
-
 templateCall: Ident (effectiveParameter (',' effectiveParameter)*)?
 ;
 
@@ -112,26 +109,16 @@ prefix: Ident ':'
 Load: [Ll][Oo][Aa][Dd]
 ;
 
-Filename: '##' 
-;
-
-fragment
-ESC
-:
-	'\\"'
-	| '\\\\'
-;
-
-DottedIdent
-:
-	Ident
-	(
-		'.' Ident
-	)*
-;
-
 Insert: [Ii][Nn][Ss][Ee][Rr][Tt]
 ;
 
 Begin: [Bb][Ee][Gg][Ii][Nn]
 ;
+
+Import: [Ii][Mm][Pp][Oo][Rr][Tt]
+;
+
+Def: [Dd][Ee][Ff]
+;
+
+Pure: [Pp][Uu][Rr][Ee];

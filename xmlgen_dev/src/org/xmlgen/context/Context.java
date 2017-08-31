@@ -303,14 +303,24 @@ public class Context
 	 */
 	protected void readTemplate()
 	{
-		assert (getXmlTemplate() != null);
+		xmlTemplateDocument = readTemplate(getXmlTemplate());
+	}
+	
+	/**
+	 * Read template and store it to be accessible through
+	 * getXmlTemplateDocument().
+	 */
+	public Template readTemplate(String templateFilename)
+	{
+		assert (templateFilename != null);
 
 		SAXBuilder jdomBuilder = new SAXBuilder();
 		jdomBuilder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		jdomBuilder.setJDOMFactory(new TemplateDomFactory(getXmlgen()));
+		Template xmlTemplateDocument = null;
 		try
 		{
-			xmlTemplateDocument = (Template) jdomBuilder.build(getXmlTemplate());
+			xmlTemplateDocument = (Template) jdomBuilder.build(templateFilename);
 		}
 		catch (JDOMException e)
 		{
@@ -323,7 +333,8 @@ public class Context
 		{
 		}
 		//TODO : Check xmlTemplateDocument is not null => Notify user otherwise.
-	}
+		return xmlTemplateDocument;
+	}	
 
 	protected Xmlgen getXmlgen()
 	{

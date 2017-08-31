@@ -13,6 +13,7 @@ import org.xmlgen.notifications.Notification.Gravity;
 /**
  * The Class Notifications.
  */
+@SuppressWarnings("serial")
 public class Notifications extends LinkedList<Notification> implements Notifier
 {
 	/*
@@ -105,11 +106,7 @@ public class Notifications extends LinkedList<Notification> implements Notifier
 	static Notifications instance = new Notifications();
 
 	/** The counts. */
-	HashMap<Notification.Gravity, Integer> counts = new HashMap<Notification.Gravity, Integer>();
-
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -5330193007718869533L;
-
+	private HashMap<Notification.Gravity, Integer> counts = new HashMap<Notification.Gravity, Integer>();
 
 	private Vector<Notified> notifieds = new Vector<Notified>(1);
 }

@@ -23,6 +23,7 @@ import org.xmlgen.parser.pi.PIParser.InputPIContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.xmlgen.parser.pi.PIParser.TaggedContext;
 import org.xmlgen.parser.pi.PIParser.TemplateDefContext;
+import org.xmlgen.parser.pi.PIParser.TemplateImportContext;
 import org.xmlgen.parser.pi.PIParser.UserServiceContext;
 
 // TODO: Auto-generated Javadoc
@@ -84,12 +85,18 @@ public class InstructionParser
 							}
 							else
 							{
-								// TODO : Notifiy error to user
-								return null;
+								TemplateImportContext templateImportContext = inputPI.templateImport();
+								if (templateImportContext != null)
+								{
+									return templateImportContext;
+								}
+								else
+								{
+									return null;
+								}
 							}
 						}
 					}
-
 				}
 			}			
 		}

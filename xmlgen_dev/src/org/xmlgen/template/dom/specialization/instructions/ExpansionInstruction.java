@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.jdom2.located.Located;
 import org.xmlgen.Xmlgen;
+import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
@@ -35,6 +36,7 @@ import org.xmlgen.parser.pi.PIParser.EndContext;
 import org.xmlgen.parser.pi.PIParser.ExpandContext;
 import org.xmlgen.parser.pi.PIParser.InsertContext;
 import org.xmlgen.parser.pi.PIParser.TemplateDefContext;
+import org.xmlgen.parser.pi.PIParser.TemplateImportContext;
 import org.xmlgen.parser.pi.PIParser.UserServiceContext;
 import org.xmlgen.template.dom.specialization.content.ProcessingInstruction;
 
@@ -95,6 +97,11 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 			UserServiceContext userServiceContext = (UserServiceContext) instruction;
 			domInstruction = new LoadInstruction(pi, userServiceContext, line, column, xmlgen);
 		}
+		else if (instruction instanceof TemplateImportContext)
+		{
+			TemplateImportContext templateImportContext = (TemplateImportContext) instruction;
+			domInstruction = new ImportInstruction(pi, templateImportContext, line, column, xmlgen);
+		}
 		else if (instruction instanceof ExpandContext)
 		{
 			domInstruction = new ExpandInstruction(pi, line, column, xmlgen);
@@ -107,7 +114,15 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 		else
 		{
 			domInstruction = null;
-			assert(false);
+
+			Message message = new Message("Unrecognized  instruction");
+			Notification notification = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
+			Context context = xmlgen.getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, line, column);
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = xmlgen.getNotifications();
+			notifications.add(contextualNotification);
 		}
 		return domInstruction;
 	}

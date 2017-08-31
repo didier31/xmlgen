@@ -46,26 +46,37 @@ public class ExpandInstruction extends ExpansionInstruction
 		   
 		   Context newContext = xmlgen.getContext(); 
 		
-			Object paramValue = frameStack.get(template);				
-		   if (paramValue instanceof String)
+		   Object paramValue;
+		   if (frameStack.containsKey(template))
 		   {
-		   	String templatePath = (String) paramValue; 
-		   	newContext.setXmlTemplate(templatePath);
+		   	paramValue = frameStack.get(template);
+		   	if (paramValue instanceof String)
+		   	{
+		   		String templatePath = (String) paramValue;
+		   		newContext.setXmlTemplate(templatePath);
+		   	}
 		   }
 		   
-		   paramValue = frameStack.get(output);			
-		   if (paramValue instanceof String)
+		   if (frameStack.containsKey(output))
 		   {
-		   	String outputPath = (String) paramValue; 
-		   	newContext.setOutput(outputPath);
+		   	paramValue = frameStack.get(output);
+		   	if (paramValue instanceof String)
+		   	{
+		   		String outputPath = (String) paramValue;
+		   		newContext.setOutput(outputPath);
+		   	}
 		   }
 		   
-		   paramValue = frameStack.get(schema);			
-		   if (paramValue instanceof String)
+		   
+		   if (frameStack.containsKey(schema))
 		   {
-		   	String schemaPath = (String) paramValue; 
-		   	newContext.setSchema(schemaPath);
-		   }		   
+		   	paramValue = frameStack.get(schema);
+		   	if (paramValue instanceof String)
+		   	{
+		   		String schemaPath = (String) paramValue;
+		   		newContext.setSchema(schemaPath);
+		   	}
+		   }
 		   
 		   paramValue = frameStack.get(trace);			
 		   if (paramValue instanceof String)

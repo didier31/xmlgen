@@ -42,8 +42,12 @@ public class Template extends org.jdom2.Document
 		assert node.size() == 1 && node.get(0) instanceof Element;
 		Element root = (Element) node.get(0);
 		Document expandedDocument = new Document(root);
-		DocType docType = (DocType) getDocType().clone();
-		expandedDocument.setDocType(docType);
+		DocType originalDocType = (DocType) getDocType();
+		if (originalDocType != null)
+		{
+			DocType docType = (DocType) getDocType().clone();
+			expandedDocument.setDocType(docType);
+		}
 		
 		return expandedDocument;
 	}	

@@ -47,6 +47,11 @@ public class Xmlgen
 	{
 		return frameStack;
 	}
+
+	public void setFrameStack(FrameStack newFrameStack)
+	{
+		frameStack = newFrameStack;
+	}
 	
 	public ExpansionContext getExpansionContext()
 	{
@@ -110,7 +115,7 @@ public class Xmlgen
 		}
 		catch (IOException e)
 		{
-			// TODO Notify an error to user.
+			getNotifications().add(cant_write_output);
 		}
 	}
 
@@ -158,8 +163,30 @@ public class Xmlgen
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
-	public void addTemplate(String id, TemplateDef templateDef)
+	public void addTemplate(TemplateDef templateDef)
 	{
+		String id = templateDef.getId();
+		if (templateDefs.containsKey(id))
+		{
+			Message message = new Message("Redefinition of template '" + id +  "'");
+			Notification notification = new Notification(Module.Expansion, Gravity.Warning, Subject.Template, message);
+			Context context = getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, templateDef.getLine(), templateDef.getColumn());
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = getNotifications();
+			notifications.add(contextualNotification);
+			
+			templateDef = templateDefs.get(id); 
+			message = new Message("Original definition of template '" + id +  "' at line " + templateDef.getLine());
+			notification = new Notification(Module.Expansion, Gravity.Information, Subject.Template, message);
+			context = getContext();
+			artefact = new Artifact(context.getXmlTemplate());
+			location = new LocationImpl(artefact, -1, templateDef.getLine(), templateDef.getColumn());
+			contextualNotification = new ContextualNotification(notification, location);
+			notifications = getNotifications();
+			notifications.add(contextualNotification);
+		}
 		templateDefs.put(id, templateDef);
 	}
 	
