@@ -1,5 +1,6 @@
 package org.xmlgen.template.dom.specialization.instructions;
 
+import java.util.Stack;
 import java.util.Vector;
 
 import org.xmlgen.Xmlgen;
@@ -18,7 +19,13 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	protected void initialize()
 	{
 		super.initialize();
-		currentState().setCompletion(false);
+		State currentState = currentState();
+		boolean notInitialized = !currentState.isInitialized();
+		if (notInitialized)
+		{
+			currentState().setCompletion(false);
+			currentState.setInitialized();
+		}
 	}
 	
 	@Override
@@ -38,7 +45,6 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	 *
 	 * @return if something has been effectively iterated.
 	 */
-
 	final public void iterate(ExpansionContext expansionContext)
 	{
 		boolean isFinished = iterateImpl(expansionContext);
@@ -46,4 +52,51 @@ public abstract class IterativeInstruction extends StructuralInstruction
 	}
 
 	abstract protected boolean iterateImpl(ExpansionContext expansionContext);
+	
+	protected State currrentState()
+	{
+		return states.peek();
+	}
+	
+	@Override
+	protected void createState()
+	{
+		State currentState = new State();
+		states.push(currentState);
+	}
+
+	@Override
+	protected void deleteState()
+	{
+		states.pop();
+	}
+
+	@Override
+	protected State currentState()
+	{
+		return states.peek();
+	}
+
+	@Override
+	protected boolean thereIsNoState()
+	{
+		return states.isEmpty();
+	}
+	
+	private Stack<State> states = new Stack<State>();
+	
+	protected class State extends StructuralInstruction.State
+	{
+		private void setInitialized()
+		{
+			isInitialized = true;
+		}
+		
+		private boolean isInitialized()
+		{
+			return isInitialized;
+		}
+		
+		private boolean isInitialized = false;
+	}
 }

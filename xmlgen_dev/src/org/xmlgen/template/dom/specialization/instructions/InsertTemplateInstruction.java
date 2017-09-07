@@ -148,6 +148,8 @@ public class InsertTemplateInstruction extends InsertInstruction
 			contextualFrameStack.push(parametersFrame);
 			// Passing parameters
 			copyEffectiveParametersOnStack();
+			// Create definitions on stack
+			templateDef.setDefinitions();
 			// Expand the template
 			expanded = body.expandMySelf(recursiveIt, false);
 			// if any, make jump exports over the parameters frame.

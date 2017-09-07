@@ -29,6 +29,7 @@ import org.xmlgen.parser.pi.PIParser.CapturesContext;
 /**
  * The Class CapturesInstruction.
  */
+@SuppressWarnings("serial")
 public class CapturesInstruction extends IterativeInstruction
 {
 	/**
@@ -237,9 +238,6 @@ public class CapturesInstruction extends IterativeInstruction
 	private Notification duplicateDataSourceReference = new Notification(Module.Parameters_check, Gravity.Error,
 			Subject.DataSource, Message.Duplicate_Reference);
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 5198212129556107335L;
-
 	/** The datasources Ids. */
 	private Vector<String> datasourcesIDs;
 
@@ -281,7 +279,7 @@ public class CapturesInstruction extends IterativeInstruction
 	private Vector<AstResult> captureQueries;
 
 	@Override
-	protected void createState(ExpansionContext expansionContext)
+	protected void createState()
 	{
 		State currentState = new State();
 		states.push(currentState);

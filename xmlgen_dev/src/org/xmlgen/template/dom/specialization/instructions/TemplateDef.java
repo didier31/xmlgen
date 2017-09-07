@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.xmlgen.Xmlgen;
 import org.xmlgen.context.Context;
 import org.xmlgen.dom.template.TemplateIterator;
-import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
@@ -35,6 +34,7 @@ import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.ParameterContext;
 import org.xmlgen.parser.pi.PIParser.TemplateDefContext;
 import org.xmlgen.template.dom.specialization.instructions.InsertTemplateInstruction.EffectiveParameter;
+import org.xmlgen.template.dom.specialization.instructions.parts.Definitions;
 
 @SuppressWarnings({ "serial", "restriction" })
 public class TemplateDef extends StructuralInstruction
@@ -128,6 +128,11 @@ public class TemplateDef extends StructuralInstruction
 			}
 		}
 		return isSuccess;
+	}
+	
+	public void setDefinitions()
+	{
+		definitions.setDefinitions();
 	}
 
 	public String getId()
@@ -232,6 +237,9 @@ public class TemplateDef extends StructuralInstruction
 				i++;
 			}
 		}
+		
+		definitions = new Definitions(templateDef.definitions(), line, column, this);
+		
 		getXmlgen().addTemplate(this);
 	}
 
@@ -326,7 +334,7 @@ public class TemplateDef extends StructuralInstruction
 	}
 
 	@Override
-	protected void createState(ExpansionContext expansionContext)
+	protected void createState()
 	{
 		State currentState = new State();
 		states.push(currentState);		
@@ -357,6 +365,11 @@ public class TemplateDef extends StructuralInstruction
 		{
 			disableExecution();
 		}
+		else
+		{
+			setExecuted();
+			setFinished();
+		}
 		return new Vector<Cloneable>(0);
 	}
 	
@@ -366,4 +379,5 @@ public class TemplateDef extends StructuralInstruction
 	private boolean isPure;
 	private FormalParameter[] formalParameters;
 	private HashMap<String, FormalParameter> formalParametersByName;
+	private Definitions definitions;
 }

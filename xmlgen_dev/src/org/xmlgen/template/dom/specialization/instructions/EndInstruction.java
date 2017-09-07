@@ -43,7 +43,7 @@ public class EndInstruction extends TaggedInstruction
 	protected EndInstruction(String pi, EndContext endContext, int line, int column, Xmlgen xmlgen)
 	{
 		super(pi, getLabel(endContext), line, column, xmlgen);
-		ExportsContext exportContext = endContext.exports(); 
+		ExportsContext exportContext = endContext.exports();
 		if (exportContext != null)
 		{
 			exports = exportContext.Ident();
@@ -53,7 +53,7 @@ public class EndInstruction extends TaggedInstruction
 			exports = null;
 		}
 	}
-	
+
 	static protected String getLabel(EndContext endContext)
 	{
 		String labelStr = getLabel(endContext.Label());
@@ -74,7 +74,8 @@ public class EndInstruction extends TaggedInstruction
 		{
 			String label = getLabel();
 
-			Message message = new Message("End instruction" + (label.equals("") ? "" : " with label '" + label + "'") + " has no related section beginning instruction.");
+			Message message = new Message("End instruction" + (label.equals("") ? "" : " with label '" + label + "'")
+					+ " has no related section beginning instruction.");
 			Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
 			Xmlgen xmlgen = getXmlgen();
 			Context context = xmlgen.getContext();
@@ -112,28 +113,46 @@ public class EndInstruction extends TaggedInstruction
 		{
 			FrameStack frameStack = getXmlgen().getFrameStack();
 			Frame currentFrame = frameStack.peek();
-			Frame upperFrame = frameStack.elementAt(frameStack.framesCount() - 2);
-			for (TerminalNode export : exports)
+			final int upperFrameIdx = frameStack.framesCount() - 2;
+			if (upperFrameIdx >= 0)
 			{
-				String exportedDataSourceId = export.getText();
-				if (currentFrame.containsKey(exportedDataSourceId))
+				Frame upperFrame = frameStack.elementAt(upperFrameIdx);
+				for (TerminalNode export : exports)
 				{
-					Object dataSource = currentFrame.get(exportedDataSourceId);
-					upperFrame.put(exportedDataSourceId, dataSource);
-					traceExport(exportedDataSourceId);
+					String exportedDataSourceId = export.getText();
+					if (currentFrame.containsKey(exportedDataSourceId))
+					{
+						Object dataSource = currentFrame.get(exportedDataSourceId);
+						upperFrame.put(exportedDataSourceId, dataSource);
+						traceExport(exportedDataSourceId);
+					}
+					else if (!frameStack.containsKey(exportedDataSourceId))
+					{
+						Message message = new Message("export: unknown '" + exportedDataSourceId + "'");
+						Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template,
+								message);
+						Xmlgen xmlgen = getXmlgen();
+						Context context = xmlgen.getContext();
+						Artifact artefact = new Artifact(context.getXmlTemplate());
+						LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+						ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+						Notifications notifications = getXmlgen().getNotifications();
+						notifications.add(contextualNotification);
+					}
 				}
-				else if (!frameStack.containsKey(exportedDataSourceId))
-				{
-					Message message = new Message("export: unknown '" + exportedDataSourceId + "'");
-					Notification notification = new Notification(Module.Expansion, Gravity.Error, Subject.Template, message);
-					Xmlgen xmlgen = getXmlgen();
-					Context context = xmlgen.getContext();
-					Artifact artefact = new Artifact(context.getXmlTemplate());
-					LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
-					ContextualNotification contextualNotification = new ContextualNotification(notification, location);
-					Notifications notifications = getXmlgen().getNotifications();
-					notifications.add(contextualNotification);
-				}
+			}
+			else
+			{
+				Message message = new Message("Not enough upper frames (less than 2)'");
+				Notification notification = new Notification(Module.Expansion, Gravity.Fatal, Subject.Template,
+						message);
+				Xmlgen xmlgen = getXmlgen();
+				Context context = xmlgen.getContext();
+				Artifact artefact = new Artifact(context.getXmlTemplate());
+				LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+				ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+				Notifications notifications = getXmlgen().getNotifications();
+				notifications.add(contextualNotification);
 			}
 		}
 	}
@@ -187,7 +206,8 @@ public class EndInstruction extends TaggedInstruction
 			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.Instruction,
 					message);
 
-			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getLine(), getColumn());
+			LocationImpl location = new LocationImpl(new Artifact(getLabel() != null ? getLabel() : ""), -1, getLine(),
+					getColumn());
 			ContextualNotification contextual = new ContextualNotification(notification, location);
 			getXmlgen().getNotifications().add(contextual);
 		}

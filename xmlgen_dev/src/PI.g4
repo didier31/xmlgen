@@ -12,7 +12,7 @@ inputPI : (tagged | content | insert | userService| templateImport | expand | te
 templateImport: '<' Import expression '>'
 ;
 
-templateDef: Ident Pure? Def (parameter (',' parameter)*)?
+templateDef: Ident Pure? Def ('(' parameter (',' parameter)* ')')? definitions?
 ;
 
 parameter: Ident ':' typeLiteral
@@ -37,7 +37,7 @@ tagged: captures | begin | end
 
 insert: '<' Insert (Label | templateCall) '>'
 ;
-templateCall: Ident (effectiveParameter (',' effectiveParameter)*)?
+templateCall: Ident ('(' effectiveParameter (',' effectiveParameter)* ')')?
 ;
 
 effectiveParameter: (Ident '=')? expression 

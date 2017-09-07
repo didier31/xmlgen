@@ -24,7 +24,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 		int actualInsertInProgressCount = expansionContext.getInsertInProgressCount();
 		if (thereIsNoState() || currentState().getInsertInProgressCount() < actualInsertInProgressCount)
 		{
-			createState(expansionContext);
+			createState();
 		}
 		State state = currentState();
 		if (!state.isInitialized())
@@ -59,7 +59,7 @@ abstract public class StructuralInstruction extends TaggedInstruction
 		deleteState();
 	}
 
-	abstract protected void createState(ExpansionContext expansionContext);
+	abstract protected void createState();
 
 	abstract protected State currentState();
 

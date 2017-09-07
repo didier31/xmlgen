@@ -59,7 +59,6 @@ public class Element extends LocatedElement implements Expandable
 			childrenIt.descendant();
 			expansionContext.push();
 			Stack<StructuralInstruction> structureStack = expansionContext.getContext().getStructuresStack();
-			boolean isFinished;
 			/*
 			 * Do while there are unfinished iterative statements
 			 */
@@ -84,12 +83,12 @@ public class Element extends LocatedElement implements Expandable
 				 * starting by the innermost to outermost and terminate the finished
 				 * ones. Stops when the first unfinished one.
 				 */
-				isFinished = true;
-				while (!structureStack.isEmpty() && isFinished)
+				boolean isFinished_or_notExecuted = true;
+				while (!structureStack.isEmpty() && isFinished_or_notExecuted)
 				{
 					StructuralInstruction structuralInstruction = structureStack.peek();
-					isFinished = structuralInstruction.isFinished();
-					if (isFinished)
+					isFinished_or_notExecuted = structuralInstruction.isFinished() || !structuralInstruction.executed();
+					if (isFinished_or_notExecuted)
 					{
 						structuralInstruction.end();
 					}

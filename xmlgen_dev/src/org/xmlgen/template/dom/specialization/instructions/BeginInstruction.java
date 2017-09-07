@@ -9,7 +9,6 @@ import org.xmlgen.context.Context;
 import org.xmlgen.context.Frame;
 import org.xmlgen.context.FrameStack;
 import org.xmlgen.dom.template.TemplateIterator;
-import org.xmlgen.expansion.ExpansionContext;
 import org.xmlgen.expansion.pi.parsing.InstructionParser;
 import org.xmlgen.notifications.Artifact;
 import org.xmlgen.notifications.ContextualNotification;
@@ -21,26 +20,28 @@ import org.xmlgen.notifications.Notification.Message;
 import org.xmlgen.notifications.Notification.Module;
 import org.xmlgen.notifications.Notification.Subject;
 import org.xmlgen.parser.pi.PIParser.BeginContext;
-import org.xmlgen.parser.pi.PIParser.DefinitionContext;
 import org.xmlgen.parser.pi.PIParser.DefinitionsContext;
 import org.xmlgen.parser.pi.PIParser.ExpressionContext;
 import org.xmlgen.parser.pi.PIParser.GuardContext;
+import org.xmlgen.template.dom.specialization.instructions.parts.Definitions;
 
 @SuppressWarnings("serial")
 public class BeginInstruction extends StructuralInstruction
-{
-
-	private Vector<AstResult> definitionsQueries;
-	private Vector<String> datasourcesIDs;
-	private AstResult guard;
-
+{	
 	protected BeginInstruction(String pi, BeginContext beginContext, int line, int column, Xmlgen xmlgen)
 	{
 		super(pi, getLabel(beginContext.Label()), line, column, xmlgen);
-		initFields(beginContext, line, column);
+		initGuard(beginContext, line, column);
+		DefinitionsContext definitionsContext = beginContext.definitions();
+		definitions = new Definitions(definitionsContext, line, column, this);
 	}
 
-	private void initFields(BeginContext beginContext, int line, int column)
+	/**
+	 * @param beginContext
+	 * @param line
+	 * @param column
+	 */
+	protected void initGuard(BeginContext beginContext, int line, int column)
 	{
 		GuardContext guardContext = beginContext.guard();
 		String guardStr;
@@ -59,40 +60,6 @@ public class BeginInstruction extends StructuralInstruction
 		}			
 		
 		guard = InstructionParser.parseQuery(guardStr, line, column);
-				
-		DefinitionsContext definitions = beginContext.definitions();
-		final int definitionsCount = definitions == null ? 0 : definitions.definition().size();
-		datasourcesIDs = new Vector<String>(definitionsCount);
-		definitionsQueries = new Vector<AstResult>(definitionsCount);
-
-		if (definitions != null)
-		{
-			for (DefinitionContext definition : definitions.definition())
-			{
-				ExpressionContext expression = definition.expression();
-				String queryToParse = getText(this.getData(), expression);
-				AstResult parsedQuery = InstructionParser.parseQuery(queryToParse, line, column);
-				String id = definition.dataID().getText();
-				datasourcesIDs.add(id);
-				definitionsQueries.add(parsedQuery);
-			}
-		}
-	}
-
-	protected void setDefinitions()
-	{
-		// Initializes references in the just new created frame in stack
-		int i = 0;
-		for (AstResult definitionQuery : definitionsQueries)
-		{
-			Object result = null;
-			if (definitionQuery.getErrors().isEmpty())
-			{
-				result = eval(definitionQuery);
-			}
-			addToCurrentFrame(datasourcesIDs.get(i), result);
-			i++;
-		}
 	}
 
 	@Override
@@ -109,7 +76,7 @@ public class BeginInstruction extends StructuralInstruction
 		boolean executionGranted = (guardResult != null && (guardResult instanceof Boolean && (Boolean) guardResult));
 		if (executionGranted)
 		{
-			setDefinitions();
+			definitions.setDefinitions();
 			setExecuted();
 		}
 		else
@@ -147,7 +114,7 @@ public class BeginInstruction extends StructuralInstruction
 	}
 
 	@Override
-	protected void createState(ExpansionContext expansionContext)
+	protected void createState()
 	{
 		State currentState = new State();
 		states.push(currentState);		
@@ -172,4 +139,6 @@ public class BeginInstruction extends StructuralInstruction
 	}
 	
 	private Stack<State> states = new Stack<State>();
+	private AstResult guard;
+	private Definitions definitions;
 }

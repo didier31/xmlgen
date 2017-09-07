@@ -185,7 +185,7 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 	 *           the parsed query
 	 * @return the object
 	 */
-	protected Object eval(AstResult parsedQuery)
+	public Object eval(AstResult parsedQuery)
 	{
 		if (parsedQuery != null && parsedQuery.getErrors().isEmpty())
 		{
@@ -226,7 +226,7 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 		}
 	}
 	
-	static protected String getText(String pi, ParserRuleContext parserRuleContext)
+	static public String getText(String pi, ParserRuleContext parserRuleContext)
 	{
 		String text;
 		if (parserRuleContext != null)
@@ -297,7 +297,7 @@ abstract public class ExpansionInstruction extends ProcessingInstruction
 	 * @param value
 	 *           the value
 	 */
-	protected void addToCurrentFrame(String id, Object value)
+	public void addToCurrentFrame(String id, Object value)
 	{
 		FrameStack frameStack = getXmlgen().getFrameStack();
 		Frame currentFrame = frameStack.peek();

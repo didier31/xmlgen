@@ -102,9 +102,6 @@ public class Notifications extends LinkedList<Notification> implements Notifier
 		this.notifieds = notifieds;
 	}
 	
-	/** The instance. */
-	static Notifications instance = new Notifications();
-
 	/** The counts. */
 	private HashMap<Notification.Gravity, Integer> counts = new HashMap<Notification.Gravity, Integer>();
 

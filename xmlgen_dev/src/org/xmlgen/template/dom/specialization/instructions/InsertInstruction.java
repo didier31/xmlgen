@@ -26,51 +26,51 @@ import org.xmlgen.template.dom.specialization.content.Element;
 
 @SuppressWarnings("serial")
 abstract class InsertInstruction extends ExpansionInstruction
-{	
+{
 	static public InsertInstruction create(String pi, InsertContext insertContext, int line, int column, Xmlgen xmlgen)
 	{
 		TerminalNode labelContext = insertContext.Label();
 		InsertInstruction insertInstruction;
 		if (labelContext != null)
 		{
-			insertInstruction = new InsertBlockInstruction(pi, labelContext, line, column, xmlgen); 
+			insertInstruction = new InsertBlockInstruction(pi, labelContext, line, column, xmlgen);
 		}
 		else
 		{
 			insertInstruction = new InsertTemplateInstruction(pi, insertContext.templateCall(), line, column, xmlgen);
-		}		
-	return insertInstruction;
+		}
+		return insertInstruction;
 	}
-	
+
 	protected InsertInstruction(String pi, int line, int column, Xmlgen xmlgen)
 	{
 		super(pi, line, column, xmlgen);
 	}
-	
+
 	@Override
 	public Vector<Cloneable> expandMySelf(TemplateIterator it)
 	{
 		Xmlgen xmlgen = getXmlgen();
 		ExpansionContext expansionContext = xmlgen.getExpansionContext();
-		
+
 		if (expansionContext.isExecuting())
 		{
 			trace();
-			Element body = getBody(); 			
-			List<Content> contents = body.getContent(); 			
+			Element body = getBody();
+			List<Content> contents = body.getContent();
 			Content instruction = contents.get(0);
-			
+
 			TemplateIterator recursiveIt = new TemplateIterator(instruction);
-			
-			FrameStack frameStack = getXmlgen().getFrameStack();			
-			frameStack.pushNumbering();			
+
+			FrameStack frameStack = getXmlgen().getFrameStack();
+			frameStack.pushNumbering();
 			expansionContext.incInsertInProgressCount();
-			
+
 			Vector<Cloneable> expanded = expand(body, recursiveIt);
-			
-			expansionContext.decInsertInProgressCount();			
+
+			expansionContext.decInsertInProgressCount();
 			frameStack.popNumbering();
-			
+
 			return expanded;
 		}
 		else
@@ -84,15 +84,15 @@ abstract class InsertInstruction extends ExpansionInstruction
 		Vector<Cloneable> expanded = body.expandMySelf(recursiveIt, false);
 		return expanded;
 	}
-	
+
 	protected Collection<Content> structureOf(StructuralInstruction structuralInstruction)
 	{
 		TemplateIterator structureIt = new TemplateIterator(structuralInstruction);
 		Stack<StructuralInstruction> structures = new Stack<StructuralInstruction>();
-		Vector<Content> structure = new Vector<Content>(0); 
+		Vector<Content> structure = new Vector<Content>(0);
 		do
-		{	
-			Content templaceContent = structureIt.current(); 
+		{
+			Content templaceContent = structureIt.current();
 			Content content = templaceContent.clone();
 			structure.addElement(content);
 			if (content instanceof StructuralInstruction)
@@ -119,29 +119,32 @@ abstract class InsertInstruction extends ExpansionInstruction
 					else
 					{
 						structures.pop();
-					}					
+					}
 				}
-			}		
-		structureIt.sibling();
+			}
+			structureIt.sibling();
 		}
 		while (structureIt.current() != null && !structures.isEmpty());
 		return structure;
 	}
-	
+
 	protected void trace()
 	{
-		Message message = new Message(this.getData());
-		Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.Template, message);
-		Xmlgen xmlgen = getXmlgen();
-		Context context = xmlgen.getContext();
-		Artifact artefact = new Artifact(context.getXmlTemplate());
-		LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
-		ContextualNotification contextualNotification = new ContextualNotification(notification, location);
-		Notifications notifications = getXmlgen().getNotifications();
-		notifications.add(contextualNotification);
+		if (getXmlgen().getContext().isTrace())
+		{
+			Message message = new Message(this.getData());
+			Notification notification = new Notification(Module.Expansion, Gravity.Information, Subject.Template, message);
+			Xmlgen xmlgen = getXmlgen();
+			Context context = xmlgen.getContext();
+			Artifact artefact = new Artifact(context.getXmlTemplate());
+			LocationImpl location = new LocationImpl(artefact, -1, getLine(), getColumn());
+			ContextualNotification contextualNotification = new ContextualNotification(notification, location);
+			Notifications notifications = getXmlgen().getNotifications();
+			notifications.add(contextualNotification);
+		}
 	}
-	
+
 	abstract protected Element getBody();
-	
+
 	protected Element body = null;
 }
