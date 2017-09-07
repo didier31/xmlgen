@@ -8,6 +8,8 @@
 
   <?gen <Load org.xmlgen.tst.ExpansionServices>
   ?>
+  <?gen <Load org.xmlgen.tst.Associations>
+  ?>
   <?gen [Body] begin 
   		            model = uml->at(1),
                     title = model.name
@@ -42,7 +44,7 @@
 ?>/*<![CDATA[*/
 /*]]>*/</script> <noscript> &lt;div&gt;JavaScript is disabled on your
   browser.&lt;/div&gt; </noscript> <!--  ========= START OF TOP NAVBAR ======= -->
-?> <div class="topNav"><a name="navbar_top"><!--  --></a><div
+ <div class="topNav"><a name="navbar_top"><!--  --></a><div
   class="skipNav"><a href="overview-summary.html#skip-navbar_top"
   title="Skip navigation links">Skip navigation links <?gen attr href = url + '/' + outputFilename + '#skip-navbar_top'
     ?></a></div><a name="navbar_top_firstrow"><!--  --></a><ul class="navList"
@@ -168,7 +170,7 @@
 				 template = 'file:/' + cdir + 'package_details_template.xhtml',
 				 outPackagefilename = name + '_details.xhtml',
 		         output = outputDir + '/' + outPackagefilename,
-				 trace = 'yes'
+				 trace = 'no'
 		?>
 		<?gen <Expand> 
 		?>

@@ -23184,7 +23184,43 @@
           </packagedElement>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_DvKMZIySEeeR6I8fedr13g" name="ClassLoader"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_2-5vsIzCEeeR6I8fedr13g" name="TemplateClass"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_AKLq8JGOEeefB-VOdsiooA" name="BindedClass">
+          <templateBinding xmi:type="uml:TemplateBinding" xmi:id="_DdFPAJGiEeefB-VOdsiooA" signature="_vEFkQI_uEeefB-VOdsiooA">
+            <parameterSubstitution xmi:type="uml:TemplateParameterSubstitution" xmi:id="_4EvoUJGiEeefB-VOdsiooA" formal="_vQkroI_vEeefB-VOdsiooA">
+              <actual xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </parameterSubstitution>
+            <parameterSubstitution xmi:type="uml:TemplateParameterSubstitution" xmi:id="_i-zuYJG4EeefB-VOdsiooA" actual="_ih8zQJG4EeefB-VOdsiooA" formal="_zyxssJAJEeefB-VOdsiooA"/>
+          </templateBinding>
+          <generalization xmi:type="uml:Generalization" xmi:id="_CcBKsJGOEeefB-VOdsiooA" general="_2-5vsIzCEeeR6I8fedr13g"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_ih8zQJG4EeefB-VOdsiooA" name="isAfter">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_ih8zQZG4EeefB-VOdsiooA" name="a" effect="read">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_ih8zQpG4EeefB-VOdsiooA" name="b" effect="read">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+            </ownedParameter>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_ih8zQ5G4EeefB-VOdsiooA" name="result" direction="return">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+            </ownedParameter>
+          </ownedOperation>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_a3akcJMAEeefB-VOdsiooA" name="Operation1" raisedException="_Cm5j0YySEeeR6I8fedr13g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_2-5vsIzCEeeR6I8fedr13g" name="TemplateClass">
+          <ownedTemplateSignature xmi:type="uml:RedefinableTemplateSignature" xmi:id="_vEFkQI_uEeefB-VOdsiooA" name="RedefinableTemplateSignature1" parameter="_vQkroI_vEeefB-VOdsiooA _8FhtYJAGEeefB-VOdsiooA _zyxssJAJEeefB-VOdsiooA">
+            <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_vQkroI_vEeefB-VOdsiooA" parameteredElement="_t9HQ8I_1EeefB-VOdsiooA"/>
+            <ownedParameter xmi:type="uml:ClassifierTemplateParameter" xmi:id="_8FhtYJAGEeefB-VOdsiooA" parameteredElement="_DJLi4I_yEeefB-VOdsiooA"/>
+            <ownedParameter xmi:type="uml:OperationTemplateParameter" xmi:id="_zyxssJAJEeefB-VOdsiooA" parameteredElement="_iaQsQJAKEeefB-VOdsiooA"/>
+          </ownedTemplateSignature>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_iaQsQJAKEeefB-VOdsiooA" name="greater" templateParameter="_zyxssJAJEeefB-VOdsiooA">
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_iaQsQZAKEeefB-VOdsiooA" name="left" type="_DJLi4I_yEeefB-VOdsiooA" effect="read"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_iaQsQpAKEeefB-VOdsiooA" name="right" type="_DJLi4I_yEeefB-VOdsiooA" effect="read"/>
+            <ownedParameter xmi:type="uml:Parameter" xmi:id="_iaQsQ5AKEeefB-VOdsiooA" name="isGreater" direction="return" effect="read">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_vAIV4I7PEdySGvm5GN66HA"/>
+            </ownedParameter>
+          </ownedOperation>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_DJLi4I_yEeefB-VOdsiooA" name="T" templateParameter="_8FhtYJAGEeefB-VOdsiooA"/>
+          <nestedClassifier xmi:type="uml:Class" xmi:id="_t9HQ8I_1EeefB-VOdsiooA" name="S" templateParameter="_vQkroI_vEeefB-VOdsiooA"/>
+        </packagedElement>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_DDD7YoySEeeR6I8fedr13g" name="emf">

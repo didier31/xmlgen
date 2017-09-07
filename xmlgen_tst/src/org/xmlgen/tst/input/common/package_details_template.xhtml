@@ -137,77 +137,37 @@
     </div>
     <div class="contentContainer">
       <ul class="blockList">
-	    <?gen [Interfaces] begin
-		                      interfaces = package.packagedElement->filter(uml::Interface)
+
+		<?gen [list Interfaces] begin
+              interfaces = package.packagedElement->filter(uml::Interface)->sortedBy(c | c.name)	
 		?>
-		<?gen [Interfaces] begin when not interfaces->isEmpty()
-		                      class = 'rowColor'
-		?>		
-        <li class="blockList">
-          <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
-            <caption>
-              <span>Interface Summary</span><span class="tabEnd"> </span>
-            </caption>
-            <tbody>
-              <tr>
-                <th class="colFirst" scope="col">
-                  Interface
-                </th>
-                <th class="colLast" scope="col">
-                  Description
-                </th>
-              </tr>
-            </tbody>
-            <tbody>
-			<?gen [Interface] begin when not interfaces->isEmpty() 
-			                     interface = interfaces->first(),
-                                 interfaces = interfaces->asSequence()->subSequence(2, interfaces->size()),
-			   			         class = if class = 'rowColor' then
-								              'altColor'
-								   	     else
-										      'rowColor'
-										 endif
-		      ?>
-              <tr class="???">
-			    <?gen attr class=class ?>
-                <td class="colFirst">
-                  <a
-                  href="http://download.eclipse.org/modeling/mdt/uml2/javadoc/5.1.0/org/eclipse/uml2/uml/profile/standard/Auxiliary.html"
-                  title="???">
-				  <?gen attr title = 'interface in ' + name ?>
-				  <?gen interface.name ?>
-				  </a>
-                </td>
-                <td class="colLast">
-				  <?gen comment : interface.ownedComment ?>
-                  <div class="block">
-					<?gen comment.literalComment() ?>
-                  </div>
-                </td>
-              </tr>
-			<?gen [Interface] end ?>
-            </tbody>
-          </table>
-        </li>
-        <?gen [Interfaces] end ?>
-		<?gen [Interfaces] end ?>
+		<?gen <Insert listClassifiers(interfaces)> ?>
+		<?gen [list Interfaces] end ?>
 		
-	    <?gen [Classes] begin
-		                      classes = package.packagedElement->filter(uml::Class)->sortedBy(c | c.name)
+		<?gen [list Classes] begin
+              classes = package.packagedElement->filter(uml::Class)->sortedBy(c | c.name)	
 		?>
-		<?gen [Classes] begin when classes <> null and not classes->isEmpty()
+		<?gen <Insert listClassifiers(classes)> ?>
+		<?gen [list Classes] end ?>
+		
+	    <?gen listClassifiers def (classifiers : Sequence(uml::Classifier))
+		?>
+		<?gen [Classifiers] begin when classifiers <> null and not classifiers->isEmpty()
 		                      class = 'rowColor',
+							  classifierType = classifiers->first().eClass().name,
+							  package = classifiers->first().eContainer(),
 							  clazz = null
 		?>		
         <li class="blockList">
-          <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+          <table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="??? Summary table, ??? listing, and an explanation">
+		  <?gen attr summary = classifierType.toUpperFirst() + ' Summary table, ' + classifierType.toLowerFirst() + 'listing, and an explanation' ?>
             <caption>
-              <span>Class Summary</span><span class="tabEnd"> </span>
+              <span><?gen classifierType.toUpperFirst() + ' ' ?>Summary</span><span class="tabEnd"> </span>
             </caption>
             <tbody>
               <tr>
                 <th class="colFirst" scope="col">
-                  Class
+                  <?gen classifierType.toUpperFirst() ?>
                 </th>
                 <th class="colLast" scope="col">
                   Description
@@ -215,12 +175,12 @@
               </tr>
             </tbody>
             <tbody>
-			<?gen [Class] begin when classes <> null and not classes->isEmpty()
+			<?gen [Class] begin when classifiers <> null and not classifiers->isEmpty()
 			                     previousClass = clazz,
-			                     clazz = classes->first(),
-                                 classes = classes->asSequence()->subSequence(2, classes->size()),
-								 nextClass = if classes <> null and not classes->isEmpty() then 
-								                classes->first()
+			                     clazz = classifiers->first(),
+                                 classifiers = classifiers->asSequence()->subSequence(2, classifiers->size()),
+								 nextClass = if classifiers <> null and not classifiers->isEmpty() then 
+								                classifiers->first()
 								             else
 											    null
 											 endif,
@@ -235,7 +195,7 @@
 				 template = 'file:/' + cdir + 'class_details_template.xhtml',
 				 classfilename = name + '.' + clazz.name + '_details.xhtml',
 		         output = outputDir + '/' + classfilename,
-				 trace = 'yes'
+				 trace = 'no'
 		   ?>
 		   <?gen <Expand> 
 		  ?>
@@ -265,8 +225,8 @@
             </tbody>
           </table>
         </li>
-        <?gen [Classes] end ?>
-		<?gen [Classes] end ?>
+        <?gen [Classifiers] end ?>
+		<?gen listClassifiers end ?>
       </ul>
     </div>
     <!--  ======= START OF BOTTOM NAVBAR ====== -->

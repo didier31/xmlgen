@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gmf.runtime.diagram.ui.image.ImageFileFormat;
 import org.eclipse.gmf.runtime.diagram.ui.render.util.CopyToImageUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
@@ -32,6 +33,12 @@ import org.jdom2.output.XMLOutputter;
 
 public class ExpansionServices 
 {
+	public java.lang.Object eGet(EObject object, EStructuralFeature feature)
+	{
+		return object.eGet(feature, true);
+	}
+
+	
 	public String getKeyword(Stereotype stereotype)
 	{
 		return stereotype.getKeyword(false);

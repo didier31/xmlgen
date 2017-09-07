@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
+
       <body xmlns="http://www.w3.org/1999/xhtml">
-	  <?gen classifier_navigation pure def previousClass : uml::Classifier, 
-                                           nextClass : uml::Classifier,
-										   packageName : String,
-										   url : String
+	  <?gen classifier_navigation pure def (previousClass : uml::Classifier, 
+                                            nextClass : uml::Classifier,
+										    packageName : String,
+										    url : String)
       ?>
       <?gen [ClassifierNavigation] begin
 	                               when previousClass <> null or nextClass <> null 	                                        
 	  ?>
       <ul class="navList">
-		<?gen classifier_link_button def neighborClass : uml::Classifier, linkText : String
+		<?gen classifier_link_button def (neighborClass : uml::Classifier, linkText : String)
         ?>									 
 		<?gen [WithNeighborClass] begin 
 		                          when neighborClass <> null		         	
@@ -39,9 +43,405 @@
         <li> <?gen linkText ?> </li>
 		<?gen [WithoutNeighborClass] end ?>
 		<?gen classifier_link_button end ?>
-        <?gen <Insert classifier_link_button previousClass, 'Prev Class'> ?>			
-		<?gen <Insert classifier_link_button nextClass, 'Next Class'> ?>
+        <?gen <Insert classifier_link_button(previousClass, 'Prev Class')> ?>			
+		<?gen <Insert classifier_link_button(nextClass, 'Next Class')> ?>
       </ul>
 	  <?gen [ClassifierNavigation] end ?>
       <?gen classifier_navigation end ?>
+	  
+	  
+	  
+	  <?gen qualifiers pure def (classifier : uml::Classifier) ?>
+      <?gen if classifier.visibility <> uml::VisibilityKind::package then 
+               classifier.visibility.toString() + ' '
+            else
+               ' '								   
+		    endif 
+	  ?> 
+	  <?gen if classifier.isAbstract then 
+	           'abstract ' 
+            else
+               ''									  
+	        endif 
+	  ?> 
+	  <?gen if classifier.isFinalSpecialization then 
+		       'final '
+            else
+               ''									  
+		    endif
+  	  ?>
+	  <?gen qualifiers end ?>
+	  
+	  
+	  
+	  <?gen writeTypeOf def (object : uml::TypedElement) ?>
+      <?gen [Writing the non-void type] begin when object <> null                                                             				  
+      ?>
+	  <?gen <Insert writeType(type = object.type, object = object)> ?>
+	  
+	  <?gen writeType def (type : uml::Type, object : uml::TypedElement) ?>
+      <?gen begin when type <> null 
+        typeName = type.name,
+        qualifiedName = type.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
+        packageQualifiedName = type.eContainer().qualifiedName,
+        packageQualifiedName = packageQualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', ''),
+        isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = type)
+        ?>
+        <?gen [isTypeInScope] begin when isTypeInScope                            
+        ?>
+		<?gen [Whith hyperlink] begin when type != clazz ?>
+        <a
+        href="??? class_details.html"
+        title="class in ???">
+         <?gen attr href = url + '/' + qualifiedName + '_details.xhtml' ?>
+         <?gen attr title = 'class in ' + packageQualifiedName ?>
+         <?gen typeName ?>
+        </a>
+		<?gen [Whith hyperlink] end ?>
+		<?gen [Whithout hyperlink] begin when type == clazz ?>
+		<?gen typeName ?>
+		<?gen [Whithout hyperlink] end ?>
+        <?gen [isTypeInScope] end ?>
+        <?gen begin when not isTypeInScope ?>
+        <?gen typeName ?>
+        <?gen end ?>
+		<?gen <Insert generic_type_definition(templateableElement = type)> ?>
+        <?gen if object <> null and object.upperValue <> null then
+				 if object.upperValue.isComputable() then
+  				    if object.upperValue.unlimitedValue() <> '' or object.upperValue.integerValue() > 1 then
+				       '[]'
+				    else
+				       ''
+				    endif
+				 else
+				    ''
+				 endif
+			 else
+			     ''
+			 endif
+        ?>
+        <?gen end ?>
+		<?gen writeType end ?>
+        <?gen [Writing the non-void type] end ?>
+        <?gen writeTypeOf end ?>		
+		
+		<?gen generic_type_definition def (templateableElement : uml::TemplateableElement) ?>
+		<?gen [TemplateSignature] begin when templateableElement.ownedTemplateSignature <> null
+		                                  or (templateableElement.templateBinding <> null and not templateableElement.templateBinding->isEmpty())
+		      templateSignature = if templateableElement.ownedTemplateSignature <> null then 
+			                         templateableElement.ownedTemplateSignature 
+								  else 
+								     Sequence{} 
+								  endif,
+			  parameters = templateSignature.ownedParameter,
+			  signatureCommas = parameters->collect(p | ',')->subSequence(1, parameters->size() - 1)->including(''),
+			  
+			  templateBindings = if templateableElement.templateBinding <> null then 
+			                        templateableElement.templateBinding 
+								 else 
+								    Sequence{} 
+								 endif,
+	  		  parameterSubstitutions = templateBindings->collect(tb | tb.parameterSubstitution),			 
+			  bindingsCommas = parameterSubstitutions->collect(p | ','),
+			  bindingsCommas = if templateSignature->isEmpty() then
+			                      bindingsCommas->subSequence(1, parameterSubstitutions->size() - 1)->including('')
+							   else
+							      bindingsCommas
+							  endif
+		?>
+		&lt;
+		<?gen [Binding Loop] parameterSubstitution : parameterSubstitutions, comma : bindingsCommas ?>
+		<?gen parameterSubstitution.formal.parameteredElement.name ?>
+		&rarr;
+		<?gen [ActualType] begin when parameterSubstitution.actual.oclIsKindOf(uml::Type) ?>
+		<?gen <Insert writeType(parameterSubstitution.actual, null)> ?>
+		<?gen [ActualType] end ?>
+		<?gen [ActualOperation] begin when parameterSubstitution.actual.oclIsKindOf(uml::Operation) ?>
+		<?gen <Insert writeName(parameterSubstitution.actual, parameterSubstitution.actual.name)> ?>
+		<?gen [ActualOperation] end ?>
+		<?gen comma ?>
+		<?gen [Binding Loop] end ?>
+		<?gen [Generic Parameters Loop] parameter : parameters, comma : signatureCommas ?>
+		<?gen [Generic Parameter] begin when parameter.ownedElement <> null 
+		                          ownedElement = parameter.parameteredElement
+		?>
+		<?gen [Generic Type] begin when ownedElement.oclIsKindOf(uml::Type)?>
+		<?gen <Insert writeType(ownedElement, object = null)> ?><?gen comma ?>
+		<?gen [Generic Type] end ?>	
+		<?gen [Generic Operation] begin when ownedElement.oclIsKindOf(uml::Operation) 
+		                          operation = ownedElement
+		?>
+		<?gen operation.name ?><?gen comma ?>
+		<?gen [Generic Operation] end ?>			
+		<?gen [Generic Parameter] end ?>
+        <?gen [Generic Parameters Loop] end ?>		
+		&gt;
+		<?gen [TemplateSignature] end ?>
+		<?gen generic_type_definition end ?>
+	  
+		<?gen operation def (operation : uml::Operation, operationName : String, class : String) ?>
+		<?gen [Operation] begin 
+                               result = operation.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return)
+		?>
+        <tr id="opId?" class="???">
+		<?gen attr id = operation.id() ?>
+        <?gen attr class = class ?>
+        <td class="colFirst">
+        <code>
+              <?gen operationModifiers def (operation : uml::Operation) ?>
+		      <?gen if operation.isStatic then 
+		                'static ' 
+                     else
+                        ''									  
+					 endif 
+			   ?>
+               <?gen if operation.isAbstract then
+				        'abstract ' 
+                     else
+                        ''									  
+				     endif 
+				?>
+			   <?gen if operation.isLeaf then 
+				        'final ' 
+                     else
+                        ''									  
+					 endif 
+				?> 
+				<?gen if operation.visibility <> uml::VisibilityKind::package then 
+                         operation.visibility.toString() + ' '
+                      else
+                         ''								   
+					  endif 
+				?>
+				<?gen operationModifiers end ?>
+				<?gen <Insert operationModifiers(operation)> ?>
+		        <?gen operationType def (operation : uml::Operation) ?>
+		        <?gen [OperationType] begin 
+		                                   result = operation.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return)
+		        ?>				
+				<?gen [Writing type] begin when result <> null and result.type <> null ?>
+                <?gen <Insert writeTypeOf(result)> ?>
+				<?gen [Writing type] end ?>
+				<?gen [Writing the void type] begin when (result = null or result.type = null) and operation.getAppliedStereotype('StandardProfile::Create') = null ?>
+				<?gen 'void' ?>
+                <?gen [Writing the void type] end ?>
+				<?gen [OperationType] end ?>
+		        <?gen operationType end ?>
+				<?gen <Insert operationType(operation)> ?>
+        </code>
+        </td>
+        <td class="colLast">
+		
+		<?gen writeName def (element : uml::NamedElement, name : String) ?>
+		<?gen [Declarations] begin
+		      owner = element.owner,  
+		      isTypeInScope = allNamedElements->exists(n : uml::NamedElement | n = owner)
+		?>
+		<?gen [Href is valid] begin when isTypeInScope 
+		      qualifiedName = owner.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')
+		?>
+		<a href = "toDetails#id???">
+		<?gen attr href = url + '/' + qualifiedName + '_details.xhtml' + '#' + element.id() + '_details' ?>
+		<?gen name ?>
+		</a>
+		<?gen [Href is valid] end ?>
+		<?gen [out of scope] begin when not isTypeInScope ?>
+		<?gen name ?>
+		<?gen [out of scope] end ?>
+		<?gen [Declarations] end ?>
+		<?gen writeName end ?>
+		
+		<?gen operationSignature def (operation : uml::Operation, operationName : String) ?>
+        <code><span class="memberNameLink"><?gen <Insert writeName(operation, operationName)> ?></span>(<?gen [ParametersWrite] begin when not operation.ownedParameter->isEmpty()
+                                                   parameters = operation.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
+                                                   commas = parameters->collect(p | ', ')->subSequence(1, parameters->size() - 1)->including('')
+                                             ?>
+                                          <?gen [ParametersLoop] parameter : parameters, comma : commas ?>
+                                          <?gen <Insert writeTypeOf(parameter)> ?>
+                                          <?gen ' ' + parameter.name + comma ?>
+                                          <?gen [ParametersLoop] end ?>
+                                          <?gen [ParametersWrite] end ?>)</code>
+        <?gen operationSignature end ?>
+		<?gen <Insert operationSignature(operation, operationName)> ?>
+        <?gen begin when not operation.ownedComment->isEmpty()
+              comment = operation.ownedComment->first() ?>
+        <div class="block">
+	    <?gen comment.literalComment() ?>
+        <!--  begin-user-doc -->
+        <!--  end-user-doc -->
+        </div>              
+        </td>
+        </tr>
+		<?gen [Operation] end ?>
+		<?gen operation end ?>
+	  
+	    <?gen writeInheritedElements def (eFeatureName : String, ancestors : Sequence(Sequence(uml::Classifier)), elementKind : String) ?>
+		        <?gen [Returned] begin 
+				       allInheritedElements = Sequence{}
+				?>
+	  			<?gen [Each ancestor level] ancestorLevel : ancestors
+				?>
+				<?gen [Each ancestor] ancestor : ancestorLevel ?>
+				<?gen [Fields] begin
+						        feature = ancestor.eClass().getEStructuralFeature(eFeatureName),
+				                elements = ancestor.eGet(feature)->select(p | p.visibility <> uml::VisibilityKind::private and p.getAppliedStereotype('StandardProfile::Create') = null),
+                                elements = elements->sortedBy(p | p.name),
+								allInheritedElements = allInheritedElements + elements
+				?>
+				<?gen [When inherited elements] begin when not elements->isEmpty()  
+				      qualifiedName = ancestor.qualifiedName.replaceAll('::', '.').replace('[^\\.]*\\.', '')
+				?>
+                <ul class="blockList">
+                  <li class="blockList">
+                    <a
+                    id="?elementKind??.inherited.from.class.???gualifiedName???">
+					<?gen attr id = elementKind.toLowerFirst() + '.inherited.from.class.' + qualifiedName ?>
+                     <!--  --> </a>
+                    <h3>
+                      <?gen elementKind.toUpperFirst() + ' inherited from class ' + qualifiedName ?>
+                    </h3>
+					<?gen [Elements] begin
+					                commas = elements->collect(f | ', '),
+									commas = commas->subSequence(1, commas->size() - 1)->including('')
+					?>
+                    <code>
+					<?gen element : elements, comma : commas ?>
+					<?gen <Insert writeName(element, element.name)> ?><?gen comma ?>
+					</code>
+                  </li>
+                </ul>
+				<?gen [When inherited elements] end ?>
+				<?gen [Fields] end export: allInheritedElements ?>
+				<?gen [Each ancestor] end export: allInheritedElements ?>
+			    <?gen [Each ancestor level] end export: allInheritedElements ?>
+				<?gen [Returned] end export: allInheritedElements
+				?>
+		<?gen writeInheritedElements end export: allInheritedElements ?>
+		
+		<?gen writeModifiers def (field : uml::Property) ?>
+		<?gen if field.isStatic then 
+		         'static ' 
+              else
+                 ''									  
+		      endif 
+		?>
+		<?gen if field.isReadOnly then 
+		         'const ' 
+              else
+                 ''									  
+		      endif 
+	    ?> 
+		<?gen if field.visibility <> uml::VisibilityKind::package then 
+                 field.visibility.toString() + ' '
+              else
+                 ''								   
+		      endif 
+	    ?> 
+		<?gen writeModifiers end ?>
+
+
+	    <?gen writeOperationDetails def (method : uml::Operation, inheritedMethods : Sequence(uml::Operation)) ?>
+		<?gen [Comments] comment : method.ownedComment ?>
+        <div class="block">
+        <?gen comment.literalComment() ?>
+        <!--  begin-user-doc -->
+        <!--  end-user-doc -->
+        </div>
+		<?gen [Comments] end ?>
+		<?gen <Insert overridedMethods(method, inheritedMethods)> ?>
+		<?gen [Details] begin 
+					    parameters = method.ownedParameter->select(param | param.direction <> uml::ParameterDirectionKind::return),
+					    result = method.ownedParameter->any(param | param.direction = uml::ParameterDirectionKind::return),
+					    redefinedMethods = (method.redefinedOperation + overridedMethods)->asOrderedSet(),
+					    raisedExeptions = method.raisedException,
+					    thereIsRedefinedMethod = redefinedMethods <> null and not redefinedMethods->isEmpty(),
+					    thereIsParameter = parameters <> null and not parameters->isEmpty(),
+					    thereIsRaisedExpection = raisedExeptions <> null and not raisedExeptions->isEmpty()					  
+		?>
+        <?gen [Details] begin when result <> null 
+		                           or not parameters->isEmpty()
+					               or thereIsRedefinedMethod
+								   or thereIsRaisedExpection ?>
+        <dl>
+		<?gen [RedefinedMethods] begin when thereIsRedefinedMethod ?>
+        <dt>
+        <span class="overrideSpecifyLabel">Specified by:</span>
+        </dt>
+		<?gen [RedefinedMethod] redefinedMethod : redefinedMethods ?>
+        <dd>
+        <code><?gen <Insert writeName(redefinedMethod, redefinedMethod.name)> ?></code> in
+        class <code><?gen <Insert writeType(redefinedMethod.owner, null)> ?></code>
+        </dd>
+		<?gen [RedefinedMethod] end ?>
+		<?gen [RedefinedMethods] end ?>
+		<?gen [Parameters] begin when thereIsParameter ?>
+        <dt>
+        <span class="paramLabel">Parameters:</span>
+        </dt>
+		<?gen [ParametersLoop] parameter : parameters ?>
+        <dd>
+		<code>
+		<?gen parameter.name ?>
+		</code>
+		<?gen [Comments] begin when not parameter.ownedComment->isEmpty() ?>
+		<?gen ' - ' ?>
+		<?gen [CommentLoop] comment : parameter.ownedComment ?>
+		<div class="block">
+        <?gen comment.literalComment() ?>
+		</div>
+		<?gen [CommentLoop] end ?>
+		<?gen [Comments] end ?>
+		</dd>
+		<?gen [ParametersLoop] end ?>	
+		<?gen [Parameters] end ?>				 
+		<?gen [Return] begin when result <> null ?>
+        <dt>
+        <span class="returnLabel">Returns:</span>
+        </dt>
+        <dd>
+		<?gen [CommentLoop] comment : result.ownedComment ?>
+		<div class="block">
+        <?gen comment.literalComment() ?>
+		</div>
+		<?gen [CommentLoop] end ?>
+		</dd>
+		<?gen [Return] end ?>
+		<?gen [Exceptions] begin when thereIsRaisedExpection ?>
+        <dt>
+        <span class="throwsLabel">Throws:</span>
+        </dt>
+		<?gen [ExceptionsLoop] raisedException : raisedExeptions ?>
+		<code>
+		<?gen <Insert writeType(raisedException, null)> ?>
+		</code>
+		<?gen [ExceptionsLoop] end ?>
+		<?gen [Exceptions] end ?>						 
+        </dl>
+		<?gen [Details] end ?>
+		<?gen [Details] end ?>
+		<?gen writeOperationDetails end ?>
+		
+		<?gen overridedMethods def (method1 : uml::Operation, methods2 : Sequence(uml::Operation)) 
+		      overridedMethods = OrderedSet{}
+		?>
+		<?gen [InstanceOnly] begin when not method1.isStatic
+			  methods2 = methods2->select(o | not o.isStatic)
+		?>
+		<?gen [For each method2] method2 : methods2 ?>
+		<?gen [Check Visibility, Name and Parameters] begin when method1.name = method2.name and method1.ownedParameter->size() = method2.ownedParameter->size() 
+		      parameters1 = method1.ownedParameter,
+			  parameters2 = method2.ownedParameter
+		?>
+		<?gen [Check each parameter] parameter1 : parameters1, parameter2 : parameters2 ?>
+		<?gen [Checks] begin when parameter1.type = parameter2.type and parameter1.direction = parameter2.direction
+		               overridedMethods = overridedMethods->including(method2)
+		?>
+		<?gen [Checks] end export: overridedMethods ?>
+		<?gen [Check each parameter] end export: overridedMethods ?>
+		<?gen [Check Visibility, Name and Parameters] end export: overridedMethods ?>
+		<?gen [For each method2] end export: overridedMethods ?>
+		<?gen [InstanceOnly] end export: overridedMethods 
+		?>
+		<?gen overridedMethods end export: overridedMethods ?>
+		
       </body>

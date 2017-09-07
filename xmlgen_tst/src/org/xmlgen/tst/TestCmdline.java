@@ -187,7 +187,7 @@ public class TestCmdline implements Notified {
 				           "config=", config,
 				           "date=", date,
 				            "--template ", template,
-				            "--trace",
+				            //"--trace",
 				            "--output", output};		
 		run(vargs);
 	}
